@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室-DIY動手做: 把家中WebCam變成監視錄影機! </title>
+  <meta name="description" content="Bear 小編發現上次答應大家寫這篇教學到現在已經過了快一個月...決定不要繼續拖稿，這次來跟大家講如何把家裡的 WebCam 變成監視錄影機然後手機能夠即時 real-time 地看到 WebCam 的影像喔!!!這次的架構比較複雜，小編先跟大家說明實驗環境囉有一台 WebCam 的電腦，PC or Mac皆可...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/bear-diy-webcam.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室-DIY動手做: 把家中WebCam變成監視錄影機! </h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:37:23+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Bear 小編發現上次答應大家寫這篇教學到現在已經過了快一個月...</p>
+<p>決定不要繼續拖稿，這次來跟大家講如何把家裡的 WebCam 變成監視錄影機</p>
+<p>然後手機能夠即時 real-time 地看到 WebCam 的影像喔!!!</p>
+<p><!--more--></p>
+<p>這次的架構比較複雜，小編先跟大家說明實驗環境囉</p>
+<p><ol>
+<p><li>有一台 WebCam 的電腦，PC or Mac皆可 (本實驗以 Mac 為例, Server 語言為 C++)</li></p>
+<p><li>iPhone (這次架構需要把程式碼放在 apple 裝置上...如果沒有的話...還請大家多擔待了!)</li></p>
+<p></p>
+<p>本次範例都使用 Xcode 進行開發, opencv 版本需使用 2.4.3</p>
+<p>(<a href="http://www.takobear.tw/2014/01/12/bear-xcodeopencv/">對使用Xcode開發C++ 以及OpenCV有疑問的, 參考這篇連結</a>)</p>
+<p>開發環境:</p>
+<p>1. Mac OS X 10.8以上</p>
+<p>2. Xcode 4.5~4.6 以上 (涵蓋Xcode 5)(12/29更動: OS X 10.9編譯如果有問題需要參考這篇:<a href="http://www.takobear.tw/2014/01/12/os-x-mavericks-for-opencv/">OpenCV OS X 編譯失敗解法</a>)</p>
+<p>3. Xcode Command Line Tool</p>
+<p>開發框架核心:</p>
+<p>1. Server端 : OpenCV</p>
+<p>2. Client端:  CoreFundation</p>
+<p>那麼，廢話不多說, 我們馬上開始這趟旅程吧!!!</p>
+<p><h4>[Server端程式架構]</h4></p>
+<p>首先先以 Xcode 開啓一個 Command Line Tool 專案 (不知道如何開啓的<a href="http://www.takobear.tw/2014/01/12/bear-xcodeopencv/">請點這篇</a>)</p>
+<p>並且把它匯入 OpenCV 的 library (不清楚做法的同樣<a href="http://www.takobear.tw/2014/01/12/bear-xcodeopencv/">請點這篇</a>)</p>
+<p>這次我們要透過的是 Wifi 網路連線, 需要的 C++ header 檔案包含以下內容</p>
+<p><pre><code>#include &lt;sys/socket.h.
+<p>#include &lt;netinet/in.h&gt;</p>
+<p>#include &lt;arpa/inet.h&gt;</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;pthread.h&gt;</p>
+<p>#include &lt;opencv2/core/core.hpp&gt;</p>
+<p>#include &lt;opencv2/opencv.hpp&gt;</p>
+<p>#include &lt;opencv2/highgui/highgui.hpp&gt;</p>
+<p>using namespace std;</p>
+<p>using namespace cv;</p>
+<p></p>
+<p>好吧小編知道這內容確實有點多.... 不過這些東西基本上都有用的!!!!</p>
+<p>現在說明一下架構:</p>
+<p>我們開放 port 9899 作為視訊連線的功能</p>
+<p>此次因為為測試範例，所有內容都限定在區網(Local NetWork)，還有簡化許多現實中最困難的網路連線問題!</p>
+<p>接下來請大家稍微看一下連線的架構圖!</p>
+<p>小編這次設計的架構並沒有依據 HTTP 標準的 handshaking 守則</p>
+<p>只是用最單純的網路連線架構來說明這範例怎麼進行的! 如果對底層 API 的使用有興趣的，希望這篇教學能幫助到你!那看到上圖，首先我們的架構就是先寫一個 Server 出來啦</p>
+<p>這次的概念其實就是所謂的Motion JPEG概念 (不清楚的可以<a href="http://www.takobear.tw/2014/01/12/video-codec/">參考Codec一文介紹</a>!)</p>
+<p>也就是說, 透過截取每一個從攝影機取得的 frame，轉換成一個影像矩陣(Matrix)後，再把它轉換儲存為 jpeg 檔案格式傳送出去，採用這樣的做法優點在於動態的傳輸 jpeg 方式可以有效壓縮每一個frame的大小，提高傳輸效率</p>
+<p>(Bear: 講這麼文青, 實際上就是傳比較快啦!!!! 不然你的iPhone可能無法連續解析這麼高的資料量，最後有可能只傳完一張圖片後就動不了了)</p>
+<p>也因為是操作矩陣的關係, 我們可以指定圖片檔案矩陣的大小如下:</p>
+<p>(定為寬度640, 高度 480, 參考code 39 - 40行)</p>
+<p>width = 640;</p>
+<p>height = 480;</p>
+<p>(詳細程式碼內容會在最後附在下載連結, 這邊僅用圖片呈現!)</p>
+<p>步驟上相當單純，預先設立圖片的大小，開 port 為 9899 (大家也可以隨意指定喔, 不過 app 部分就要修改了!)</p>
+<p>capture.open(0); 代表開始打開攝影機</p>
+<p>利用 capture.isOpened() 判斷攝影機是否能夠成功被打開，失敗的話直接 quit 結束程式!把 capture 的資料持續寫入到 img (也就是 capture &gt;&gt; img 的功用)</p>
+<p>並宣告一個一樣大的矩陣 img1</p>
+<p>最後重點在使用 pthread_create 建立一個新 thread 執行傳輸影像的功用!!</p>
+<p>thread_s 執行 void* streamServer(void* arg); 的內容!!</p>
+<p>接下來我們看 thread_s 的內容</p>
+<p><h4>Step 1. 架設 Server 資訊(綁定local ip, 設定thread特性等)</h4></p>
+<p>(程式碼內容 : 開啓資料夾 ServerCV 底下專案)</p>
+<p>這邊是做單純網路連線的設定</p>
+<p>socket() 建立 listenSock</p>
+<p>設定 ip 位址給 serverAddr</p>
+<p>bind ip 位址資訊給 listenSock</p>
+<p>以及設定 listenSock 能接收最多5個連線資訊比較重要事 imgSize, 因為我們在把影像資料傳輸出去時是一個一維矩陣資料</p>
+<p>也就是說它必須同時涵蓋到整個矩陣的內容</p>
+<p>這裡的 imgSize 相當於預先宣告矩陣有多大</p>
+<p>所以才會是 img1.total() * img1.elemSize();</p>
+<p>接下來進行傳送的架構大致如下圖</p>
+<p>這邊的架構也就是建立一個大的 While (1) 無窮回圈確保伺服器端會持續存活</p>
+<p>之後用 accept 的方式確認 server 與 client 間的連線是否還存在接下來就是最重要的傳輸檔案部分了!</p>
+<p>因為我們是動態的傳輸每一個包裝為 jpeg 檔案的 frame 出去</p>
+<p>在三方交握中，必須要讓對方知道檔案大小，否則另一方以 TCP 連線情況會不知道該傳輸多少</p>
+<p>以 HTTP 的格式，會有一個欄位 Contents: 告知檔案大小</p>
+<p>但是因為 Bear 只想簡單的測試這個範例能否順利運行</p>
+<p>所以是用偷吃步的方法先 send 一次 檔案大小的數值出去 (Client端接收檔案大小)</p>
+<p>之後再 send 實際上要傳輸過去的 jpeg 檔案內容，這樣 client 端才能收到正確的圖檔解析出來!</p>
+<p>那實際上程式是怎麼運行的呢?</p>
+<p>用一個大的 while (1 )代表了存活運行的 server</p>
+<p>用 accept 去建立每一次的連線資料，一旦建立連線失敗直接結束程式</p>
+<p>(注意: accept 會阻擋程式的運行, 一直到接收到資料或其他狀況才會往下執行)確認連線建立後</p>
+<p>用 imencode 把資料流 img1 壓縮成 jpg 檔案給 buff</p>
+<p>第一個 send 把 buff 的資料流長度傳輸出去，因為是數值資料，所以檔案大小也就是 uint32_t (4byte)</p>
+<p>第二個 send 則根據 buff 的資料流長度，把 buff 給傳輸出去!</p>
+<p>到這邊為止就是完成了整個連線行為了!!!</p>
+<p>完成單一 request 後，之後重新進入到 accept -&gt; send -&gt; accept - &gt; send .... 的邏輯</p>
+<p>這邊結束後, 我們就可以來進行 Client 端的部分囉!</p>
+<p><h4>Step 2. 架設 Client 資訊(接收 Server 的影像資料)</h4></p>
+<p>(程式碼內容 : 開啓資料夾 SHWebCameraSocket 底下專案)</p>
+<p>這邊 Bear 建立的是一般的 iOS 專案!</p>
+<p>(新手不知<a href="http://www.takobear.tw/2014/01/12/bear-xcode-5-ios/">如何建立iOS 專案者請點這篇</a>)這裡小編設立的是一個 readStream 以及 writeStream 的型別</p>
+<p>此處小編要提的重點是 ip 的設定，這個的 ip 需要是電腦端的 ip，Mac 的用戶可以到 <code>系統偏好設定 -&gt; 網路</code> 中看到相關的數值(參考下圖)</p>
+<p>這個 ip 值很重要!</p>
+<p>如果要做對外連線，也就是如果你人不在家中的話，就需要一些修改 ip 為 public 外</p>
+<p>還有一些網路關於 NAT 的問題，因為比較複雜小編就先不在這裡介紹....iOS 做 streaming 串流最簡單的方式就是透過程式碼中36 - 52行的內容進行</p>
+<p>而實作呈現在畫面上的委派內容則如下:</p>
+<p>我們建立一個 method : dataIsValidJPEG 用來判斷檔案格式內容有沒有符合 jpeg 格式</p>
+<p>這理由在於 streaming 傳來的資料會因為部分漏失資訓或是處理不及下造成無法順利解析</p>
+<p>所以我們必須要判斷傳來的 data 格式是否遵循 jpeg 檔案的規範</p>
+<p>其中 jpeg 檔案格式規範的重點就在於開頭為 FFD8，結尾為 FFD9</p>
+<p>符合此格式者即為 jpeg 檔案!在- (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode 這項委派中</p>
+<p>我們進行以下處理</p>
+<p>A. 取得將要處理的jpeg檔案大小</p>
+<p><pre><code>uint8_t buff[4];
+<p>[(NSInputStream *)aStream read:buff maxLength:4]; // Read Length</p>
+<p>uint32_t dataLength = (buff[0] &lt;&lt; 8) |(buff[1] &lt;&lt; 8) |(buff[2] &lt;&lt; 8) | buff[3];</p>
+<p></p>
+<p>這邊輸入 maxLength 4 是因為我們已經知道數字大小是4byte，所以可以先給常數定值之後再把得到的 buff 資料解析為 dataLength，此為 jpeg 檔案大小</p>
+<p>B. 處理jpeg檔案</p>
+<p>同樣利用 read: maxLength: 去接收 tcp 傳輸到的檔案內容</p>
+<p>接收到以後把它接在 imgData 上</p>
+<p><pre><code>dataLength = [(NSInputStream *)aStream read:tcpbuff maxLength:dataLength]; // Read Data
+<p>[imgdata appendBytes:(const void *)tcpbuff length:dataLength];</p>
+<p></p>
+<p>銜接完成後判斷檔案格式是不是jpeg, 是的話就把它顯示在畫面上!!</p>
+<p><pre><code>if ([self dataIsValidJPEG:imgdata]) {
+<p>    [_imgView setImage:[UIImage imageWithData:imgdata]];</p>
+<p>}</p>
+<p></p>
+<p>到這篇整個程式教學結束囉!!</p>
+<p>12/29更新: 檔案更新至github上: <a href="https://github.com/shouian/SHWebCamExample.git">https://github.com/shouian/SHWebCamExample.git</a></p>
+<p>依照以下步驟</p>
+<p><ol>
+<p><li>開啓ServerCV資料夾內專案, 啟動程式, 應當會像最上面的圖一樣, 會顯示目前攝影機抓到的內容畫面在電腦上</li></p>
+<p><li>確認電腦目前ip位址</li></p>
+<p><li>確認手機與電腦目前是屬於同一區域網路</li></p>
+<p><li>調整ip位址後, 直接編譯進行程式, 就能跟首頁一樣, 直接進行程式囉!!</li></p>
+<p></p>
+<p>對於此次範例有任何問題, 歡迎來信討論!!</p>
+<p>喜歡這篇教學的話也歡迎加入Takobear粉絲團獲得更多最新資訊!</p>
+<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+<p></p>
+<p>[cjtoolbox name='google_ad']</p>
+</div></p></ol></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></ol></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/bear-diy-webcam\/";
+        this.page.identifier = "617 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-diy-webcam";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

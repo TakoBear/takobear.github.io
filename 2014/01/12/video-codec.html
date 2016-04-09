@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Video Codec! 那是什麼樣的東西?</title>
+  <meta name="description" content="上一篇教學文內我們討論到FFmpeg跟Codec這個名詞想必很多人也對此感到很苦手吧接下來小編就來進一步解釋這是什麼樣的東西!不管你是在網路上觀賞影片，或者是專業的數位影片製作人，可能都會碰到這個難懂的名詞。這個字在字典裡可是找不到的，因為他是近年數位影像科技發展下的產物.... (編按: 需要學習的東西越來越多...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/video-codec.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Video Codec! 那是什麼樣的東西?</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:43:44+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3109363_orig.jpeg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div><a href="http://www.gossibear.tw/12/post/2013/07/ffmpeg-ios-61.html" target="_blank">上一篇教學文內</a>我們討論到FFmpeg跟Codec這個名詞
+<p>想必很多人也對此感到很苦手吧</p>
+<p>接下來小編就來進一步解釋這是什麼樣的東西!</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>不管你是在網路上觀賞影片，
+<p>或者是專業的數位影片製作人，</p>
+<p>可能都會碰到這個難懂的名詞。</p>
+<p>這個字在字典裡可是找不到的，</p>
+<p>因為他是近年數位影像科技發展下的產物.... (編按: 需要學習的東西越來越多了...)</p>
+<p>而他最主要的工作就是<strong>壓縮與解壓縮</strong>。</p>
+<p>CODEC可以拆解成兩個字<strong>Encode編碼：</strong></p>
+<p>編碼的工作是讓比較龐大的影像檔案，經過編碼方式大幅減少他的容量，卻可以保持相當良好的品質。</p>
+<p><strong>Decode 解碼：</strong></p>
+<p>解碼的工作是將已經壓縮好的影片檔案，還原成為沒否播放器所能接受的檔案並呈現畫質與音質。蘋果電腦的QuickTime影片格式和微軟的Windows Media AVI影片格式，</p>
+<p>在非線性剪輯逐漸成為主流，</p>
+<p>而電腦成為主要的剪輯工具，</p>
+<p>自然的電腦系統中的媒體程式就成為最重要的媒體。</p>
+<p>然而沒有經過壓縮的影片檔案資料量非常龐大，</p>
+<p>過去的電腦不一定能夠跑得動。</p>
+<p>於是開始有些廠商研發出，</p>
+<p>一些可以讓電腦可以跑得動影片的方法。</p>
+<p>有的廠商發展出視訊專門的加速卡，</p>
+<p>也有的廠商則發展出軟體讓系統可以將影片壓縮讓電腦可以跑得動。</p>
+<p>利用電腦來剪接技術大約從1990年開始進入市場，</p>
+<p>但是當時的電腦運算能力根本無法應付龐大的影像資料量，</p>
+<p>因此各家廠商紛紛推出自己的硬體與軟體整合系統。</p>
+<p>而這些非線性剪接機的工作原理大致上都一樣，</p>
+<p>就是利用自己研發的影像擷取卡，</p>
+<p>搭配多管道磁碟陣列來處理或者儲存龐大的影像資料。</p>
+<p>其中最為知名的兩個系統分別是英國 Quantel 公司的EditBox 與美國的Avid公司同名剪接系統AVID。</p>
+<p>這兩套極為出色的非線性剪輯系統都十分昂貴，</p>
+<p><strong>一套設備動輒數百萬台幣，而他們都使用 M-JPEG（Motion-JPEG） 壓縮格式。</strong></p>
+<p>影像壓縮的格式非常多，而各種格式都有他的優缺點，</p>
+<p>但是各位還是可以從這些格式看到當時的發展。</p>
+<p>舉例來說： Taga 檔案是由當時的 Truevision 公司所設計出來，</p>
+<p>為了要支援該公司所推出的影像擷取卡 TARGA 1000 。</p>
+<p>柯達公司雖然沒有推出影片擷取卡，</p>
+<p>但是他們也研發了眾所皆知的 TIFF檔案格式。</p>
+<p>由於壓縮檔案格式多，就不在這裡一一介紹。</p>
+<p>重點是這些壓縮的格式，</p>
+<p>慢慢的讓影像與聲音逐漸可以在電腦上面運作，</p>
+<p>甚至到了目前已經成為專業影音製作的主流。</p>
+<p>壓縮格式的誕生是在DVD（mpeg-2）、VCD（mpeg-1）的年代，</p>
+<p>工程師為了要讓影音檔案可以利用光碟播放。</p>
+<p>想出了MPEG這樣的格式，</p>
+<p>它不需要額外的硬體就可以使用電腦來播放影音檔案。</p>
+<p>MPEG-2推出之時，</p>
+<p>大多數的人都被它『高倍率壓縮卻還是可以保持漂亮的影像品質』感到驚艷。</p>
+<p>但是當時技術無法剪輯以『組』（GOP = Group of Picture）為影像單位的mpeg-2。</p>
+<p>那個年代的數位錄影多半採用M-JPEG，從Sony Digital Betacam一直到AVID，</p>
+<p>所有的人不約而同的採用這樣的壓縮格式，並不是這個格式好。</p>
+<p><strong>而是因為這個格式由一組、一組JPEG圖檔所構成，因此可以任意剪接。</strong></p>
+<p>電腦科技的進步往往話不可行為可行，現在HDV格式的高解析電視規格採用mpeg-2，</p>
+<p>軟體廠商也多半研發出可以剪輯mpeg-2的編碼器，並且成為主流。</p>
+<p>網路的流行使得越來越多人網路上分享自己的影音檔案，</p>
+<p>因此很多人都接觸到轉檔的問題。問題是到底那一個Codec才是對的呢？</p>
+<p>以目前最夯的youtube來說，</p>
+<p>他們所採用的Adobe Flash Video他的編碼器on2vp6所產生，</p>
+<p>因檔案比較小畫質優而受到廣泛的歡迎。此外還有幾個Codec值得大家多做研究：</p>
+<p>QuickTime Pro →DIVX、XVID、H.264、Sorenson、MP4、ProRes、Uncompressed</p>
+<p>Windows Media →DIVX、XVID、WMV、MPEG</p>
+<p>現代的電腦處理能力驚人，處理器廠商所設計出來的晶片，</p>
+<p>不再單只是處理資料。新一代的微處理器不但將圖形、聲音、網路...等等晶片組通通整合在一起，</p>
+<p>他所發揮出來的效能也大幅提昇。</p>
+<p>接下來影音串流的服務因應智慧行動裝置的普及越來越重要</p>
+<p>Codec的重要性也就越來越重要</p>
+<p>目前App Store上有提供Codec有關服務的其中一款是底下的OPlayer</p>
+<p></p>
+<p><div>
+<p><div></div></p>
+<p><div id="283168031232458517-slideshow"></div></p>
+<p><script type="text/javascript">// < ![CDATA[</p>
+<p>// < ![CDATA[  (function(jQuery) { function init() { wSlideshow.render({elementID:"283168031232458517",nav:"none",navLocation:"bottom",captionLocation:"bottom",transition:"fade",autoplay:"1",speed:"5",aspectRatio:"auto",showControls:"true",randomStart:"false",images:[{"url":"1\/9\/9\/7\/19975491\/1644457.jpg","width":333,"height":187,"fullHeight":270,"fullWidth":480},{"url":"1\/9\/9\/7\/19975491\/1944799.jpg","width":140,"height":250,"fullHeight":480,"fullWidth":270},{"url":"1\/9\/9\/7\/19975491\/6799728.jpg","width":140,"height":250,"fullHeight":480,"fullWidth":270}]}) } jQuery ? jQuery(init) : document.observe('dom:loaded', init) })(window._W &#038;&#038; _W.jQuery)</p>
+<p>// ]]></script></p>
+<p><div></div></p>
+<p></p>
+<p><div>想要下載OPlayer的朋友可以點以下連結下載
+<p><a title="" href="https://itunes.apple.com/us/app/oplayer-best-video-music-media/id344784375?mt=8" target="_blank">前往該網址下載</a></p>
+<p><div>
+<p><div id="379853021762828802" align="left"><script async="">// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script><!-- Gossibear728 --><script>// < ![CDATA[</p>
+<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>對Codec有興趣的朋友歡迎來信到我們的信箱takobearx@gmail.com
+<p>更多消息請繼續關注TakoBear!資料出處： <a title="" href="http://www.ericmojo.com/2009/05/video-codec.html" target="_blank">http://www.ericmojo.com/2009/05/video-codec.html</a></p>
+<p><div>
+<p><div id="116956208993067956" align="left"><script async="">// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script><!-- Gossibear728 --><script>// < ![CDATA[</p>
+<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/video-codec\/";
+        this.page.identifier = "740 http:\/\/www.takobear.tw\/201702608526356260322804024687\/video-codec";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

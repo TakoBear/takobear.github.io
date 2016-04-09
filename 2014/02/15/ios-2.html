@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[iOS]  中級: 如何把測試的訊息記錄成文字檔?</title>
+  <meta name="description" content="在開發比較大型的專案, 或是有牽涉到多執行緒的時候公司內如果有測試QA進行時, 最可怕的問題不在於碰到了Bug, 而是碰到了Bug你卻不知道到底發生了什麼事...總不能什麼測試都自己來測吧!!! 這次Bear要分享一個在公司開發過程中曾經使用的技巧,也就是把App過程中的Log給記錄在檔案中的方法!首先Bear先...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/ios-2.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[iOS]  中級: 如何把測試的訊息記錄成文字檔?</h1>
+    <p class="post-meta"><time datetime="2014-02-15T12:19:39+08:00" itemprop="datePublished">Feb 15, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1450379_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>在開發比較大型的專案, 或是有牽涉到多執行緒的時候
+<p>公司內如果有測試QA進行時, 最可怕的問題不在於碰到了Bug, 而是碰到了Bug你卻不知道到底發生了什麼事...</p>
+<p>總不能什麼測試都自己來測吧!!! 這次Bear要分享一個在公司開發過程中曾經使用的技巧,</p>
+<p>也就是把App過程中的Log給記錄在檔案中的方法!</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>
+<p><div id="910362342878838099" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9034175_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>首先Bear先建立了一個Class名為DebugLog,
+<p>這次的Class目的相當簡單, 我們希望能在程式打開define : __DEBUG__的時候</p>
+<p>把log的訊息給存進一個txt檔案內, 不過希望在App Release到App Store的時候不要讓使用者看到這些訊息</p>
+<p>那, 因為是要存取Log的訊息, 所以用法也會希望如同NSLog一樣, 是一個不定參數 (或是稱為 可變參數)的輸入方式那來看看這個Class要怎麼使用吧!!</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6523411_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>在Import進來DebugLog後, 只要在你想要加上Log的地方
+<p>使用function : BugLog().. 就能如同NSLog一樣印出在畫面上 （如上圖）</p>
+<p>除此之外, 也能到你的App內的SandBox中的Document資料夾 (如下圖)</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7911149_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>此時你會發現你多了一個record的資料夾, 裡面也有一個txt檔案附上了年月日的時間
+<p>如果我們點開txt檔就會看到這樣的訊息</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6923168_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>內容中我們把年月日, 秒分 還有Log的訊息都印上去了!
+<p>要注意我們這個Class的使用中, 只能大約記錄1000筆資料</p>
+<p>因為每次會把檔案內的資料讀出來再記錄回去, 對於大量反覆操作的動作中, 會因為記憶體問題而發生crash</p>
+<p>不過只要把__DEBUG__的define給關閉後就能變回一般的NSLog操作了!針對這個class還有一些優化的方式, 例如一個檔案只記錄500筆數據後自動換成下一個檔案等操作方式</p>
+<p>不過這篇僅為了Demo教學用, 就不放上這些進階技巧了!!</p>
+<p>有需要的朋友可以到Github上下載:</p>
+<p><a title="" href="https://github.com/shouian/DebugLogTrace" target="_blank">https://github.com/shouian/DebugLogTrace</a></p>
+<p>這篇文章對你有用嗎? 對iOS有興趣的話也能參考以下文章:</p>
+<p>[入門系列]</p>
+<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a></p>
+<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a></p>
+<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a></p>
+<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a></p>
+<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a></p>
+<p>[中級系列]</p>
+<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a></p>
+<p>[進階系列]</p>
+<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a></p>
+<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a></p>
+<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a></p>
+<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a></p>
+<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a></p>
+<p>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
+<p></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/15\/ios-2\/";
+        this.page.identifier = "475 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ios1";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

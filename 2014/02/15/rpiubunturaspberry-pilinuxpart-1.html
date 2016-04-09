@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[RPI]使用ubuntu編譯raspberry pi的linux核心part 1</title>
+  <meta name="description" content="Bear這次不介紹RPI的玩法，而是回到最基本的地方也就是編譯RPI用的核心的教學為什麼要編譯核心呢？原因有很多，但最重要的就是客製化了即便如此，Bear還是得說，除非有絕對必要的需求（如執行特定硬體驅動、只有新版本核心才能執行的硬體、刪除用不到的功能、real-time核心等等）不然不需要特定自己編一個新的核心...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/rpiubunturaspberry-pilinuxpart-1.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[RPI]使用ubuntu編譯raspberry pi的linux核心part 1</h1>
+    <p class="post-meta"><time datetime="2014-02-15T12:19:24+08:00" itemprop="datePublished">Feb 15, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/718411_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>Bear這次不介紹RPI的玩法，而是回到最基本的地方
+<p>也就是編譯RPI用的核心的教學</p>
+<p>為什麼要編譯核心呢？原因有很多，但最重要的就是客製化了</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>即便如此，Bear還是得說，除非有絕對必要的需求
+<p>（如執行特定硬體驅動、只有新版本核心才能執行的硬體、刪除用不到的功能、real-time核心等等）</p>
+<p>不然不需要特定自己編一個新的核心，功力不足編出來不一定比較好或穩定</p>
+<p>不過，玩玩總可以吧（大誤</p>
+<p><div>
+<p><div id="753921735472247845" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>當然，編譯核心不是說編就可以編的
+<p>工欲善其事，必先利其器，準備好編譯工具吧</p>
+<p>最單純的工具就是手上的Raspberry Pi了</p>
+<p>可是，拿它來編核心可能會慢到想哭</p>
+<p>這時候，嘿嘿，交叉編譯（cross-compile）的時候到了</p>
+<p><div>交叉編譯(Cross-Compile)是什麼？
+<p>簡單的說，就是用很快但是CPU架構不同（x86 Intel I7）去打造較慢CPU（ARM）專用的軟體</p>
+<p>就是為了快速開發，縮減時間</p>
+<p>特別在現在的嵌入式系統(Embedded System)開發時會使用</p>
+<p>剩下就不多說，更詳細的定義及說明就請各位自行尋找</p>
+<p>既然是不同架構當然有不同的編譯器</p>
+<p>用x86的Linux要編ARM的Linux不是想像中的容易</p>
+<p>所幸Raspberry Pi有提供現成的編譯器與函式庫</p>
+<p><a title="" href="https://github.com/raspberrypi/tools">https://github.com/raspberrypi/tools</a></p>
+<p>原始碼就在上面</p>
+<p>大致了解後，接下來可以開始進行編譯了</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6975970_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>可以的話，希望各位先有個Linux（最好是Ubuntu）
+<p>如果沒有的話也沒關係</p>
+<p>Bear提供為了交叉編譯所創建的virtualbox ova檔</p>
+<p><a title="" href="http://tburl.rr.nu/V">請服用</a></p>
+<p>容量大了點（約3.5G），可能需要滿多的時間</p>
+<p>好好去洗個澡、泡個咖啡、睡個覺都可以</p>
+<p></p>
+<p><div>這邊先離題一下，教各位如何使用ova檔
+<p>其實很容易，但也先得安裝或更新至最新版的<a href="https://www.virtualbox.org/">virtualbox</a></p>
+<p>virtualbox是開放軟體，還是跨平台的，請放心使用</p>
+<p>裝完後啟動如下</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4881605_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>選擇"檔案"==&gt;"匯入應用裝置"</div></p>
+<p><div>
+<p><div>
+<p><div>
+<p><table>
+<p><tbody>
+<p><tr>
+<p><td>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8382310_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><td>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4929302_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p><div>匯入完可以依照目前PC硬體等級調整虛擬機的配備
+<p>如果想趕快編好可以增加虛擬機的CPU核心數</p>
+<p>啟動virtualbox吧</p>
+<p><div>預設的使用者帳號是 pi，密碼也是 pi
+<p>沒有設定root的密碼，有需要的可以自行輸入</p>
+<p>（下面指令藍色是虛擬機、綠色是RPI）</p>
+<p>sudo passwd root</p>
+<p></p>
+<p><div>首先安裝編譯用工具
+<p>（如果是用Bear提供的ova檔就不用做下面工作）</p>
+<p>sudo apt-get update</p>
+<p>sudo apt-get install git vim</p>
+<p>sudo apt-get install gcc-arm-linux-gnueabi make ncurses-dev</p>
+<p>下載交叉編譯器</p>
+<p>cd</p>
+<p>git clone git://github.com/raspberrypi/tools.git</p>
+<p>工具放在home底下似乎怪怪的</p>
+<p>Bear是把它移到/usr下，這邊就看人隨意發揮了</p>
+<p>sudo mv ./tools /usr/</p>
+<p></p>
+<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2490611.png" alt="图片" /></a></p>
+<p><div>.下載原始碼
+<p>（若是用Bear提供的ova檔，開始做事了）</p>
+<p>git clone https://github.com/raspberrypi/linux.git</p>
+<p>cd linux</p>
+<p>git checkout rpi-3.6.y</p>
+<p>這邊的rpi-3.6.y是Bear的RPI使用核心版本</p>
+<p>如果有興趣換版本可以自行修改</p>
+<p>其中master是3.2.0</p>
+<p>Bear建議各位選擇目前自己RPI使用的核心來編譯</p>
+<p>（可以用　uname -a　來得知）</p>
+<p>畢竟新版本的核心必然會增加新功能</p>
+<p>增加的新功能除非特別去注意，否則根本不知道如何去配置</p>
+<p>反而編出更糟的核心QAQ</p>
+<p><hr /></p>
+<p><div>編譯前首要取得RPI用的核心編譯配置檔
+<p>請在各位的RPI上輸入</p>
+<p>（OS必須為Raspbian，其他系統Bear沒用過，不敢保證）</p>
+<p>zcat /proc/config.gz &gt; .config</p>
+<p>得想辦法從PI上取出來（用samba、FTP、SFTP等方法）</p>
+<p>再想辦法放進虛擬機ubuntu上（同上，或是用網路下載）</p>
+<p>如果嫌麻煩，或事先練習看看，可以用Bear提供，Raspbian 3.6.11+的核心配置檔</p>
+<p>在虛擬機上輸入</p>
+<p>cd</p>
+<p>wget https://www.dropbox.com/s/kux3co7it7gkm4j/config</p>
+<p>mv ./config ./linux/.config</p>
+<p>取得配置檔後進行配置檔設定</p>
+<p>主要針對原核心沒有的新功能做配置</p>
+<p>cd ./linux</p>
+<p>make ARCH=arm CROSS_COMPILE=/usr/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- oldconfig</p>
+<p>千萬注意</p>
+<p>CROSS_COMPILE=/usr/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-</p>
+<p>必須是之前下載tools的絕對路徑</p>
+<p>配置完開始編譯</p>
+<p>make ARCH=arm CROSS_COMPILE=/usr/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- -j1</p>
+<p>其中j1是指用1個CPU核心進行編譯，如果有多核心的話，可以是增加其值</p>
+<p>核心模組編譯與安裝</p>
+<p>事實上，不是核心的所有功能都需要包含至核心裡面</p>
+<p>部分少用或是不需要核心直接處理的功能都可以模組化（編譯時看到的[M]就是指模組化）</p>
+<p>新增一個放置模組化的資料夾</p>
+<p>mkdir ./mod_install</p>
+<p>make ARCH=arm CROSS_COMPILE=/usr/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=/home/pi/linux_rt/mod_install/ modules</p>
+<p>make ARCH=arm CROSS_COMPILE=/usr/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=/home/pi/linux_rt/mod_install/ modules_install</p>
+<p>到這邊總算編好Raspbian官方核心了</p>
+<p>接下來取出核心與模組化的檔案</p>
+<p>cp ./arch/arm/boot/zImage ~/</p>
+<p>cp -r ./mod_install/lib/modules/3.6.11+/ ~/</p>
+<p>可以在/home/pi看到3.6.11+跟zImage</p>
+<p>把3.6.11+打包壓縮吧</p>
+<p>tar -zcvf ./3.6.11+.tar.gz ./3.6.11+/</p>
+<p>想辦法把它們（zImage、3.6.11+.tar.gz ）從虛擬機弄出來吧</p>
+<p>弄出來後，放到RPI上面吧</p>
+<p>zImage放到/boot/</p>
+<p>並更名為kernel-3.6.11+.img</p>
+<p>mv /boot/zImage /boot/kernel-3.6.11+.img</p>
+<p>而壓縮檔3.6.11+.tar.gz則解壓縮後放到/lib/modules/</p>
+<p>編輯/boot/config.txt</p>
+<p>vim /boot/config.txt</p>
+<p>新增</p>
+<p>kernel=kernel-3.6.11+.img</p>
+<p>Esc :wq!存檔，重開機試試是否可以使用新核心，不行就會開不了機</p>
+<p>如果真的發生不能開機的話，取下SD卡，放進隨意其他電腦或系統</p>
+<p>windows話，只會有一個磁區顯示，那就是/boot/</p>
+<p>修改裡面的config.txt檔</p>
+<p>把kernel=kernel-3.6.11+.img刪除，存檔就回復原本的狀態了</p>
+<p>呼，part 2將會介紹real-time patch跟BFS、BFQ patch的編譯過程!</p>
+<p>有興趣的朋友趕快看看吧!</p>
+<p>參考來源：<a title="" href="http://elinux.org/RPi_Kernel_Compilation">http://elinux.org/RPi_Kernel_Compilation</a></p>
+<p>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></td></p></div></p></div></p></td></p></tr></p></tbody></p></table></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/15\/rpiubunturaspberry-pilinuxpart-1\/";
+        this.page.identifier = "470 http:\/\/www.takobear.tw\/201702608526356260322804024687\/rpiubunturaspberry-pilinuxpart-1";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

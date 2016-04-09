@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室: Arduino+BLE shield, 用手機控制你家電燈吧!</title>
+  <meta name="description" content="在之前動手做自己的智能家電 - 藍芽模組BLE Shield系列 已經介紹過 BLE shield這次來介紹一些其他簡單的應用吧!相信有些人也有跟 Bear 一樣有在睡前躺在床上看點書或是滑滑手機的習慣但是通常常常就會很懶的爬起床來關燈雖然市面上已經有一些產品來解決這樣的情形，比如說:(photo from Be...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/13/bear-arduinoble-shield.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室: Arduino+BLE shield, 用手機控制你家電燈吧!</h1>
+    <p class="post-meta"><time datetime="2014-01-13T08:41:01+08:00" itemprop="datePublished">Jan 13, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>在之前<a href="http://www.takobear.tw/2014/01/12/ble-shield-2/">動手做自己的智能家電 - 藍芽模組BLE Shield</a>系列 已經介紹過 BLE shield</p>
+<p>這次來介紹一些其他簡單的應用吧!</p>
+<p><!--more--></p>
+<p>相信有些人也有跟 Bear 一樣有在睡前躺在床上看點書或是滑滑手機的習慣</p>
+<p>但是通常常常就會很懶的爬起床來關燈</p>
+<p>雖然市面上已經有一些產品來解決這樣的情形，比如說:</p>
+<p>(photo from Belkin website)</p>
+<p>利用改裝過的開關，搭配上藍芽的技術，就可以將家電智慧型化</p>
+<p>但是由於價錢還是過於昂貴，所以 Bear 在這邊提供一個比較簡易的方法</p>
+<p>也可以達成相同的目的</p>
+<p>首先我們需要一個繼電器(Relay)來作為我們的開關</p>
+<p>(photos from LU-5 datasheet)</p>
+<p>繼電器的電路如上，在這邊我們有接一顆 NPN 和 1k 的電阻</p>
+<p>在吃 5V 的繼電器用的是 2n2222 但是如果要拿來驅動電壓比較大的繼電器的話</p>
+<p>就需要加上 TIP101</p>
+<p>參考元件：</p>
+<p><ul>
+<p><li>繼電器 LU-5H</li></p>
+<p><li>電晶體(NPN) 2N2222</li></p>
+<p><li>電阻 1k</li></p>
+<p><li>二極體(Diode) 1N4004/1N4001</li></p>
+<p></p>
+<p>將繼電器接上電之後，我們可以用最簡單的 digitalWrite 輸出不同的 HIGH, LOW 來測試</p>
+<p>如果你有聽到咑咑咑的聲音的話，就代表已經成功的驅動你的繼電器了</p>
+<p>接下來就要將之前用過，由 <a href="http://redbearlab.com/bleshield/">RedBearLab</a> 所開發的 BLE shield 來作遠端的控制了</p>
+<p>到他們的網站下載手機的 APP</p>
+<p>在 Arduino 這邊跟之前介紹 <a href="http://www.takobear.tw/2014/01/12/ble-shield-2/">BLE Shield</a> 所用的一樣</p>
+<p>但是因為 RedBearLab 已經有 update</p>
+<p>新的 library (舊的依然可以用) 因為舊的 library 不能跟新的同時放在 Arduino 的資料夾底下</p>
+<p>如果要用新版的 library 將 Nordic_BLE 及 RBL_BLEShield 放到 library 的資料夾底下</p>
+<p>然後開啟 Arduino 打開 RBL_BLEShield 底下的 BLEFirmataSketch ，如下圖</p>
+<p>將 BLEFirmataSketch 燒錄到 Arduino 裡面後就完成了 (有興趣的人也可以自己將程式簡單化)</p>
+<p>接下來就只剩下燈的部分了 Bear 在這邊用的是本身在燈上就有開關的燈(如下圖)</p>
+<p>然後我們將它拆開，原本的線會接在下邊的銅片上，我們將線拉出來</p>
+<p>接著用剝線器多拉出一些銅線出來</p>
+<p>接著把線的一端接到繼電器的 COM</p>
+<p>然後另一端接在另外一側，完成後如下圖:</p>
+<p>最後我們來看將全部合起來的結果</p>
+<p><iframe src="//www.youtube.com/embed/-t8YG3JJxyY?wmode=opaque" width="300" height="150" frameborder="0" allowfullscreen="allowfullscreen">
+<p></p>
+<p>是不是方便又簡單呢更多其他資訊請點以下內容</p>
+<p>1. <a href="http://www.belkin.com/us/">Belkin website</a></p>
+<p>2. <a href="http://www.jameco.com/Jameco/Products/ProdDS/174450.pdf">LU-5 Data sheet</a></p>
+<p>3. <a href="http://playground.arduino.cc/uploads/Main/relays.pdf">How to drive relay with Arduino</a></p>
+<p>[cjtoolbox name='google_ad']</p>
+<p>參考連結：</p>
+<p><a href="http://ant2sky.blogspot.tw/2014/05/relay.html">使用繼電器 (Relay) 當成控制大電流的開關</a></p>
+<p><a href="http://thats-worth.blogspot.tw/2014/04/arduino-intro-to-relay.html">[Arduino] 繼電器介紹 – Intro to Relay</a></p>
+<p>更多有趣消息, 趕快加入Takobear粉絲團吧!</p>
+<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+<p></p>
+</div></p></iframe></p></ul></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/13\/bear-arduinoble-shield\/";
+        this.page.identifier = "485 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-arduinoble-shield";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

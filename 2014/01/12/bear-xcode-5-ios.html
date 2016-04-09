@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[入門] Bear實驗室: 如何用 Xcode 5 寫第一支iOS程式? </title>
+  <meta name="description" content="鑑於前陣子 Bear 好友反應熱烈決定從今天開始一系列完整的 iOS 有關教學(其它相關實驗室文章也會持續推進!)本篇教學給入門者學習如何第一次用 Xcode 5 寫iOS完全不需要基礎!好奇學習的可以進來參考看看!注意: 本篇教學假設你已經有一台 Mac 開發環境，如為 Windows 用戶須先建立環境首先請打...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/bear-xcode-5-ios.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[入門] Bear實驗室: 如何用 Xcode 5 寫第一支iOS程式? </h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:38:37+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>鑑於前陣子 Bear 好友反應熱烈</p>
+<p>決定從今天開始一系列完整的 iOS 有關教學</p>
+<p>(其它相關實驗室文章也會持續推進!)</p>
+<p>本篇教學給入門者學習如何第一次用 Xcode 5 寫iOS完全不需要基礎!</p>
+<p>好奇學習的可以進來參考看看!</p>
+<p><!--more--></p>
+<p><strong>注意</strong>: 本篇教學假設你已經有一台 Mac 開發環境，如為 Windows 用戶須先建立環境首先請打開你的 Mac App Store</p>
+<p>搜尋 Xcode 就能發現上圖</p>
+<p>點選 Xcode 以後，就會進到本篇的第一張圖</p>
+<p>點選安裝後就可以靜靜地一直按 "下一步" 了....</p>
+<p>完成安裝以後並沒有這麼簡單</p>
+<p>考慮到未來的使用，你需要下載以下工具：</p>
+<p>Xcode command line tool :  (目前是5.0.1 GM版本)</p>
+<p>1. <a href="https://developer.apple.com/downloads/index.action#">[官方載點] (需要Apple 開發者帳號)</a></p>
+<p>2. <a href="https://mega.co.nz/#!uNNCjDaJ!AkRRl2OEjPP33QmlD_B8Ux3yr8EWdOX-sJJ6L0A3OTI">Mega載點</a></p>
+<p>或是按下鍵盤上的 <code>command + ,</code> 叫出 Preferences  視窗</p>
+<p>切換到 Downloads 頁面，如下圖所示</p>
+<p>按下 Command Line Tools 右邊的箭頭就會開始下載安裝</p>
+<p>Command Line tool 這東西有什麼用，Bear 先在這邊不提</p>
+<p>之後我們再介紹! 總之先裝了就對了! Xcode 裝好以後，會看到下圖</p>
+<p>接下來點下去 XCode 就對囉!!</p>
+<p>會跳出以下畫面</p>
+<p>點下去位置以後會出來以下畫面</p>
+<p>一開始要先選擇左上排的 Application</p>
+<p>然後選擇上圖中，右上角的 Single View ApplicationXcode 5 在應用程式部分有支援8種樣板</p>
+<p>但是 Bear 屬於老派人士依然支持用 Single View Controller 來制作</p>
+<p>至於其它樣板的差異就必須留之後再討論了</p>
+<p>依次介紹每個項目:Product Name: 專案名稱, 這邊 Bear 以著名的 HelloWorld 命名了</p>
+<p>Organization Name: 公司組織名稱，這邊隨意取就好</p>
+<p>Company Identifier:  這是識別字，要看底下的 Bundle Identifier</p>
+<p>Bundle Identifier: 這個是用來區分你的 App 跟其他 App 的不同, 一隻手機內只能有一個 Bundle Identifier</p>
+<p>(想像一下, 你的 iphone 內可以有 10 個名叫做 “LINE” 的App，他們可以內容完全一模一樣, 只要 Bundle Identifier 不同就好)</p>
+<p>Class Prefix: 這先不用理他</p>
+<p>Device: 你要發佈的平台，可以是 iPad，iPhone 或是兩者都支援</p>
+<p><strong>注意</strong>:</p>
+<p>Xcode 4.6 也就是一般的 iOS 6 版本以前底下還會有一個支援記憶體操作的選項</p>
+<p>可以選擇 Automatic Reference Counting (自動管理記憶體 ARC) 或是</p>
+<p>Manual Reference Counting (手動管理記憶體 MRC)</p>
+<p>Xcode 5 以後預設都是用 ARC，要切換的話要到程式內部才能設定</p>
+<p>創建完檔案以後，就依照下圖動作吧!</p>
+<p>如果想要 fashion 一點</p>
+<p>只要同時按下 <code>command + r</code> 按鈕就可以執行程式囉!</p>
+<p>跑出來結果就像這樣</p>
+<p>到這邊我們第一支 iOS 程式就完成了</p>
+<p>是不是很簡單呢?</p>
+<p>接下來也會有更多有趣的應用請大家別錯過!</p>
+<p>[cjtoolbox name='google_ad']</p>
+<p>歡迎加入Takobear粉絲團獲得更多最新資訊!</p>
+<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+<p></p>
+</div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/bear-xcode-5-ios\/";
+        this.page.identifier = "641 http:\/\/www.takobear.tw\/201702608526356260322804024687\/-bear-xcode-5-ios";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

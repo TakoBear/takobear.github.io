@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室：Mac開發 - OS X APP Part2 : HelloTimer</title>
+  <meta name="description" content="本次教學目標：建立一個簡單的計時器使用 NSTimer 定期更新畫面文字操作環境：OS X Version 10.9.1Xcode Version 5.0.2 (5A3005)在本教學中，我們將藉由撰寫一個計時器，學到如何使用 NSTimer 定期呼叫方法執行。建立 OS X Application 專案這次我們...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/03/08/bearmac-os-x-app-part2-hellotimer.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室：Mac開發 - OS X APP Part2 : HelloTimer</h1>
+    <p class="post-meta"><time datetime="2014-03-08T22:24:51+08:00" itemprop="datePublished">Mar 8, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9199235_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>本次教學目標：
+<p>建立一個簡單的計時器</p>
+<p>使用 NSTimer 定期更新畫面文字</p>
+<p>操作環境：</p>
+<p>OS X Version 10.9.1</p>
+<p>Xcode Version 5.0.2 (5A3005)</p>
+<p>在本教學中，我們將藉由撰寫一個計時器，學到如何使用 NSTimer 定期呼叫方法執行。</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><h2><strong>建立 OS X Application 專案</strong></h2></p>
+<p><div>這次我們建立一個名為 HelloTimer 的專案
+<p>請參考教學 OS X APP Part1 Hello World 建立新專案</p>
+<p><a href="http://www.takobear.weebly.com/12/post/2014/02/bearmac-os-x-app-part1-hello-world.html" target="_blank">點選前往OS X App Part1 - Hello World</a></p>
+<p><div>
+<p><div id="265641786382282849" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2564792_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4772806_orig.png" alt="图片" /></a>
+<p><div>對 HelloTimer Group 點擊右鍵，點擊 New Group 建立新 Group，用來整理專案檔案。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3959604_orig.png" alt="图片" /></a>
+<p><div>建立 Resources 與 Controllers 兩個 Group。</div></p>
+<p></p>
+<p></p>
+<p><div>這次我們要建立一個 WindowController，用來管理 Window 上的事件。
+<p>讓 AppDelegate 裡的邏輯只負責程式啟動與停止的。</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9064009_orig.png" alt="图片" /></a>
+<p><div>對 HelloTimer Group 點擊右鍵，點擊 New File… 建立新的檔案。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5553728_orig.png" alt="图片" /></a>
+<p><div>於左側選單選擇 OS X 下的 Cocoa，在右側選單選擇 Objective-C class，點擊 Next。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9909301_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>Class 欄位輸入：MainWindowController
+<p>Subclass of 欄位輸入：NSWindowController</p>
+<p>勾選 With XIB for user interface</p>
+<p>輸入完成後點擊 Next。</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8037064_orig.png" alt="图片" /></a>
+<p><div>點擊 Create。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8831267_orig.png" alt="图片" /></a>
+<p><div>點擊 Skip。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3917674_orig.png" alt="图片" /></a>
+<p><div>以上的動作所產生的三個檔案。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1911181_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>拖拉檔案，將 MainWindowController.h/.m 移至 Controllers 底下。
+<p>將 MainMenu.xib，MainWindowController.xib 移至 Resources 底下。</p>
+<p>建立 Group 是管理專案的程式檔非常好的用的方式。</p>
+<p></p>
+<p><h2><strong>設計版面(layout)</strong></h2></p>
+<p><div>這一次的 Window 將在 MainWindowController.xib 設計，所以我們要將 MainMenu.xib 中的 Window 元件刪除。
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2565791_orig.png" alt="图片" /></a>
+<p><div>點選 MainMenu.xib，在設計畫面點選 Window - HelloTimer，按下鍵盤上的 delete。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8145527_orig.png" alt="图片" /></a>
+<p><div>在 MainMenu.xib 中移除了 Window 元件。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/963286_orig.png" alt="图片" /></a>
+<p><div>點選 MainWindowController.xib，在設計畫面中選擇 Window - Window。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8945511_orig.png" alt="图片" /></a>
+<p><div>本教學不使用自動佈局來配置版面原件。請於右側選單切換至最左側頁面，取消勾選 Use AutoLayout。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3763686_orig.png" alt="图片" /></a>
+<p><div>從右下角選擇 Label 元件拖曳至 Window 中，並調整至適當大小。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7464261_orig.png" alt="图片" /></a>
+<p><div>於右邊切換至屬性頁面。</div></p>
+<p></p>
+<p></p>
+<p><div>Title 欄位輸入：00:00。
+<p>Alignment 選擇置中。</p>
+<p>Font 將字體調整到適當大小。</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8787564_orig.png" alt="图片" /></a>
+<p><div>從右下角選擇 Bevel Button 元件拖曳至 Window 中。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7090999_orig.png" alt="图片" /></a>
+<p><div>於右邊切換至屬性頁面，將 Type 欄位改成 On Off。</div></p>
+<p></p>
+<p></p>
+<p><h2><strong>編寫邏輯</strong></h2></p>
+<p><div>接下來將開始編寫程式碼了。bearAppDelegate.h
+<p></p>
+<p><div>
+<p><div id="541222099717130464" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>bearAppDelegate.m</div></p>
+<p><div>
+<p><div id="366965047565322980" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>接下來測試一下程式是否會顯示新設計的視窗畫面。
+<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
+<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9956768_orig.png" alt="图片" /></a>
+<p><div>顯示新設計的視窗畫面。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p>再來要撰寫 MainWindowController 相關的程式碼，先說明一下本次教學的計時器的主要流程如下圖：</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1267467_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>當點擊 Bevel Button 時會呼叫 handleClick: 方法，透過取得 Bevel Button 的 state 特性，來呼叫相對應的方法。
+<p>state 為 Off 就呼叫 stop: 方法停止計時；state 為 On 就呼叫 start 方法。</p>
+<p>start 方法會進行計時器歸零，並定期呼叫 update 方法更新顯示在視窗的時間。</p>
+<p>要定期呼叫方法執行，我們可以使用 <a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSTimer_Class/Reference/NSTimer.html" target="_blank">NSTimer</a> 類別。</p>
+<p>本教學中，主要使用 NSTimer 類別的三個方法：</p>
+<p>scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:</p>
+<p>isValid</p>
+<p>invalidate</p>
+<p>1.首先要呼叫 scheduledTimerWithTimeInterval:target:selector:userInfo:repeats: 建立 NSTimer 物件：</p>
+<p><div>
+<p><div id="746909562783077657" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>2.要停止 NSTimer 物件繼續執行時，需要先用 isValid 檢查該 NSTimer 物件是否可以停止。
+<p>3.呼叫 invalidate 停止 NSTimer。</p>
+<p>以下便是 MainWindowController 類別的相關程式碼：</p>
+<p>MainWindowController.h</p>
+<p><div>
+<p><div id="759978846346209185" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>MainWindowController.m</div></p>
+<p><div>
+<p><div id="994671086828056387" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><h2><strong>連接元件</strong></h2></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7507645_orig.png" alt="图片" /></a>
+<p><div>點選 MainWindowController.xib，在設計視窗中對 File’s Owner 點擊右鍵。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3330248_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>點擊 timerTextFiled 的圈不放，拖曳至 Label 放開。
+<p>點擊 handleClick: 的圈不放，拖曳至 Bevel Button 放開。</p>
+<p></p>
+<p><h2><strong>測試結果</strong></h2></p>
+<p><div>接下來測試一下完成的程式。
+<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
+<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9646215_orig.png" alt="图片" /></a>
+<p><div>初始畫面。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4685787_orig.png" alt="图片" /></a>
+<p><div>按下按鈕，開始計時。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9343691_orig.png" alt="图片" /></a>
+<p><div>按下按鈕，停止計時。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4681264_orig.png" alt="图片" /></a>
+<p><div>再次按下按鈕，歸零重新計時。</div></p>
+<p></p>
+<p></p>
+<p><h2><strong>後續討論</strong></h2></p>
+<p><div>在 MainWindowController.m 中，我們可以發現我們在 update 方法中處理顯示時間的格式。
+<p>要如何呈現資料其實並不是 WindowController 的職責，而是 NSTextField 該負責的。</p>
+<p><div>
+<p><div id="633412093104415582" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>在下一次的教學，我們將會將時間格式化的部分移到對應的類別中作處理。關於這次的Sample Code 下載：
+<p><a title="" href="https://github.com/TakoBear/OSXHelloTimer1" target="_blank">https://github.com/TakoBear/OSXHelloTimer1</a></p>
+<p></p>
+<p><h2><strong>參考</strong></h2></p>
+<p><div><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSTimer_Class/Reference/NSTimer.html" target="_blank">NSTimer Class Reference</a>
+<p><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/foundation/Classes/NSDate_Class/Reference/Reference.html" target="_blank">NSDate Class Reference</a></p>
+<p><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/NSApplicationDelegate_Protocol/Reference/Reference.html" target="_blank">NSApplicationDelegate Protocol Reference</a></p>
+<p><div>更多Mac App 教學請前往:<a title="" href="http://www.takobear.weebly.com/12/post/2014/03/bear-mac1.html" target="_blank">Bear Mac開發教學大全</a>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!
+<p></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/03\/08\/bearmac-os-x-app-part2-hellotimer\/";
+        this.page.identifier = "412 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bearmac-os-x-app-part2-hellotimer";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

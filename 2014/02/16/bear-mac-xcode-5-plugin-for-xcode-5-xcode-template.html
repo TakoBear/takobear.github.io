@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear 實驗室: Mac開發 - 如何開發Xcode 5 外掛 (Plugin for Xcode 5 ) &amp; 增加Xcode 範本(Template)</title>
+  <meta name="description" content="這陣子Bear跟Tako在工作上意外的發現一些加速開發iOS的方式也接觸了些有關Mac的開發方式, 於是今天開始, Bear也會介紹一些有關在Mac上開發應用的教學喔!第一篇教學的話, 讓我們先介紹如何在Xcode 5中開發外掛吧!在介紹如何開發以前, 這邊Bear先列舉幾個有名的Xcode 5外掛名單:(以下名...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/16/bear-mac-xcode-5-plugin-for-xcode-5-xcode-template.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear 實驗室: Mac開發 - 如何開發Xcode 5 外掛 (Plugin for Xcode 5 ) & 增加Xcode 範本(Template)</h1>
+    <p class="post-meta"><time datetime="2014-02-16T18:55:49+08:00" itemprop="datePublished">Feb 16, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1808648_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>這陣子Bear跟Tako在工作上意外的發現一些加速開發iOS的方式
+<p>也接觸了些有關Mac的開發方式, 於是今天開始, Bear也會介紹一些有關在Mac上開發應用的教學喔!</p>
+<p>第一篇教學的話, 讓我們先介紹如何在Xcode 5中開發外掛吧!</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>在介紹如何開發以前, 這邊Bear先列舉幾個有名的Xcode 5外掛名單:(以下名單點選均會導到Github連結)
+<p>1. <a href="https://github.com/steipete/NSLogger-CocoaLumberjack-connector.git" target="_blank">XVim : 讓你開發Xcode的時候可以像操作Vim一樣操作</a></p>
+<p>2. <a href="https://github.com/Kapeli/Dash-Plugin-for-Xcode" target="_blank">Dash-Plugin :  安裝Dash這款Mac App後, 在Xcode的說明文件會導入到Dash</a></p>
+<p>3. <a href="https://github.com/omz/ColorSense-for-Xcode" target="_blank">ColorSense: 讓你在Xcode開發的時候顏色可以自動跳出, 不用每次編譯後才知道自己的RGB值看起來是什麼顏色</a></p>
+<p>4. <a href="https://github.com/questbeat/Lin" target="_blank">Lin: 讓你打NSLocalizedString時可以自動補完...非常的簡單明瞭</a></p>
+<p>5. <a href="https://github.com/chendo/FuzzyAutocompletePlugin" target="_blank">Fuzzy Autocomplete for Xcode: 一款比Xcode內建的自動完成(Auto-completion)更佳的外掛</a></p>
+<p>6. <a href="https://github.com/onevcat/VVDocumenter-Xcode" target="_blank">VVDocumenter: 讓你再寫javadoc的時候更方便的工具</a></p>
+<p>7. <a href="https://github.com/mneorr/Alcatraz" target="_blank">Alcatraz : 一款可以幫你安裝其他Xcode外掛的外掛...安裝後老實說沒什麼感覺, 因為太像原生Xcode的工具了!</a></p>
+<p>輔助的工具實在是太多了, 目前網路上很多文章仍然是關於如何在Xcode 4的階段開發外掛,</p>
+<p>但要開發Xcode 5的外掛的話, 則是有一些設定要弄的,</p>
+<p>不過, 網路上總是有好心人士已經整理好了Open Source,</p>
+<p>以下大家就跟Bear一起進行動做準備開發吧!!</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/369378_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>首先先點選Github連結: <a href="https://github.com/kattrali/Xcode5-Plugin-Template.git" target="_blank">https://github.com/kattrali/Xcode5-Plugin-Template.git</a></div></p>
+<p><div>
+<p><div id="962144589675695253" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>首先我們需要先把這份檔案下載下來,
+<p>原始Github的操作步驟敘述比較簡單, 依照以下步驟進行後就能新增進去Xcode範本了</p>
+<p>下載完成後會得到一份Xcode5-Plugin-Template-master的資料夾</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2000150_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>這邊把這資料夾名稱更改為: Xcode5-Plugin.xctemplate
+<p>可以用的command為:</p>
+<p><div>
+<p><div id="769002931913791065" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>改名完成以後, 接下來我們要到Xcode的資料夾內部,
+<p>請大家在終端機執行以下Command</p>
+<p><div>
+<p><div id="495474356924519782" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>執行完以後會看到以下畫面</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8422089_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>把剛剛改名好的資料夾放到這裡, 並請大家確認一下檔案有沒有缺少
+<p>(參考下圖)</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1797420_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>移動資料夾進來的時候會需要輸入密碼, 大家別忘記自己的登入密碼囉</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7924195_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>加入完成以後, 這時候重新開啟Xcode, 選擇專案為OS X類型,
+<p>點選 Application Plug-in以後...</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3908310_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>開啟一個新專案後,
+<p>這個預設就是可以在Xcode 5內進行開發外掛的範本Template囉!!</p>
+<p>後續的操作使用說明, 請大家在注意一下原始出處的提醒:在Info.plist中把XCPluginHasUI的數值改為YES, 就會把外掛給停止</p>
+<p>Xcode 5 預設是開啟ARC (Automatic Reference Counting) (<a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-xcodemrc.html" target="_blank">需要轉換為MRC的請點這邊</a>)</p>
+<p>如果要debug 外掛的程式的時候, 記得在終端機下以下命令</p>
+<p></p>
+<p><div>
+<p><div id="617879293761240567" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>這樣萬一Xcode執行到一半crash掉, 或是需要看Log內容時, 都能在終端機時看到了！
+<p>到這邊就是初步建好環境可以開發Xcode外掛囉!</p>
+<p>更多有關Mac / iOS的互動開發接下來也會陸續加入內容, 歡迎有興趣的大家共同分享!喜歡這篇文章嗎? 加入Takobear粉絲團獲得更多最新資訊!</p>
+<p></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/16\/bear-mac-xcode-5-plugin-for-xcode-5-xcode-template\/";
+        this.page.identifier = "437 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-mac-xcode-5-plugin-for-xcode-5-xcode-template";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

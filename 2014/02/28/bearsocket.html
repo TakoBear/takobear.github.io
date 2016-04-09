@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室：網路通訊之什麼是Socket?</title>
+  <meta name="description" content="Bear 在之前介紹過如何利用 Socket 傳送 image (詳情請參閱：Bear實驗室-如何用WebCam打造監控攝影機?)但是並沒有對 Socket 做進一步的解釋所以在這邊，我們要來簡單介紹一下 Socket 是如何運作的!!左邊是 TCP 的示意圖，右邊則是 UDP 的示意圖Socket 是在 UNI...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/28/bearsocket.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室：網路通訊之什麼是Socket?</h1>
+    <p class="post-meta"><time datetime="2014-02-28T10:10:55+08:00" itemprop="datePublished">Feb 28, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Bear 在之前介紹過如何利用 Socket 傳送 image (詳情請參閱：<a href="http://www.takobear.tw/2014/01/12/bear-diy-webcam/">Bear實驗室-如何用WebCam打造監控攝影機?</a>)</p>
+<p>但是並沒有對 Socket 做進一步的解釋</p>
+<p>所以在這邊，我們要來簡單介紹一下 Socket 是如何運作的!!</p>
+<p><!--more--></p>
+<p>左邊是 TCP 的示意圖，右邊則是 UDP 的示意圖</p>
+<p>Socket 是在 UNIX 系統下利用網路通訊的一種接口，一般的程式操作上，大家可以把它當作是對於檔案 File I/O 的一個操作</p>
+<p>基本上也就在於兩個重點: 讀出(Read)與寫入(Write)</p>
+<p>也就是如何讀出客戶端(Client)給你的資料，以及如何把資料寫入給你的客戶端兩個重點!</p>
+<p>那在進行這些操作以前，基本的步驟就如同上面那張圖</p>
+<p>對於一個伺服器端(Server)，你需要進行綁定(bind)連接本地端的網路，取得 ip 還有設定自己的 server 要支援哪些 port 之後只需要進行監聽(listen)去聽取外部來的 request 後進行對應的操作</p>
+<p>accept 等待客戶端傳來的資料，確認有收到 request 再去讀出以及進行寫入的操作</p>
+<p>完成一個動作後把這個連線進行關閉， 基本上這就是一個伺服器的基礎行為!!!</p>
+<p>(當然還有很多變形操作啦!) 了解這概念後，我們就要開始進入程式碼的認知啦! 以下介紹重要的 function</p>
+<p><h4>1. int socket(int domain, int type, int protocol)</h4></p>
+<p>domain 指明所使用的協定 通常設定為 PF_INET type 指定 socket 類型 SOCK_STREAM or SOCK_DGRAM protocol 通常設定為 0</p>
+<p><h4>2. int bind(int sockfd, struct sockaddr *addr, int addrlen)</h4></p>
+<p>sockfd 是 socket 函數的回傳值</p>
+<p>addr 是一個指向包含有本機IP位址及埠號等資訊的 sockaddr 類型的指針</p>
+<p>addrlen 常被設置為 sizeof(struct sockaddr)</p>
+<p><em><strong>bind 函數 通常只有由 server 使用</strong></em></p>
+<p>struct sockaddr or struct sockaddr_in (兩者的pointer是可以互相交換的)是用來保存socket資訊的資料結構</p>
+<p><pre><code>struct sockaddr {     
+<p>    unsigned short sa_family;</p>
+<p>    char sa_data[14];</p>
+<p>};</p>
+<p></p>
+<p>下面的結構通常比較常用</p>
+<p><pre><code>struct sockaddr_in {
+<p>    short int sin_family;</p>
+<p>    unsigned short int sin_port;</p>
+<p>    struct in_addr sin_addr;</p>
+<p>    unsigned char sin_zero[8];</p>
+<p>}; </p>
+<p></p>
+<p>當 bind 函數被呼叫的時候如果設定 sin_addr.s_addr = INADDR_ANY</p>
+<p>bind 函數會自動去搜尋主機的 ip 位置，然後我們還需要去設定一個未被佔用的 port 如果我們設定 port 為 0 的話，電腦會自動搜尋一個未被佔用的 port</p>
+<p>在設定的時候我們需要將 port，sin_addr 利用 htonl, htons 轉成網絡字節優先順序</p>
+<p>此外在設定 port 的時候我們要注意把 port 的值設定大於 1024，1~1024 是預設被保留的</p>
+<p><h4>3. int connect(int sockfd, struct sockaddr *serv_addr,int addrlen)</h4></p>
+<p>sockfd, addr, addrlen 的設定都跟 bind 一樣</p>
+<p>但是 connect 函數通常只有在 client 端呼叫</p>
+<p><h4>4. int listen(int socketfd, int backlog)</h4></p>
+<p>socketfd 跟上面的一樣，backlog 則是在 queue 上等待的數量(等待 accept)</p>
+<p>大多數的電腦 backlog 的預設值是 20</p>
+<p><h4>5. int accept(int sockfd, void *addr, int *addrlen)</h4></p>
+<p>sockfd 還是跟上面的一樣</p>
+<p>addr 直接在宣告的 addr 後直接拿來用</p>
+<p>example: <code>struct sockaddr_in client</code></p>
+<p>在使用時直接用 &amp;client</p>
+<p>addrlen 則通常設定為 sizeof(struct sockaddr_in)</p>
+<p>accept 主要是拿來接受通訊協定的開始，這是一種阻塞模式(block mode)，也就是說在沒有收到 request 以前，執行到 accept 這隻程式時將會使整個程式暫時停住在那邊，直到收到 client 的 socket 後才會繼續往下一行執行!</p>
+<p>接下來就是資料傳輸的部分</p>
+<p><h4>6. 如果使用的是 TCP 的協定的話用 send &amp; recv 來做傳輸</h4></p>
+<p><code>int send(int sockfd, const void *msg, int len, int flags)</code></p>
+<p><code>int recv (int sockfd, void *buf, int len, unsigned int flags)</code></p>
+<p>msg 是 client 要送的 data</p>
+<p>len 是 data 的長度</p>
+<p>flags 預設為 0</p>
+<p>buf 是放接收到的data的緩衝區</p>
+<p>len 是該緩衝區的長度，如果是用 UDP 的話就要改用 sendto &amp; recvfrom 來做傳輸</p>
+<p><code>int sendto(int sockfd, const void *msg,int len,unsigned int flags,const struct sockaddr *to, int tolen)</code></p>
+<p><code>int recvfrom(int sockfd,void *buf,int len,unsigned int flags,struct sockaddr *from,int *fromlen)</code></p>
+<p><h4>7.</h4></p>
+<p><code>ssize_t write(int fd, const void *buf, size_t count)</code></p>
+<p><code>ssize_t read(int fd, const void *buf, size_t count)</code></p>
+<p>基本上也是進行讀寫的操作，使用到 write 或 read 的話，一般而言屬於 linux 端裡面接近底層的 function 當你的server 或專案使用的不是 standard library 時，使用 read/write 一般而言不會有太大的問題</p>
+<p>這邊提一個 Bear 的經驗，以前曾經看過使用 printf 在不同標準凾式庫中產生 memory buffer 爆掉的問題..</p>
+<p>這種狀況改成用 write 寫到正確的 fd 就可以通過了!</p>
+<p>說了這麼多函數，我們來實際看看怎麼使用吧</p>
+<p>下面提供一個從 client 端輸入 string 然後傳送到 server 端</p>
+<p>server 端收到以後會回傳給 client 所收到的東西，同時也會print出收到的 data</p>
+<p><h4>Server端程式碼</h4></p>
+<p><pre><code>#include&lt;stdio.h&gt;
+<p>#include&lt;string.h&gt;    </p>
+<p>#include&lt;sys/socket.h&gt;</p>
+<p>#include&lt;arpa/inet.h&gt; </p>
+<p>#include&lt;unistd.h&gt;    </p>
+<p>int main(){</p>
+<p>    int socket_desc , client_sock , c , read_size;</p>
+<p>    struct sockaddr_in server , client;</p>
+<p>    char client_message[2000];</p>
+<p>    //建立Socket</p>
+<p>    socket_desc = socket(PF_INET , SOCK_STREAM , 0);</p>
+<p>    if (socket_desc == -1)</p>
+<p>    {</p>
+<p>        printf("Could not create socket");</p>
+<p>    }</p>
+<p>    puts("Socket created");</p>
+<p>    //指派struct sockaddr_in data</p>
+<p>    server.sin_family = PF_INET;</p>
+<p>    server.sin_addr.s_addr = INADDR_ANY;</p>
+<p>    server.sin_port = htons( 5567 );   </p>
+<p>    //Bind</p>
+<p>    if( bind(socket_desc,(struct sockaddr *)&amp;server , sizeof(server)) &lt; 0)</p>
+<p>    {</p>
+<p>        //print the error message</p>
+<p>        perror("bind failed. Error");</p>
+<p>        return 1;</p>
+<p>    }</p>
+<p>    puts("bind done");</p>
+<p>    //Listen</p>
+<p>    listen(socket_desc , 3);</p>
+<p>    //Accept and incoming connection</p>
+<p>    puts("Waiting for incoming connections...");</p>
+<p>    c = sizeof(struct sockaddr_in);</p>
+<p>    //accept connection from an incoming client</p>
+<p>    client_sock = accept(socket_desc, (struct sockaddr *)&amp;client, (socklen_t*)&amp;c);</p>
+<p>    if (client_sock &lt; 0)</p>
+<p>    {</p>
+<p>        perror("accept failed");</p>
+<p>        return 1;</p>
+<p>    }</p>
+<p>    puts("Connection accepted");</p>
+<p>    //Receive a message from client</p>
+<p>    while( (read_size = recv(client_sock , client_message , 2000 , 0)) &gt; 0 )</p>
+<p>    {</p>
+<p>        //Send the message back to client</p>
+<p>        printf("%s\n",client_message);</p>
+<p>        write(client_sock , client_message , strlen(client_message));</p>
+<p>        memset(client_message, 0x0, sizeof(client_message));  </p>
+<p>    }</p>
+<p>    if(read_size == 0){</p>
+<p>        puts("Client disconnected");</p>
+<p>        fflush(stdout);</p>
+<p>    }</p>
+<p>    else if(read_size == -1){</p>
+<p>        perror("recv failed");</p>
+<p>    }</p>
+<p>    return 0;</p>
+<p>}</p>
+<p></p>
+<p><h4>Client端程式碼</h4></p>
+<p><pre><code>#include&lt;stdio.h&gt;
+<p>#include&lt;string.h&gt;    </p>
+<p>#include&lt;sys/socket.h&gt;    </p>
+<p>#include&lt;arpa/inet.h&gt; </p>
+<p>#include&lt;unistd.h&gt;</p>
+<p>int main(){</p>
+<p>    int sock;</p>
+<p>    struct sockaddr_in server;</p>
+<p>    char message[1000] , server_reply[2000];</p>
+<p>    //Create socket</p>
+<p>    sock = socket(PF_INET , SOCK_STREAM , 0);</p>
+<p>    if (sock == -1)</p>
+<p>    {</p>
+<p>        printf("Could not create socket");</p>
+<p>    }</p>
+<p>    puts("Socket created");</p>
+<p>    server.sin_addr.s_addr = inet_addr("127.0.0.1");</p>
+<p>    server.sin_family = PF_INET;</p>
+<p>    server.sin_port = htons( 5567 ); </p>
+<p>    //Connect to remote server</p>
+<p>    if (connect(sock , (struct sockaddr *)&amp;server , sizeof(server)) &lt; 0)</p>
+<p>    {</p>
+<p>        perror("connect failed. Error");</p>
+<p>        return 1;</p>
+<p>    }</p>
+<p>    puts("Connected\n");   </p>
+<p>    //keep communicating with server</p>
+<p>    while(1)</p>
+<p>    {</p>
+<p>        printf("Enter message : ");</p>
+<p>        scanf("%s" , message); </p>
+<p>        //Send some data</p>
+<p>        if( send(sock , message , strlen(message) , 0) &lt; 0)</p>
+<p>        {</p>
+<p>            puts("Send failed");</p>
+<p>            return 1;</p>
+<p>        }</p>
+<p>        //Receive a reply from the server</p>
+<p>        if( recv(sock , server_reply , 2000 , 0) &lt; 0)</p>
+<p>        {</p>
+<p>            puts("recv failed");</p>
+<p>            break;</p>
+<p>        }</p>
+<p>        puts("Server reply :");</p>
+<p>        puts(server_reply);      </p>
+<p>    }</p>
+<p>    close(sock);</p>
+<p>    return 0;</p>
+<p>}</p>
+<p></p>
+<p>其他資料推薦:</p>
+<p><ol>
+<p><li><a href="http://www.tenouk.com/cnlinuxsockettutorials.html">http://www.tenouk.com/cnlinuxsockettutorials.html</a> </li></p>
+<p><li><a href="http://kezeodsnx.pixnet.net/blog/post/27462696-socket-programming-%E7%AD%86%E8%A8%98">Socket programming 筆記</a></li></p>
+<p><li><a href="http://pws.niu.edu.tw/~ttlee/os.101.1/day/socket/">http://pws.niu.edu.tw/~ttlee/os.101.1/day/socket/</a>    </li></p>
+<p></p>
+<p>如果對於寫視訊串流的方式有疑問的，請參考以下連結：<a href="http://www.takobear.tw/2014/01/12/bear-diy-webcam/">點選前往WebCam與iPhone視訊串流教學</a></p>
+<p>[cjtoolbox name='google_ad']</p>
+<p>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
+<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+<p></p>
+</div></p></ol></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/28\/bearsocket\/";
+        this.page.identifier = "426 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bearsocket";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

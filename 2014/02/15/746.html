@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>動手做自己的智能家電-紅外線遙控器腳位修改</title>
+  <meta name="description" content="大家晚安!感謝大家的熱情支持，動手做自己的智能家電系列不斷收到好評這次小編又要在介紹新內容了!上篇我們說到如何利用IRremote模組複製出家裡的紅外線遙控器就有人來詢問小編 "請問我想換成其他腳位來連接, 我該怎麼做呢?"今天小編就來解答大家的疑問囉!因為發射紅外線訊號使用了Timer，所以紅外線發射的腳位是不...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/746.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">動手做自己的智能家電-紅外線遙控器腳位修改</h1>
+    <p class="post-meta"><time datetime="2014-02-15T12:13:26+08:00" itemprop="datePublished">Feb 15, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>大家晚安!
+<p>感謝大家的熱情支持，動手做自己的智能家電系列不斷收到好評</p>
+<p>這次小編又要在介紹新內容了!</p>
+<p><a title="" href="http://gossibear.weebly.com/12/post/2013/06/-arduino-irremote-homemade.html" target="_blank">上篇</a>我們說到如何利用IRremote模組複製出家裡的紅外線遙控器</p>
+<p>就有人來詢問小編 "請問我想換成其他腳位來連接, 我該怎麼做呢?"</p>
+<p>今天小編就來解答大家的疑問囉!<strong>因為發射紅外線訊號使用了Timer，</strong></p>
+<p><strong>所以紅外線發射的腳位是不能隨意指定的，</strong></p>
+<p><strong>要更改發射腳位必須更改紅外線Library內的標頭檔(IRremoteInt)，</strong></p>
+<p>如下圖。</p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5693535_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>Atmega2560預設是使用pin 9，
+<p>其他可用的腳位包含11、5、6以及46，</p>
+<p>小編在這裡把它改為pin 46，</p>
+<p>以下是利用Visual Studio修改。</p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5506385_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>也可以利用記事本修改或是NotePad++下圖為利用記事本改法，
+<p>利用記事本開啟IRremoteInt.h。<strong>小提醒: 改完要記得存檔喔。</strong></p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/311206_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>到這邊修改完就行囉!有更多疑問歡迎再聯繫TakoBear!
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/15\/746\/";
+        this.page.identifier = "746 http:\/\/www.takobear.tw\/201702608526356260322804024687\/arduino-pin-change-irremote";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

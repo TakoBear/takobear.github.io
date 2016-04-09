@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室: 輕鬆用Raspberry Pi建立Samba 伺服器</title>
+  <meta name="description" content="大家好相信大家跟Bear一樣玩Pi也有一段時間了，總有需要在Windows跟Pi之間傳輸檔案的時候其實Bear早就解決這些問題，只是一直懶惰不發文QAQ要傳輸檔案的話有很多方式今天Bear就來介紹如何用Samba來傳輸檔案囉!傳輸檔案有很多方式簡單的解決方案有FTP、SFTP(SSH)、Samba（其實一點也不簡...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2013/10/27/bear-raspberry-pisamba.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室: 輕鬆用Raspberry Pi建立Samba 伺服器</h1>
+    <p class="post-meta"><time datetime="2013-10-27T11:56:57+08:00" itemprop="datePublished">Oct 27, 2013</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8941926_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>大家好
+<p>相信大家跟Bear一樣玩Pi也有一段時間了，</p>
+<p>總有需要在Windows跟Pi之間傳輸檔案的時候</p>
+<p>其實Bear早就解決這些問題，只是一直懶惰不發文QAQ</p>
+<p>要傳輸檔案的話有很多方式</p>
+<p>今天Bear就來介紹如何用Samba來傳輸檔案囉!</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>傳輸檔案有很多方式
+<p>簡單的解決方案有FTP、SFTP(SSH)、Samba（其實一點也不簡單..）等方法進行兩邊傳檔話說Samba是什麼東西，可以跳舞嗎？如何與Windows連結傳檔？</p>
+<p><strong>(Tako：Samba是指森巴舞嗎?)</strong></p>
+<p><strong>(Bear：當然不是!!!!!)</strong></p>
+<p>相信大家使用Windows時，有個在區網下傳檔的好工具</p>
+<p>那就是</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p><strong>＂網路上的芳鄰＂或＂網路磁碟機＂</strong></p>
+<p>沒錯，Samba就是一種利用逆向工程了解網路上的芳鄰的協定，</p>
+<p>使得Unix-like可以在區網上與Windows溝通</p>
+<p>畢竟是利用逆向工程開發，並非微軟產品，傳輸效率不是很好</p>
+<p>但沒魚蝦也好，可以互傳就很好了</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1490039_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>啟動SSH連線工具，輸入帳密
+<p>sudo apt-get update</p>
+<p>sudo apt-get upgrade</p>
+<p>先更新Source，順便升級App</p>
+<p>sudo apt-get install samba samba-common-bin</p>
+<p>來安裝Samba吧</p>
+<p><div>接下來設定要分享的位置以及一些配置
+<p>cd /etc/samba/</p>
+<p>sudo cp ./smb.conf ./smb.conf_bk</p>
+<p>先備份原始得設定檔</p>
+<p>sudo vim ./smb.conf</p>
+<p>按下i進行編輯[global]</p>
+<p>security = user</p>
+<p>#為了安全性，啟動帳密認證</p>
+<p>load printers = no</p>
+<p>#關閉印表機</p>
+<p>#以下是新增的要連結的資料夾設定</p>
+<p>[<em>YourDirName</em>]</p>
+<p>#輸入要連結的資料夾名稱，到時候Windows搜索資料夾需要用到</p>
+<p>        comment = <em>YourFileName</em></p>
+<p>#連結名，可隨意輸入</p>
+<p>        path = /home/pi/<em>YourDirName</em></p>
+<p>#分享的位置</p>
+<p>browseable = yes</p>
+<p>        #可瀏覽</p>
+<p>        writeable = yes</p>
+<p>#可寫入</p>
+<p>        write list = @users</p>
+<p>#可寫入的使用者群組，這邊設定為users群組</p>
+<p>        create mode = 0664</p>
+<p>#可建立檔案的權限</p>
+<p>        directory mode = 0775</p>
+<p>#建立資料夾的權限</p>
+<p>按下[Esc]，輸入＂:wq!＂完成設定</p>
+<p>接下來，建立剛剛設定的資料夾</p>
+<p>cd</p>
+<p>mkdir ./<em>YourDirName</em></p>
+<p>sudo chgrp users ./<em>YourDirName</em></p>
+<p>將<em>YourDirName</em>群組改為uesrs</p>
+<p>sudo chmod 2770 ./<em>YourDirName</em></p>
+<p>設定<em>YourDirName</em>權限</p>
+<p>再來，設定可以使用Samba的帳密</p>
+<p>對了在Samba上面的使用者帳號，必須要是Pi（Linux）帳號中的一個！</p>
+<p>sudo pdbedit -a -u pi (or <em>YourUserName</em>)</p>
+<p>輸入密碼</p>
+<p>OK，完成PI這邊的設定了，重啟Samba吧</p>
+<p>sudo /etc/init.d/samba restart</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7839628_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>接下來，回到windows吧
+<p>Bear這邊用Win7做示範</p>
+<p>在＂電腦＂上方有個＂連線網路磁碟機＂</p>
+<p>在資料夾內輸入</p>
+<p><strong>\\<em>YourPiIP</em>\<em>YourDirName</em></strong></p>
+<p>完成</p>
+<p>進入時需要記得輸入帳密總算可以跟Pi互通資料了(大心)</p>
+<p>喜歡這篇文章嗎?</p>
+<p>請繼續關注Takobear，我們將帶來更多更有趣的開發消息!</p>
+<p>喜歡Bear實驗室的朋友也能參考以下文章喔!</p>
+<p><a href="http://www.takobear.weebly.com/12/post/2013/08/windowsopen-vpn.html" target="_blank">Bear的OpenVPN教學時間</a></p>
+<p><a href="http://www.takobear.weebly.com/12/post/2013/08/raspberry-pivpn-server.html" target="_blank">Bear教你如何動手架設VPN</a></p>
+<p><a href="http://www.takobear.weebly.com/12/post/2013/06/raspberry-pi-raspbian.html" target="_blank">Bear教你安裝Raspberry</a></p>
+<p></p>
+<p><div>
+<p><div id="357002373766742862" align="left"><script async="">// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script><!-- Takobear 728x90 --><script>// < ![CDATA[</p>
+<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2013\/10\/27\/bear-raspberry-pisamba\/";
+        this.page.identifier = "711 http:\/\/www.takobear.tw\/201702608526356260322804024687\/raspberry-pisamba-server";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

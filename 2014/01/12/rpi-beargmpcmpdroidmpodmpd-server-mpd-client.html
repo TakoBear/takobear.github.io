@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[RPI] Bear實驗室:使用Gmpc、MPDroid與MPod連線MPD Server (MPD Client 篇) </title>
+  <meta name="description" content="呼，繼上次架設好mpd server後 (文章最末也有連結!)總是需要一些工具去控制撥放器(server)遠端SSH、Xrdp都是堪用的方法那麼，需要什麼工具會更好呢?嘿嘿.....其實，有心的話會發現已經有一大堆別人寫好的mpd client可以用http://mpd.wikia.com/wiki/Client...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/rpi-beargmpcmpdroidmpodmpd-server-mpd-client.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[RPI] Bear實驗室:使用Gmpc、MPDroid與MPod連線MPD Server (MPD Client 篇) </h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:31:35+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6340881_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>呼，繼上次<a title="" href="http://www.takobear.weebly.com/12/post/2013/12/rpibear-mpd-music-player-daemon-server.html">架設好mpd server後</a> (文章最末也有連結!)
+<p>總是需要一些工具去控制撥放器(server)</p>
+<p>遠端SSH、Xrdp都是堪用的方法</p>
+<p>那麼，需要什麼工具會更好呢?嘿嘿.....</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>其實，有心的話會發現已經有一大堆別人寫好的mpd client可以用
+<p><a title="" href="http://mpd.wikia.com/wiki/Clients">http://mpd.wikia.com/wiki/Clients</a>但是為了控制mpd server還開了一台PC不就本末倒置了嗎?</p>
+<p>沒錯，最有力的情形就是用智慧型手機來控制</p>
+<p>不多說，以下就分PC用的跟android、以及iOS三部分說明</p>
+<p><div>
+<p><div id="913141936422066299" align="left"><script async="">// < ![CDATA[</p>
+<p>// < ![CDATA[ // < ![CDATA[ // < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p>// < ![CDATA[ // < ![CDATA[ // < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// < ![CDATA[ // < ![CDATA[ // < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p>// < ![CDATA[ // < ![CDATA[ // < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>首先介紹的是PC上用的Gmpc (Gnome Music Player Client)
+<p>顧名思義就是Gnome上的音樂撥放器連線程式</p>
+<p>為什麼是它呢?</p>
+<p>因為它是跨.....平.....台.....</p>
+<p>諸如Windows、Mac OSX、Linux都可以使用第一步到<a href="http://gmpclient.org/installation">官方網站</a>下載</p>
+<p>(Mac OSX與部分Linux需要自己編譯，有教學別擔心)</p>
+<p>然後啟動</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5939345_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>點選Music -&gt; preference來設定要連線的Server IP</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2300174_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3990963_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>至於怎麼看IP應該不是這邊需要擔心的吧
+<p>可以用流覽器到IP分享器上找尋</p>
+<p>或是直接在Server的命令列上輸入</p>
+<p>$ ifconfig</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2774634_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>沒問題就表示正常連線
+<p>選取Database會看到根目錄( / )</p>
+<p>對/按右鍵update</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4674913_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>Server有存放音樂檔案就會看到所有的曲目
+<p>如果不知道怎麼將音樂檔上傳到Server上</p>
+<p>可以參考<a title="" href="http://www.takobear.weebly.com/12/post/2013/09/raspberry-pisamba-server.html">這篇</a></p>
+<p>OK，簡易的gmpc教學就到這了</p>
+<p><div>再來就是Android上的MPDroid了</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1702577_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div><a href="https://play.google.com/store/apps/details?id=com.namelessdev.mpdroid&amp;hl=zh_TW">https://play.google.com/store/apps/details?id=com.namelessdev.mpdroid&amp;hl=zh_TW</a>
+<p>安裝後啟動</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4850112_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>選擇Default connection settings
+<p>並設定server IP跟port（預設6600）</p>
+<p><div>
+<p><div>
+<p><div>
+<p><table>
+<p><tbody>
+<p><tr>
+<p><td>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3990291_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><td>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2200770_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p><div>回到主畫面</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6874118_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>可以用手機控制真是太方便了</div></p>
+<p><div>再來就是iOS上MPod了</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7627105_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div><a title="" href="https://itunes.apple.com/us/app/mpod/id285063020">https://itunes.apple.com/us/app/mpod/id285063020</a>
+<p>或是打開iTunes搜尋MPod</p>
+<p>各位抱歉，目前手邊只有ipod touch 4，iOS版本不是iOS7.....</p>
+<p>請見諒安裝後啟動</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7545155_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>事實上，MPod更單純，會幫你自動尋找Server
+<p>連IP都不用key</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3155561_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9666863_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6814828_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>不要怪Bear沒說明什麼，因為真的沒什麼好說明的XD
+<p>可惜的是MPod似乎無法讀取圖片的tag</p>
+<p><div>總算完成三個不同的MPD Client的介紹了
+<p>如果各位不喜歡，其實還有許多類似的軟體</p>
+<p>用法絕對是大同小異的，就讓各位自行研究會更有趣!!不知道前篇伺服器怎麼架設的, 點選以下來連結前往吧!</p>
+<p><a href="http://www.takobear.weebly.com/12/post/2013/12/rpibear-mpd-music-player-daemon-server.html" target="_blank"><strong>前往Bear實驗室: MPD 伺服器架設教學</strong></a>喜歡這篇嗎? 趕快加入Takobear粉絲團吧!!!!</p>
+<p></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></td></p></div></p></div></p></td></p></tr></p></tbody></p></table></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/rpi-beargmpcmpdroidmpodmpd-server-mpd-client\/";
+        this.page.identifier = "529 http:\/\/www.takobear.tw\/201702608526356260322804024687\/rpi-beargmpcmpdroidmpodmpd-server-mpd-client";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

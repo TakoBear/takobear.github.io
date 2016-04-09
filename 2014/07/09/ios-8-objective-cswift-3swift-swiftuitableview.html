@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[iOS 8] 從Objective-C到Swift : 你的第3支Swift程式 - 如何在Swift使用UITableView (製作表格)? </title>
+  <meta name="description" content="Bear在前面兩篇分別介紹了怎麼在Swift中使用UIView, 或是如何製作按鈕進行互動接下來則是另一個重點介紹了, 這次的內容是介紹大家如何在Swift中使用表格,內容也相對前面兩篇複雜些, 有興趣者可以先到這篇文章後面下載我們的程式喔!跟Objective-C一樣, 使用UITableView需要加上兩個d...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/07/09/ios-8-objective-cswift-3swift-swiftuitableview.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[iOS 8] 從Objective-C到Swift : 你的第3支Swift程式 - 如何在Swift使用UITableView (製作表格)? </h1>
+    <p class="post-meta"><time datetime="2014-07-09T00:53:21+08:00" itemprop="datePublished">Jul 9, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3567349_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>Bear在前面兩篇分別介紹了<a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/ios-8-objective-cswift-swift-swiftuiview" target="_blank">怎麼在Swift中使用UIView</a>, 或是<a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/ios-8-objective-cswift-2swift-swiftuilabeluibutton" target="_blank">如何製作按鈕進行互動</a>
+<p>接下來則是另一個重點介紹了, 這次的內容是介紹大家如何在Swift中使用表格,</p>
+<p>內容也相對前面兩篇複雜些, 有興趣者可以先到這篇文章後面下載我們的程式喔!</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>
+<p><div id="306655547117564602" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>跟Objective-C一樣, 使用UITableView需要加上兩個delegate,
+<p>也必須要使用到identifier做註冊, 這邊我們先宣告一個全域變數cellIdentifier對之後作處理在viewDidLoad的部分, Bear這邊創造一個UITableView,</p>
+<p>對他做初始化(initialize)的時候把frame大小跟style進行設定,</p>
+<p>再把delegate跟dataSource指定為ViewController (程式內的self)</p>
+<p>這邊要注意的是Swift在創建UITableView時需要多一個步驟</p>
+<p></p>
+<p><div>
+<p><div id="750380861362168376" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>如過忘記加的話會導致crash！而這裡的cellIdentifier 需要跟delegate內cell的identifier 一樣，
+<p>所以我們剛剛將identifier的字串直接宣告在全域變數，這樣可以保證兩者之間不會有筆誤的情況！</p>
+<p></p>
+<p><div>
+<p><div id="737258246851909905" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>Delegate跟obj-c一樣需要回傳section及row的個數
+<p>接著回傳cell的內容</p>
+<p>注意到以下這行了嗎！</p>
+<p><strong>cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell</strong></p>
+<p>as UITableViewCell 就是代替 obj-c 裡面的轉換型別 (UITableViewCell *)</p>
+<p><div>
+<p><div id="490164371921763793" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>對照<a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/xcode5-uitableview" target="_blank"><strong>以前的Objective-C UITableView教學</strong></a>, 是不是覺得沒那麼難了呢?
+<p>接下來執行程式就大功告成囉!!</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3731296_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div id="922439450752920272" align="left">
+<p><div id="fb-root"></div></p>
+<p><script>// < ![CDATA[</p>
+<p> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
+<p>// ]]></script></p>
+<p><div data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div></p>
+<p></p>
+<p></p>
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/07\/09\/ios-8-objective-cswift-3swift-swiftuitableview\/";
+        this.page.identifier = "262 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ios-8-objective-cswift-3swift-swiftuitableview";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

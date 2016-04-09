@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TAKOBEAR</title>
+    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+</description>
+    <link>http://www.takobear.tw/</link>
+    <atom:link href="http://www.takobear.tw/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 09 Apr 2016 15:08:40 +0800</pubDate>
+    <lastBuildDate>Sat, 09 Apr 2016 15:08:40 +0800</lastBuildDate>
+    <generator>Jekyll v3.1.2</generator>
+    
+      <item>
+        <title>【Camr】匯入貼圖教學</title>
+        <description>&lt;p&gt;&lt;div&gt;
+&lt;p&gt;感謝您使用 Camr.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;以下我們將教您如何將喜歡的圖片匯入 Camr 作為貼圖&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;strong&gt;
+&lt;p&gt;1.先準備好一些透明的PNG圖檔&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;這些圖檔可以從Google圖片搜尋下載&lt;br /&gt;
+&lt;p&gt;在搜尋關鍵字前面加上&quot; filetype:png &quot;，然後將過濾條件設為透明背景及PNG圖檔&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;您就可以找到一些很棒的透明貼圖！&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;strong&gt;2.將您的圖片放進Dropbox的資料夾，並取得該資料夾的分享連結&lt;/strong&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;因為技術上的關係，我們目前只支援Dropbox這個雲端服務&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;資料夾可以取任意名稱，並把你想要的貼圖都放進來&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;接著把這資料夾的分享連結貼到Camr 內&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/shareLink_ch.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/shareLink_ch.png&quot; alt=&quot;shareLink_ch&quot; width=&quot;779&quot; height=&quot;552&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;3.將Dropbox 的分享連結貼到 Camr 上&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;1.將分享連接貼到文字框，接著按確定，即開始下載&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/paste_link_ch.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/paste_link_ch-169x300.png&quot; alt=&quot;paste_link_ch&quot; width=&quot;169&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;4.下載程序馬上就開始了&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;如果您不想等待在此處，可按隱藏&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/download_process_ch.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/download_process_ch-169x300.png&quot; alt=&quot;download_process_ch&quot; width=&quot;169&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;5.開始使用您的貼圖囉&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;每一個分享連結都會建立一個分類，所以您可以創立不同的Dropbox資料夾&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/use.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/use-169x300.png&quot; alt=&quot;use&quot; width=&quot;169&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;Final : &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;如果您的貼圖很棒，也煩請您不吝分享於此處&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;非常感謝！&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;下方是範例連結，可以先試看看: &lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;小小兵 :&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/c78adrybb5kf6ng/AACaSEohwYPrwDP8bZEQEK7Oa?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;腦筋急轉彎 :&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/dqfp8e5jtu0e835/AAD0OR8z5SvZauW8DV74tK_Ma?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;怪獸電力公司 : &lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/kzyr9y45p5zvqx7/AABk-zUp5277gGnDTGGftXh5a?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;鴨嘴獸泰瑞 : &lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/3o6xxvhhvreayd5/AACBcoY12_O_5LYL9sgV81Cxa?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/strong&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 20 Nov 2015 16:21:37 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/11/20/e3-80-90camr-e3-80-91-e5-8c-af-e5-85-a5-e8-b2-bc-e5-9c-96-e6-95-99-e5-ad-b8.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/11/20/e3-80-90camr-e3-80-91-e5-8c-af-e5-85-a5-e8-b2-bc-e5-9c-96-e6-95-99-e5-ad-b8.html</guid>
+        
+        
+        <category>TakoBear 作品</category>
+        
+      </item>
+    
+      <item>
+        <title>【Camr】 Import stickers tutorial</title>
+        <description>&lt;p&gt;&lt;div&gt;
+&lt;p&gt;Thank you for using Camr.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Here we&#39;d like to teach you how to import favourite images to Camr for stickers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;strong&gt;1. You should prepare some transparent background png image resources&lt;/strong&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;It&#39;s an easy way to find them from &quot; google image search &quot;.&lt;br /&gt;
+&lt;p&gt;You can search the keyword with &quot; filetype:png &quot;, and set filters with transparent background and PNG files.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;The results will be all good transparent images.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;strong&gt;2. Add your image resources to your Dropbox folder and get the share link&lt;/strong&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;Dropbox is the only way to import your images that we support currently.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;You can create a folder for any name, and store all your stickers.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Then share the folder&#39;s link to Camr.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/shareLink_en.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/shareLink_en.png&quot; alt=&quot;shareLink_en&quot; width=&quot;779&quot; height=&quot;552&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;3.Paste the Dropbox share link to Camr&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;1.Paste the share link on the text field then press ok  to start download.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/paste_link_en.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/paste_link_en-169x300.png&quot; alt=&quot;paste_link_en&quot; width=&quot;169&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;4.The download process will start soon&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;If you don&#39;t like to wait, you can hide the download dialog or cancel the process.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/download_process_en.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/download_process_en-169x300.png&quot; alt=&quot;download_process_en&quot; width=&quot;169&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;5.Enjoy your stickers&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;Every link will create a category, so you can create different folders in your dropbox to store images.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/use.png&quot;&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/09/use-169x300.png&quot; alt=&quot;use&quot; width=&quot;169&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;Final : &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;If you have any collections, please share the link to us on this page.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Appreciate！&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;
+&lt;p&gt;&lt;strong&gt;Here are some links for sample: &lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Despicable me :&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/c78adrybb5kf6ng/AACaSEohwYPrwDP8bZEQEK7Oa?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;Inside out :&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/dqfp8e5jtu0e835/AAD0OR8z5SvZauW8DV74tK_Ma?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;Monsters : &lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/kzyr9y45p5zvqx7/AABk-zUp5277gGnDTGGftXh5a?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;Terry : &lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;https://www.dropbox.com/sh/3o6xxvhhvreayd5/AACBcoY12_O_5LYL9sgV81Cxa?dl=0&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 04 Sep 2015 18:40:29 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/09/04/e3-80-90camr-e3-80-91-import-stickers-tutorial.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/09/04/e3-80-90camr-e3-80-91-import-stickers-tutorial.html</guid>
+        
+        
+        <category>TakoBear 作品</category>
+        
+      </item>
+    
+      <item>
+        <title>手持式掛燙機 日本TWINBIRD 與 飛利浦GC310 大對決！</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;手持式掛燙機是小型的蒸氣式熨斗，就像百貨公司的服裝專櫃在使用那種，只要將衣服掛著拉直，直接燙就可以了！不再需要熨斗專用的墊布，真的非常適合小套房來使用呀！&lt;br /&gt;以下是小編來整理目前網路較知名的兩款手持掛燙機：&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;飛利浦 手持式蒸氣掛燙刷  GC310  : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt; 價錢 : 1780 NT &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;購買位址 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/GC310.png&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/LxvT1&quot; target=&quot;_blank&quot;&gt;PChome線上購物 - &lt;/a&gt;&amp;lt;h6;&amp;gt; &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;部落格推薦 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://farm8.staticflickr.com/7347/11513270213_684c1e0dc5_z.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/M8vUd&quot; target=&quot;_blank&quot;&gt;【。(女孩3C) TWINBIRD手持式蒸氣熨斗~ 熨斗✕掛燙機 3 in 1功能大方便！(已...&lt;/a&gt;&amp;lt;h6;&amp;gt;好女孩、好女友、好人妻都應該要有一支! &amp;amp;hearts; 是說我已經肖想嚮往一支好用的掛燙機很久了~ 因為衣櫥一直呈現炸開的狀態，所以好多衣服都很可憐的塞得非常皺... 之前本來幾度衝動&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/amomosmiley/1405084069-3561640694.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/vivJP&quot; target=&quot;_blank&quot;&gt;【購物】日本TWINBIRD 手持式蒸氣熨斗（掛燙機）實用分享 @ Amomo&#39;s Smile...&lt;/a&gt;&amp;lt;h6;&amp;gt;最近還真是花錢啊不過因為又是個忍了很久的東西，最後還是敗惹。。。。。上週買了&amp;quot;一批&amp;quot;衣服，皺皺的，所以又讓我想起了掛燙機這個東西。但礙於是住外面，買東西的時候總是會想到以後如果要搬&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://farm4.staticflickr.com/3786/11558695753_b9ce5c5122_o.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Zmvnu&quot; target=&quot;_blank&quot;&gt;[居家]乾濕兩用!!超輕巧方便的TWINBIRD手持式蒸氣熨斗♥ @ Amber。迷你馬的逆襲...&lt;/a&gt;&amp;lt;h6;&amp;gt;我真的超愛蒸汽熨斗的啦!!&amp;amp;gt;///////&amp;amp;lt;自從人生有了第一台蒸汽式掛燙機之後我的燙衣人生完全就是處於一個豁然開朗、柳暗花明又一村的超然境界!!!之前就有分享過我對掛燙機的&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt; PTT 評論 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/GC310.png&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/8_vR9&quot; target=&quot;_blank&quot;&gt;[問題] 請問有人用過TWINBIRD 手持蒸氣熨斗嗎 - 看板 e-shopping - 批...&lt;/a&gt;&amp;lt;h6;&amp;gt; http://24h.pchome.com.tw/prod/DMAH0V-A82120744?q=/S/DMAL2I 想請問有人使用過TWINBIRD 手持式蒸氣熨斗SA-4084嗎 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/GC310.png&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/MEvOg&quot; target=&quot;_blank&quot;&gt;[問題] TWINBIRD 手持式蒸氣熨斗SA-4084TW - 看板 E-appliance...&lt;/a&gt;&amp;lt;h6;&amp;gt; 各位版友大家好 最近想購買熨斗 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;飛利浦 手持式蒸氣掛燙刷  GC310  : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt; 價錢 : 1880 NT &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;購買位址 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/GC310.png&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Zmv4Y&quot; target=&quot;_blank&quot;&gt;PChome線上購物 - &lt;/a&gt;&amp;lt;h6;&amp;gt; &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;部落格推薦 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/michellebuy/1385363217-2183630503.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/fWv5k&quot; target=&quot;_blank&quot;&gt;[家電] 不用再穿梅干菜出門!!輕巧方便的飛利浦手持式蒸氣掛燙刷GC310 @ 米雪兒 Fas...&lt;/a&gt;&amp;lt;h6;&amp;gt;呵呵呵～～～今兒個我是特務米！！！ 衣櫥裡的皺巴巴醃菜乾，靠我來搞定啦～～ 是說....我對於燙衣服這件事....跟它完全不熟啦hahaha~ 以前還在家當大小姐的時候，燙衣服這件事都是米爸一手包&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://blog.xuite.net/ourangel/baby/81412316/cover600.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/N6vT9&quot; target=&quot;_blank&quot;&gt;飛利浦手持蒸氣掛燙機GC310開箱 @ 施爸拍拍寫寫過生活!!! :: 隨意窩 Xuite日誌&lt;/a&gt;&amp;lt;h6;&amp;gt;話說在上個月施爸我和萱萱妍妍媽在逛阪急百貨時看到飛利浦在展示2013最新產品_手持蒸氣掛燙機GC310,在現場看工作人員試用給我們看時,萱萱妍妍媽就說想要買一台,但當時售價為2880元加送收納袋,心想有點貴...所以回家上網查看比價發...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://farm3.static.flickr.com/2808/11309353685_2b26308d74_o.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/gKvjV&quot; target=&quot;_blank&quot;&gt;▌輕巧家電 ▌拍照前~提升衣服質感的秘密♥飛利浦手持式蒸氣掛燙刷GC310♥ @ ANGEL&#39;...&lt;/a&gt;&amp;lt;h6;&amp;gt;今天要分享的小家電,是我相見恨晚的&amp;amp;ldquo;掛燙機&amp;amp;rdquo;呀！ 傳統式的熨斗已經無法滿足我,傳統熨斗因為是靠整面接觸的熱～容易燙壞衣服～ 太軟的衣服也很難燙 所以我一直想&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;PTT 評論 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/GC310.png&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/F8v1M&quot; target=&quot;_blank&quot;&gt;[挑選] 掛燙機挑選 歌林or飛利浦 - 看板 e-shopping - 批踢踢實業坊&lt;/a&gt;&amp;lt;h6;&amp;gt; ★挑色/挑尺寸/挑款式:挑款式 ☆個人資料簡述: &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 24 Aug 2015 16:22:00 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/24/e6-89-8b-e6-8c-81-e5-bc-8f-e6-8e-9b-e7-87-99-e6-a9-9f-e6-97-a5-e6-9c-actwinbird-e8-88-87-e9-a3-9b-e5-88-a9-e6-b5-a6gc310-e5-a4-a7-e5-b0-8d-e6-b1-ba-ef-bc-81.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/24/e6-89-8b-e6-8c-81-e5-bc-8f-e6-8e-9b-e7-87-99-e6-a9-9f-e6-97-a5-e6-9c-actwinbird-e8-88-87-e9-a3-9b-e5-88-a9-e6-b5-a6gc310-e5-a4-a7-e5-b0-8d-e6-b1-ba-ef-bc-81.html</guid>
+        
+        
+        <category>女性最愛</category>
+        
+        <category>家電</category>
+        
+      </item>
+    
+      <item>
+        <title>Neogence 霓淨思音波淨化潔膚儀 MiLLi 2 - 清除粉刺超簡易！</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;商品原價約 : 1980 (新台幣)&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;如何購買?&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://blogwww.s3.amazonaws.com/uploads/fgblogphoto/2236/3425d66c-98ee-41b1-8401-e26e43e2372c.png&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&amp;lt;a href=&quot;http://boo.tw/JtvuR&quot; target=&quot;_blank&quot;/a&amp;gt;音波淨化潔膚儀MiLLi 2 (MOMO購物)&amp;lt;h6;&amp;gt; &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;開箱評測：&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://farm1.staticflickr.com/471/19515849430_08bf2644c9_b.jpg&quot; alt=&quot;Mountain View&quot; /&gt;
+&lt;p&gt;&lt;div&gt;&lt;a target=&quot;_blank&quot; href=&quot;http://boo.tw/udvm9&quot;&gt;【保養】洗淨毛孔。清除粉刺有感♥CP值超高的Neogence霓淨思音波淨化潔膚儀 MiLLi ...&lt;/a&gt;
+&lt;p&gt;&lt;h6&gt;最近覺得粉刺變少了耶~~((歡呼~~大家記得之前很流行的韓國洗臉機嗎，當時我也很瘋那個，結果後來因為覺得購買蠻不方便的，加上他的刷頭其實沒有因為功能去區分他，變得我會想要注重平常清潔之外，也想特別針對&lt;/h6&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://farm1.static.flickr.com/513/19274631868_6af17c1d67_o.jpg&quot; alt=&quot;Mountain View&quot; /&gt;
+&lt;p&gt;&lt;div&gt;&lt;a target=&quot;_blank&quot; href=&quot;http://boo.tw/rRvfT&quot;&gt;[保養] Neogence MiLLi2 音波淨化潔膚儀。打造乾淨無暇Baby肌 @ 小米的雪...&lt;/a&gt;
+&lt;p&gt;&lt;h6&gt;今天要來跟妳們分享Neogence MiLLi2音波淨化潔膚儀唷!!! 因為第一代我也有使用過，這次升級後覺得更加好用也更加方便 三段速多了比較弱的段速，所以乾肌和敏感肌的女孩也可以放心的使用 而且現&lt;/h6&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://pic.pimg.tw/bonnnnie/1436639648-3540657436.jpg?v=1436639678&quot; alt=&quot;Mountain View&quot; /&gt;
+&lt;p&gt;&lt;div&gt;&lt;a target=&quot;_blank&quot; href=&quot;http://boo.tw/m-vn3&quot;&gt;更聰明更貼心的洗臉機 Neogence 霓淨思 音波淨化潔膚儀 MiLLi 2 @ bonnn...&lt;/a&gt;
+&lt;p&gt;&lt;h6&gt;Hello!今天又要推薦什麼好貨了呢？你們有用洗臉機的習慣嗎？我的第一台洗臉機就是霓淨思的milli音波淨化潔膚儀，因為我有個很洗腦的朋友，本身是霓淨思的愛用者，於是推著我一起入坑了，化妝櫃裡開始有了&lt;/h6&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://pic.pimg.tw/liping0915/1438789431-3987091228_n.jpg&quot; alt=&quot;Mountain View&quot; /&gt;
+&lt;p&gt;&lt;div&gt;&lt;a target=&quot;_blank&quot; href=&quot;http://boo.tw/ZKvu9&quot;&gt;[試用]五款超好用刷頭，今天你要用哪一個!? - Neogence 霓淨思音波淨化潔膚儀MiL...&lt;/a&gt;
+&lt;p&gt;&lt;h6&gt;大家猜猜...美容保養最重要的一環是什麼!?沒錯!!就是清潔要先把臉洗好才是照顧好膚質的第一步...Neogence 霓淨思剛出第一代洗臉機時瓶子就入手了(點我看舊文)最近新出了進化版 - Neoge&lt;/h6&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://g.udn.com.tw/upfiles/B_BN/bnp311hbjl15/PSN_MAIN/f_bnp311hbjl15_2.jpg&quot; alt=&quot;Mountain View&quot; /&gt;
+&lt;p&gt;&lt;div&gt;&lt;a target=&quot;_blank&quot; href=&quot;http://boo.tw/i8vVA&quot;&gt;【Neogence 霓淨思】音波淨化潔膚儀MiLLi 2-白 - 網路超級好康分享263 - ...&lt;/a&gt;
+&lt;p&gt;&lt;h6&gt;網路購物對我這種懶人來說，可以說是個很方便很方便的方法， 因為可以直送在網路上訂購，或是送到家、超商取貨， 再也不必大包小包扛回家，扛到腰酸背痛， 舉凡日常生活用品到3C電子， 網路上都找的到，真的不...&lt;/h6&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 19 Aug 2015 01:39:10 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/19/neogence-e9-9c-93-e6-b7-a8-e6-80-9d-e9-9f-b3-e6-b3-a2-e6-b7-a8-e5-8c-96-e6-bd-94-e8-86-9a-e5-84-80-milli-2-e6-b8-85-e9-99-a4-e7-b2-89-e5-88-ba-e8-b6-85-e7-b0-a1-e6-98-93-ef-bc-81.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/19/neogence-e9-9c-93-e6-b7-a8-e6-80-9d-e9-9f-b3-e6-b3-a2-e6-b7-a8-e5-8c-96-e6-bd-94-e8-86-9a-e5-84-80-milli-2-e6-b8-85-e9-99-a4-e7-b2-89-e5-88-ba-e8-b6-85-e7-b0-a1-e6-98-93-ef-bc-81.html</guid>
+        
+        
+        <category>女性最愛</category>
+        
+      </item>
+    
+      <item>
+        <title>格林 Grimm - 顛覆你的童話故事</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;警探尼克·柏克哈特逐漸發現身邊有少部分人突然會面部變形為異類，身患絕症的姑姑在去世前告知尼克是格林家族的後裔，而異類在情緒激動時展現本來的面目；在第一集尼克認識了狼人鐘錶匠Monroe，而後成為朋友，後者對尼克提供了許多幫助。&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;線上直接看 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://i1.wp.com/vmus.co/wp-content/uploads/2015/01/10341536_780099595333687_7021047866100253734_n.jpg?resize=860,280&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/OPv5w&quot; target=&quot;_blank&quot;&gt;格林Grimm | VM美劇 英劇 歐美影集 線上看 | 頁面 9&lt;/a&gt;&amp;lt;h6;&amp;gt; &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;預告 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://i.ytimg.com/vi/2rVy3RBJmNo/hqdefault.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/6ZvRw&quot; target=&quot;_blank&quot;&gt;Grimm - Full Trailer - YouTube&lt;/a&gt;&amp;lt;h6;&amp;gt;Remember the fairy tales your parents used to tell you before bedtime? Well, those weren&#39;t stories, they were warnings.&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;部落格推薦 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/beforesunset/1418701074-1634060316_n.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/73vBL&quot; target=&quot;_blank&quot;&gt;【美劇】格林 Grimm @ 愛在黎明破曉時：人妻日誌 :: 痞客邦 PIXNET ::&lt;/a&gt;&amp;lt;h6;&amp;gt;這個跟格林童話不太一樣，故事情節比較偏陰暗面，人物也是！這裡沒有漂亮可愛的仙女或是精靈，也沒有英勇俊帥的王子騎士。 Grimm 都有特殊能力，wesen 在他們面前都會不自覺的變身，這個能力有可能會&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pics10.yamedia.tw/39/userfile/p/pippychen/article_thumb/56868462.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/m9v6J&quot; target=&quot;_blank&quot;&gt;痞皮陳的家: 【格林 Grimm】第一季 - yam天空部落 &lt;/a&gt;&amp;lt;h6;&amp;gt;《格林》算是一部題材很有意思的戲劇，超自然、奇幻、再加上懸疑……風格也非常對我的胃口。不過我還是非常猶豫要不要繼續追第二季。演員的魅力真的是無法檔，但是對於怪物的設定...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/Grimm.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/MEvwd&quot; target=&quot;_blank&quot;&gt;[心得] 格林Grimm第一集 - 看板 EAseries - 批踢踢實業坊&lt;/a&gt;&amp;lt;h6;&amp;gt; 第一集 老實說我會被吸引確實是因為被開頭的那首歌 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/fifi0404/1331538413-724431467_m.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/qtvA4&quot; target=&quot;_blank&quot;&gt;[影集]格林(Grimm)：觀賞進度S1E01～S1E09 @ 腐毒花園 :: 痞客邦 PIX...&lt;/a&gt;&amp;lt;h6;&amp;gt;有關於超自然生物的題材，素來是我感興趣的題材，小時候總是午夜守在電視機前面等著收看，《十三號星期五》、《美國狼人》&amp;amp;hellip;&amp;amp;hellip;堪稱是本人童年時代的深刻回憶。 《格林&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://attachment.van698.com/forum/201401/02/2135140xc3swvvvyr5luba.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/zAveo&quot; target=&quot;_blank&quot;&gt;影集《格林》You’re a Grimm！！NO～I&#39;m a 公公～〈好悲傷阿-阿宅戲劇通 V...&lt;/a&gt;&amp;lt;h6;&amp;gt;心得部分公公其實是千言萬語道不盡的人阿～就像找到一款GAME或吃到好吃的牛肉麵那種挖到寶藏的港覺〈顫抖〉放學閒閒沒事不看書的公公都窩在電腦前邊吃晚餐邊看影集《格林》當初因為 ...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 18 Aug 2015 16:58:26 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/18/e6-a0-bc-e6-9e-97-grimm-e9-a1-9b-e8-a6-86-e4-bd-a0-e7-9a-84-e7-ab-a5-e8-a9-b1-e6-95-85-e4-ba-8b.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/18/e6-a0-bc-e6-9e-97-grimm-e9-a1-9b-e8-a6-86-e4-bd-a0-e7-9a-84-e7-ab-a5-e8-a9-b1-e6-95-85-e4-ba-8b.html</guid>
+        
+        
+        <category>美劇</category>
+        
+      </item>
+    
+      <item>
+        <title>金裝律師 Suits - 西裝控不能不看!</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;Mike Ross，一位誤入歧途的法律系學生，為了給重病中的祖母交醫療費開始販毒，偶然遇見了Pearson Hardman律師公司的一號人物Harvey Specter。Harvey從這個年輕人身上看到了自己的影子，決定鋌而走險應聘Mike，而兩個截然不同卻又性情相投的人之間又會擦出怎樣的火花呢？&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;線上直接看 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.lovemovie.url.tw/wp-content/uploads/2015/07/suits-poster.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/BNv1g&quot; target=&quot;_blank&quot;&gt;金裝律師(無證律師) Suits 美劇線上看 - LoveMovie&lt;/a&gt;&amp;lt;h6;&amp;gt;金裝律師(無證律師) Suits&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;預告 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://i.ytimg.com/vi/SYUQKm2nZNE/hqdefault.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/civ-K&quot; target=&quot;_blank&quot;&gt;Suits Season 1 Official Trailer - YouTube&lt;/a&gt;&amp;lt;h6;&amp;gt;Watch the official trailer for Suits Season 1 on USA. » Watch Full Episodes of Suits Here: http://po.st/fu8ICk » Subs...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;部落格推薦 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/imsandra/1345915770-2304218860.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/S9vq4&quot; target=&quot;_blank&quot;&gt;《美劇》推薦 超好看的 Suits (無證律師/金裝律師/訴訟雙雄/西裝革履) @ 珊卓‧心生...&lt;/a&gt;&amp;lt;h6;&amp;gt;【365 &amp;amp;hearts; 057】我愛美劇！ 2011年播出的Suits，中文翻譯有好幾個版本：無證律師、金裝律師、訴訟雙雄、西裝革履。 Suits在IMDB上的分數有8.9分那麼高！先前&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://i.imgur.com/zqGIR.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/m-vhe&quot; target=&quot;_blank&quot;&gt;Suits‧因為，而改變。 (一季完結觀後感) 總令我欲罷不能! @ 千萬樹葉飛落 :: 痞客...&lt;/a&gt;&amp;lt;h6;&amp;gt;我最近趕影集的進度有點慢，因為要趕很多部(汗)，大部分的時間在看The good wife，租回家的所以要加緊腳步看完... Anyway，經過長時間的拖延，我終於看完Suits了，這真的是很適合輕鬆&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://blog.xuite.net/summerweii/wretch/142905614/cover600.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/hrvKC&quot; target=&quot;_blank&quot;&gt;☆我是影集控☆ SUITS，西裝控必看的律師劇影集 @ 可羅蘭 :: 隨意窩 Xuite日誌&lt;/a&gt;&amp;lt;h6;&amp;gt;&amp;nbsp;我從來沒有想過有一天會這麼沉迷在美國影集裡。 &amp;nbsp; 五專喜歡看friends六人行，大學愛看satc慾望城市，這兩部經典影集陪我分別渡過讀書時期；出社會則開始迷gossip girl，迷到現在第六季還在演，gg...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 18 Aug 2015 16:47:14 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/18/e9-87-91-e8-a3-9d-e5-be-8b-e5-b8-ab-suits-e8-a5-bf-e8-a3-9d-e6-8e-a7-e4-b8-8d-e8-83-bd-e4-b8-8d-e7-9c-8b.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/18/e9-87-91-e8-a3-9d-e5-be-8b-e5-b8-ab-suits-e8-a5-bf-e8-a3-9d-e6-8e-a7-e4-b8-8d-e8-83-bd-e4-b8-8d-e7-9c-8b.html</guid>
+        
+        
+        <category>美劇</category>
+        
+      </item>
+    
+      <item>
+        <title>閃電俠 The Flash</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;在目睹了母親離奇被殺，父親被錯誤指認為兇手，貝瑞·艾倫被喬·威斯特警探一家收留。貝瑞·艾倫變成了一個聰明但是不善交際的中央城警察局CSI犯罪現場員。由於沉溺於自己悲慘的過去，使得他被同齡群體所排斥；他研究「冷案（Cold Cases）」、超自然現象以及尖端科學的進展以試圖解釋他母親的謀殺案。沒人相信他對犯罪的描述:「一個擁有人臉的球狀閃電那晚入侵他們家」。貝瑞激烈地替自己辯護，來為他父親洗脫罪名。&lt;br /&gt;&lt;br /&gt;
+&lt;p&gt;粒子加速器在公開亮相的當日，由於設備故障引發的雷暴向城市中心散發前所未知的輻射。貝瑞·艾倫被故障引發的閃電擊中，而他實驗室中的化學試劑亦灑在他的身上。在經歷九個月的昏迷而甦醒後，他發現自己擁有了極速移動的能力。加速器設計師哈里遜·韋爾斯因加速器失敗而名譽掃地，將貝瑞的特殊性質描述為「超人類（Metahuman）」。貝瑞很快便發現自己並不是被輻射改變的唯一人類，並發誓要用自己的的天賦來保護中央城，免受超人類不斷升級的暴力襲擊，幾個親密的朋友和同事幫他保守秘密並協助他。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;線上直接看 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.lovemovie.url.tw/wp-content/uploads/2015/07/p2197530069111.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/LPvB0&quot; target=&quot;_blank&quot;&gt;閃電俠 The Flash 美劇線上看 - LoveMovie&lt;/a&gt;&amp;lt;h6;&amp;gt;閃電俠 The Flash&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;預告 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://i.ytimg.com/vi/TvPhWRR536k/maxresdefault.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/T9vip&quot; target=&quot;_blank&quot;&gt;閃電俠 - 影集預告加長版 - YouTube&lt;/a&gt;&amp;lt;h6;&amp;gt;閃電俠 - 影集預告加長版 (中文字幕) 美國電視網CW今年秋天首播 原影像網址：https://www.youtube.com/watch?v=Yj0l7iGKh8g Facebook：https://www.facebook.co...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;部落格推薦 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://1.bp.blogspot.com/-vb50jxvIsRI/Va-XSv6AJgI/AAAAAAAACYE/EHVIXsyoDM4/s640/arrowflash.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/_JvEn&quot; target=&quot;_blank&quot;&gt; 【美劇推薦】《Flash：閃電俠》第一季（Season1）總結影評 | ...&lt;/a&gt;&amp;lt;h6;&amp;gt;《Flash：閃電俠》是D.C超級英雄影集計畫繼《Arrow：綠箭俠》之後的第二部作品，不同於綠箭俠的黑暗風格，閃電俠的取向比較正向不這麼沉重。 一切的一切開始於主角的童年，一道神祕的閃光闖進了他家殺害了她母親並陷害了他父親使他入...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/ming2262/1412695200-3079316674.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Envmt&quot; target=&quot;_blank&quot;&gt;閃電俠The Flash(2014秋季新劇) @ 美劇盒小品~美劇 歐美影集 劇情簡介 時間...&lt;/a&gt;&amp;lt;h6;&amp;gt;閃電俠The Flash(2014秋季新劇) CW:漫畫改編 新劇首播:2014 10 07 Barry Allen(Grant Gustin)11歲那年,他的母親在一起離奇的事件中身亡, 他的&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/beforesunset/1417933404-1082819604_n.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/8_vnz&quot; target=&quot;_blank&quot;&gt;【美劇】閃電俠 The Flash @ 愛在黎明破曉時：人妻日誌 :: 痞客邦 PIXNET ::&lt;/a&gt;&amp;lt;h6;&amp;gt;閃電俠的青春肉體好令人流口水啊。&amp;gt;///&amp;lt; 閃電俠是綠箭俠的衍生劇，閃電俠屬於DC那一邊的，所在城市為中央城，跟綠箭俠所在的星城比起來比較熱鬧，感覺壞人比較沒那麼黑暗。 介紹一下主要演&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 18 Aug 2015 16:24:47 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/18/e9-96-83-e9-9b-bb-e4-bf-a0-the-flash.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/18/e9-96-83-e9-9b-bb-e4-bf-a0-the-flash.html</guid>
+        
+        
+        <category>美劇</category>
+        
+      </item>
+    
+      <item>
+        <title>泰國曼谷大爆炸！第一手相關新聞整理</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;2015年8月17日，泰國曼谷旅遊景點四面佛附近發生大型爆炸，事故造成至少12人死亡，20人受傷 
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;下面連結部分圖片有血腥畫面，有可能令人不適，請謹慎瀏覽！ &lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;Twitter 圖片 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/thailand.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Hovp3&quot; target=&quot;_blank&quot;&gt;bangkok - Twitter 搜尋&lt;/a&gt;&amp;lt;h6;&amp;gt;@HasanSari7 在 1 分鐘 之前發送了推文：&quot;? UPDATE: At least 15 killed, 80 injure..&quot; - 看看其他人在說些什麼並加入對話。&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;Facebook 圖片 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/thailand.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Bavvi&quot; target=&quot;_blank&quot;&gt;愛出國 IFLY.tw - [breaking news] 泰國曼谷四面佛發生爆炸案！... ...&lt;/a&gt;&amp;lt;h6;&amp;gt;[breaking news] 泰國曼谷四面佛發生爆炸案！ J編泰國朋友傳來第一手照片，提醒：內有令人不適之畫面，點開前請先做好心理準備。&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;Facebook 影片 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/thailand.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/hDvn-&quot; target=&quot;_blank&quot;&gt;愛出國 IFLY.tw | Facebook&lt;/a&gt;&amp;lt;h6;&amp;gt;曼谷四面佛旁爆炸影片 part1&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;第一手新聞 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://static.ettoday.net/images/1246/d1246572.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/AJvE_&quot; target=&quot;_blank&quot;&gt;驚心動魄！曼谷爆炸瞬間在正上方天橋　陸客捕捉高清影片 | ETtoday國際新聞 | ETto...&lt;/a&gt;&amp;lt;h6;&amp;gt;泰國曼谷四面佛廣場17日晚間7時，發生疑似恐怖攻擊的炸彈爆炸事件，最新官方說法已造成19死、120餘傷，十分慘烈。有一名中國大陸遊客在事發當時，走在事發地點正上方天橋，並拿著手機沿路拍攝，剛好捕捉到爆炸瞬間的影音，在網路上引發瘋傳。(...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://twimg.edgesuite.net/images/ReNews/20150817/640_ead099fa25c8108f70a3666b5c978e0d.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/BgvIr&quot; target=&quot;_blank&quot;&gt;【更新】曼谷爆炸　至少27死80傷　 | 即時新聞 | 20150817 | 蘋果日報&lt;/a&gt;&amp;lt;h6;&amp;gt;（更新：死亡人數）泰國曼谷知名四面佛附近發生重大爆炸案，目前已累積至27死，當中有4名外國人，還有80人受傷。有民眾形容，現場有如發生大地震&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://img1.cna.com.tw/www/WebPhotos/firstnews/common/20150817/45457106.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/LPvbv&quot; target=&quot;_blank&quot;&gt; 曼谷爆炸 駐泰處證實1台灣旅客輕傷 | 重點新聞 | 中央社即時新聞 CNA NEWS &lt;/a&gt;&amp;lt;h6;&amp;gt;（中央社記者劉得倉曼谷17日專電）泰國首都曼谷市中心著名的四面佛附近今晚驚傳大爆炸，至少有12人喪生，另有數十人受傷。駐泰國代表處證實，已知有1名台灣旅客受傷，已被送往醫院治療。 | 重點新聞&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://setn-iset.cdn.hinet.net/newsimages/2015/08/17/319956-XXL.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/MCv-z&quot; target=&quot;_blank&quot;&gt; 快訊／泰國曼谷四面佛區驚傳爆炸　已知12死20人受傷 | 商業 | 兩岸國際 | 三立新...&lt;/a&gt;&amp;lt;h6;&amp;gt;今（17）日台北時間晚上8點左右，泰國曼谷商業區中心、四面佛附近發生爆炸，推特（Twitter）上已經流傳現場狀況的照片，根據《BBC》報導指出，當地的電視台初步報導至少有12人死亡、20多人受傷，透過照片可以清楚看見現場的街道上非常...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://static.ettoday.net/images/1246/d1246353.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/tcvgJ&quot; target=&quot;_blank&quot;&gt;快訊／泰國曼谷鬧區奇隆傳爆炸案　已知5死20傷 | ETtoday國際新聞 | ETtoday...&lt;/a&gt;&amp;lt;h6;&amp;gt;泰國曼谷在17日晚間傳出爆炸案，就在商業鬧區中，根據當地國營電視台報導，至少已經有5人死亡，20人受傷。當地警方證實這是炸彈所造成，地點就在觀光客群聚的四面佛廣場，鄰近奇隆（Chidlom）。由於現場人潮眾多，爆炸消息馬上就在網路上傳...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://imgs.ntdtv.com/pic/2015/8-17/p6742645a459596819.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/OVvB0&quot; target=&quot;_blank&quot;&gt;【視頻】泰國曼谷市中心爆炸 數十死傷（組圖） | 新唐人電視台 新聞資訊 國際 社會 &lt;/a&gt;&amp;lt;h6;&amp;gt;8月17日，泰國首都曼谷市中心發生大型爆炸，地點位於著名旅遊景點四面佛附近。據當地媒體報道，事故已造成至少12人死亡，另有至少20人受傷。&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 17 Aug 2015 21:31:33 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/17/e6-b3-b0-e5-9c-8b-e6-9b-bc-e8-b0-b7-e5-a4-a7-e7-88-86-e7-82-b8-ef-bc-81-e7-ac-ac-e4-b8-80-e6-89-8b-e7-9b-b8-e9-97-9c-e6-96-b0-e8-81-9e-e6-95-b4-e7-90-86.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/17/e6-b3-b0-e5-9c-8b-e6-9b-bc-e8-b0-b7-e5-a4-a7-e7-88-86-e7-82-b8-ef-bc-81-e7-ac-ac-e4-b8-80-e6-89-8b-e7-9b-b8-e9-97-9c-e6-96-b0-e8-81-9e-e6-95-b4-e7-90-86.html</guid>
+        
+        
+        <category>即時新聞</category>
+        
+      </item>
+    
+      <item>
+        <title>高譚市 Gotham</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;在著名罪惡都市「高譚市」中，上有腐敗、下有惡勢力，各個有錢、有權、有勢者開始趁火打劫般的將城市拿捏到股掌中，只有單單一群小部分的正義人士才敢站出來與他們對抗。一名新進警員詹姆士·戈頓成為了一名勇敢站出來與惡勢力對抗的警察，卻在最後才發現是自己的想法過於簡單，而自己只是一隻對抗著十條鯨魚的小蝦米。高譚市的地下惡勢力如同一個錯綜複雜的迷宮，除了一群經營黑幫家族生意的大佬以外、還有海外未知身份的有權有勢者在暗地裏操控這座城市。期間，為了保持現狀的韋恩夫婦慘遭殺害，使得戈頓在憤怒下不擇手段的追查真相，但黑幫之間的內戰也因為這對夫婦的死而即將浮出水面。&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;線上直接看 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.lovemovie.url.tw/wp-content/uploads/2015/06/54fb1cbf222da.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/ZavG2&quot; target=&quot;_blank&quot;&gt;高譚市(哥譚鎮) Gotham 線上看 - LoveMovie&lt;/a&gt;&amp;lt;h6;&amp;gt;高譚市(哥譚鎮) Gotham&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;預告 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://i.ytimg.com/vi/0d1zpt6k5OI/hqdefault.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/m7vji&quot; target=&quot;_blank&quot;&gt;GOTHAM | Official Extended Trailer | FOX BROADC...&lt;/a&gt;&amp;lt;h6;&amp;gt;GOTHAM is an origin story of the great DC Comics Super-Villains and vigilantes, revealing an entirely new chapter tha...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;部落格推薦 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://2.bp.blogspot.com/-nQ8xpXZ_o3Q/VUkHkz-O4MI/AAAAAAAABr8/Y9GIwuT1GHw/s640/11169970_1042934712403185_8150073661525415772_n.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/hrvsZ&quot; target=&quot;_blank&quot;&gt; 【美劇心得】《Gotham：高譚市》第一季結局完結篇影評：混亂的決戰時刻 |...&lt;/a&gt;&amp;lt;h6;&amp;gt;蝙蝠俠前傳影集《Gotham：高譚市》第一季完結篇出爐！ 完結篇總結了每一條故事線，將從季初以來的劇情收攏，畫下句點。然而或許是礙於篇幅，可以從完結篇看出劇情緊湊，但劇情安排稍嫌混亂。要在40分鐘內要將所有重要角色與劇情彙整確實不易...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.theglobaldispatch.com/wp-content/uploads/2014/09/Ben-McKenzie-as-Jim-Gordon-Donal-Logue-as-Bullock-Gotham-ep-3-photo.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/M8vcF&quot; target=&quot;_blank&quot;&gt;[美劇推薦/影評] Gotham 高譚市- 追這部劇的理由 ~ RH Talk&lt;/a&gt;&amp;lt;h6;&amp;gt; Copyright © var creditsyear = new Date();document.write(creditsyear.getFullYear()); RH TalkDistributed By My Blogge...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/ming2262/1411386649-3124405170_m.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Qivji&quot; target=&quot;_blank&quot;&gt;高譚市(哥譚)Gotham (2014秋季新劇) @ 美劇盒小品~美劇 歐美影集 劇情簡介 ...&lt;/a&gt;&amp;lt;h6;&amp;gt;高譚市(哥譚)Gotham(2014秋季新劇) FOX:DC漫畫改編連續劇 新劇首播:2014 09 22(週一檔期) 劇名即是大家所熟悉-蝙蝠俠Batman-裡的高譚(哥譚)市Gotham 該劇以&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 17 Aug 2015 20:20:21 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/17/e9-ab-98-e8-ad-9a-e5-b8-82-gotham.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/17/e9-ab-98-e8-ad-9a-e5-b8-82-gotham.html</guid>
+        
+        
+        <category>美劇</category>
+        
+      </item>
+    
+      <item>
+        <title>冰與火之歌 Game of Thrones</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;權力遊戲緊緊圍繞《冰與火之歌》系列的故事情節，作者馬丁表示該劇非常忠於自己的著作。故事設置在維斯特洛的七個王國，那裡「夏天持續數十年，冬天能持續一輩子」，權力遊戲主要講述王國的七個貴族家族爭奪鐵王座的權力鬥爭；在劇集之初，來自維斯特洛北部區域的冰雪以及狹海以東大陸的威脅逐步加重。&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;線上直接看 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://i1.wp.com/www.lovemovie.url.tw/wp-content/uploads/2015/06/GoT2.jpg?resize=1600%2C1000&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Zhvua&quot; target=&quot;_blank&quot;&gt;冰與火之歌：權力的遊戲 Game of Thrones&lt;/a&gt;&amp;lt;h6;&amp;gt;冰與火之歌：權力的遊戲 Game of Thrones - LoveMovie &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;預告 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;https://i.ytimg.com/vi/8ixEWrTLiZg/hqdefault.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/CGv7s&quot; target=&quot;_blank&quot;&gt;Game Of Thrones - trailer - YouTube&lt;/a&gt;&amp;lt;h6;&amp;gt;Long trailer for upcoming HBO tv series.&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;部落格推薦 : &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://pic.pimg.tw/dos19891120/1341330519-3108051266.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/7JvEn&quot; target=&quot;_blank&quot;&gt;∥影集∥勝者王、敗者亡→Game of Thrones：冰與火之歌：權力的遊戲 @ Fun 4...&lt;/a&gt;&amp;lt;h6;&amp;gt;【製作：HBO，播出：2011至今（第四季）】 【主演：Sean Bean、Jennifer Ehle、Richard Madden、Kit Harington..】 前一陣子不小心掉入美劇這個大洞的&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://www.takobear.tw/wp-content/uploads/2015/08/game-of-thrones.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/EnvF9&quot; target=&quot;_blank&quot;&gt;《權力的遊戲》全盤解讀 @ 傅葉的美劇評論 :: 痞客邦 PIXNET ::&lt;/a&gt;&amp;lt;h6;&amp;gt;在談這齣劇之前，我們必須先說，這個劇名《權力的遊戲》實在太小看了這部戲的內容，如果只是權力的爭奪，那《紙牌屋》就已足夠，這部劇集不會橫跨數大洲，成為世界美劇迷盜版下載的第一名，也不足以反映這部戲的原著&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div&gt;&lt;img src=&quot;http://1.bp.blogspot.com/-jIkn5-EzDcw/VJ9-WLcSTGI/AAAAAAAAArU/AArKRjLeEGI/s1600/jason-momoa01.jpg&quot; alt=&quot;Mountain View&quot; /&gt;&lt;div&gt;&lt;a href=&quot;http://boo.tw/Bgvzl&quot; target=&quot;_blank&quot;&gt; 【美劇心得】《Game of Thrones：冰與火之歌-權力遊戲》第一季影評 ...&lt;/a&gt;&amp;lt;h6;&amp;gt;基本上來說，第一季主要的視角是集中在House of Stark史塔克家族，領主艾德史塔克（西恩賓Sean Bean飾）是國王羅勃的生死兄弟，過去一同推翻瘋王Mad King，重新建立七大王國的秩序。故事主軸分成三條，第一條線是現任御...&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 17 Aug 2015 19:58:19 +0800</pubDate>
+        <link>http://www.takobear.tw/2015/08/17/e5-86-b0-e8-88-87-e7-81-ab-e4-b9-8b-e6-ad-8c-game-of-thrones.html</link>
+        <guid isPermaLink="true">http://www.takobear.tw/2015/08/17/e5-86-b0-e8-88-87-e7-81-ab-e4-b9-8b-e6-ad-8c-game-of-thrones.html</guid>
+        
+        
+        <category>美劇</category>
+        
+      </item>
+    
+  </channel>
+</rss>

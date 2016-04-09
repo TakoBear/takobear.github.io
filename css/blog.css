@@ -1,0 +1,58 @@
+/* header */
+
+.site-header {
+  background-color: #f9f9f9;
+}
+
+.site-header a:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.site-title {
+  font-weight: bold;
+}
+
+.site-nav .page-link {
+  color: #a2a2a2;
+}
+
+/* footer */
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: .3em;
+  color: #828282;
+}
+
+.contact-list a:hover {
+  color: #fff;
+}
+
+.username {
+  color: #828282;
+}
+
+a:hover .username  {
+  color: #fff;
+}
+
+.footer-col-right {
+  float: right;
+}
+
+.footer-license {
+  text-align: center;
+  color: #828282;
+}
+
+/* category */
+.category-posts {
+  list-style-type: none;
+  margin-left: 0px;
+}
+
+.category-post {
+  margin-bottom: .3em;
+}

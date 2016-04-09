@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>OSX APP 教學 Part9-Bindings</title>
+  <meta name="description" content="本次教學目標：	透過修改 Bindings 的選項，連結程式物件與視圖元件。	了解 NSUserDefaults。操作環境：OS X Version 10.9.1Xcode Version 5.1 (5B130a)OS X 支援 bindings 的功能，在開發 OS X 程式時，可以在視圖設計畫面，透過元件 B...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/04/26/osx-app-part9-bindings.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">OSX APP 教學 Part9-Bindings</h1>
+    <p class="post-meta"><time datetime="2014-04-26T23:38:12+08:00" itemprop="datePublished">Apr 26, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7466325_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>本次教學目標：
+<p><ol>
+<p>	<li>透過修改 Bindings 的選項，連結程式物件與視圖元件。</li></p>
+<p>	<li>了解 NSUserDefaults。</li></p>
+<p></p>
+<p>操作環境：</p>
+<p>OS X Version 10.9.1</p>
+<p>Xcode Version 5.1 (5B130a)</p>
+<p>OS X 支援 bindings 的功能，在開發 OS X 程式時，可以在視圖設計畫面，透過元件 Bindings 頁面修改選項，來連結程式物件與視圖元件。可以在某些情況下減少開發所需要撰寫的程式碼。</p>
+<p>本次教學延續使用 <a title="" href="http://www.takobear.weebly.com/12/post/2014/04/osx-app-part7-drawrect.html" target="_blank">OSX APP 教學 Part7-DrawRect</a> 的專案，在視窗中加上拉桿。使用者可以透過拖拉拉桿來變更顯示的 Label 的字體大小。</p>
+<p></p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><h2><strong>建立 OS X Application 專案</strong></h2></p>
+<p><div>本次延續使用<a title="" href="http://www.takobear.weebly.com/12/post/2014/04/osx-app-part7-drawrect.html" target="_blank">OSX APP 教學 Part7-DrawRect</a>的專案，不再額外新建。</div></p>
+<p><h2><strong>設計版面(layout)</strong></h2></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7111605_orig.png" alt="图片" /></a>
+<p><div>加入 Horizontal Slider 元件。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9936795_orig.png" alt="图片" /></a>
+<p><div>修改 Horizontal Slider 的屬性。</div></p>
+<p></p>
+<p></p>
+<p><div>Min Value:1
+<p>Max Value:55</p>
+<p>Current Value:1</p>
+<p>勾選 Continuous。勾選 Continuous 的意思是立即更新程式物件或視圖元件，如果沒有勾選這個選項的話，會等到使用者停止操作元件的動作時才更新程式物件或視圖元件。</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7043052_orig.png" alt="图片" /></a>
+<p><div>修改 Bindings 選項。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2339044_orig.png" alt="图片" /></a>
+<p><div>點開 Value，勾選 Bind to Share User Defaults Controller。並在 Model key Path 欄位中輸入 fontSize。</div></p>
+<p></p>
+<p></p>
+<p><div>本次教學將利用 NSUserDefaults 儲存變數 fontSize。NSUserDefaults 讓開發者使用鍵值對應的方式存取資料，而且這些資料會自動儲存起來，以供下次程式開啟時使用。NSUserDefaults 物件無法讓 Bindings 的選項設定連結，但是我們可以透過 NSDefaultsController 來連結。NSDefaultsController 的 values 方法可以取得 NSUserDefaults 的 property，再以 fontSize 為 key 取得所要連結的值。
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5963241_orig.png" alt="图片" /></a>
+<p><div>修改 Label 的屬性，勾選 Continuous。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2152355_orig.png" alt="图片" /></a>
+<p><div>接著修改 Label 的 Bindings 選項。點開在 Font 區塊中的 Font Size，勾選 Bind to Share User Defaults Controller。並在 Model key Path 欄位中輸入 fontSize。</div></p>
+<p></p>
+<p></p>
+<p><h2><strong>測試結果</strong></h2></p>
+<p><div>接下來測試一下完成的程式。
+<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
+<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6711246_orig.png" alt="图片" /></a>
+<p><div>一開始字體大小為1。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2766029_orig.png" alt="图片" /></a>
+<p><div>隨著拖拉拉桿，字體大小也會立即改變。</div></p>
+<p></p>
+<p></p>
+<p><h2><strong>後續討論</strong></h2></p>
+<p><div>除了單純數值的 bindings 外，bindings 也可以設定陣列等物件，可以更方便呈現在 NSTableView 的資料。其他更多的資訊請參考文末連結。關於這次的Sample Code 下載：
+<p><a title="" href="https://github.com/TakoBear/OSXHelloBindings" target="_blank">https://github.com/TakoBear/OSXHelloBindings</a></p>
+<p></p>
+<p><div>
+<p><div id="610053597799961784" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><h2><strong>參考</strong></h2></p>
+<p><div><a href="https://developer.apple.com/library/mac/documentation/General/Devpedia-CocoaApp-MOSX/Bindings.html" target="_blank">Cocoa Application Competencies for OS X</a>
+<p><a href="https://developer.apple.com/library/mac/documentation/cocoa/reference/ApplicationKit/Classes/NSUserDefaultsController_Class/Reference/Reference.html" target="_blank">NSUserDefaultsController Class Reference</a></p>
+<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/nsuserdefaults_Class/Reference/Reference.html" target="_blank">NSUserDefaults Class Reference</a></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></ol></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/04\/26\/osx-app-part9-bindings\/";
+        this.page.identifier = "357 http:\/\/www.takobear.tw\/201702608526356260322804024687\/osx-app-part9-bindings";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

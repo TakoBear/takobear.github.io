@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室: Mac開發 - Xcode 5 外掛: Hello World</title>
+  <meta name="description" content="Bear跟一些朋友開發App一陣子後, 常會覺得Xcode似乎應該要更好(雖然Xcode 5 一天到晚當掉 + 讓iOS 7 裝置當機的情況不少見...)想要提高開發速度, 恐怕是得要從工具開始先著手了, 這篇開始Bear實驗室除了介紹Mac App的開發外也會介紹如何開發Mac上既有程式的外掛喔!注意: 閱讀本...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/03/02/bear-mac-xcode-5-hello-world.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室: Mac開發 - Xcode 5 外掛: Hello World</h1>
+    <p class="post-meta"><time datetime="2014-03-02T00:10:03+08:00" itemprop="datePublished">Mar 2, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1748923_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>Bear跟一些朋友開發App一陣子後, 常會覺得Xcode似乎應該要更好
+<p>(雖然Xcode 5 一天到晚當掉 + 讓iOS 7 裝置當機的情況不少見...)</p>
+<p>想要提高開發速度, 恐怕是得要從工具開始先著手了, 這篇開始Bear實驗室除了介紹Mac App的開發外</p>
+<p>也會介紹如何開發Mac上既有程式的外掛喔!</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>
+<p><div id="990838515485343533" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>注意: 閱讀本篇教學前, 務必先閱讀完 <a href="http://www.takobear.weebly.com/12/post/2014/02/bear-mac-xcode-5-plugin-for-xcode-5-xcode-template.html" target="_blank">Bear實驗室-如何開發Xcode 5 外掛</a> 一文第一篇的教學, 我們目標很簡單,
+<p>在Xcode最上面一排的Menu上的 "File" 新增一列按鈕, 按下去以後會跳出"Hello World"的字樣</p>
+<p>就這麼簡單的目標XD</p>
+<p>Bear先假設大家看了上篇文章的教學, 現在就創建一個新的Xcode 5 外掛專案吧!</p>
+<p>這次Bear把這個專案名稱命名為SimpleAlertPlugin, 依照以下步驟進行就可以了</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2285099_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>先選擇Xcode5-Plugin的範本, 點選Next進行下一步</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5130236_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>好....其實今天的教學只有到這裡...
+<p>Bear只是打算給大家看看怎麼新增一個Plugin而已 (被毆飛不過第一個教學呢, 確實沒打算跟大家說要寫什麼程式碼XD</p>
+<p>倒是要跟大家解析一下Xcode的外掛程式是要怎麼運行的,</p>
+<p>畢竟因為我們是使用一般的Open Source所封裝的範本, 還是好好理解一下這架構吧!</p>
+<p>============================================</p>
+<p>回顧分隔線</p>
+<p>============================================</p>
+<p>傳統上, Xcode 4.x版以前的外掛要開發時, 需要做以下的設定:</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7306742_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>傳統的外掛開發上, 是要在Framework &amp; Library上選擇Bundle為基礎,
+<p>之後再Plist的部分進行設定, 而Xcode 5的設定上則需要注意以下幾個數值</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7593284_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>其實只要有這三個數值設定, 基礎的外掛開發就算是設定完成了</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7792717_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>這邊則是告訴你安裝外掛所在的位置, 參考一下就行了</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9855239_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>Build Setting中的Package選項中, Product Name是指外掛的名稱, Wrapper Extension則是外掛的副檔名
+<p>理論上大家都完全不需要修改到這邊的設定的</p>
+<p>在Xcode 4左右的版本呢, 還需要加上兩個使用者設定參數</p>
+<p><ul>
+<p>	<li><strong>GCC_ENABLE_OBJC_GC</strong> 需要設定為 <strong>supported</strong></li></p>
+<p>	<li><strong>GCC_MODEL_TUNING</strong> 需要設定為 <strong>G5</strong></li></p>
+<p></p>
+<p>不過Xcode 5 是都不需要這些設定的, 反正Open Source也都幫我們幫裝好了XD</p>
+<p>另外一個提醒事項, 使用這個範本所建立的外掛, 是使用ARC所建立而成的</p>
+<p>要改成MRC的話, 請參考<a href="http://www.takobear.weebly.com/12/post/2013/10/-xcodemrc.html" target="_blank">這篇連結</a></p>
+<p>=====================================</p>
+<p>回顧歷史結束</p>
+<p>=====================================</p>
+<p>介紹完這些內容以後, 讓我們真正進入到主題啦!</p>
+<p>我們希望能在Xcode開啟的時候, 能有以下畫面的產生</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2974046_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4697938_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>按下"Do Action"以後, 跳出一個Hello World 的字樣
+<p>那我們來看, 這樣的程式碼是怎麼寫出來的呢?跟App不同, 在外掛的程式中並沒有所謂的main.m</p>
+<p>也沒有AppDelegate的概念, 大家可以想成類似在Linux上開發Package一樣的概念, 就是單純的需要header跟實作檔而已</p>
+<p>先看看.h檔的內容吧</p>
+<p></p>
+<p><div>
+<p><div id="437503696492175803" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>很單純吧! 外掛的開發上著重的也就是AppKit跟Foundation framework這兩塊
+<p>依照需求才可能加入Cocoa.h的功能, 不過基礎的功能是不需要的!</p>
+<p>接下來解析一下實作的方式吧</p>
+<p><div>
+<p><div id="471945011146955830" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>一個外掛的程式進入點就是從 pluginDidLoad開始的
+<p>這邊有寫過iOS Singleton的朋友應該不陌生吧, 沒錯這就是一個Singleton的用法</p>
+<p>(不清楚的朋友, Bear後續會在iOS內文中介紹)</p>
+<p>也就是說, 對於你的一款App, 也只會有這唯一一款的外掛物件, 那當然就是Singleton囉!!</p>
+<p>注意他一開始是先用NSBundle取出目前你要安裝的App名稱,</p>
+<p>然後判斷App名稱是Xcode的時候, 才會做初始化的動作Bear小提醒: 因為範本都幫你做好了, Bear這邊只是在解釋程式碼而已XD</p>
+<p></p>
+<p><div>
+<p><div id="565877249514626950" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>先看initWithBundle的部分, 其實這邊只是單純的init, 跟把自身的property指定為本身的外掛bundle這邊範本很貼心的幫你先完成了NSMenuItem的安插
+<p>一開始會先取出App內有沒有名為 "File"的item, 也就是這段程式碼</p>
+<p>NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"File"];</p>
+<p>如果有的話, 才進行下一步動作,</p>
+<p>利用NSMenuItem的API : addItem 可以新增物件到列表上</p>
+<p>[[menuItem submenu] addItem:[NSMenuItem separatorItem]];</p>
+<p>這一行的意思也就是加入分隔線而已XD</p>
+<p>後面一段就是真正加入了一個名為Do Action的item, 他的action就是點下去以後會執行doMenuAction的動作</p>
+<p>最後再把它加到畫面列表這樣</p>
+<p>再看一下doMenuAction的內容,</p>
+<p>NSAlert就可以想成是UIAlertView, runModal就是讓Alert內容給跳出來顯示</p>
+<p>詳細的API Bear之後會介紹, 這邊大家就先玩玩看吧!!</p>
+<p>到這邊程式碼就介紹完了, 那得談一下, 外掛這東西該怎麼Debug呢?</p>
+<p>很遺憾............你是沒辦法做到的</p>
+<p>外掛程式只能依照以下步驟進行:</p>
+<p><strong>1. 按下 command + b 進行建置(Build)</strong></p>
+<p><strong>2. 關閉Xcode </strong></p>
+<p><strong>3. 重新啟動Xcode </strong></p>
+<p>只能夠透過這樣的方式進行...這樣麻煩的方式, Bear相信這也是為什麼Xcode的外掛會如此稀少的原因之一</p>
+<p>不過, 還是有辦法讓我們檢查Xcode進行時候是不是有任何問題的</p>
+<p>在Xcode開起來以前, 先在終端機執行這一段command</p>
+<p></p>
+<p><div>
+<p><div id="101150724719955914" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>執行後不要關閉終端機, 接下來再點開你的Xcode就行了,
+<p>如果遇到一些錯誤的話, 終端機會告訴你發生什麼錯誤,</p>
+<p>例如以下畫面</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1341216_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>如果建制出來的外掛有錯誤該怎麼辦呢?
+<p>那就該到安裝好的資料夾把裝好的外掛檔案給刪除, 重新執行Xcode後就沒問題了</p>
+<p>由於這樣的步驟太過麻煩, Bear寫好了一份shell script, 大家直接使用後就行囉!</p>
+<p><div>
+<p><div id="903383434641425748" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>Bear把這個script命名為pluginbuild.sh, 執行以後會先列出你目前有的外掛
+<p>在輸入你要刪除的外掛名稱後, 就會幫你刪除掉那個外掛了</p>
+<p>執行的畫面可以參考下圖內容</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3786007_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>呼, 到這邊總算大功告成了!!!
+<p>有興趣的朋友, 可以到以下連結把Script跟這次的專案一起下載下來噢!<a title="" href="https://github.com/TakoBear/XcodeSimpleAlertDemo.git" target="_blank">https://github.com/TakoBear/XcodeSimpleAlertDemo.git</a></p>
+<p>喜歡這篇文章嗎? 有任何問題歡迎與我們聯繫噢!!</p>
+<p>趕快加入Takobear粉絲團獲得更多最新消息吧!</p>
+<p></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></ul></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/03\/02\/bear-mac-xcode-5-hello-world\/";
+        this.page.identifier = "421 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-mac-xcode-5-hello-world";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

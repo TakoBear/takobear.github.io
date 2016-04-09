@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>OSX APP 教學 Part8-Status Item</title>
+  <meta name="description" content="本次教學目標：	了解如何設置 Status Item操作環境：OS X Version 10.9.2Xcode Version 5.1 (5B130a)有些時候我們想要在狀態列(Status Bar)上加提供選單的Status Item，讓使用者可以快速地使用或是設定程式功能。例如下圖大家常見的LINE, Eve...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/04/20/osx-app-part8-status-item.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">OSX APP 教學 Part8-Status Item</h1>
+    <p class="post-meta"><time datetime="2014-04-20T22:29:16+08:00" itemprop="datePublished">Apr 20, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9351752_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>本次教學目標：
+<p><ol>
+<p>	<li>了解如何設置 Status Item</li></p>
+<p></p>
+<p>操作環境：</p>
+<p>OS X Version 10.9.2</p>
+<p>Xcode Version 5.1 (5B130a)</p>
+<p>有些時候我們想要在狀態列(Status Bar)上加提供選單的Status Item，讓使用者可以快速地使用或是設定程式功能。</p>
+<p>例如下圖大家常見的LINE, Evernote, 或是Skitch的做法就是這樣做到的喔!</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2759959_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>本次教學將教各位如何讓程式加入最基本的 Status Item。</div></p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><h2><strong>建立 OS X Application 專案</strong></h2></p>
+<p><div>這次我們建立一個名為 HelloStatusItem 的專案
+<p>請參考教學 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a> 建立新專案</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/955160_orig.png" alt="图片" /></a>
+<p><div>新專案名為 HelloStatusItem。</div></p>
+<p></p>
+<p></p>
+<p><div>新增 MainWindowController，整理專案結構如下：</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7515651_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><h2><strong>設計版面(layout)</strong></h2></p>
+<p><div>在本次教學中，我們會在 Main.xib 建立新的 Menu，這是給稍後建立的 Status Item用的。</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1006813_orig.png" alt="图片" /></a>
+<p><div>移除 Main.xib 的 Window 元件。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6370113_orig.png" alt="图片" /></a>
+<p><div>加入 Menu 元件。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2705170_orig.png" alt="图片" /></a>
+<p><div>將 Menu 中第一個選項的 Title 改成 open window。(如果屬性欄位沒有出現，請重新開啓Xcode)</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6453158_orig.png" alt="图片" /></a>
+<p><div>在 MainWindowController.xib 的 window 上加入 Label。</div></p>
+<p></p>
+<p></p>
+<p><div>接下來加入給 Status Item 圖示用的圖檔。</div></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8684912_orig.png" alt="图片" /></a>
+<p><div>對 Resources Group 點擊右鍵，點選 Add Files to "HelloStatusItem"…。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4198347_orig.png" alt="图片" /></a>
+<p><div>加入 icon 目錄。(請從至文末連結下載範例專案，圖片附在範例專案中。)</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9396276_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><h2><strong>編寫邏輯</strong></h2></p>
+<p><div>這次邏輯主要只有在 bearAppDelegate.h/.m。bearAppDelegate.h
+<p></p>
+<p><div>
+<p><div id="525829886581814321" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>bearAppDelegate.m</div></p>
+<p><div>
+<p><div id="332436419401233405" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><h2><strong>連接元件</strong></h2></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1898760_orig.png" alt="图片" /></a>
+<p><div>在 Main.xib 對 bear App Delegate 點擊右鍵，將 theMenu 連接至之前新加入的 Menu；而 openWindow: 連接至 Menu 的第一個選項。</div></p>
+<p></p>
+<p></p>
+<p><h2><strong>測試結果</strong></h2></p>
+<p><div>接下來測試一下完成的程式。
+<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
+<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3582100_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9114796_orig.png" alt="图片" /></a>
+<p><div>於狀態列上多顯示了一個圖示。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3120840_orig.png" alt="图片" /></a>
+<p><div>點擊圖示後，會切換圖示並顯示選單。</div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/657676_orig.png" alt="图片" /></a>
+<p><div>點擊 open window 後，顯示視窗。關閉視窗後，狀態列的圖示仍在。</div></p>
+<p></p>
+<p></p>
+<p><h2><strong>後續討論</strong></h2></p>
+<p><div>可以在狀態列加入 StatusItem，當然也可以移除，以下便是範例程式碼。</div></p>
+<p><div>
+<p><div id="693008485224036337" align="left"><script>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>關於這次的Sample Code 下載：
+<p><a title="" href="https://github.com/TakoBear/OSXHelloStatusItem" target="_blank">https://github.com/TakoBear/OSXHelloStatusItem</a></p>
+<p><div>
+<p><div id="871828882569259806" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><h2><strong>參考</strong></h2></p>
+<p><div><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/Reference/ApplicationKit/Classes/NSStatusBar_Class/Reference/Reference.html" target="_blank">NSStatusBar Class Reference</a>
+<p><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/Reference/ApplicationKit/Classes/NSStatusItem_Class/Reference/Reference.html" target="_blank">NSStatusItem Class Reference</a></p>
+<p><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/Conceptual/StatusBar/StatusBar.html" target="_blank">Status Bar Programming Topics</a>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
+<p></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></ol></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/04\/20\/osx-app-part8-status-item\/";
+        this.page.identifier = "365 http:\/\/www.takobear.tw\/201702608526356260322804024687\/osx-app-part8-status-item";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

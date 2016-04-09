@@ -1,0 +1,56 @@
+.paginate-block {
+    display: inline-block;
+    width: 100%;
+    text-align:center;
+}
+
+.pagination {
+    display: inline-block;
+    margin: 0px auto;
+}
+
+.pagination ul {
+    display: inline-block;
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {display: inline;}
+
+.pagination ul li a {
+    width: 18px;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination ul li a:hover {
+    color: white;
+    background-color: gray;
+}
+
+.pagination ul li .current-page {
+    width: 18px;
+    color: white;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+
+    background-color: gray;
+}
+
+.pagination .previous {
+    display: inline;
+    float: left;
+    padding: 8px 8px;
+    text-decoration: none;
+}
+
+.pagination .next {
+    display: inline;
+    float: left;
+    padding: 8px 8px;
+    text-decoration: none;
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>海神「波賽頓」來勢洶洶，POS機新型病毒大舉入侵！</title>
+  <meta name="description" content="商業用的POS機系統一直以來都是許多駭客的目標，就如同會有人想搶銀行，有許多惡意駭客也都會希望藉由攻擊他們獲得利益，前陣子才有銀行遇到「宙斯（Zeus）」，最近資安人員又發現這個變種過的病毒「波賽頓（PoSeidon）」，這次他的複雜性與影響規模可是超乎我們想像啊！  這項研究由思科Cisco的Talos安全智慧...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2015/03/30/pos-2.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">海神「波賽頓」來勢洶洶，POS機新型病毒大舉入侵！</h1>
+    <p class="post-meta"><time datetime="2015-03-30T07:54:18+08:00" itemprop="datePublished">Mar 30, 2015</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div>
+<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9779860_orig.jpg" alt="图片" /></a></p>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p>商業用的POS機系統一直以來都是許多駭客的目標，就如同會有人想搶銀行，<br /></p>
+<p>有許多惡意駭客也都會希望藉由攻擊他們獲得利益，前陣子才有銀行遇到「宙斯（Zeus）」，<br /></p>
+<p>最近資安人員又發現這個變種過的病毒「波賽頓（PoSeidon）」，這次他的複雜性與影響規模可是超乎我們想像啊！</p>
+<p></p>
+<p><div>
+<p><!--BLOG_SUMMARY_END--></p>
+<p></p>
+<p><div>
+<p><div id="670938488577317371" align="left">
+<p><script async=""></p>
+<p>]]></script><!-- takobear 336*280 --> <script></p>
+<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>]]></script><script async=""></p>
+<p>]]></script><!-- takobear 336*280 --> <script></p>
+<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>]]></script></p>
+<p></p>
+<p><div>
+<p>這項研究由思科Cisco的Talos安全智慧團隊（Talos Security Intelligence Group）所發現，<br /></p>
+<p>被稱為波賽頓（PoSeidon）的這個病毒被設計出具備有惡名昭彰的銀行特洛伊木馬「Zeus」以及「BlackPOS」特性，<br /></p>
+<p>這兩套曾經從美國的零售商搶走幾百萬美元的紀錄。<br /><br /></p>
+<p>「波賽頓」會透過取得存在POS系統的記憶體來得到客戶端的信用卡序列，<br /></p>
+<p>之後會透過「Luhn 演算法」來核對信用卡是否為真（包含Visa、MasterCard、AMEX以及Discover），<br /></p>
+<p>驗證通過以後，這些信用卡資料就會被傳送到俄羅斯的網路上，賣到黑市資料上。<br /></p>
+<p><div>
+<p><div>
+<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6324349_orig.jpg" alt="图片" /></a></p>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><blockquote>
+<p>" 惡意的攻擊者會持續以POS系統為目標並且放出混淆的技巧來規避偵查，只要POS的攻擊持續有回應，攻擊者就能在用來發展出新的病毒系列來變形，" 由思科資人員發表。</p>
+<p></p>
+<p><div>
+<p><div>
+<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8658317_orig.png" alt="图片" /></a></p>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p>關於波賽頓這個病毒主要由Load Binary所組成，他會將被攻擊的機器嘗試重開機或使用者登出的時候進行阻斷，<br /></p>
+<p>在這個時候Loader會收到來自於控制端伺服器的命令接受中，同時也會一起被下載的FindStr檔案中，<br /></p>
+<p>也安裝了一個Keylogger部件，主要是用來掃描PoS機的信用卡號碼序列，<br /></p>
+<p>最後就交由Luhn演算法來把加密後的資訊送到俄羅斯的域名。<br /><br /></p>
+<p>如果你發現封包有以下網域，請注意你們的網路是否也已經遭駭客入侵：<br /><ul><li><em>linturefa.com</em></li>
+<p><li><em>xablopefgr.com</em></li></p>
+<p><li><em>tabidzuwek.com</em></li></p>
+<p><li><em>lacdileftre.ru</em></li></p>
+<p><li><em>tabidzuwek.com</em></li></p>
+<p><li><em>xablopefgr.com</em></li></p>
+<p><li><em>lacdileftre.ru</em></li></p>
+<p><li><em>weksrubaz.ru</em></li></p>
+<p><li><em>linturefa.ru</em></li></p>
+<p><li><em>mifastubiv.ru</em></li></p>
+<p><li><em>xablopefgr.ru</em></li></p>
+<p><li><em>tabidzuwek.ru</em></li></p>
+<p></p>
+<p><div>
+<p><div>
+<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/970540_orig.png" alt="图片" /></a></p>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p>Loader所在的位置可以參考到上圖，大家可以注意是否有WinHost.exe或是WinHost32.exe在執行，<br /></p>
+<p>如果這兩個程式都沒在執行，他會把自己給複製到 %SystemRoot%\System32\WinHost.exe的位置，<br /></p>
+<p>讓他跟WinHost的名字一樣，之後Loader就會啟動它，做第一層的欺騙，<br /></p>
+<p>只看處理序的話可能會忽略掉以為沒有遭受病毒攻擊。<br /><br /></p>
+<p>有關這次POS病毒詳細分析的資料可以參考Cisco官方部落格的說明，<br /></p>
+<p>內容有包含提到解決的方案，如果你們的公司有發現類似問題請儘速處理喔！<br /><a href="http://blogs.cisco.com/security/talos/poseidon" target="_blank" title=""><strong>&gt;&gt;點我到Cisco 波賽頓病毒報告&lt;&lt;</strong></a></p>
+<p></p>
+<p><div>
+<p><div id="914406068749979052" align="left">
+<p><div id="fb-root"></div><script></p>
+<p>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
+<p>]]></script><div data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
+<p><div>
+<p>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></ul></p></div></p></div></p></div></p></blockquote></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2015\/03\/30\/pos-2\/";
+        this.page.identifier = "785 http:\/\/www.takobear.tw\/201702608526356260322804024687\/pos";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

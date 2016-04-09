@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Xcode 6.3 beta 加入了閃退報告(Crash log report)系統！</title>
+  <meta name="description" content="         大年初六開工的第一天，不只是台灣很忙，老美那邊很多工作要做，Apple今天發佈了第二版的OS X10.10.3預先測試版， 還有iOS 8.3 Beta 2的測試版本給開發者們，除此之外，開發者們最需要使用的Xcode 6.3 也進入了beta 2的階段！ 根據目前的資料，最新版的Xcode能夠...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2015/02/24/xcode-6-3-beta-crash-log-report-2.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Xcode 6.3 beta 加入了閃退報告(Crash log report)系統！</h1>
+    <p class="post-meta"><time datetime="2015-02-24T08:09:37+08:00" itemprop="datePublished">Feb 24, 2015</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div> <div> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5076079_orig.png" alt="图片" /></a>  <div></div> </div> </div>  <div> 大年初六開工的第一天，不只是台灣很忙，老美那邊很多工作要做，Apple今天發佈了第二版的OS X10.10.3預先測試版，<br /> 還有iOS 8.3 Beta 2的測試版本給開發者們，除此之外，開發者們最需要使用的Xcode 6.3 也進入了beta 2的階段！<br /> 根據目前的資料，最新版的Xcode能夠讓大家在管理開發出來的App搭配上一組閃退報告回饋系統，<br /> 這組系統就讓你自動追蹤到使用者的App發生什麼問題喔！ </div>  <div> <!--BLOG_SUMMARY_END--> </div>  <div> <div id="130135326350210257" align="left"> <script async=""> ]]></script><!-- takobear 336*280 --> <script> (adsbygoogle = window.adsbygoogle || []).push({}); ]]></script><script async=""> ]]></script><!-- takobear 336*280 --> <script> (adsbygoogle = window.adsbygoogle || []).push({}); ]]></script></div> </div>  <div> 對開發者來說，這個功能也真是越來越方便，從介面上的顯示來看，<br /> 你可以從code stack上面直接看到是哪一段method出了問題，<br /> 也就是說在Xcode上面可以更容易追蹤到App的發生的狀況做改善，<br /><br /> 對一般的使用者來說，這點當然是能夠提升你手上App的品質囉！ （只要開發者有心要把東西做好的話...）<br /> 這項新功能名為Crashes Organizer，可以幫你追蹤在App Store上發佈的App以及TestFlight上的beta測試版本！！<br /> </div>  <div> <div> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4639505_orig.png" alt="图片" /></a>  <div></div> </div> </div>  <div> 其實這個功能在去年6月的世界開發者大會(WWDC)上就有宣布了，<br /> 搭配能夠讓使用者預先測試的Testflight工具一起宣布，而到Xcode 6.3看起來終於要支援這項功能，<br /> 之後追蹤這些上架App的狀況可以不用再透過一些第三方的開發套件，利用Apple提供的Xcode工具就能辦到囉！ </div>  <div> <div id="975176482270066467" align="left"> <div id="fb-root"></div><script> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk')); ]]></script><div data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466"> <div> 由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。 </div> </div> </div> </div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2015\/02\/24\/xcode-6-3-beta-crash-log-report-2\/";
+        this.page.identifier = "808 http:\/\/www.takobear.tw\/201702608526356260322804024687\/xcode-63-beta-crash-log-report";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

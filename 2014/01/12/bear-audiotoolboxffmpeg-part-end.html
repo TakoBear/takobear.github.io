@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear 實驗室: 用AudioToolbox與FFmpeg制作網路收音機 [Part End]</title>
+  <meta name="description" content="感謝各位網友支持!Bear實驗室這次以聲音播放為主題的iOS教學將走到尾聲請大家千萬別錯過這篇教學,我們將帶大家把iPhone做成網路收音機!這邊重新整理一下至此為止的三篇教學:0. Bear 實驗室: 如何使用ffmpeg 在iOS 6.11. Bear實驗室: 用iPhone播放MP3音樂2. Bear實驗室...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/bear-audiotoolboxffmpeg-part-end.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear 實驗室: 用AudioToolbox與FFmpeg制作網路收音機 [Part End]</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:40:10+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6255484_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>感謝各位網友支持!
+<p>Bear實驗室這次以聲音播放為主題的iOS教學將走到尾聲</p>
+<p>請大家千萬別錯過這篇教學,</p>
+<p>我們將帶大家把iPhone做成網路收音機!</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>這邊重新整理一下至此為止的三篇教學:
+<p><a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ffmpeg-ios-61.html" target="_blank">0. Bear 實驗室: 如何使用ffmpeg 在iOS 6.1</a></p>
+<p><a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-iosaudiotoolboxmp3-part-1.html" target="_blank">1. Bear實驗室: 用iPhone播放MP3音樂</a></p>
+<p><a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-iosaudiotoolbox-ffmpeg-part-2.html" target="_blank">2. Bear實驗室: 以FFmpeg製作音樂播放器</a>有了前兩篇的基礎, 進入接下來的教學大家應當能比較快上手!</p>
+<p>首先必須先介紹我們這次的範例, 以網路收音機為例</p>
+<p>一般常見的播放方式會有以下兩個條件:</p>
+<p><ul>
+<p>	<li><strong>使用 mms 協定 (以這次範例為例:   mms://bcr.media.hinet.net/RA000009)</strong></li></p>
+<p>	<li><strong>使用 WMA  格式</strong></li></p>
+<p></p>
+<p>我們要製作成的範例運作起來參考這篇內容一開始的影片就行了</p>
+<p><a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-iosaudiotoolbox-ffmpeg-part-2.html" target="_blank">Bear實驗室: 以FFmpeg製作音樂播放器</a></p>
+<p>上一篇我們講到底層的Player是如何實作出來以及他的架構</p>
+<p>這一篇我們就得提到他是如何應用在實際的App上呢</p>
+<p>以一個單一的ViewController為例</p>
+<p>我們有以下的構造</p>
+<p><strong>畫面上會有一個按鈕Button, 按下去後會播放音樂(不管是網路端或是本地端的音樂)</strong></p>
+<p><strong>再按一下會停止播放</strong></p>
+<p><strong>我們要做的也就是這樣的過程</strong></p>
+<p>但是因為底層的架構沒有包裝完全, 這邊還有一點ffmpeg的影子存在</p>
+<p>請大家稍稍擔待一點!</p>
+<p>那麼, 我們就開始囉!</p>
+<p>以下是ViewController的架構</p>
+<p>#import "ViewController.h"</p>
+<p>#include "libavformat/avformat.h"</p>
+<p>#include "libswscale/swscale.h"</p>
+<p>#import "Audio/AudioPacketQueue.h"</p>
+<p>#import "Audio/AudioPlayer.h"</p>
+<p>#import "Audio/AudioUtilities.h"</p>
+<p>NSString *const kAudioTestPath = @"mms://bcr.media.hinet.net/RA000009";</p>
+<p>typedef enum {</p>
+<p>kTCP = 0,</p>
+<p>kUDP</p>
+<p>}kNetworkWay;</p>
+<p>@interface ViewController ()</p>
+<p>{</p>
+<p>AVFormatContext *pFormatCtx;</p>
+<p>AVCodecContext *pAudioCodeCtx;</p>
+<p>int    audioStream;</p>
+<p>AudioPlayer *aPlayer;</p>
+<p>BOOL  isStop;</p>
+<p>BOOL  isLocalFile;</p>
+<p>}</p>
+<p>// 決定是否要播放音樂, 或是停止播放音樂的method</p>
+<p>- (void)playAudio:(id)sender;</p>
+<p>// 停止播放音樂的method</p>
+<p>- (void)stopPlayAudio;</p>
+<p>// 用來建立Codec Context的method, 如果不先建立Context, 後面會無法進行播放解析, 可以決定由TCP傳輸或是UDP傳輸</p>
+<p>- (BOOL)initFFmpegAudioStream:(NSString *)filePath withTransferWay:(kNetworkWay)network;</p>
+<p>// 不斷讀取每一個frame直到讀完或是出錯, 或是使用者停止播放音樂</p>
+<p>- (void)readFFmpegAudioFrameAndDecode;</p>
+<p>// 停止播放音樂與終止FFmpeg</p>
+<p>- (void)stopFFmpegAudioStream;</p>
+<p>- (void)destroyFFmpegAudioStream;</p>
+<p>@end</p>
+<p>看到上面的method名稱與簡介</p>
+<p>這次的內容比之前簡單多了吧!</p>
+<p>不過還是要畫幾張結構圖讓大家理解每個method內具體做了些什麼事喔!</p>
+<p><strong>1. Play Button 按下的動作:  - (void) playAudio:(id)sender</strong></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3597593_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>這樣架構應該比較清楚了!?
+<p>那我們來實際觀察程式碼這邊的邏輯- (void)playAudio:(id)sender</p>
+<p>{</p>
+<p>UIButton *btn = (UIButton *)sender;</p>
+<p>  // 我們用目前按鈕的字串顯示為Stop還是Play來判斷要關閉還是播放音樂</p>
+<p>if ([btn.currentTitle isEqualToString:@"Stop"]) {</p>
+<p>[btn setTitle:@"Play" forState:UIControlStateNormal];</p>
+<p>       // 這邊要注意, 停止音樂的部分要到另一個執行緒去停止喔!</p>
+<p>dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{</p>
+<p>[self stopPlayAudio];</p>
+<p>});</p>
+<p>} else {</p>
+<p>// Succeed to play audio</p>
+<p>/// TODO: determine if this streaming support ffmpeg</p>
+<p> [btn setTitle:@"Stop" forState:UIControlStateNormal];</p>
+<p>         //同理, 到另一個執行緒去進行初始化Player, 播放等動作</p>
+<p>dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{</p>
+<p>// 這邊要進行初始化了, 我們設定連線方式用TCP方式</p>
+<p>if ([self initFFmpegAudioStream:kAudioTestPath withTransferWay:kTCP] == NO) {</p>
+<p>NSLog(@"Init ffmpeg failed");</p>
+<p>dispatch_async(dispatch_get_main_queue(), ^{</p>
+<p>[btn setTitle:@"Play" forState:UIControlStateNormal];</p>
+<p>});</p>
+<p>                return;</p>
+<p>}</p>
+<p>            // 利用initFFmpeg得出的codec context去初始化AudioPlayer</p>
+<p>aPlayer = [[AudioPlayer alloc] initAuido:nil withCodecCtx:(AVCodecContext *)pAudioCodeCtx];</p>
+<p>            // 拉回主執行緒進行播放</p>
+<p>dispatch_async(dispatch_get_main_queue(), ^{</p>
+<p>sleep(5);</p>
+<p>if ([aPlayer getStatus] != eAudioRunning) {</p>
+<p>[aPlayer play];</p>
+<p>}</p>
+<p>});</p>
+<p>            // Read Packet in another thread  </p>
+<p>           // 到另一個執行緒去讀取音訊的每一個frame</p>
+<p>             [self readFFmpegAudioFrameAndDecode];</p>
+<p>});</p>
+<p>}</p>
+<p>}</p>
+<p>目前為止大家對於按下按鈕執行的動作應當有初步的認識了!</p>
+<p>那Bear就要介紹一下個重要的method</p>
+<p><strong>2. 初始化FFmpeg的內容: </strong></p>
+<p><strong>- (BOOL)initFFmpegAudioStream:(NSString *)filePath withTransferWay:(kNetworkWay)network</strong></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9582450_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>開始解釋程式碼以前有幾點要先提醒的
+<p>(a). ffmpeg本身並不支援mms: 這樣開頭的url, 但是支援mmsh: ,</p>
+<p>所以我們要把他替換掉字串</p>
+<p>(至於為何可以直接替換而不受影響, 是因為微軟之後對於mms開頭的服務內本身也會支援mmsh, 對這部分有興趣的版友Bear可以在之後解釋這部分內容)(b). ffmpeg本身預設是UDP連線方式, 可能動作會很慢, 我們這邊範例有提供轉換成TCP的連線方式, 這次也是TCP方式進行</p>
+<p>- (BOOL)initFFmpegAudioStream:(NSString *)filePath withTransferWay:(kNetworkWay)network</p>
+<p>{</p>
+<p>NSString *pAudioInPath;</p>
+<p>AVCodec  *pAudioCodec;</p>
+<p>    // 這邊要比較輸入的檔案路徑內有沒有包含rtsp, mmsh 或是mms的字樣</p>
+<p>    // 有mms:的話, 要把他替換成mmsh: </p>
+<p>    // 其它以外的檔案路徑我們視為是本地端檔案, 用NSBundle 開啓檔案</p>
+<p>// Compare the file path</p>
+<p>     if (strncmp([filePath UTF8String], "rtsp", 4) == 0) {</p>
+<p>pAudioInPath = filePath;</p>
+<p>isLocalFile = NO;</p>
+<p>} else if (strncmp([filePath UTF8String], "mms:", 4) == 0) {</p>
+<p>pAudioInPath = filePath;</p>
+<p>pAudioInPath = [pAudioInPath stringByReplacingOccurrencesOfString:@"mms:" withString:@"mmsh:"];</p>
+<p>NSLog(@"Audio path %@", pAudioInPath);</p>
+<p>isLocalFile = NO;</p>
+<p>} else if (strncmp([filePath UTF8String], "mmsh:", 4) == 0) {</p>
+<p>pAudioInPath = filePath;</p>
+<p>isLocalFile = NO;</p>
+<p>} else {</p>
+<p>pAudioInPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:filePath];</p>
+<p>isLocalFile = YES;</p>
+<p>}</p>
+<p>    // Register FFmpeg  = &gt; 這邊很重要, 要先執行這兩個函數, 後面ffmpeg的操作函數才能起作用喔!</p>
+<p>    avcodec_register_all();</p>
+<p>av_register_all();</p>
+<p>if (isLocalFile == NO) {</p>
+<p>        // 如果檔案是遠端的檔案或是收音機串流服務, 要在初始化一個格式才行</p>
+<p>        avformat_network_init();</p>
+<p>}</p>
+<p>    // 初始化音訊格式, 同樣也是必須要執行的ffmpeg函數, 不然會無法操作!</p>
+<p>     @synchronized(self) {</p>
+<p>pFormatCtx = avformat_alloc_context();</p>
+<p>}</p>
+<p>    // 這邊要根據TCP連線或是UDP連線</p>
+<p>    // 注意因為ffmpeg預設就是走UDP連線, 會使進來的訊息品質變差或是有其他問題</p>
+<p>   // 我們特別要針對TCP作處理</p>
+<p>     switch (network) {</p>
+<p>case kTCP:</p>
+<p>{</p>
+<p>            // 針對tcp連線, 需要設定選項為rtsp_transport方式, 走tcp連線</p>
+<p>            // 使用方式類似Xcode內對於NSDictionary的操作</p>
+<p>             AVDictionary *option = 0;</p>
+<p>av_dict_set(&amp;option, "rtsp_transport", "tcp", 0);</p>
+<p>            // 這邊總算可以打開檔案了! 用avformat_open_input就能取得到目前檔案路徑的基本格式喔</p>
+<p>if (avformat_open_input(&amp;pFormatCtx, [pAudioInPath cStringUsingEncoding:NSASCIIStringEncoding], NULL, &amp;option) != 0) {</p>
+<p>NSLog(@"Could not open connection");</p>
+<p>return NO;</p>
+<p>}</p>
+<p>            // 結束以後別忘記把選項給釋放掉避免記憶體問題!</p>
+<p>av_dict_free(&amp;option);</p>
+<p>}</p>
+<p>break;</p>
+<p>case kUDP:</p>
+<p>{</p>
+<p>           // UDP 連線方式就不用設定了, 直接open吧</p>
+<p>if (avformat_open_input(&amp;pFormatCtx, [pAudioInPath cStringUsingEncoding:NSASCIIStringEncoding], NULL, NULL) != 0) {</p>
+<p>NSLog(@"Could not open connection");</p>
+<p>return NO;</p>
+<p>}</p>
+<p>}</p>
+<p>  break;</p>
+<p>}</p>
+<p>pAudioInPath = nil;</p>
+<p><strong>    // 取得由avformat_open_input得到的串流資訊</strong></p>
+<p>if (avformat_find_stream_info(pFormatCtx, NULL) &lt; 0) {</p>
+<p>NSLog(@"Could not find streaming information");</p>
+<p>return NO;</p>
+<p>}</p>
+<p>    // Dump Streaming information</p>
+<p>av_dump_format(pFormatCtx, 0, [pAudioInPath UTF8String], 0);</p>
+<p>    // 取得串流的第一個可用frame資訊, 用av_find_best_stream取得</p>
+<p>if ((audioStream = av_find_best_stream(pFormatCtx, AVMEDIA_TYPE_AUDIO, -1, -1, &amp;pAudioCodec, 0)) &lt; 0) {</p>
+<p>NSLog(@"Could not find a audio streaming information");</p>
+<p>return NO;</p>
+<p>} else {</p>
+<p>        // 成功取得串流資訊後, 先印出來讓我們瞭解一下情況</p>
+<p>NSLog(@"== Audio pCodec Information");</p>
+<p>NSLog(@"name = %s",pAudioCodec-&gt;name);</p>
+<p>NSLog(@"sample_fmts = %d",*(pAudioCodec-&gt;sample_fmts));</p>
+<p>if (pAudioCodec-&gt;profiles) {</p>
+<p>NSLog(@"Profile names = %@", pAudioCodec-&gt;profiles);</p>
+<p>} else {</p>
+<p>NSLog(@"Profile is Null");</p>
+<p>}</p>
+<p>        // 把取得到的串流資訊給全域變數的codec context, 這樣之後才能使用他的資訊離進行解析</p>
+<p>pAudioCodeCtx = pFormatCtx-&gt;streams[audioStream]-&gt;codec;</p>
+<p>        // 依據codec context所擁有的codec_id能找到他所應當有的解析方式</p>
+<p>       // 以此初始化全域的codec資訊, 之後解析時可以使用</p>
+<p>         pAudioCodec = avcodec_find_decoder(pAudioCodeCtx-&gt;codec_id);</p>
+<p>        // 接下來是正式打開codec了! 不要問小編為什麼叫做avcodec_open2.... opensource 經過很多人修改後總是會越來越糟的...</p>
+<p>if (avcodec_open2(pAudioCodeCtx, pAudioCodec, NULL) &lt; 0) {</p>
+<p>return NO;</p>
+<p>}</p>
+<p>}</p>
+<p>isStop = NO;</p>
+<p>return YES;</p>
+<p>}</p>
+<p>介紹完初始化的動作後</p>
+<p>就要進入到另一個執行緒內去不斷讀取收到的buffer資料</p>
+<p>直到組成一個AVFrame的資訊, 才能用ffmpeg的函數去解析音樂並把它播放出來</p>
+<p>所以接下來要介紹的就是這隻函數了!</p>
+<p><strong>3. - (void)readFFmpegAudioFrameAndDecode</strong></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5498819_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>- (void)readFFmpegAudioFrameAndDecode
+<p>{</p>
+<p>int error;</p>
+<p>    // 先用ffmpeg初始化一個packet</p>
+<p>AVPacket aPacket;</p>
+<p>av_init_packet(&amp;aPacket);</p>
+<p>     // 判斷檔案是遠端還是本地端檔案 </p>
+<p>    // 播放方式都一樣, 但是本地端檔案需要延遲操作</p>
+<p>     if (isLocalFile) {</p>
+<p>// Local File playing</p>
+<p>while (isStop == NO) {</p>
+<p>// Read frame</p>
+<p>error = av_read_frame(pFormatCtx, &amp;aPacket);</p>
+<p>if (error == AVERROR_EOF) {</p>
+<p>// End of playing music</p>
+<p>isStop = YES;</p>
+<p>} else if (error == 0) {</p>
+<p>// During playing..</p>
+<p>if (aPacket.stream_index == audioStream) {</p>
+<p>if ([aPlayer putAVPacket:&amp;aPacket] &lt;=0 ) {</p>
+<p>NSLog(@"Put Audio packet error");</p>
+<p>}</p>
+<p>// For local file, packet should delay</p>
+<p>usleep(1000 * 25);</p>
+<p>} else {</p>
+<p>av_free_packet(&amp;aPacket);</p>
+<p>}</p>
+<p>} else {</p>
+<p>// Error occurs</p>
+<p>NSLog(@"av_read_frame error :%s", av_err2str(error));</p>
+<p>isStop = YES;</p>
+<p>}</p>
+<p>}</p>
+<p>} else {</p>
+<p><strong>        // 開始播放遠端檔案了</strong></p>
+<p><strong>       // 我們用一個全域變數isStop來判斷要不要繼續播放音樂或是停止播放
+<p>         while (isStop == NO) {</p>
+<p><strong>            //  用av_read_frame, 代表依照initffmpeg所得到的音訊格式資訊來讀取資料, 把讀到的資料給packet</strong></p>
+<p>error = av_read_frame(pFormatCtx, &amp;aPacket);</p>
+<p>if (error == AVERROR_EOF) {</p>
+<p>                // 如果歌曲播完的話 (ffmpeg常數 AVERROR_EOF代表讀完了音訊檔案)</p>
+<p>               // 讀完的話代表歌曲結束了喔!</p>
+<p>                 isStop = YES;</p>
+<p>} else if (error == 0) {</p>
+<p>                // During playing..</p>
+<p>                // 如果目前packet的index與 起始化得到的audioStream特徵值一樣</p>
+<p>               // 就可以把packet放到player中, 之後player會在進行解析, 更新buffer, 加入到音訊的queue中</p>
+<p>                 if (aPacket.stream_index == audioStream) {</p>
+<p>if ([aPlayer putAVPacket:&amp;aPacket] &lt;=0 ) {</p>
+<p>NSLog(@"Put Audio packet error");</p>
+<p>}</p>
+<p>} else {</p>
+<p>av_free_packet(&amp;aPacket);</p>
+<p>}</p>
+<p>} else {</p>
+<p>                // Error occurs</p>
+<p>                 // 讀取packet發生錯誤的話, 中斷播放音訊</p>
+<p>                 NSLog(@"av_read_frame error :%s", av_err2str(error));</p>
+<p>isStop = YES;</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>NSLog(@"End of playing ffmpeg");</p>
+<p>}</p>
+<p>呼, 到這邊我們總算完成教學囉!</p>
+<p>這邊要提及幾個重點</p>
+<p>1. iPhone 5s 因為採用armv8架構, 我們這邊ffmpeg在編譯時只有支援armv7, armv7s  , 所以這段教學在iPhone 5s 上不能使用的!</p>
+<p>2. 範例檔案使用的是台灣其中一間支援mms服務的廣播電台, 讀者有興趣可以改成其他架構</p>
+<p>本次教學的範例完整檔案在這邊:</p>
+<p><a title="" href="https://github.com/shouian/MMSRadioWithFFmpeg" target="_blank">https://github.com/shouian/MMSRadioWithFFmpeg</a></p>
+<p>接下來Bear實驗室也會更新一連串有關iOS 7的變動...</p>
+<p>平日工作的開發者們現在應該已經忙到天昏地暗了...</p>
+<p>Bear和Tako現在也在馬不停蹄的修改程式</p>
+<p>希望各位開發者們能夠有個愉快地中秋佳節!!</p>
+<p>更多有趣消息, 按讚加入TakoBear粉絲團就能獲得最新消息喔!</p>
+<p></p>
+<p><div></div></p>
+<p><div>
+<p><div id="787867320983715495" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- Takobear 728x90 --><script>// < ![CDATA[</p>
+<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+</div></p></strong></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></ul></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/bear-audiotoolboxffmpeg-part-end\/";
+        this.page.identifier = "675 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-audiotoolboxffmpeg-part-end";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

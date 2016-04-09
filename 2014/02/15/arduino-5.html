@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>動手做自己的智能家電- 如何驅動arduino?</title>
+  <meta name="description" content="上篇文章簡單介紹了Arduino的功用跟如何購買!!雖然它真的很好上手很好上手但是要啟用它以前還是有幾個步驟要做的!這邊用windows 7版本介紹給大家 (有用mac的朋友操作更簡單喔!)首先到官網：http://arduino.cc/en/Main/Software 的Download頁面，可以看到以下畫面 ...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/arduino-5.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">動手做自己的智能家電- 如何驅動arduino?</h1>
+    <p class="post-meta"><time datetime="2014-02-15T12:15:16+08:00" itemprop="datePublished">Feb 15, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>上篇文章簡單介紹了Arduino的功用跟如何購買!!
+<p>雖然它真的很好上手很好上手</p>
+<p>但是要啟用它以前還是有幾個步驟要做的!</p>
+<p>這邊用windows 7版本介紹給大家 (有用mac的朋友操作更簡單喔!)首先到官網：<a title="" href="http://arduino.cc/en/Main/Software">http://arduino.cc/en/Main/Software</a> 的<strong>Download</strong>頁面，</p>
+<p>可以看到以下畫面</p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6302538_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>如果你用的是Mac或其他系統，點選其他項目就可以了!</div></p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7406842_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>下載完成解壓縮以後，會看到一個arduino.exe，如圖所示，點選他就能直接開始寫了! …….不過世界上總是沒有那麼簡單的事….
+<p>這時候請將你的 arduino 開發板接上電腦，然後到</p>
+<p><strong><u>”控制台”→”硬體和音效”→裝置和印表機底下的”裝置管理員”</u></strong></p>
+<p>打開裝置管理員後，可以看到以下畫面</p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/111385_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>我們要注意的就是 <strong>其他裝置、連接埠</strong>兩個選項，詳細看下圖</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7370264_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>在"無法辨識的裝置"上點擊右鍵，點擊<strong>更新驅動程式軟體</strong></div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4116747_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>選第二個”<strong>瀏覽電腦上的驅動程式軟體</strong>”(<strong>很重要不要選錯!</strong>)</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8154194_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>這邊會要尋找你的arduino驅動程式，點選瀏覽(別忘記勾選<strong>包含子資料夾</strong>)</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4397918_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>找到我們前面載好跟解壓縮好的<strong>arduino-1.0.5資料夾</strong>，選擇<strong>drivers</strong>資料夾後，按<strong>”確定”</strong>即可</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1062618_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>確認資料夾路徑是正確的!之後就可以點下一步!</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3905916_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>看到這個畫面時，請記得勾選”永遠信任來自Arduino LLC”的軟體跟點選”安裝”</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5052942_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>完成安裝了!!! (泣) 這邊總算安裝了...</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2690609_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>回到裝置管理員，到這邊我們看到Arduino Mega 2560(COM3)這代表的意思，白話點來說就是
+<p><strong>”你的Arduino接在你電腦上一個叫做com3的位置”，代表資料會從com3通過你這台arduino!!"</strong></p>
+<p>呼…到這邊可以稍微休息一下，已經完成最辛苦的驅動安裝了!!</p>
+<p>下一篇我們來說怎麼運作第一個Arduino程式!!</p>
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/15\/arduino-5\/";
+        this.page.identifier = "754 http:\/\/www.takobear.tw\/201702608526356260322804024687\/-arduino-drive";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

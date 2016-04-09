@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Ruby on Rails ! 網站前端開發利器!  </title>
+  <meta name="description" content="今天要介紹的Ruby on rails 是近年來進行網站前端開發的新興工具，能大幅減輕傳統前端工程師開發時一堆冗長的div, div,.... &amp; div，永遠 import 不完的javascript (泣)常常要透過Crunch或是sass的其他工具編譯css後再整合在一起(大哭)對於剛要入門做前端網...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/09/ruby-on-rails.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Ruby on Rails ! 網站前端開發利器!  </h1>
+    <p class="post-meta"><time datetime="2014-01-09T23:37:53+08:00" itemprop="datePublished">Jan 9, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>今天要介紹的Ruby on rails 是近年來進行網站前端開發的新興工具，能大幅減輕傳統前端工程師開發時一堆冗長的div, div,.... &amp; div，永遠 import 不完的javascript (泣)</p>
+<p>常常要透過Crunch或是sass的其他工具編譯css後再整合在一起(大哭)對於剛要入門做前端網站設計的新手或是要整理大型網站專案，快速開發這些東西都是十分不方便的!</p>
+<p>從開始的不知名的Web工具，到近幾年來台灣許多新興公司，外商都逐漸導入這工具了!</p>
+<p>他到底是什麼呢? 就讓小編簡單介紹一下...</p>
+<p><!--more--></p>
+<p>早前的php &amp; mySQL 程式碼常會看到以下的編碼(資料來源:<a href="http://ihower.tw/rails3/intro.html">前往Ruby on rails 實戰聖經</a>)</p>
+<p>這種架構在專案變得很巨大，或是需要快速實踐測試service 可行性的時候就會變得很困難</p>
+<p>這幾年也就提倡了新興的 MVC (Model - View - Controller)架構(Tako編按: 連同 iOS 的 app 開發也是使用這個框架喔!)它的架構主要如下：</p>
+<p><ul>
+<p><li><strong>Model</strong> 物件包裝了資料，也就是資料的來源</li></p>
+<p><li><strong>View</strong> 表示使用者介面，顯示及編輯表單，特別的UI顯現都在這邊</li></p>
+<p><li><strong>Controller</strong> 負責將前面兩者整合，在 web 上也就是處理 HTTP Request，將 model 傳輸的資料整理顯示在 View 上面</li></p>
+<p></p>
+<p>(架構可以參考如下，iOS內參考的還有導入委派(delegate)的概念在設計上! )</p>
+<p><em><strong>Ruby on Rails</strong></em> (官方簡稱為 <em><strong>Rails</strong></em>，<em><strong>RoR</strong></em>非官方簡稱)是使用 <em><strong>Ruby</strong></em> 這套開放原始碼(採用 MIT授權)、物件導向程式語言所開發的 Web 開發框架，主要用於開發資料庫網站應用程式。</p>
+<p><em><strong>Rails</strong></em> 是一套專業的開發框架，採用了 MVC(Model-View-Control) 模式、內建支援單元測試和整合測試、支援 Ajax 和 RESTful 介面、ORM 機制，以及支援各種最新的業界標準像是 HTML5、JQuery 等等功能。它的發明人是 David Heinemeier Hanson(DHH)，DHH 是2004年將 <em><strong>Rails</strong></em>從 <a href="http://www.37signals.com/">37signals</a> 商業產品中獨立出來成為開源專案。</p>
+<p>(資料來源: <a href="http://ihower.tw/rails3/intro.html">Ruby on rails 聖經</a>)</p>
+<p>其實有關為何什麼要使用Ruby的概念相當簡單，因為它已經有相當多的開發框架(framework)，同時它本身也已經與主流的應用程式設計概念(MVC相符)，最重要的是它本身已經可以整合相當多有用的工具(less，sass等)。</p>
+<p>不只是短期開發，連同維護，擴充等項目都能很快速的實踐完成</p>
+<p>程式碼特別的少!!!</p>
+<p>程式碼特別的少!</p>
+<p>程式碼特別的少!  (因為很重要要講三遍)不過話雖如此，其實一開始的門檻還是有存在的</p>
+<p>台灣部分目前也沒有足夠多的中文資料</p>
+<p><em>Ruby on rails 實戰聖經</em>有關的文章整理相當詳細,</p>
+<p>小編這裡也只是簡單介紹他的用處接下來會放一些有關 Ruby 的開發筆記,</p>
+<p>有興趣的版友請多多支持!!!</p>
+</ul></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/09\/ruby-on-rails\/";
+        this.page.identifier = "738 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ruby-on-rails";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

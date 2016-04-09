@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>動手做自己的智能家電 -- ARDUINO</title>
+  <meta name="description" content="這一系列文章主要在介紹如何自己在家裡用智慧手機跟一塊小板子作出簡單的智慧家電!不論你是否具備程式能力都能簡單上手，看一次就會!!第一篇文章我們就先介紹這好用的工具--ArduinoArduino這名字最近在理工機電整合領域越來越有名，不過相信更多人跟版主一樣對這東西具體的功用很陌生吧!從維基百科上查到的定義是：A...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/arduino-6.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">動手做自己的智能家電 -- ARDUINO</h1>
+    <p class="post-meta"><time datetime="2014-02-15T12:15:25+08:00" itemprop="datePublished">Feb 15, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>這一系列文章主要在介紹如何自己在家裡用智慧手機跟一塊小板子作出簡單的智慧家電!
+<p>不論你是否具備程式能力都能簡單上手，看一次就會!!第一篇文章我們就先介紹這好用的工具--Arduino</p>
+<p></p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>Arduino這名字最近在理工機電整合領域越來越有名，
+<p>不過相信更多人跟版主一樣對這東西具體的功用很陌生吧!</p>
+<p>從維基百科上查到的定義是：</p>
+<p><blockquote><strong>Arduino</strong>，是一個<a title="" href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%BA%90">開源</a>的<a title="" href="http://zh.wikipedia.org/wiki/%E5%8D%95%E7%89%87%E6%9C%BA">單片機</a>控制器，它使用了Atmel AVR單片機，採用了基於<a title="" href="http://zh.wikipedia.org/wiki/%E9%96%8B%E6%94%BE%E5%8E%9F%E5%A7%8B%E7%A2%BC">開放原始碼</a>的軟硬體平台，構建於開放原始碼 simple I/O 介面版，並且具有使用類似<a title="" href="http://zh.wikipedia.org/wiki/Java">Java</a>，C 語言的Processing/Wiring開發環境 (From Wikipedia)</blockquote></p>
+<p><div>白話來說就是一塊小板子!能讓初學機電整合的人能夠快速實作軟硬體整合的作品而不用糾結於細節的程式語言(<strong>不過基本的邏輯仍然不能少!)</strong>它的特色就如同維基百科說的，能簡單連接各種感測器或電子元件(例如LED燈、紅外線、光敏電阻、伺服馬達之類的)，支援各種互動程式，USB孔、直流輸出、微處理器功用! 利用他以及基本的電路學原理，任何人在家裡都能實作自己想要的機電整合功能(沒錯說的是<strong>任何人!</strong>)
+<p></p>
+<p><blockquote><strong>Arduino小故事:<a title="" href="http://zh.wikipedia.org/wiki/Arduino" target="_blank">_</a></strong>
+<p>目前的核心成員Massimo是一間義大利設計學校的老師，因為學生持續抱怨沒有便宜又好用的微控制器，在2005年，他跟一位西班牙的晶片工程師David Cuartielles針對這問題討論後決定自己來做這樣的板子，由Massimo的學生David Mellis設計語言(版主心聲:不知道是不是又是台灣研究所教育的翻版…)。不過這學生只花了兩天就設計出程式碼，再花三天完成了電路板並命名為Arduino(看到這裡版主真的佩服…也許以後有機會可以研究相關開發的方式!)</p>
+<p><div>當初創辦的成員採用創用CC許可
+<p>(不知道的可以參考: <a title="" href="http://creativecommons.org/licenses/by-nc-nd/2.5/tw/legalcode">http://creativecommons.org/licenses/by-nc-nd/2.5/tw/legalcode</a>)，</p>
+<p>簡單來說，任何人都可以生產這個電路板、或是重新設計、甚至銷售員本設計的複製品，</p>
+<p>唯一需要注意的就是如果更改了電路板設計，新的設計也必須用創用CC許可，</p>
+<p>以及販賣這板子時需要支付一點商標費用給核心人員(在板主看來這根本佛心來的…)程式碼的話就可以參考下面幾行!!</p>
+<p>int LED_PIN=13;</p>
+<p>void setup () {</p>
+<p>pinMode (LED_PIN, OUTPUT);     <em>// </em><em>啟動</em><em>PIN 13</em></p>
+<p>}</p>
+<p>void loop () {</p>
+<p>digitalWrite (LED_PIN, HIGH);  <em>// </em><em>開啟</em><em>LED</em></p>
+<p>delay (1000);                  <em>// </em><em>等</em><em>1</em><em>秒</em></p>
+<p>digitalWrite (LED_PIN, LOW);   <em>// </em><em>關閉</em><em>LED</em><em>    </em></p>
+<p>delay  (1000);       <em>// </em><em>等</em><em>1</em><em>秒</em></p>
+<p>}</p>
+<p>簡單來說就是兩部分!</p>
+<p>setup設定啟動、或是基本程序動作</p>
+<p>在loop內寫執行後的動作</p>
+<p>(這邊有一點物件導向的概念，但簡單來說，這樣的設計讓初學開發人員確實很簡單的就進到這領域了!)</p>
+<p>官方網站上還有關於Arduino的詳細教學與example可以幫助大家!</p>
+<p><a title="" href="http://www.arduino.cc/">http://www.arduino.cc/</a> 以後版主也會放上更多相關的內容分享大家 (希望大家支持..)</p>
+<p>介紹到此，這篇是開箱文!當然要介紹從哪邊可以取得到這樣的東西勒….</p>
+<p></p>
+<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/249767.png" alt="图片" /></a></p>
+<p><div>上露天拍賣搜尋arduino，下單後兩天內可7-11取貨..</div></p>
+<p><a title="" href="http://search.ruten.com.tw/search/s000.php?searchfrom=indexbar&amp;k=arduino&amp;t=0">http://search.ruten.com.tw/search/s000.php?searchfrom=indexbar&amp;k=arduino&amp;t=0</a></p>
+<p>(編按：版主友人曾說，露天上只差沒能買到鈾235就能組顆核彈..)</p>
+<p><hr /></p>
+<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3086679.png" alt="图片" /></a></p>
+<p><div>版主這次買的是這款 Arduino Mega，有興趣的讀者可以到這裡看詳細規格!</div></p>
+<p><a title="" href="http://goods.ruten.com.tw/item/show?21210172712871">http://goods.ruten.com.tw/item/show?21210172712871</a></p>
+<p><hr /></p>
+<p><div><strong>等待兩天以後....</strong></div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5673981_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>(露天拍賣!!!)</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/485287_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>打開後就是一塊板子，usb線跟收據(拍賣上買的就沒有單眼開箱文那樣豪氣了O_Q)</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1332743_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>板子內還有好好的被保護到! 因為版主友人也有買，就一次買兩塊啦</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7880458_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>並排比例尺大小，就是一個滑鼠大小</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/740333_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>驗明正身!!</div></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8019178_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>最後放一張特寫! 這邊有稍微修圖一下..到這邊總算取得Arduino了! 有了他我們可以實作以iPhone或是android的溝通，簡單自己在家裡做出智慧家電的功能!，待版主研究熟悉後與大家分享相關內容!
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></blockquote></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/15\/arduino-6\/";
+        this.page.identifier = "755 http:\/\/www.takobear.tw\/201702608526356260322804024687\/-arduino3";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

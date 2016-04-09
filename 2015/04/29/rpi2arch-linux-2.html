@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[RPi2][Arch Linux]初次使用與設定</title>
+  <meta name="description" content="在上篇安裝完在RPi2上的Arch linux後，想當然就是要配置一下了Bear接下來會大概介紹一些初次設定或許會覺得奇怪，怎麼好端端的Raspbian不用，用起了Arch linux呢？一來Bear想玩新玩意兒二來覺得Arch linux簡簡單單，不需要的App它不會預裝，需要的也不一定會裝XD反正幾乎都要手動...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2015/04/29/rpi2arch-linux-2.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[RPi2][Arch Linux]初次使用與設定</h1>
+    <p class="post-meta"><time datetime="2015-04-29T22:31:10+08:00" itemprop="datePublished">Apr 29, 2015</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3898119_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>在<a href="http://www.takobear.weebly.com/201702608526356260322804024687/rpi2raspberry-pi-2-model-barchliunx" target="_blank">上篇安裝完在RPi2上的Arch linux</a>後，想當然就是要配置一下了
+<p>Bear接下來會大概介紹一些初次設定</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>
+<p><div id="220039182461086416" align="left"><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>或許會覺得奇怪，怎麼好端端的Raspbian不用，用起了Arch linux呢？
+<p>一來Bear想玩新玩意兒</p>
+<p>二來覺得Arch linux簡簡單單，不需要的App它不會預裝，需要的也不一定會裝XD</p>
+<p>反正幾乎都要手動處理，藉此可以稍微了解單純linux的長什麼樣子</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5850677_orig.jpeg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>首先，把安裝好的RPi2接上網路線跟電源吧
+<p>預設的啟動服務有SSH、DHCP，所以可以直接利用SSH Client來連線</p>
+<p>SSH Client需要的IP，就請各位自行到路由器上找吧（被毆至於SSH Client工具，看是Putty、Pietty或是Xshell（Windows）</p>
+<p>也請大家自行在網路上尋找跟學習使用方式，放心這類工具很單純</p>
+<p>其他OS的使用者（Mac OSX、Linux）打開終端機輸入</p>
+<p></p>
+<p><div>
+<p><div id="119012372144505847" align="left"><code>$ ssh root@<strong>YOURIP</strong></code></div></p>
+<p></p>
+<p><div>連上了嗎？連上就可以繼續往下看
+<p>沒連上的只好把HDMI螢幕、USB鍵盤接上了QQ對了，預設的密碼是root</p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7448403_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>第一步當然是把可怕的root密碼改掉
+<p>要輸入一個困難但是要記得的密碼哦</p>
+<p><div>
+<p><div id="195953313739537463" align="left"><code># passwd root</code></div></p>
+<p></p>
+<p><div>再來先更新系統吧
+<p>Archlinux使用pacman來進行套件管理</p>
+<p>就像Debian/Ubuntu/Raspbian的apt-get</p>
+<p><div>
+<p><div id="732735945144774590" align="left"><code># pacman -Syy</code>
+<p><code># pacman -Syu</code></p>
+<p></p>
+<p><div>安裝一些常用的工具吧</div></p>
+<p><div>
+<p><div id="109613118375738252" align="left"><code># pacman -S vim sudo wget curl</code></div></p>
+<p></p>
+<p><div>建立一個super user來取代root做事吧
+<p>開著root總覺得怪怪的</p>
+<p><div>
+<p><div id="174657739939010525" align="left"><code># useradd -m <strong><em>UserName</em></strong></code></div></p>
+<p></p>
+<p><div>設定密碼</div></p>
+<p><div>
+<p><div id="892543029416680592" align="left"><code># passwd <strong><em>UserName</em></strong></code></div></p>
+<p></p>
+<p><div>將之加入管理群組（wheel，可使用su切換身分）內</div></p>
+<p><div>
+<p><div id="974102660605425951" align="left"><code># usermod -aG wheel <strong><em>UserName</em></strong></code></div></p>
+<p></p>
+<p><div>再來設定sudo的使用權，預設文本編輯器是vi，不是很直覺，改用vim</div></p>
+<p><div>
+<p><div id="547818691946492641" align="left"><code># VISUAL=vim visudo</code></div></p>
+<p></p>
+<p><div>這邊Bear是直接提升wheel這個群組使用sudo的權力
+<p>也可以只針對該<strong>UserName</strong>做修改</p>
+<p><div>
+<p><div id="774529496426590696" align="left"><code>%wheel ALL=(ALL) ALL</code>
+<p>or</p>
+<p><code><strong><em>UserName</em></strong> ALL=(ALL) ALL</code></p>
+<p></p>
+<p><div>當然可以設定不用輸入密碼執行sudo
+<p># %wheel ALL=(ALL) NOPASSWD: ALL</p>
+<p>這跟直接開root來做事一樣，風險超高，建議不要</p>
+<p><div>最後拔掉root使用SSH登入權限與加入<em><strong>UserName</strong></em>使用SSH登入權限</div></p>
+<p><div>
+<p><div id="370538678620202539" align="left"><code># vim /etc/ssh/sshd_config</code></div></p>
+<p></p>
+<p><div>拔掉root</div></p>
+<p><div>
+<p><div id="298866165472841680" align="left"><code>#PermitRootLogin yes</code>
+<p>改成</p>
+<p><code>PermitRootLogin no</code></p>
+<p></p>
+<p><div>加入<em><strong>UserName</strong></em>使用SSH登入權限</div></p>
+<p><div>
+<p><div id="276367067758027291" align="left">增加
+<p><code>AllowUsers <strong><em>UserName</em></strong></code></p>
+<p></p>
+<p><div>最後就請用<strong>UserName</strong>來做事吧</div></p>
+<p><div>==================================================
+<p>用了一段時間後發現還有一些設定忘了說</p>
+<p>因此在2015/04/29更新一些遺珠之憾</p>
+<p>對了，都是用一般使用者配合sudo權限</p>
+<p>如果還是root的話，就不需要sudo了首先</p>
+<p>修改時區</p>
+<p>先將原本的舊時區砍掉</p>
+<p></p>
+<p><div>
+<p><div id="795189004760783360" align="left"><code>$ sudo rm /etc/localtime</code></div></p>
+<p></p>
+<p><div>軟連結時區吧（以臺北時區為例）</div></p>
+<p><div>
+<p><div id="636086656582445095" align="left"><code>$ sudo ln -s /usr/share/zoneinfo/Asia/Taipei /etc/localtime</code></div></p>
+<p></p>
+<p><div>再來，更改系統語系
+<p>不太確定原本是什麼語系，但絕對不是中文</p>
+<p>Bear某次開（中文）文件才發現忘記設定</p>
+<p>現在補上了XD</p>
+<p><div>
+<p><div id="628482481987301176" align="left"><code>$ sudo vim /etc/locale.gen</code></div></p>
+<p></p>
+<p><div>把需要的反註解吧
+<p>一般通常是：</p>
+<p>en_US.UTF8 UTF8</p>
+<p>zh_TW.UTF8 UTF8</p>
+<p>需要支援簡體字：</p>
+<p>zh_CN.UTF8 UTF8</p>
+<p>日文：</p>
+<p>ja_JP.UT8 UTF8完成後就更新吧</p>
+<p></p>
+<p><div>
+<p><div id="428617554316856338" align="left"><code>$ sudo locale-gen</code></div></p>
+<p></p>
+<p><div>修改本機環境語系
+<p>做為開發用，習慣上使用英文（en_US.UTF8）</p>
+<p><div>
+<p><div id="324450260798377717" align="left"><code>$ sudo vim /etc/locale.conf</code></div></p>
+<p></p>
+<p><div>
+<p><div id="975713472175429647" align="left">增加
+<p><code>LANG="en_US.UTF-8"</code></p>
+<p></p>
+<p><div>當然可以用中文，改成zh_TW.UTF8即可最後，修改本機hostname
+<p></p>
+<p><div>
+<p><div id="959803007814685788" align="left"><code>$ sudo vim /etc/hostname</code></div></p>
+<p></p>
+<p><div>要改什麼名字就自己決定吧
+<p>對了，只能設定小寫英文字跟.(dot)，其他不行哦OK，我們下次見了</p>
+<p></p>
+<p><div>
+<p><div id="279757239831205892" align="left">
+<p><div id="fb-root"></div></p>
+<p><script>// < ![CDATA[</p>
+<p>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
+<p>// ]]></script></p>
+<p><div data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
+<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。</div></p>
+<p></p>
+<p></p>
+<p></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2015\/04\/29\/rpi2arch-linux-2\/";
+        this.page.identifier = "19 http:\/\/www.takobear.tw\/201702608526356260322804024687\/rpi2arch-linux1";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

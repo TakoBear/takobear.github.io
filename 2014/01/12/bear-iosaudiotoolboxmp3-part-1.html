@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室: iOS用AudioToolbox播放mp3音樂 [Part 1]</title>
+  <meta name="description" content=" 剛介紹完Android如何架設環境Bear馬上又要來介紹如何利用iOS的AudioToolbox Framework來播放mp3 音樂囉!這次內容分成兩篇進行, 先介紹AudioToolBox如何使用下一篇我們會介紹使用AudioToolbox 配合FFmpeg制作網路收音機但基礎的部分還是要從這篇開始囉!其實...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/bear-iosaudiotoolboxmp3-part-1.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室: iOS用AudioToolbox播放mp3音樂 [Part 1]</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:41:31+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3017712_orig.jpg" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>剛介紹完Android如何架設環境
+<p>Bear馬上又要來介紹如何利用iOS的AudioToolbox Framework來播放mp3 音樂囉!這次內容分成兩篇進行, 先介紹AudioToolBox如何使用</p>
+<p>下一篇我們會介紹使用AudioToolbox 配合FFmpeg制作網路收音機</p>
+<p>但基礎的部分還是要從這篇開始囉!</p>
+<p></p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>其實播放音樂或是影片的播放器(Player)概念都是這樣的流程取出檔案來源(可能是本地端, 或是遠端)
+<p>- &gt;編碼 (encode)每一個buffer呈frame 送出去</p>
+<p>-&gt; 解碼 (decode)成一堆buffer</p>
+<p>-&gt; 播放</p>
+<p>實際上與遠端運作會牽涉到一種名為RTSP(Real Time Streaming Protocol)類似的操作</p>
+<p>因為範疇過大, 這篇我們不會深究這樣的Protocol運作方式</p>
+<p>如果要對檔案進行編碼, 解碼的操作</p>
+<p>我們需要瞭解不同檔案的格式</p>
+<p>這邊我們先介紹最簡單的<strong>AAC格式</strong>是什麼</p>
+<p>讓我們先抄一下Wiki的定義...</p>
+<p><strong>AAC (Advanced Audio Coding)</strong></p>
+<p><a title="" href="http://zh.wikipedia.org/wiki/%E5%89%AF%E6%AA%94%E5%90%8D">副檔名</a>.m4a, .m4b, .m4p, .m4v, .m4r, <a title="" href="http://zh.wikipedia.org/wiki/3GP">.3gp</a>, .mp4, .aac</p>
+<p><a title="" href="http://zh.wikipedia.org/wiki/%E4%BA%92%E8%81%94%E7%BD%91%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B">網路媒體型式</a>audio/aac, audio/aacp, audio/3gpp, audio/3gpp2, audio/mp4, audio/MP4A-LATM, audio/mpeg4-generic</p>
+<p>其實大家只要知道這幾種副檔名都會被歸類為是AAC格式</p>
+<p>而Apple iOS 設備上對於AAC格式的檔案播放是有限制的!</p>
+<p>有支援的檔案格式可以直接用AVAudioPlayer或是AVPlayer兩種class來播放</p>
+<p>甚至是使用AudioToolbox的方式直接進行播放</p>
+<p>而如果是Apple不支援的檔案格式呢</p>
+<p>我們就是用FFmpeg來把他解壓縮成PCM格式( 全名為: Pulse-Code Modulation, 為一種標準的音訊格式)</p>
+<p>然後再用AudioToolbox的功能來播放!!</p>
+<p>介紹這篇的原因在於</p>
+<p>雖然AVPlayer或是AVAudioPlayer都已經讓播放音樂這件事情變得很簡單</p>
+<p>但是當我們必須要支援不同的聲音格式的時候</p>
+<p>這兩種Class變成能夠擴展的格局就不夠了</p>
+<p>為此我們還是必須回來用古早的AudioToolbox來處理囉!</p>
+<p>這邊Bear決定先不要再往下探討AAC格式如何播放以及FFmpeg的搭配...</p>
+<p>我們先討論如何使用AudioToolbox 這個Framework來播放mp3音樂吧!!!</p>
+<p>以AAC為例的播放音訊過程就可以參考下圖囉!</p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6789616_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>那麼~~廢話就不多說我們馬上開始這次的主題吧!
+<p>這次建立的Class實體需要有的Method配置如下</p>
+<p><strong>(記得要先到Build Setting內加入 AudioToolBox framework!)</strong></p>
+<p>#import &lt;Foundation/Foundation.h&gt;</p>
+<p>#import &lt;AudioToolbox/AudioToolbox.h&gt;</p>
+<p>#import &lt;AudioToolbox/AudioFile.h&gt;</p>
+<p> @interface SHAudioPlayer : NSObject</p>
+<p> @property (nonatomic) AudioQueueRef queueRef;</p>
+<p> // Play method</p>
+<p>- (id)initWithAudio:(NSString *)filePath;</p>
+<p> // Read Buffer</p>
+<p>- (void)audioQueueOutputWithQueue:(AudioQueueRef)audioQueue queueBuffer:(AudioQueueBufferRef)audioQueueBufferRef;</p>
+<p>- (UInt32)readPacketsIntoBuffer:(AudioQueueBufferRef)buffer;</p>
+<p> // Callback function (Standard format)</p>
+<p> static void BufferCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef buffer);</p>
+<p> @end</p>
+<p>這邊有一個重點</p>
+<p>就是Callback的function部分, 依據Apple Official開放的官方文件</p>
+<p>是不能做任何修改的, 我們能修改的只有命名</p>
+<p>但是需要輸入的變數格式都是固定的, 這點請特別注意!!</p>
+<p>接下來是我們要進去.m檔內實作裡面每一個Method囉!</p>
+<p>#import "SHAudioPlayer.h"</p>
+<p> // 3 is recommended by Apple</p>
+<p> #define NUM_BUFFERS 3</p>
+<p> static UInt32 gBufferSizeBytes = 0x10000; // It must be pow(2,x)</p>
+<p> @interface SHAudioPlayer()</p>
+<p>{</p>
+<p>     // File ID</p>
+<p>AudioFileID audioFileID;</p>
+<p>     // Description</p>
+<p>AudioStreamBasicDescription dataFormat;</p>
+<p>     // Buffer Queue</p>
+<p>AudioQueueRef                   queueRef;</p>
+<p>SInt64                          packetIndex;</p>
+<p>UInt32                          numPacketsToRead;</p>
+<p>UInt32                          bufferByteSize;</p>
+<p>AudioStreamPacketDescription    *packetsDescs;</p>
+<p>AudioQueueBufferRef             buffers[NUM_BUFFERS];</p>
+<p>}</p>
+<p> @end</p>
+<p> @implementation SHAudioPlayer</p>
+<p> @synthesize queueRef;</p>
+<p> // Init Player</p>
+<p>- (id)initWithAudio:(NSString *)filePath</p>
+<p>{</p>
+<p>self = [super init];</p>
+<p>if (self) {</p>
+<p>UInt32   size;</p>
+<p>UInt32   maxPacketSize;</p>
+<p>char     *cookie;</p>
+<p>OSStatus status;</p>
+<p>         // Open File</p>
+<p>status = AudioFileOpenURL((CFURLRef)[NSURL fileURLWithPath:filePath], kAudioFileReadPermission, 0, &amp;audioFileID);</p>
+<p>if (status != noErr) {</p>
+<p>NSLog(@"Error encounter when opening file %@", filePath);</p>
+<p>return nil;</p>
+<p>}</p>
+<p>         // Read audio data format</p>
+<p>size = sizeof(dataFormat);</p>
+<p>AudioFileGetProperty(audioFileID, kAudioFilePropertyDataFormat, &amp;size, &amp;dataFormat);</p>
+<p>         // Create music queue for playing</p>
+<p>AudioQueueNewOutput(&amp;dataFormat, BufferCallback, self, nil, nil, 0, &amp;queueRef);</p>
+<p>         // Calculate number of packets in unit time</p>
+<p>if (dataFormat.mBytesPerPacket == 0 || dataFormat.mFramesPerPacket == 0) {</p>
+<p>size = sizeof(maxPacketSize);</p>
+<p>AudioFileGetProperty(audioFileID, kAudioFilePropertyPacketSizeUpperBound, &amp;size, &amp;maxPacketSize);</p>
+<p>if (maxPacketSize &gt; gBufferSizeBytes) {</p>
+<p>maxPacketSize = gBufferSizeBytes;</p>
+<p>}</p>
+<p>             // Calculation</p>
+<p>numPacketsToRead = gBufferSizeBytes / maxPacketSize;</p>
+<p>             // Allocate size</p>
+<p>packetsDescs = malloc(sizeof(AudioStreamPacketDescription) * numPacketsToRead);</p>
+<p>} else {</p>
+<p>numPacketsToRead = gBufferSizeBytes / dataFormat.mBytesPerPacket;</p>
+<p>packetsDescs = nil;</p>
+<p>}</p>
+<p>         // Set up Magic cookie</p>
+<p>AudioFileGetProperty(audioFileID, kAudioFilePropertyMagicCookieData, &amp;size, nil);</p>
+<p>if (size &gt; 0) {</p>
+<p>cookie = malloc(sizeof(char) * size);</p>
+<p>AudioFileGetProperty(audioFileID, kAudioFilePropertyMagicCookieData, &amp;size, cookie);</p>
+<p>AudioQueueSetProperty(queueRef, kAudioQueueProperty_MagicCookie, cookie, size);</p>
+<p>}</p>
+<p>         // Create and Allocate buffer size</p>
+<p>packetIndex = 0;</p>
+<p>for (int i = 0; i &lt; NUM_BUFFERS; i++) {</p>
+<p>AudioQueueAllocateBuffer(queueRef, gBufferSizeBytes, &amp;buffers[i]);</p>
+<p>             // Read Packet data</p>
+<p>if ([self readPacketsIntoBuffer:buffers[i]] == 1) {</p>
+<p>break;</p>
+<p>}</p>
+<p>}</p>
+<p>Float32 gain = 1.0;</p>
+<p>         // Set up volume</p>
+<p>AudioQueueSetParameter(queueRef, kAudioQueueParam_Volume, gain);</p>
+<p>         // Start queue, and then OS will handle the callback</p>
+<p>AudioQueueStart(queueRef, nil);</p>
+<p>}</p>
+<p>     return self;</p>
+<p>}</p>
+<p>- (void)dealloc</p>
+<p>{</p>
+<p>[super dealloc];</p>
+<p>}</p>
+<p> // Callback Implement</p>
+<p> static void BufferCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef buffer)</p>
+<p>{</p>
+<p>SHAudioPlayer *player = (SHAudioPlayer *)inUserData;</p>
+<p>[player audioQueueOutputWithQueue:inAQ queueBuffer:buffer];</p>
+<p>}</p>
+<p>// Read Buffer</p>
+<p>- (void)audioQueueOutputWithQueue:(AudioQueueRef)audioQueue queueBuffer:(AudioQueueBufferRef)audioQueueBufferRef</p>
+<p>{</p>
+<p>OSStatus status;</p>
+<p>     // Read packet data</p>
+<p>UInt32 numBytes;</p>
+<p>UInt32 numPackets = numPacketsToRead;</p>
+<p>status = AudioFileReadPackets(audioFileID,</p>
+<p>NO,</p>
+<p>&amp;numBytes,</p>
+<p>packetsDescs,</p>
+<p>packetIndex,</p>
+<p>&amp;numPackets,</p>
+<p>audioQueueBufferRef-&gt;mAudioData);</p>
+<p>     // When succeed to read</p>
+<p>if (numPackets &gt; 0) {</p>
+<p>         // Allocate buffer size as same as reading music buffer size</p>
+<p>audioQueueBufferRef-&gt;mAudioDataByteSize = numBytes;</p>
+<p>         // Finish allocating queue</p>
+<p>status = AudioQueueEnqueueBuffer(audioQueue, audioQueueBufferRef, numPackets, packetsDescs);</p>
+<p>         // Move Start index</p>
+<p>packetIndex += numPackets;</p>
+<p>}</p>
+<p>}</p>
+<p>- (UInt32)readPacketsIntoBuffer:(AudioQueueBufferRef)buffer</p>
+<p>{</p>
+<p>     // Read data and save it to buffer</p>
+<p>UInt32 numBytes;</p>
+<p>UInt32 numPackets = numPacketsToRead;</p>
+<p>AudioFileReadPackets(audioFileID,</p>
+<p>NO,</p>
+<p>&amp;numBytes,</p>
+<p>packetsDescs,</p>
+<p>packetIndex,</p>
+<p>&amp;numPackets,</p>
+<p>buffer-&gt;mAudioData);</p>
+<p>if (numPackets &gt; 0) {</p>
+<p>buffer-&gt;mAudioDataByteSize = numBytes;</p>
+<p>AudioQueueEnqueueBuffer(queueRef, buffer, (packetsDescs ? numPackets : 0), packetsDescs);</p>
+<p>packetIndex += numPackets;</p>
+<p>} else {</p>
+<p>return 1; // Which means we do not accept any packet</p>
+<p>}</p>
+<p>return 0; // Normal resign</p>
+<p>}</p>
+<p>@end</p>
+<p>好的, 到這邊Bear知道你們一定也看得霧煞煞吧!</p>
+<p>其實可以用下面這張圖幫助大家簡單吸收這裡的流程!</p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1210281_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>上面這張圖是InitAudio所進行的架構!
+<p>這樣大家有比較理解嗎?</p>
+<p>不過這張圖上並沒有標示出來我們實際是如何把buffer放到queue裡面的</p>
+<p>這部分就請大家注意在AudioQueueNewOutput到AudioQueueStart間</p>
+<p>我們用for 跑了3次, 是因為Apple建議將Buffer分成三份為最佳值</p>
+<p>這邊裡面會執行一段method:</p>
+<p>readPacketsIntoBuffer:(AudioQueueBufferRef)buffer 會把buffer 塞到queue內!</p>
+<p>關於這個部分大家可以看到Bear下面畫的這張圖噢!</p>
+<p></p>
+<p><div>
+<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1882094_orig.png" alt="Picture" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>終於來到最後了!!當開始執行AudioQueueStart 後
+<p>一開始會先由這三段buffer播放</p>
+<p>然後iPhone的OS會一直回傳Callback 給我們定義的function :BufferCallback</p>
+<p><strong>(Bear小提醒, 這邊Callback能改動的只有名稱喔! 輸入的變數順序跟型別都是固定不能改的!)</strong></p>
+<p>這邊我們做法就是當讀到Callback時</p>
+<p>就繼續再把packet塞到下一個buffer內</p>
+<p>這樣就能一直播放到歌曲結束囉!!!</p>
+<p>如果要使用這個class的話, 只要在你的view controller中執行這一段:</p>
+<p>SHAudioPlayer  *audioPlayer = [[SHAudioPlayer alloc] initWithAudio:@"/Users/shouian/Desktop/AppDev/AppCodeDevelop/SHAudioPlayer/brave.mp3"];</p>
+<p>路徑可以隨意指定!</p>
+<p>參考資料:<a title="" href="http://www.cnblogs.com/xuanyuanchen/archive/2012/03/30/xuanyaunchen.html" target="_blank"> 用AudioQueue Service 來使iPhone 播放音樂</a></p>
+<p>今天的Bear實驗室就到這邊!</p>
+<p>有興趣的朋友可以到以下連結進行下載!</p>
+<p><a href="https://github.com/shouian/SHAudioPlayer" target="_blank">https://github.com/shouian/SHAudioPlayer
+<p></p>
+<p>接下來Bear實驗室也會有更多有趣教學文章, 請各位別錯過囉!</p>
+<p></p>
+</a></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/bear-iosaudiotoolboxmp3-part-1\/";
+        this.page.identifier = "702 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-iosaudiotoolboxmp3-part-1";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

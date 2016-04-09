@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>FFmpeg 與iOS 6.1</title>
+  <meta name="description" content="感謝大家支持! DIY動手做系列文章持續受到好評這次小編將要介紹 FFmpeg 在 iOS 上的應用(如果你跟小編之前一樣不知道什麼是FFmpeg, 別急著走接下來馬上會解釋!)  FFmpeg是一個自由軟體，可以執行音訊和視訊多種格式的的錄影、轉檔、串流功能，包含了libavcodec 這是一個用於多個專案中音...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/ffmpeg-ios-6-1.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">FFmpeg 與iOS 6.1</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:30:23+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>感謝大家支持! DIY動手做系列文章持續受到好評</p>
+<p>這次小編將要介紹 FFmpeg 在 iOS 上的應用</p>
+<p>(如果你跟小編之前一樣不知道什麼是FFmpeg, 別急著走接下來馬上會解釋!)</p>
+<p><!--more--></p>
+<p><blockquote>
+<p>  FFmpeg是一個自由軟體，可以執行音訊和視訊多種格式的的錄影、轉檔、串流功能，包含了libavcodec 這是一個用於多個專案中音訊和視訊的解碼器函式庫，以及 libavformat 一個音訊與視訊格式轉換函式庫。</p>
+<p>  </p>
+<p>  FFmpeg"這個單詞中的 "FF" 指的是 <a href="http://zh.wikipedia.org/wiki/FFmpeg#cite_note-2">"Fast Forward"</a>。</p>
+<p>  </p>
+<p>  有些新手寫信給"FFmpeg"的項目負責人，詢問FF是不是代表「Fast Free」或者「Fast Fourier」等意思，"FFmpeg"的項目負責人回信說「Just for the record, the original meaning of "FF" in FFmpeg is "Fast Forward"...」</p>
+<p>  </p>
+<p>  不過在2011年時, FFmpeg的部分開發人士已經另外組成 libav (<a href="http://libav.org/">http://libav.org/</a>)</p>
+<p></p>
+<p>值得注意的是 Libav、FFmpeg 是在<a href="http://zh.wikipedia.org/wiki/LGPL">LGPL</a>、<a href="http://zh.wikipedia.org/wiki/GPL">GPL</a> 協議下發行的（如果使用了其中一些使用GPL協議發行的模組則必須使用GPL協議），任何人都可以自由使用，但必須嚴格遵守LGPL、GPL協議。</p>
+<p>只有LGPL授權部分是可以不用開放原始碼的</p>
+<p>但是很多廠商仍然沒有嚴格遵守GPL授權，這是非常不應該的行為, 請所有開發者都需要注意!</p>
+<p>接下來就要進入正題了!!</p>
+<p>這次我們要介紹的是如何使用 FFmpeg 播放一段 mov 檔案</p>
+<p>以及如何利用它來播放 RTSP (real time streaming player)</p>
+<p><h4>1. 首先你需要安裝有 Xcode</h4></p>
+<p>(假如你有 Mac，直接到 App Store 上搜尋 Xcode，下載安裝即可;</p>
+<p>如果是 Windows 使用者可以參考這篇教學: <a href="http://bbs.weiphone.com/read-htm-tid-5329046.html">http://bbs.weiphone.com/read-htm-tid-5329046.html </a></p>
+<p>但根據小編經驗, 仍然強烈建議去買一台Mac吧!)</p>
+<p>Note: 小編現在使用的是Mac OS X 10.8.4; Xcode 4.6.3 (再過不久也會釋出Xcode 5了....)</p>
+<p><h4>2. 安裝Git工具 :</h4></p>
+<p>點選這個網站就能安裝好Git囉!  <a href="http://git-scm.com/">http://git-scm.com/</a></p>
+<p><h4>3. Git 安裝完畢後...</h4></p>
+<p>在你的mac終端機或是Putty等終端機工具輸入以下指令</p>
+<p><pre><code>git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+<p></p>
+<p>這樣就可以把 ffmpeg 的檔案複製到一個新開的 ffmpeg 資料夾了喔!</p>
+<p>(對Git不熟悉的朋友, 小編之後會介紹有關的工具)</p>
+<p><h4>4.修改你的mac環境變數</h4></p>
+<p><pre><code>$vi ~/.profile
+<p>export PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH</p>
+<p></p>
+<p>但是根據小編測試, 似乎沒有新增這檔案也可以成功, 有興趣的版友也可以嘗試略過這一步試試看!</p>
+<p><h4>5. 接下來到你下載好的 ffmpeg 資料夾</h4></p>
+<p>先用 vi 開啓一個 <code>build.sh</code> 檔案</p>
+<p>輸入指令:</p>
+<p><pre><code>vi build.sh
+<p></p>
+<p>在 <code>build.sh</code> 檔案貼上以下內容</p>
+<p><pre><code>-disable-ffmpeg --disable-ffplay --disable-ffserver  --disable-debug --disable-encoders --enable-cross-compile --disable-decoders --disable-armv5te --enable-decoder=h264 --enable-pic --cc=/Applications/Xcode.app/Contents//Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc --as='gas-preprocessor/gas-preprocessor.pl /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc' --extra-ldflags=-L/Applications/Xcode.app/Contents//Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/usr/lib/system --sysroot=/Applications/Xcode.app/Contents//Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk --target-os=darwin --arch=i386 --cpu=i386 --extra-cflags='-arch i386' --extra-ldflags='-arch i386' --disable-asm --enable-swresample --enable-gpl --enable-postproc --prefix=compiled/i386
+<p></p>
+<p>有了 <code>build.sh</code> 就可以用它去編譯 ffmpeg 內所有的 codec</p>
+<p>(編按: codec 就是 coder 與 decoder 的縮寫, 簡單的說就是編碼器 )</p>
+<p>.sh 就是編譯器的腳本檔案，執行他的話終端機就會依照你所撰寫的腳本內容去進行編譯檔案的行為</p>
+<p>詳細腳本的撰寫是一門大學問，這邊小編也先不提囉!要注意這是非常輕量的編譯方式，稍後小編會針對我們這次的 example 提供另一組腳本檔案</p>
+<p>接下來你的終端機內執行以下指令</p>
+<p><pre><code>$ ./[build.sh](http://build.sh/)
+<p>-bash: ./build.sh: Permission denied</p>
+<p></p>
+<p>(正常來說輸入上面的指令就能直接進行編譯, 但是如果很不幸的出來這段訊息請繼續以下指令)</p>
+<p><pre><code>$ chmod 755 build.sh
+<p>$ ./build.sh # (這樣就會依照你的腳本設定內容去編譯檔案了喔!)</p>
+<p>$ make</p>
+<p>$ make install</p>
+<p></p>
+<p>到這邊為止就會產生一個 compiled 的資料夾</p>
+<p>裡面就是已經編譯好的 library 檔案以及 header 檔案</p>
+<p>這些檔案就能提供給 iOS 內使用囉!!!</p>
+<p>到這邊之後，你需要的只是把 compiled/i386/lib 資料夾內的8個檔案</p>
+<p>放到你的 xcode 專案內就能使用他們囉</p>
+<p>接下來我們就要進行一款FFmpeg在iOS上的應用了喔!!!</p>
+<p><h4>1. 先到github上下載專案iFrameExtractor (參考下圖)</h4></p>
+<p><a href="https://github.com/alb423/iFrameExtractor">https://github.com/alb423/iFrameExtractor</a></p>
+<p>或是在終端機上輸入指令:  </p>
+<p><pre><code>git clone git://github.com/lajos/iFrameExtractor.git
+<p></p>
+<p>接下來是重點!!!因為網路上有關編譯他的說明並沒有特別清楚，小編在這邊重新整理一下操作流程</p>
+<p>先把模擬器設定為iPhone 6.1 Simulator</p>
+<p>然後底下會看到下載的專案變成這樣....</p>
+<p>你發現了如我們上圖的畫面...很不幸的下載下來的檔案並不能進行 compile 運作</p>
+<p>接下來請依照我們的步驟去進行</p>
+<p>首先回到你開的ffmpeg資料夾</p>
+<p>然後修改你的 <code>build.sh</code> 檔案內容全部取代為以下的內容</p>
+<p><pre><code>./configure \
+<p>--cc=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc \--as='/usr/local/bin/gas-preprocessor.pl /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc' \</p>
+<p>--sysroot=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk \</p>
+<p>--target-os=darwin \</p>
+<p>--arch=arm \</p>
+<p>--cpu=cortex-a8 \</p>
+<p>--extra-cflags='-arch armv7' \</p>
+<p>--extra-ldflags='-arch armv7 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk' \</p>
+<p>--prefix=compiled/armv7 \</p>
+<p>--enable-cross-compile \</p>
+<p>--enable-nonfree \</p>
+<p>--enable-gpl \</p>
+<p>--disable-armv5te \</p>
+<p>--disable-swscale-alpha \</p>
+<p>--disable-doc \</p>
+<p>--disable-ffmpeg \</p>
+<p>--disable-ffplay \</p>
+<p>--disable-ffprobe \</p>
+<p>--disable-ffserver \</p>
+<p>--disable-asm \</p>
+<p>--disable-debug</p>
+<p></p>
+<p>完成編輯以後, 在終端機內輸入以下指令</p>
+<p><pre><code>$ make clean
+<p>$ make</p>
+<p>$ make install</p>
+<p></p>
+<p>就能重新編譯你的 codec 到 compiled 的資料夾內</p>
+<p>要注意這一份腳本檔案是針對 iFrameExtractor 去修改的</p>
+<p>內容會比我們原本的 <code>build.sh</code> 腳本檔案所編譯來的巨大許多...</p>
+<p>也就是要等頗久，這點是十分正常的</p>
+<p>完成編譯以後，把你的 compiled 資料夾複製出來，在你的 iFrameExtractor 內新增一個 ffmpeg 資料夾</p>
+<p>接下來把 compiled 資料夾放到那個資料夾內，成為以下的畫面</p>
+<p>到這邊還沒有結束</p>
+<p>Xcode 4.6.3 跟原本這個範例的版本已經有所落差</p>
+<p>我們還需要在裡面再 import 一個 library <code>libiconv.dylib</code></p>
+<p>(這個的話, 你只需要到 <code>Build Phases -&gt; Link Binary With Libraries</code> 內新增, 找到這個關鍵字就可以加入了)接下來, 把這個資料夾內的 <code>gas-preprocessor.pl</code>複製到你的絕對路徑下 <code>/usr/local/bin</code> 內</p>
+<p>如果不知道怎麼找的人可以在 finder 內 按下 <code>shift + command鍵 + g</code></p>
+<p>輸入 <code>/usr/local/bin</code> 就可以找到囉到這邊才能你就能順順利利的去執行你的 project，理論上來說這裡應該能夠順利運作!</p>
+<p>就能看到以下畫面</p>
+<p>到這邊已經算是順利完成執行檔案了!!</p>
+<p>這次的困難點在於市面上的教學版本有點落差，在編譯時需要特別注意如果有興趣要使用 rtsp 方式播放影片的朋友</p>
+<p>只要在 <code>iFrameExtractorAppDelegate.m</code> 內的</p>
+<p><pre><code>- (void)applicationDidFinishLaunching:(UIApplication *)application {
+<p>    self.video =[[VideoFrameExtractor alloc] initWithVideo:@"rtsp://192.168.0.10:554/livestream"];</p>
+<p></p>
+<p>修改成 rtsp 的URL就好!</p>
+<p><em><strong>[GPL, LGPL授權注意]</strong></em></p>
+<p>接下來要注意的是, 我們編譯的 <code>build.sh</code> 內有一個項目如下:</p>
+<p><pre><code>--enable-gpl
+<p></p>
+<p>這一行代表了啓動 gpl 授權</p>
+<p>要修改的話請改成如下</p>
+<p><pre><code>disable-gpl
+<p></p>
+<p>這樣如果版友有興趣開發成商用軟體時才比較不會有爭議</p>
+<p>使用 GPL 授權的 app 是不能在 App Store 中上架的噢!</p>
+<p>更多開發消息, 請繼續關注 TakoBear!</p>
+<p><hr /></p>
+<p>如果對於這篇教學還有任何問題的版友</p>
+<p>我們也已經將該檔案重新編譯好放上, 直接下載即可</p>
+<p><a href="http://www.4shared.com/zip/s1E-tlf9/iFrameExtractor.html?">前往進行下載</a></p>
+<p>[cjtoolbox name='google_ad']</p>
+</code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></blockquote></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/ffmpeg-ios-6-1\/";
+        this.page.identifier = "741 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ffmpeg-ios-61";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

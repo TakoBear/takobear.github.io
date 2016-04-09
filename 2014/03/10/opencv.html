@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[OpenCV] 照片 濾鏡 效果</title>
+  <meta name="description" content="現在的智慧型手機 內建都有許多濾鏡或是扭曲的功能基本上這些功能都是對每個畫素作運算之後得到的不過在OpenCV上面可以透過一些簡單的方法就可以快速達成類似的效果喲在OpenCV中我們可以利用不同的color map 做成不同的風格效果並且搭配上內建的applyColorMap這個函數 就可以快速地作出濾鏡的效果囉...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/03/10/opencv.html">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[OpenCV] 照片 濾鏡 效果</h1>
+    <p class="post-meta"><time datetime="2014-03-10T22:27:40+08:00" itemprop="datePublished">Mar 10, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1394385635.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>現在的智慧型手機 內建都有許多濾鏡或是扭曲的功能
+<p>基本上這些功能都是對每個畫素作運算之後得到的</p>
+<p>不過在OpenCV上面可以透過一些簡單的方法就可以快速達成類似的效果喲</p>
+<p><div><!--BLOG_SUMMARY_END--></div></p>
+<p><div>
+<p><div id="619247947120382978" align="left"><script async="">// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script><script async="">// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
+<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>在OpenCV中我們可以利用不同的color map 做成不同的風格效果
+<p>並且搭配上內建的applyColorMap這個函數 就可以快速地作出濾鏡的效果囉</p>
+<p>之後我們會在其他篇文章介紹如何利用對畫素的值作運算 來得到更多不同種濾鏡的效果</p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/943180.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div id="308446793336225493" align="left"><script>// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3708797.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5577960_orig.jpg" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div></div></p>
+<p><hr /></p>
+<p><div></div></p>
+<p></p>
+<p><div>再來介紹一下 如何製造凸透鏡效果在這邊我們順便介紹一下怎樣利用滑鼠還選擇 凸透鏡效果的中心點
+<p>以及利用sliding bar 來控制凸透鏡的效果我們可以定義一個callback function來update凸透鏡的效果</p>
+<p>setMouseCallback("SrcImage", CallBackFunc, NULL);</p>
+<p>利用呼叫這個function的時候我們必須指定要在哪一個window下偵測滑鼠控制的點</p>
+<p>以及要被執行的函數</p>
+<p>void FunctionName(int event, int x, int y, int flags, void* userdata)</p>
+<p>x, y即為滑鼠的位置</p>
+<p>滑鼠偵測的事件包括</p>
+<p>EVENT_MOUSEMOVE</p>
+<p>EVENT_LBUTTONDOWN</p>
+<p>EVENT_RBUTTONDOWN</p>
+<p>EVENT_MBUTTONDOWN</p>
+<p>EVENT_LBUTTONUP</p>
+<p>EVENT_RBUTTONUP</p>
+<p>EVENT_MBUTTONUP</p>
+<p>EVENT_LBUTTONDBLCLK</p>
+<p>EVENT_RBUTTONDBLCLK</p>
+<p>EVENT_MBUTTONDBLCLK</p>
+<p>Flag</p>
+<p>EVENT_FLAG_LBUTTON</p>
+<p>EVENT_FLAG_RBUTTON</p>
+<p>EVENT_FLAG_MBUTTON</p>
+<p>EVENT_FLAG_CTRLKEY</p>
+<p>EVENT_FLAG_SHIFTKEY</p>
+<p>EVENT_FLAG_ALTKEY</p>
+<p>這邊提供一個簡單的例子 如何使用mouse event</p>
+<p></p>
+<p><div>
+<p><div id="625427781843629138" align="left"><script>// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>接著 如何加上slider 來做凸透鏡效果的控制
+<p>在OpenCV我們利用</p>
+<p>createTrackbar( TrackbarName, "Linear Blend", &amp;alpha_slider, alpha_slider_max, on_trackbar );</p>
+<p>來產生一個slider bar</p>
+<p>"Linear Blend" 就是要把Bar放在哪個window上面</p>
+<p>alpha_slider 是slider回傳的直</p>
+<p>alpha_slider_max 就是slider的最大值</p>
+<p>on_trackbar 是slider改變值的時候會呼叫的函數這邊附上OpenCV官方網站給的例子 (把兩張圖疊在一起 然後做透明化)</p>
+<p><div>
+<p><div id="262270582236118869" align="left"><script>// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>接著我們把凸透鏡效果結合mouse的callback function加上slider bar做個整合</div></p>
+<p><div>
+<p><div id="612127903793820520" align="left"><script>// < ![CDATA[</p>
+<p>// < ![CDATA[</p>
+<p>// ]]></script></div></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8895379_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>
+<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8122659_orig.png" alt="图片" /></a>
+<p><div></div></p>
+<p></p>
+<p></p>
+<p><div>參考網站
+<p>1. <a href="http://blog.csdn.net/yangtrees/article/details/9095731" target="_blank">http://blog.csdn.net/yangtrees/article/details/9095731</a></p>
+<p>2. <a href="http://blog.csdn.net/wsfdl/article/details/7719890" target="_blank">http://blog.csdn.net/wsfdl/article/details/7719890</a></p>
+<p>3. <a href="http://opencv-srf.blogspot.com/2011/11/mouse-events.html">http://opencv-srf.blogspot.com/2011/11/mouse-events.html</a></p>
+<p><div>喜歡這則消息嗎? 趕快加入Takobear粉絲團吧!</div></p>
+<p><div></div></p>
+</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/03\/10\/opencv\/";
+        this.page.identifier = "410 http:\/\/www.takobear.tw\/201702608526356260322804024687\/opencv";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
