@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[iOS 8] 從Objective-C到Swift : 你的第4支Swift程式 - 如何使用HTTP/ REST API (NSURLConnection)? </title>
+  <meta name="description" content="Bear 之前除了介紹怎麼在Swift中使用UIView, 怎麼製作按鈕進行互動, 以及如何製作表格今天的內容可是更進階的, 讓大家知道怎麼去做網路連線, 透過HTTP 協定去下載圖片大家也可以依此類推到其他的REST API做網路應用喔!!今天要介紹的Class主題是NSURLConection,當然囉, 也是...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/07/27/ios-8-objective-cswift-4swift-http-rest-api-nsurlconnection/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[iOS 8] 從Objective-C到Swift : 你的第4支Swift程式 - 如何使用HTTP/ REST API (NSURLConnection)? </h1>
+    <p class="post-meta"><time datetime="2014-07-27T08:57:44+08:00" itemprop="datePublished">Jul 27, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2897835_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">Bear 之前除了介紹<a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/ios-8-objective-cswift-swift-swiftuiview" target="_blank">怎麼在Swift中使用UIView</a>, 怎麼<a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/ios-8-objective-cswift-2swift-swiftuilabeluibutton" target="_blank">製作按鈕進行互動</a>, 以及<a href="http://www.takobear.weebly.com/201702608526356260322804024687/ios-8-objective-cswift-3swift-swiftuitableview" target="_blank">如何製作表格</a>
+今天的內容可是更進階的, 讓大家知道怎麼去做網路連線, 透過HTTP 協定去下載圖片
+大家也可以依此類推到其他的REST API做網路應用喔!!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="511222235615010210" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">今天要介紹的Class主題是NSURLConection,
+當然囉, 也是在Swift上面要怎麼用NSURLConnection去下網路請求(Network Request)要記得在class外面加上NSURLConnectionDataDelegate, 確保遵循其協定來看網路封包回傳的結果我們在viewDidLoad的地方嘗試發出Request
+先宣告一個NSURL，這邊大家可以想成是網路上的網址(URL)
+Bear這裡是以下載圖片做示範，大家可以直接在Google image 任意挑張圖右鍵複製圖片網址來試玩看看喔!!
+
+完成以後再宣告一個NSURLRequest 將剛剛的 url 填入
+接著我們建立一個 NSURLConnection 填入request 並將 delegate 設為 self (也就是自己)
+注意這個時候網路請求並沒有真正被送出去! 這階段只是完成宣告
+要把請求送出去, 要到connection.start()這一行被執行好以後才會送出去!!!
+
+大家可以注意一下, 網路封包是有可能沒有傳回來或是傳送失敗的喔! (完整的程式碼可以參考如下)
+
+</div>
+<div>
+<div id="859481107715207238" class="wcustomhtml" align="left"><script>// < ![CDATA[
+// < ![CDATA[
+// ]]></script></div>
+</div>
+<div class="paragraph">我們發送完的網路封包要怎麼處理回傳的結果呢?
+func <span style="color: #6555c2;"><strong>connection</strong></span>(connection: <span style="color: #9555c2;">NSURLConnection</span>!, didReceiveData data: <span style="color: #a561d0;">NSData</span>!)
+這個delegate下的function就是網路封包回來的時候會處理的地方
+我們的做法就是在這邊收到封包以後(封包都以NSData)來呈現,
+再把它利用UIImageView來呈現囉! 是不是很簡單呢?
+如果是原本就在Objective-C的開發者, 到目前為止應該不會很陌生吧!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9658716_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">如果對於網路連線不熟悉的朋友, 大家可以試試看, 打開你的瀏覽器,
+把這串網址
+<strong>http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7856205_orig.png</strong>
+<span style="color: #2a2a2a;">貼到你的瀏覽器上, 可以看到以下畫面</span></div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5563283_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">大家有沒有發現圖片出來了呢? 其實這邊我們就是跟瀏覽器一樣,
+去下了一個所謂的HTTP GET的指令封包 (只是都被NSURLConnection所封裝起來了)
+有興趣的朋友, 之後Bear會在進行比較深入的講解, 或是大家可以先到以下維基百科連結參考看看內容:
+<a title="" href="http://zh.wikipedia.org/wiki/%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE" target="_blank"><strong><span style="font-size: large;">維基百科: HTTP超文本協議</span></strong></a></div>
+<div>
+<div id="682899276562995109" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+// < ![CDATA[  (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+</div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/07\/27\/ios-8-objective-cswift-4swift-http-rest-api-nsurlconnection\/";
+        this.page.identifier = "232 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ios-8-objective-cswift-4swift-http-rest-api-nsurlconnection";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

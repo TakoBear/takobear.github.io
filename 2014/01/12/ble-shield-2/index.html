@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>動手做自己的智能家電 - 藍芽模組BLE Shield</title>
+  <meta name="description" content="各位有在支持TakoBear的朋友大家週末好!這個禮拜網站域名作了正式的更動, 我們的域名正式定為:http://www.takobear.weebly.com/未來也將推出更多不同的新聞消息, 還請大家多多支持!">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/ble-shield-2/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">動手做自己的智能家電 - 藍芽模組BLE Shield</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:44:34+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div class="paragraph">各位有在支持TakoBear的朋友大家週末好!
+這個禮拜網站域名作了正式的更動, 我們的域名正式定為:
+<span style="color: #ef0202;">http://www.takobear.weebly.com/</span>未來也將推出更多不同的新聞消息, 還請大家多多支持!
+
+今天要介紹的是如何用家裡的iPhone跟Arduino自製藍芽(Bluetooth)聊天器!
+....
+
+先別急著走,
+萬事起頭總是有簡單有難, 總是要從簡單的部份開始!
+首先我們要先講如何利用Arduino 進行藍芽傳輸!
+你需要的是這個: <a title="" href="http://redbearlab.com/bleshield/">BLE Shield</a>
+
+他長得什麼樣呢?
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8326795_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">沒錯又是小編愛好的滑鼠比例尺
+BLE Shield大約一隻滑鼠的2/3 長(不專業估計)
+想要購買他的朋友可以到露天拍賣搜尋: BLE Shield
+或是點選以下連結:
+<a href="http://goods.ruten.com.tw/item/show?21304302843066" target="_blank">http://goods.ruten.com.tw/item/show?21304302843066</a>
+就能買到囉!到貨以後就能把它跟原本的板子組裝在一起
+與原本的<a href="http://www.gossibear.tw/12/post/2013/06/-arduino-drive.html" target="_blank">動手做自己的智能家電系列</a>文章有點不同, 這次就不需要裝驅動程式就能用了!
+在正式使用以前讓我們先看看他長什麼樣子吧
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6288449_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<blockquote><span style="color: #020000;"><strong>為何需要買BLE Shield?
+BLE Shield 是能提供arduino做藍芽4.0的傳輸模組
+基於Apple的Programming Guide, 在iPhone 4s 以前（不包含iphone 4s）的機種不支援藍芽4.0
+這種情況下所有的藍芽配備產品要優先通過MFi  (Made For iPod)認證後, 才能進行開發
+一直到兩年前Apple WWDC 宣布CoreBlueTooth FrameWork能在iOS 5上使用
+同時支援藍芽4.0, 只要Apple支援藍芽4.0 以上的機種, 開發者們都能不需要經過蘋果認證就能開發藍芽應用程式,
+大大增進藍芽搭載硬體與Apple間的整合市場!</strong></span>
+
+(P.S. 一般要通過MFi需要經過很嚴厲的認證與足夠大的公司....現在仍然如此,
+蘋果為了增加MFi的效益,
+iOS 7上據說還要增加如果沒有通過MFi認證的產品,
+<span style="color: #020000;"><strong>目前針對的是USB纜線傳輸時會跳出警告.. (參考下圖)
+未來藍芽傳輸不知道會不會也有類似圖樣...)</strong></span></blockquote>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8983859_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">用app打開看到這種畫面也確實挺嚇人的...(抖)
+不過這不是我們今天的重點! 讓我們繼續往下看!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7244549_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">組裝起來就跟上圖一樣啦!!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1437987_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">插上電以後就會看到一顆藍色的LED燈亮起來
+還有這間實驗室制作的RedBear圖樣!買好以後 請到這個網址:
+<a title="" href="https://github.com/RedBearLab/BLEShield/tree/master/Library" target="_blank">https://github.com/RedBearLab/BLEShield/tree/master/Library</a> 到以下畫面把它下載下來!
+下載方法可以參考<a href="http://www.gossibear.tw/12/post/2013/06/-arduino-irremote-homemade.html" target="_blank">前面文章</a>的教學
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3952351_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">載完以後將 BluetoothLowEnergy 資料夾放到arduino的library內
+另外一個BLE資料夾暫時不會用到, 他是給iOS 開發作的Open Source, 下篇我們會做進一步介紹不清楚資料夾所在的的同樣請<a href="http://www.gossibear.tw/12/post/2013/06/-arduino-irremote-homemade.html" target="_blank">參考前面教學</a>!
+
+完成移植以後, 打開Arduino就會看到以畫面囉:
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2194074_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這邊小編用的是Mac OS環境, 不過Windows環境的操作過程一模一樣!
+看到File  - &gt; Examples 多了一個BluetoothLowEnergy就表示我們已經完整把這個library移植進來了!
+有關這塊藍芽模組接下來還會有好幾篇介紹,
+最後我們會介紹如何用iPhone跟Arduino進行連結
+有興趣的朋友千萬別錯過!關於內文有任何問題歡迎來信takobearx@gmail.com
+請繼續關注TakoBear !
+
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/ble-shield-2\/";
+        this.page.identifier = "745 http:\/\/www.takobear.tw\/201702608526356260322804024687\/-bluetooth-ble-shield";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

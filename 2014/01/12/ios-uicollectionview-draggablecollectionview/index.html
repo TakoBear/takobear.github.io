@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[中級] iOS - 可拖曳變化位置的UICollectionView - DraggableCollectionView</title>
+  <meta name="description" content="Bear 昨天整理教學文時發現 iOS 內只有入門與進階的教學…">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/ios-uicollectionview-draggablecollectionview/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[中級] iOS - 可拖曳變化位置的UICollectionView - DraggableCollectionView</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:34:31+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Bear 昨天整理教學文時發現 iOS 內只有入門與進階的教學…</p>
+
+<p>有鑒於難易度似乎落差過大… 決定再加入一個中等程度的介紹!!</p>
+
+<p>這次介紹的是基於 UICollectionView 所出現的 Open Source，可以讓你自由拖曳在畫面中的方格以及陣列內的順序!</p>
+
+<!--more-->
+
+<p>實際上程式跑起來的 Gif 檔案如下</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8166896_orig.gif" alt="" /></p>
+
+<p>首先先到 GitHub 上面 commit 這份 Opensource : DraggableCollectionView網址如下: <a href="https://github.com/lukescott/DraggableCollectionView">https://github.com/lukescott/DraggableCollectionView</a></p>
+
+<p>git 來源: https://github.com/lukescott/DraggableCollectionView.git</p>
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1017754_orig.png" alt="" /></p>
+
+<p>下載下來後把他整個放到專案內</p>
+
+<p>注意這份 Open Source 是指支援 ARC 的噢! 要在MRC的專案內要調整設定Bear這邊建立一個新的空白專案: TestDragCollectionView</p>
+
+<p>為方便解釋我們直接使用ARC來介紹囉</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7964511_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8130999_orig.png" alt="" /></p>
+
+<p>這個 Open Source 相當厲害，Bear 在這裡先介紹第一種簡單用法!</p>
+
+<p>(會先假設大家對於 UICollectionView 熟悉, 如果不了解的可以先等 Bear 在入門系列的介紹…)目標是要做出跟本篇開頭類似的配置，然後長按方格後可以拖曳他的位置</p>
+
+<p>(如同上面的Gif檔案效果)</p>
+
+<p>程式完成架構大致如下：</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7572534_orig.png" alt="" /></p>
+
+<h4>重點1.</h4>
+
+<p>Import 以下兩個 framework：</p>
+
+<pre><code>DraggableCollectionViewFlowLayout.h
+UICollectionView+Draggable.h
+</code></pre>
+
+<p>讓你的物件遵循這兩個 protocol 協定:  </p>
+
+<pre><code>UICollectionViewDataSource_Draggable
+UICollectionViewDelegate
+</code></pre>
+
+<p>(不清楚 Protocol 意義的，可以先在 Google 搜尋資料或是等 Bear 之後補完在入門篇)</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1228259_orig.png" alt="" /></p>
+
+<p>這邊 Bear 偷懶先宣告一個全域的 Array 當作假資料呈現用</p>
+
+<h4>重點2:</h4>
+
+<p>如何配置View在畫面上</p>
+
+<p>UICollectionView 的配置步驟與一般的畫 View 有點不同，有興趣的之後 Bear 也會詳細介紹</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/92023_orig.png" alt="" /></p>
+
+<p>使用 Draggable CollectionView 的方法與一般的 UICollectionView 操作方法完全相同</p>
+
+<p>只需要兩步配置即可</p>
+
+<p>A. 先初始化你的 Layout 配置，這邊要先宣告一個物件叫做 DraggableCollectionViewFlowLayout</p>
+
+<p>告訴他的滑動方向是垂直方向(UICollectionViewScrollDirectionVertical)</p>
+
+<p>告訴他每一個方格的大小是 100 * 100</p>
+
+<p>B. 真正去初始化你的UICollectionView，初始化時把剛剛宣告的layout配置帶入</p>
+
+<p>把 dataSource 跟 delegate 都指派為自己</p>
+
+<p>最重要的是要把 draggable 這個 property 設定為 yes，不然拖曳是無法進行的</p>
+
+<p>把 collectionview 的背景設定為黑色</p>
+
+<p>最後就是 collectionview 跟 tableview 不同的地方，必須先註冊你用的 cell 的 class 名稱</p>
+
+<p>registerClass: forCellWithReussIdentifer: 這個方法如果沒註冊程式是不能執行會crash的!!!!!!</p>
+
+<p>最後就只要把它加到畫面上就好</p>
+
+<p>接下來就只需要去撰寫有關的委派方法(delegate method)就行了!</p>
+
+<p>大家先看一下程式碼結構</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5741513_orig.png" alt="" /></p>
+
+<p>一項項解釋這4個method的話</p>
+
+<h4>(1)  - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section</h4>
+
+<p>跟 UITableView 一樣，要宣告你總共有幾個 item 在這個 section，section 的 method 也類似，不指定 section 個數時預設只有1個</p>
+
+<p>這邊我們用 data 的元素量來指定有多少 item，也就是20</p>
+
+<h4>(2) - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath</h4>
+
+<p>這邊也與 UITableView 類似，是做初始化每一個 Cell 的內容</p>
+
+<p>值得注意的是因為他跟 UITableView 類似，會有 reuse 的問題</p>
+
+<p>也就是說經過滑動後畫面的物件可能會重疊</p>
+
+<p>所以我們必須要先在初始化前都先把畫面上既有的元件先進行移除後再重新加到畫面上</p>
+
+<p>才不會發生重疊(overlap)的問題</p>
+
+<h4>(3) - (BOOL)collectionView:(LSCollectionViewHelper *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath</h4>
+
+<p>這邊 return YES 代表你的手勢操作會啟用，注意他跟原本的委派方法有點不同，collectionView 的類別不是 UICollectionView 而是 LSCollectionViewHelper</p>
+
+<h4>(4)  - (void)collectionView:(LSCollectionViewHelper *)collectionView moveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath</h4>
+
+<p>這隻告訴你移動完成後進行的動作，我們的做法就是先移除原本陣列中的物件</p>
+
+<p>之後再重新加回去他到指定的新位置</p>
+
+<p>fromIndexPath 是原本的位置</p>
+
+<p>toIndexPath 是移動後的位置</p>
+
+<p>這樣就能簡單地做出一樣的效果囉!!!</p>
+
+<p>根據官方原本的程式碼，只要修改DraggableViewLayout 就能更改配置囉</p>
+
+<p>作出以下的配置也是相當簡單的</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3622309_orig.png" alt="" /></p>
+
+<p>有興趣的朋友歡迎來信討論喔!!對於今天的Code教學有疑問的，可以到以下連結下載回來</p>
+
+<p><a href="https://github.com/shouian/Simple-Draggable-UICollectionView">https://github.com/shouian/Simple-Draggable-UICollectionView</a></p>
+
+<p>或是歡迎來信到我們的信箱: takobearx@gmail.com喔!</p>
+
+<p>喜歡這篇文章嗎? 歡迎加入Takobear粉絲團!</p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/ios-uicollectionview-draggablecollectionview\/";
+        this.page.identifier = "551 http:\/\/www.takobear.tw\/201702608526356260322804024687\/-ios-uicollectionview-draggablecollectionview";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

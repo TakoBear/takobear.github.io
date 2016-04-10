@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[Opensource] OpenCV SURF detector-應用篇</title>
+  <meta name="description" content="Visualize SURF Detector前面已經介紹了一些利用OpenCV不同的應用, 在這邊我們要介紹的是SURF的一些應用 (理論的部分 之後會再補上)在這邊我們介紹兩個利用SURF這個特徵(feature)的應用1. 利用一張影像 來搜尋其他更多的類似影像2. 如何作出全景圖">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/03/22/opensource-opencv-surf-detector/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[Opensource] OpenCV SURF detector-應用篇</h1>
+    <p class="post-meta"><time datetime="2014-03-22T19:16:46+08:00" itemprop="datePublished">Mar 22, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1393483999.jpg" alt="图片" /></a>
+<div>Visualize SURF Detector</div>
+</div>
+</div>
+<div class="paragraph">前面已經介紹了一些利用OpenCV不同的應用, 在這邊我們要介紹的是SURF的一些應用 (理論的部分 之後會再補上)</div>
+<div class="paragraph">在這邊我們介紹兩個利用SURF這個特徵(feature)的應用1. 利用一張影像 來搜尋其他更多的類似影像
+2. 如何作出全景圖
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="902712392672575794" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">首先介紹 如何使用SURF detector
+基本步驟就是 1. 找到關鍵點(keypoint) 2. 計算敘述子(descriptor) 3. 比較不同影像的feature來做match第一個例子 我們就介紹怎樣找到keypoint接下來把它顯示在畫面上
+我們利用OpenCV內建的 SurfFeatureDetector 宣告一個來找尋關鍵點的class 我們用surf來代表
+constructor內是代表min Hessian 詳細的 我們會在其他文章內做解釋
+surf.detect就是進行找關鍵點的動作 我們利用可口可樂的Logo來做例子
+
+</div>
+<div>
+<div id="904729206132347146" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8791035.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">第一個例子中 我們可以得到他的這些keypoint 接下來我們要用這個logo來找尋在另外一張影像中的可樂瓶利用上面 找到的這些keypoint怎樣找到 接著 我們利用
+SurfDescriptorExtractor這個class來進行擷取descriptor的動作
+利用其底下的compute這個member function我們就可以得到在每個keypoint的descriptor
+接下來 我們就是要對兩張不同的影像來做match並將其框雷同的地方框選出來
+
+Match的話我們則是利用FlannBasedMatcher來做一個比較兩個descriptor
+Flann 是 Fast Approximate Nearest Neighbor 基本上就是找到最相似的descriptor
+然後我們去計算這些找到的點 去比較彼此的距離 我們只採用距離在三個最小距離內的這些feature point
+
+找到好的match points之後 我們利用Homography以及perspectiveTransformation去做找到對應在新影像的點
+並用line這個function標示出來
+
+</div>
+<div>
+<div id="348537002650777273" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9032918_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">雖然結果有不是很完美(大概是因為曲面的關係) 但是大致上還是可以抓到一些重要的特徵接著我們介紹如何利用相同的方法做全景圖 基本上的步驟都是一樣的
+只是最後我們是用warpPerspective來結合兩張影像
+
+</div>
+<div>
+<div id="861763115129245576" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1395377494.png" alt="图片" /></a>
+<div>images from reference 2.</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9488165_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">參考資料:
+1. http://www.chrisevansdev.com/computer-vision-opensurf.html
+2. http://ramsrigoutham.com/2012/11/22/panorama-image-stitching-in-opencv/</div>
+<div class="paragraph">喜歡這篇文章嗎 趕快加入我們</div>
+<div></div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/03\/22\/opensource-opencv-surf-detector\/";
+        this.page.identifier = "397 http:\/\/www.takobear.tw\/201702608526356260322804024687\/opensource-opencv-surf-detector";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[iOS 8] 從Objective-C到Swift : 你的第一支Swift程式 - 如何在Swift使用UIView? </title>
+  <meta name="description" content="隨著蘋果的推陳出新Swift成為潮流的趨勢顯然銳不可擋，Bear 這次也來跟風介紹一下大家可以如何開始從Objective-C 轉換到Swift上!">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/07/03/ios-8-objective-cswift-swift-swiftuiview/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[iOS 8] 從Objective-C到Swift : 你的第一支Swift程式 - 如何在Swift使用UIView? </h1>
+    <p class="post-meta"><time datetime="2014-07-03T01:31:44+08:00" itemprop="datePublished">Jul 3, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3956765_orig.jpeg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">隨著蘋果的推陳出新Swift成為潮流的趨勢顯然銳不可擋，
+Bear 這次也來跟風介紹一下大家可以如何開始從Objective-C 轉換到Swift上!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="509998952987589861" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">要進行這次教學前, 大家得先到Apple Developer 網站上下載Xcode 6 beta版本
+<strong><span style="font-size: large;"><a title="" href="https://developer.apple.com/devcenter/ios/index.action" target="_blank">點選前往開發者下載載點</a></span></strong>註: 本系列教學適用於從原本已學會Objective-c的使用者想要轉換學習Swift上, 已假設對於objective-c有一定認識
+有關基礎知識可參考本站<a href="http://www.takobear.weebly.com/201702608526356260322804024687/bear-ios" target="_blank"><strong>iOS系列教學入口網頁</strong></a>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5502801_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">安裝好Xcode 6以後,
+首先我們開啟一個single view的新專案，這裡都跟以前Xcode 5 一樣 (參考: <strong><a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/-bear-xcode-5-ios" target="_blank">如何建立第一支Xcode專案?)</a></strong>
+或是依照下圖步驟也能新增喔</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/568637_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3144948_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">最後一步則要記得將語言選取Swift!!!!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2844905_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">建好後的專案跟objective-c完全一樣，會得到一個AppDelegate跟ViewController的swift檔
+現在就沒有分.m或是.h了，而下圖我們就直接實作一個UIView當範例</div>
+<div>
+<div id="390550035499711991" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">Swift的宣告都是用<strong><span style="color: #f00303;">var</span></strong> (可變)或 <strong><span style="color: #f90606;">let</span></strong> (固定)，而冒號後面則是該變數(或是物件)的形態等號後面則是init 該物件，view的屬性設定跟obj-c類似，
+而Swift把obj-c的中括號概念捨棄，改成用點符號呼叫, 例如UIColor.redColor()及addSubview都是
+這點就跟主流的java或是C#的運算符號相同
+算是方便從其他領域轉過來的開發者入手吧!
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5563707_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">大家可以看得出來, 這邊function的命名基本上還是跟以前Objective-C時期沒有什麼差別,
+一樣是有基本的viewDidLoad, didRecevieMemoryWarning架構,
+大概對於Objective-C的人來說, 只需要知道物件宣告上的差異,
+沒有記憶體回收的問題等幾點事項, 其他部分均與以前開發iOS大同小異</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9106164_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">值得一提的是, 在XCode6 beta中,
+如果最上面的<span style="color: #f60202; font-size: medium;"><strong>註解內有中文</strong></span>的話，將會失去自動補完的功能(AutoComplete)，
+大家都知道這有多痛苦吧！所以記得將中文名字或是2014“年”去掉</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8740424_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">最後附上精美的結果圖呈現！如果沒有iOS 8的Device的話，可以使用simulator模擬器也可以！</div>
+<div>
+<div id="482233608220819842" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+</div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/07\/03\/ios-8-objective-cswift-swift-swiftuiview\/";
+        this.page.identifier = "274 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ios-8-objective-cswift-swift-swiftuiview";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

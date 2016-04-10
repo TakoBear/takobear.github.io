@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>利用Raspberry Pi建立VPN server</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2013/10/27/raspberry-pivpn-server/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">利用Raspberry Pi建立VPN server</h1>
+    <p class="post-meta"><time datetime="2013-10-27T11:58:11+08:00" itemprop="datePublished">Oct 27, 2013</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1417666_orig.jpg" alt="" /></p>
+
+<p>大家好，Bear 這次打算介紹簡單的樹莓派伺服器應用</p>
+
+<p>這次介紹的伺服器應用是 VPN Server</p>
+
+<p>何謂 VPN Server?</p>
+
+<p>虛擬私人網路（Virtual Private Network，簡稱VPN）</p>
+
+<p>通常建立來應用於連線中、大型企業或團體與團體間的私人網路的通訊方法。</p>
+
+<p>簡單的說就是利用點對點與VPN Server建立一個連線通道，利用該VPN Server進入內部網路或外部網路</p>
+
+<p>常用於以下幾種情況：
+1. 在家中連線到公司架設的 VPN Server，成為公司內部網路的一份子，在家中工作QAQ
+2. 在外面連進家裡架設的 VPN Server，獲取家中內部網路資源
+3. 利用該方法，繞過部分阻擋外部網路的防火牆，俗稱＂翻牆＂（大心）沒錯，這次介紹的就是 VPN 的特殊用法，翻牆 VPN Server 的類型很多，小編這次教的是難阻擋的 OpenVPN</p>
+
+<p>為何它難阻擋呢？</p>
+
+<p>OpenVPN 採用 OpenSSL 加密，且可自選 port</p>
+
+<p>沒錯就是威在可自選 port 這點，選擇 port 443（一種用於加密連線的網頁瀏覽，https）</p>
+
+<p>一般防火牆或規則，很難辨別 port 443 裡面封包為何，更不用說阻擋 port 443 的連線</p>
+
+<!--more-->
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/494805_orig.png" alt="" /></p>
+
+<p>在 Windows 底下打開 pietty 或 putty 或其他可以進行 SSH 連線的 Windows App</p>
+
+<p>如果沒有的話請打開瀏覽器搜尋 pietty</p>
+
+<p>在主機名稱輸入樹莓派的區網 IP</p>
+
+<p>如果不知道的話，請打開瀏覽器進入 I P分享器（或ＷiFi AP）等設定頁找出樹莓派的區網 IP</p>
+
+<p>連線完輸入 user id（login as:），password:</p>
+
+<p>畫面如下</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6007922_orig.png" alt="" /></p>
+
+<p>不要害怕，咱們開始當個 Geek 吧（大誤）</p>
+
+<p>小編這裡採用的是官方推薦的 Raspbian “wheezy”</p>
+
+<p>鍵入</p>
+
+<pre><code class="bash"># 這指令用於更新目前源庫，就是更新 Raspbian 可用 App 的清單
+# 會要求輸入密碼
+sudo apt-get update
+
+# 更新 PI 目前的有的 Apps
+sudo apt-get upgrade
+</code></pre>
+
+<p>一段時間後，來安裝 openvpn 吧</p>
+
+<p>鍵入</p>
+
+<pre><code class="bash"># 安裝四個App，分別是openvpn，本篇主角，openssl，建立憑證，vi、vim，終端機下非常好用的文書編輯軟體
+sudo apt-get install openvpn openssl vi vim
+</code></pre>
+
+<p>好了，建立 VPN Server 完成</p>
+
+<p>該休息了^_&lt;.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.</p>
+
+<p>只說到這，各位讀者一定認為 Bear 很混</p>
+
+<p>接下來就是 openvpn 的設定與啟動</p>
+
+<p>首先，現建立連線用的憑證，可視為一種使用者帳號密碼</p>
+
+<p>為了方便，需要root身分來執行以下動作</p>
+
+<p>如果之前沒有設定 root 密碼，請自行建立一個</p>
+
+<pre><code class="bash">sudo passwd
+</code></pre>
+
+<p>待要求後重覆輸入要建立的 root 密碼</p>
+
+<p>注意，root 在 Uuix-like 的作業系統中，是神一般的存在，請建立強式密碼</p>
+
+<p>不要隨意使用root身分執行，在 root 底下，任何行為請小心謹慎</p>
+
+<pre><code class="bash"># su，切換 user，無指定 ID 表示 root
+# 要求輸入 root 密碼
+su
+
+# 移動至 openvpn 安裝後位置
+cd /etc/openvpn/
+
+# 將 openvpn 建立憑證的程式複製到 /etc/openvpn/easy-rsa 底下
+cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 ./easy-rsa
+
+# 到easy-rsa底下用vim修改vars檔案，簡易設定憑證要的參數
+cd ./easy-rsa/
+vim ./vars
+</code></pre>
+
+<p>將 1024 修改成 2048，增加憑證難度</p>
+
+<p>修改方式，按下鍵盤 <code>i</code> 鍵，可開始編輯，不需編輯請按 <code>Esc</code> 鍵</p>
+
+<pre><code class="bash"># Increase this to 2048 if you
+# are paranoid.  This will slow
+# down TLS negotiation performance
+# as well as the one-time DH parms
+# generation process.
+export KEY_SIZE=2048
+</code></pre>
+
+<p>需存檔時，按下 <code>Esc</code> 鍵後按出 <code>:wq!</code>，如下圖</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7944893_orig.png" alt="" /></p>
+
+<p>按下 Enter 完成存檔 <code>w</code> 並離開 <code>q</code></p>
+
+<pre><code class="bash"># In how many days should the root CA key expire?
+export CA_EXPIRE=3650
+# In how many days should certificates expire? 
+# 憑證有效時間，預設為3650天，可自行修改
+export KEY_EXPIRE=3650
+# These are the default values for fields
+# which will be placed in the certificate.
+# Don't leave any of these fields blank.
+export KEY_COUNTRY="TW"
+export KEY_PROVINCE="Taiwan"
+export KEY_CITY="Taipei"
+export KEY_ORG="TakoBear"
+export KEY_EMAIL="me@myhost.mydomain"
+export KEY_EMAIL=mail@host.domain
+export KEY_CN=changeme
+export KEY_NAME=changeme
+export KEY_OU=changeme
+export PKCS11_MODULE_PATH=changeme
+export PKCS11_PIN=1234
+</code></pre>
+
+<p>預設憑證資訊，可自行處理好了，可以開始建立憑證</p>
+
+<p>將剛剛建立的文件讀入</p>
+
+<pre><code class="bash">source ./vars
+</code></pre>
+
+<p>清空舊有憑證</p>
+
+<pre><code class="bash">./clean-all
+</code></pre>
+
+<p>建立憑證所需動作</p>
+
+<pre><code class="bash">./build-ca
+./build-key-server YourServerName
+# （依需求建立數量）
+./build-key UserName 1
+./build-key UserName 2
+./build-key UserName 3
+
+./build-dh openvpn --genkey --secret tls.key
+</code></pre>
+
+<p>將 tls.key 移到 keys 資料夾下</p>
+
+<pre><code class="bash">mv ./tls.key ./keys/
+</code></pre>
+
+<p>利用 FTP Server、NFS Server、File Server 等將憑證複製取出（後續文章再說明）</p>
+
+<p>接下來，設定 OpenVPN 設定檔</p>
+
+<p>一樣使用 root 身分</p>
+
+<pre><code class="bash">cd /etc/openvpn/
+vim ./openvpn.conf
+</code></pre>
+
+<p>openvpn.conf 內容如下</p>
+
+<pre><code class="ini">dev tun
+;; Listen port: 443
+port 443
+;; tcp mode
+proto tcp
+;; vpn 使用網段，勿和原有網段相衝突
+server 172.16.0.0 255.255.255.0
+;; 允許client間互相連接
+;client-to-client
+push "redirect-gateway def1"
+;;DNS設定
+push "dhcp-option DNS 8.8.8.8"
+;;最大使用者量
+max-clients 12
+keepalive 10 120
+tls-server
+;; Key File 設定
+dh /etc/openvpn/easy-rsa/keys/dh2048.pem
+ca /etc/openvpn/easy-rsa/keys/ca.crt
+cert /etc/openvpn/easy-rsa/keys/YourServerName.crt
+key /etc/openvpn/easy-rsa/keys/YourServerName.key
+;; openvpn 啟動的身份;如果不是root,會影響後面的進階設定
+user root
+group root
+;;----以下是進階部份設定,非必要----
+;; 針對client端個別設定
+client-config-dir /etc/openvpn/ccd
+ccd-exclusive
+;; client登入後要執行的script
+;learn-address "/etc/openvpn/learnscript/userlog"
+;; 以下兩行為啟動 mysqld ,利用user/password認證
+;plugin /usr/lib/openvpn/openvpn-auth-pam.so openvpn
+;; 將登入使用的username,當作憑證的CN name(寫入log需要)
+;username-as-common-name
+;;----進階部份設定結束----
+comp-lzo
+persist-tun
+persist-key
+tls-auth /etc/openvpn/easy-rsa/keys/tls.key 0
+;status /var/log/openvpn/openvpn-status.log
+;log         /var/log/openvpn/openvpn.log
+verb 3
+</code></pre>
+
+<p>建立不同使用者登入後的 IP</p>
+
+<pre><code class="bash">cd /etc/openvpn/
+mkdir ./ccd
+cd ./ccd
+vim ./UserName1
+</code></pre>
+
+<p>編輯輸入 <code>ifconfig-push 172.16.0.9 172.16.0.10</code></p>
+
+<pre><code class="bash">vim ./UserName2
+</code></pre>
+
+<p>編輯輸入 <code>ifconfig-push 172.16.0.13 172.16.0.14</code></p>
+
+<pre><code class="bash">vim ./UserName3
+</code></pre>
+
+<p>編輯輸入 <code>ifconfig-push 172.16.0.17 172.16.0.18</code></p>
+
+<p>（視需求決定，ip 間距為 4）</p>
+
+<p>接下來正式啟動 Raspberry Pi 上面的 openvpn 服務</p>
+
+<pre><code class="bash">sudo /etc/init.d/openvpn restart
+</code></pre>
+
+<p>當然，此時的 VPN Server 有提供連線，但無對外能力</p>
+
+<p>建立一批次檔（bash）對 PI 的防火牆做些例外吧</p>
+
+<pre><code class="bash">vim ./start-nat.sh
+</code></pre>
+
+<p>編輯</p>
+
+<pre><code class="bash">#!/bin/bash
+ipt="/sbin/iptables"
+# Clean the all rules
+$ipt -F
+$ipt -X
+$ipt -t nat -F
+$ipt -t nat -X
+# Enable ip_forward
+echo "1" &gt; /proc/sys/net/ipv4/ip_forward
+# For NAT routing
+$ipt -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
+$ipt -t nat -L
+</code></pre>
+
+<p>當然，上述做法是清空 iptables 的內容，相當於打開訪火牆</p>
+
+<p>Bear 這邊不多談 iptables 的設定</p>
+
+<p>如果想多了解 iptables 的話，可自行尋找相關介紹</p>
+
+<p>執行批次檔</p>
+
+<pre><code class="bash">sh ./start-nat.sh
+</code></pre>
+
+<p>到這邊 VPN Server 建立的部分就真的要告一段落了!</p>
+
+<p>下篇文章將介紹 client 的部分!</p>
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
+<p>更多消息請繼續關注TakoBear!</p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2013\/10\/27\/raspberry-pivpn-server\/";
+        this.page.identifier = "731 http:\/\/www.takobear.tw\/201702608526356260322804024687\/raspberry-pivpn-server";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

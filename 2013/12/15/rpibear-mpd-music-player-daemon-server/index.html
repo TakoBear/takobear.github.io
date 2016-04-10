@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[RPI]Bear實驗室: 利用MPD (Music Player Daemon) 建造小型音樂訊源 (伺服器Server架設)</title>
+  <meta name="description" content="什麼是MPD server?相信很多人應該都是第一次聽過簡單且概括的說，就是可連網的音樂播放器與音樂資料庫概念上就是一台電腦加上硬碟配合DAC （數位類比轉換器，Digital to analog converter，就是音效卡）組合成一台專司播放的機器不過用一般PC就可以達成類似的目的，這種東西的實際用途是什麼...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2013/12/15/rpibear-mpd-music-player-daemon-server/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[RPI]Bear實驗室: 利用MPD (Music Player Daemon) 建造小型音樂訊源 (伺服器Server架設)</h1>
+    <p class="post-meta"><time datetime="2013-12-15T22:20:51+08:00" itemprop="datePublished">Dec 15, 2013</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2114041_orig.jpg" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">什麼是MPD server?
+相信很多人應該都是第一次聽過
+簡單且概括的說，就是可連網的音樂播放器與音樂資料庫
+概念上就是一台電腦加上硬碟配合DAC （數位類比轉換器，Digital to analog converter，就是音效卡）
+組合成一台專司播放的機器不過用一般PC就可以達成類似的目的，這種東西的實際用途是什麼？
+且讓Bear慢慢解釋.....
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="969568207577361826" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">合久必分，分久必合
+昔日被個人電腦並吞的功能漸漸因智慧型手機而分離了
+不要懷疑，這是事實
+以往個人儲存方式是放置於傳統硬碟，而現今存放於雲端空間（不就是個硬碟空間的Server嗎？）
+以往用個人電腦抓東西，現在用Seed Box服務或其他簡易下載器（NAS）
+以往在電腦前看影片，現在跑到大螢幕電視前用Apple TV、chromecast、Android影音電視盒（棒）看Youtube
+所以，以往用電腦聽音樂，現在用專門的播放器似乎也是趨勢之一吧 （大誤）試想，當你躺在床上時，突然想聽高品質音樂時
+手機容量太小、網路上音質參差不齊、個人電腦太遠、開機太慢
+恰好，床頭旁放了一台MPD server，接上了一顆外接硬碟裡面放了收藏的音樂電子檔
+配合著優秀的DAC與擴大機，最後接上Hi-Fi的喇叭或耳機
+手指滑動手機點播放.....
+似乎頗讓人嚮往的
+
+至少，原本智慧型手機容量、音質問題；個人電腦省電問題，是否可利用簡單的MPD server解決呢？
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9553936_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">工欲善其事，必先利其器
+得準備以下內容：
+raspberry pi（含SD card）
+USB DAC與擴大機
+耳機或喇叭有關Raspberry Pi有一些基礎設定，不了解的請參考一下兩篇文章:
+1. <a href="http://www.takobear.weebly.com/12/post/2013/06/raspberry-pi-raspbian.html" target="_blank">想知道如何安裝Raspberry Pi的作業系統請點這裡</a>
+2. <a href="http://www.takobear.weebly.com/12/post/2013/07/raspberry-pi-install.html" target="_blank">如何對Raspberry Pi進行設定調整請點這裡</a>
+
+</div>
+<div class="paragraph">把以上東西通通接上去，啟動pi吧
+打開常用的SSH連線工具（<a title="" href="http://www.takobear.weebly.com/12/post/2013/07/raspberry-pi-install.html">可參考</a>）
+輸入第一個指令，檢查目前接的USB裝置吧$ <span style="color: #3a96b8;"><span style="color: #a82e2e;">lsusb</span>
+</span>
+下圖至少接了一台DAC（C-Media）跟一張無線網卡
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8680003_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">再來輸入$ <span style="color: #3387a2;"><span style="color: #a82e2e;">aplay -l</span>
+</span>
+查看可使用的音效裝置
+目前Bear的pi除了原本的音效裝置外，多了USB PnP Sound Device
+尤其是<span style="color: #5fa233;">card 1: Device [USB PnP Sound Device], device 0: USB Audio [USB Audio]</span>
+這邊的資料要先記得，晚點要用
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8188507_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">如果沒有問題的話，至少硬體部份解決了XD可以來安裝mpd了
+輸入
+
+$ <span style="color: #3387a2;"><span style="color: #a82e2e;">sudo apt-get install mpd</span></span>
+
+完成.....
+
+</div>
+<div class="paragraph"><strong><span style="font-size: xx-large;">先別走啊！</span></strong>Raspbian內建的mpd版本有點舊
+在播放*.cue檔會有問題
+那.....怎麼辦呢？
+
+嘿嘿，只好手動編譯新版來裝了
+不過建議在編譯新版前，還是先安裝舊版
+這是有好處的，安裝舊版會把服務、設定檔整個自動弄好，就不用在另行設定
+
+所以，接下就是移除舊版
+
+$ <span style="color: #a82e2e;">sudo apt-get remove mpd</span>
+
+然後，先安裝些前置工具
+
+$ <span style="color: #a82e2e;">sudo apt-get install build-essential libglib2.0-dev git vim</span>
+
+替套件包增加編譯用的原始碼庫
+
+$ <span style="color: #a82e2e;">sudo vim /etc/apt/sources.list</span>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7018945_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">按i添加（參考: <a title="" href="http://linux.vbird.org/linux_basic/0310vi.php">vim教學</a>）<span style="color: #3387a2;">deb-src http://archive.raspbian.org/raspbian wheezy main contrib non-free rpi</span>
+
+Esc :wq!儲存
+更新源庫
+
+$ <span style="color: #a82e2e;">sudo apt-get update</span>
+
+安裝mpd用的前置工具
+
+$ <span style="color: #a82e2e;">sudo apt-get build-dep mpd</span>
+
+這些工具可能會夾帶一堆關聯，這些都是編譯工具
+
+準備好後，下載最新版mpd的原始碼
+<a title="" href="http://www.musicpd.org/download/mpd/stable/">http://www.musicpd.org/download/mpd/stable/</a>
+目前最新版為<span style="color: #5fa233;">0.18.5</span>，所以指令為
+
+$ <span style="color: #a82e2e;">wget http://www.musicpd.org/download/mpd/stable/mpd-0.18.5.tar.gz</span>
+
+解壓縮並進入該資料夾
+
+$ <span style="color: #a82e2e;">tar -zxvf ./mpd-0.18.5.tar.gz</span>
+$ <span style="color: #a82e2e;">cd ./mpd-0.18.5/</span>
+
+開始編譯程式了:)
+好習慣，先清除（可能不需要）
+
+$ <span style="color: #a82e2e;">make clean</span>
+
+搜尋編譯相關
+
+$ <span style="color: #a82e2e;">./configure</span>
+
+編譯
+
+$ <span style="color: #a82e2e;">make</span>
+
+可能需要編譯很久，去喝杯咖啡吧
+編譯完，安裝
+
+$ <span style="color: #a82e2e;">sudo make install</span>
+
+再努力點，快完成了
+接下來替新版mpd與啟動服務關聯起來
+
+$ <span style="color: #a82e2e;">whereis mpd</span>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4876779_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">可能比圖還要少，但是重要的是這個
+<span style="color: #5fa233;">/usr/local/bin/mpd</span>$ <span style="color: #a82e2e;">sudo ln -s /usr/local/bin/mpd /usr/bin/mpd</span>
+
+重起mpd服務
+
+$ <span style="color: #a82e2e;">sudo /etc/init.d/</span><span style="color: #a82e2e;">mpd restart</span>
+
+可能會沒辦法啟動，這是配置檔不夠正確導致的，先擱著
+然後來設定配置檔了
+
+$ s<span style="color: #a82e2e;">udo vim /etc/mpd.conf</span>
+
+主要要修改的是
+<span style="color: #3387a2;">music_directory         "/home/pi/music"</span>
+歌曲存放資料夾。隨意設定，但建議在自己帳號下，方便存取歌曲
+
+<span style="color: #3387a2;">playlist_directory              "/home/pi/.mpd/playlists"</span>
+存放播放清單的資料夾。一樣隨意設定
+
+<span style="color: #3387a2;">#bind_to_address </span>
+替bind_to_address補上#，IP設定並非必要
+
+<span style="color: #3387a2;">port                            "6600"</span>
+port倒是可以打開，反正預設就是6600
+
+最後，設定輸出音效裝備
+
+<span style="color: #3387a2;">#
+#USB DAC
+#
+audio_output {
+type            "alsa"
+name            "UsbDAC"
+device          "hw:1,0"
+}</span>
+
+name可以隨意命名
+重要的是device的編號，可不能亂key
+還記得剛剛輸入過的aplay -l
+card <span style="color: #d061c7;">1</span>: Device [USB PnP Sound Device], device <span style="color: #d061c7;">0</span>: USB Audio [USB Audio]
+忘了存檔後重key指令再看一次
+其中<span style="color: #d061c7;">card 1<span style="color: #515151;">跟</span>device 0</span>就是要的，所以是<span style="color: #3387a2;">hw:1,0</span>
+OK吧？
+
+存檔，如果沒錯的話
+再重啟服務一次
+
+$ <span style="color: #a82e2e;">sudo /etc/init.d/mpd restart</span>
+
+正確就表示mpd啟動了
+
+呼，總算完成Server端了
+接下來就是Client端篇囉!
+
+<strong><a href="http://www.takobear.weebly.com/12/post/2013/12/rpi-beargmpcmpdroidmpodmpd-server-mpd-client.html" target="_blank"><span style="font-size: large;">前往Bear實驗室: 製作MPD Client篇</span></a></strong>
+
+<strong><span style="font-size: x-large;"><span style="color: #c2743b;">喜歡這篇文章嗎?</span>
+</span></strong>
+<strong>Takobear粉絲團慶祝成立兩個月將滿三個月,</strong>
+<strong>推出LINE貼圖抽獎贈送活動!  </strong><strong>詳情<a title="" href="http://www.takobear.weebly.com/12/post/2013/11/3-takobear.html" target="_blank">點選這篇連結前往了解</a></strong><span style="font-size: large;">!</span>
+
+<span style="font-size: large;">或是直接分享以下文章就可以囉!</span>
+
+</div>
+<div>
+<div id="486989335397983204" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+// < ![CDATA[  (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/photo.php?fbid=441325125974120&amp;set=a.412255868881046.1073741826.408887699217863&amp;type=1" data-width="550">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/photo.php?fbid=441325125974120&amp;set=a.412255868881046.1073741826.408887699217863&amp;type=1">留言</a>。</div>
+</div>
+</div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2013\/12\/15\/rpibear-mpd-music-player-daemon-server\/";
+        this.page.identifier = "538 http:\/\/www.takobear.tw\/201702608526356260322804024687\/rpibear-mpd-music-player-daemon-server";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

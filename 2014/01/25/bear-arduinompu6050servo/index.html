@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear 實驗室：利用Arduino+MPU6050慣性感測器控制Servo</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/25/bear-arduinompu6050servo/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear 實驗室：利用Arduino+MPU6050慣性感測器控制Servo</h1>
+    <p class="post-meta"><time datetime="2014-01-25T21:36:20+08:00" itemprop="datePublished">Jan 25, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1757076_orig.jpg" alt="" /></p>
+
+<p>Bear 在很久以前就買了一顆慣性感測器</p>
+
+<p>但是因為太忙了一直沒時間拿出來跟大家分享，今天總算有時間給大家個新內容囉!</p>
+
+<!--more-->
+
+<p>話不多說，先跟大家簡單介紹一下什麼是慣性感測器慣性感測器，又稱作 IMU</p>
+
+<p>是拿來量測物體運動時候的加速度以及角加速度</p>
+
+<p>利用這些資訊我們就可以更瞭解物體的姿態</p>
+
+<p>為了獲得更準確的資料IMU通常會被安裝在物體的重心在比較早之前 IMU 通常被安裝在飛機、潛艇、飛彈、衛星等等</p>
+
+<p>現在幾乎所有的智慧型手機裡面都有 IMU 在裡面或是有名的 Segway，Wii的手把都是利用IMU的資訊來作控制</p>
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
+<p>此外 IMU 得到的是加速度的資訊，只要我們對時間做積分，我們可以得到粗略的速度及角速度的資訊，只是非常不準確XD</p>
+
+<p>這次我們在這邊要用的是 InvenSense 的 MPU6050，它包含了三軸加速規以及三軸的陀螺儀(有關他的 <a href="http://invensense.com/mems/gyro/documents/PS-MPU-6000A-00v3.4.pdf">Datasheet請點這裡</a>)</p>
+
+<p>此外 MPU6050 可以加上三軸的電子羅盤得到九軸的完整資訊</p>
+
+<p>(不在這次的討論範圍之中! 下次我們再討論!)</p>
+
+<p>Arduino 官方網站有更多介紹更完整地介紹 (<a href="http://playground.arduino.cc/Main/MPU-6050">Click Here</a>)</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9091366.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7044609.jpg" alt="" /></p>
+
+<p>Photo: GY-521 breakout board</p>
+
+<p>從 Datasheet 來看 Arduino 與 MPU6050 主要的溝通方式就是 i2c</p>
+
+<p>主要的接線方式：</p>
+
+<pre><code>MPU6050      Arduino
+VCC          -&gt;  3.3V
+GND          -&gt;  GND
+SCL          -&gt;  SCL
+SDA          -&gt;  SDA因為Bear手邊的MPU6050是有多加一個5V轉3.3V的所以可以直接接5V
+</code></pre>
+
+<p>大家接線之前要先注意一下</p>
+
+<p>接好線以後 就是軟體的部分了</p>
+
+<p>我們可以直接從 github 上下載由 Jeff Rowberg 寫好的 library <a href="http://www.i2cdevlib.com/devices/mpu6050">http://www.i2cdevlib.com/devices/mpu6050</a></p>
+
+<p><a href="http://www.takobear.tw/2014/02/15/arduino-3/">不會使用github的請點這篇連結</a></p>
+
+<p>下載下來以後放到 Arduino 的 library 裡面以後</p>
+
+<p>從 <code>File -&gt; Examples -&gt; MPU6050 -&gt; Examples</code> 先利用裡面的範例</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1389330903.jpg" alt="" /></p>
+
+<p>打開 Serial Monitor 確定 IMU 能夠得到值，上下左右旋轉一下看看值是否有變化</p>
+
+<p>如果在 Serial Monitor 看到亂碼的話 可能是鮑率設定錯了，要改成 38400 在確定 MPU6050 可以正確的讀到值之後</p>
+
+<p>我們要將 Servo 也接上 Servo 是由 PWM 訊號來控制旋轉的角度(0-約180)</p>
+
+<p>Servo 要接的有三條線 紅色接5V 黑色接GND 白色接PWM 訊號</p>
+
+<p>在這邊我們用 Pin7 來輸出 PWM 訊號</p>
+
+<p>同樣的 Arduino 也有控制 Servo 的 library 了 (下面還會看到，在這邊就不再多做介紹)(補充：如果 Servo 的負載比較大的時候最好不要使用 Arduino 上面的5V 外接電給 Servo 然後再共地)</p>
+
+<p>將上面兩個東西整合起來的大概長這樣</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1389333004.jpg" alt="" /></p>
+
+<p>程式如下</p>
+
+<pre><code class="c">#include "I2Cdev.h"
+#include "MPU6050.h"
+#include "Wire.h"
+#include &lt;Servo.h&gt;
+
+MPU6050 accelgyro;
+Servo servo1;
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
+int val;
+int prev; 
+
+void setup() {
+  Wire.begin();
+  Serial.begin(38400);
+  Serial.println("Initializing I2C devices...");
+  accelgyro.initialize();
+  servo1.attach(7);
+
+  // verify connection
+  Serial.println("Testing device connections...");
+  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+}
+
+void loop() {
+  // read raw accel/gyro measurements from device
+  accelgyro.getMotion6(&amp;ax, &amp;ay, &amp;az, &amp;gx, &amp;gy, &amp;gz);
+  Serial.print("a/g:\t");
+  Serial.print(ax); Serial.print("\t");
+  Serial.print(ay); Serial.print("\t");
+  Serial.print(az); Serial.print("\t");
+  Serial.print(gx); Serial.print("\t");
+  Serial.print(gy); Serial.print("\t");
+  Serial.println(gz);
+
+  val = map(ay,-17000,17000,0,179);
+  if (val!=prev){
+    servo1.write(val);
+    prev=val;
+  }
+  delay(50);
+}
+</code></pre>
+
+<iframe src="//www.youtube.com/embed/1IyMuuUL59c?wmode=opaque" width="300" height="150" frameborder="0" allowfullscreen="allowfullscreen">
+</iframe>
+
+<p>利用相同的原理，我們也可以用x z方向的加速度來控制 Servo</p>
+
+<p>此外我們也可以拿來遠端控制遙控車的加速減速等等 (如果有時間的話在Po上來跟大家分享)</p>
+
+<p>也歡迎大家跟我們分享自己的創意!!!其他不錯的參考資料</p>
+
+<ul>
+<li><a href="http://www.geeetech.com/wiki/index.php/MPU-6050_Triple_Axis_Accelerometer_%26_Gyro_Breakout">http://www.geeetech.com/wiki/index.php/MPU-6050_Triple_Axis_Accelerometer_%26_Gyro_Breakout</a></li>
+<li><p><a href="http://www.i2cdevlib.com/forums/topic/4-understanding-raw-values-of-accelerometer-and-gyrometer/">http://www.i2cdevlib.com/forums/topic/4-understanding-raw-values-of-accelerometer-and-gyrometer/</a></p></li>
+</ul>
+
+<p>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div></p>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/25\/bear-arduinompu6050servo\/";
+        this.page.identifier = "488 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-arduinompu6050servo";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室: iOS用AudioToolbox播放網路收音機 (使用FFmpeg) [Part 2]</title>
+  <meta name="description" content="上次Bear實驗室報導了如何用AudioToolbox播放mp3音樂就有讀者詢問請問如果檔案格式是Apple 不支援的該怎麼辦呢?別擔心, 上篇都說了是Part I,這次進入到Part II 當然是來解決檔案格式不是Apple 支援的檔案囉!注意! 本篇內容有點長, 讀者閱讀時請保持耐心....另外注意本篇文章程...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/bear-iosaudiotoolbox-ffmpeg-part-2/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室: iOS用AudioToolbox播放網路收音機 (使用FFmpeg) [Part 2]</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:40:29+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div class="wsite-video">
+<div class="wsite-video-wrapper wsite-video-height-auto wsite-video-align-left">
+<div class="wsite-video-container"><iframe src="//www.weebly.com/weebly/apps/generateVideo.php?version=2&amp;source=weebly&amp;elementid=266714458776028941&amp;user=19975491&amp;ineditor=0&amp;align=left&amp;height=auto&amp;video=1/9/9/7/19975491/ffmpeg_274.mp4&amp;image=1/9/9/7/19975491/ffmpeg_274.jpg" width="300" height="150" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe></div>
+</div>
+</div>
+<div class="paragraph">上次Bear實驗室報導了<a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-iosaudiotoolboxmp3-part-1.html" target="_blank">如何用AudioToolbox播放mp3音樂</a>
+就有讀者詢問請問如果檔案格式是Apple 不支援的該怎麼辦呢?
+別擔心, 上篇都說了是Part I,
+這次進入到Part II 當然是來解決檔案格式不是Apple 支援的檔案囉!<strong><span style="color: #f10d0d; font-size: medium;">注意! 本篇內容有點長, 讀者閱讀時請保持耐心....</span></strong>
+<span style="color: #f10d0d; font-size: medium;"><strong>另外注意本篇文章程式在iPhone 5s 恐有問題, 請謹慎注意內文說明</strong></span>
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">為避免大家記憶模糊, 讓Bear跟大家先重新復習一下, 如何判斷檔案格式是不是Apple 支援的呢?<span style="color: #fa0404;"><strong>很簡單, 只要看你的URL能不能被打開就是了!!</strong></span>
+
++ (<span style="color: #d061c7;">void</span>)printFileStreamBasicDescriptionFromFile:(<span style="color: #7161d0;">NSString</span> *)filePath
+{
+<span style="color: #8273da;">OSStatus</span> status;
+<span style="color: #7161d0;">UInt32</span> size = 0;
+<span style="color: #7161d0;">AudioFileID</span> audioFile;
+<span style="color: #7161d0;">AudioStreamBasicDescription</span> dataFormat;
+
+<span style="color: #6cb83a;">    // or you can use CFURLCreateFromFileSystemRepresentation to get the url</span>
+<span style="color: #7161d0;">CFURLRef</span> url = (<span style="color: #8273da;">CFURLRef</span>)[<span style="color: #7161d0;">NSURL</span> fileURLWithPath:filePath];
+
+<span style="color: #6cb83a;">    // Open the audio file to playback</span>
+status = <span style="color: #7161d0;">AudioFileOpenURL</span>(url, kAudioFileReadPermission, 0, &amp;audioFile);
+
+<span style="color: #d061c7;">if</span> (size != <span style="color: #7161d0;">noErr</span>) {
+NSLog(<span style="color: #c23b3b;">@"*** Error *** PlayAudio - play:Path: could not open audio file. Path given was: %@",</span> filePath);
+<span style="color: #d061c7;">return</span>;
+} <span style="color: #d061c7;">else</span> {
+NSLog(<span style="color: #a82e2e;">@"*** OK *** : %@"</span>, filePath);
+}
+
+size = <span style="color: #d061c7;">sizeof</span>(dataFormat);
+
+<span style="color: #7161d0;">AudioFileGetProperty</span>(audioFile,
+<span style="color: #4caac9;">kAudioFilePropertyDataFormat</span>,
+&amp;size,
+&amp;dataFormat);
+
+<span style="color: #d061c7;">if</span> (size &gt; 0) {
+<span style="color: #6cb83a;">// Do something  when you can get file property</span>
+}
+<span style="color: #7161d0;">AudioFileClose</span>(audioFile);
+<span style="color: #7161d0;">CFRelease</span>(url);
+}
+
+是不是很簡單呢?
+只要AudioFileOpenURL<span style="color: #2a2a2a;">執行後, status顯示不是noErr就表示他是屬於Apple支援的格式,</span>
+<span style="color: #2a2a2a;">就可以依照之前的教學架構直接播放檔案的內容了喔!</span>
+<span style="color: #2a2a2a;">(之前內容參考: </span><a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-iosaudiotoolboxmp3-part-1.html" target="_blank">用AudioToolbox播放mp3音樂</a>)
+
+接下來規劃一下我們需要的播放器架構, 大家請看下圖
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3517686_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">會不會覺得有點複雜呢?
+其實我們只是把上次介紹的AudioPlayer所提供的method做了以下的變動
+原本的SHAudioPlayer只有這個method:
+<strong><span style="color: #f30707;">- (id)initWithAudio:(NSString *)filePath;</span></strong>
+這樣的概念中, 表示了我們的檔案路徑必須是Apple支援的格式, 而且原本的Player是只能播放不能停止,
+同時也不能選擇其他codec來進行解析
+所以這次我們擴增了Play, Stop, 還有在init的時候增加Codec的選擇
+來擴增他的可用性而Bear要使用的Codec就是FFmpeg了!
+(對於FFmpeg不熟悉的朋友可以參考這篇: <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ffmpeg-ios-61.html" target="_blank">FFmpeg與iOS 6.1</a>)
+
+使用ffmpeg好處很多
+包含可以支援其他不同遠端的協定(例如rtsp, mms, http)等等
+也可以幫助我們對於一個音訊或是影像檔案成像時的概念作完整的理解!
+
+對於上圖的說明, 在於我們要實際播放一個檔案時
+每一段的音訊呈現(或是視訊呈現)都是由每一個frame 為單位
+frame以一個數學概念來看就是矩陣Matrix
+<strong><span style="color: #ef1010;">(Bear在這邊不做細節解釋, 讓Bear之後還能騙文章數!)</span></strong>
+
+於是接下來讓Bear先介紹整個AudioPlayer的程式架構吧
+看到AuidoPlayer.h的宣告如下
+
+<span style="color: #c2743b;">#import &lt;Foundation/Foundation.h&gt;
+#import &lt;AudioToolbox/AudioToolbox.h&gt;
+#import "AudioPacketQueue.h"
+#include "libavformat/avformat.h"
+#include "libavutil/opt.h"
+#include "libswresample/swresample.h"
+</span>
+<span style="color: #da73d2;">typedef enum</span> {
+eAudioRunning   = 1,
+eAudioStop      = 2
+}eAudioType;
+
+<span style="color: #da73d2;">@interface</span> AudioPlayer : <span style="color: #7161d0;">NSObject</span>
+
+<span style="color: #da73d2;">@property BOOL</span> bIsADTSAAS;
+
+- (<span style="color: #da73d2;">id</span>)initAuido:(<span style="color: #3ab890;">AudioPacketQueue</span> *)audioQueue withCodecCtx:(<span style="color: #3ab890;">AVCodecContext</span> *)aCodecCtx;
+- (<span style="color: #d061c7;">void</span>)play;
+- (<span style="color: #da73d2;">void</span>)stop:(<span style="color: #da73d2;">BOOL</span>)bStopImmediatelly;
+- (<span style="color: #da73d2;">void</span>)decodeAudioFile:(<span style="color: #7161d0;">NSString</span> *)filePathIn
+toPCMFile:(<span style="color: #7161d0;">NSString</span> *)filePathOut
+withCodecCtx:(<span style="color: #3ab890;">AVCodecContext</span> *)pAudioCodecCtx
+withFormat:(<span style="color: #3ab890;">AVFormatContext</span> *)pFormatCtx
+withStreamIdx:(<span style="color: #da73d2;">int</span>)audioStream;
+- (<span style="color: #da73d2;">int</span>)getStatus;
+- (<span style="color: #da73d2;">int</span>)putAVPacket:(<span style="color: #3ab890;">AVPacket</span> *)pkt;
+- (<span style="color: #da73d2;">int</span>)getAVPacket:(<span style="color: #3ab890;">AVPacket</span> *)pkt;
+- (<span style="color: #da73d2;">void</span>)freeAVPacket:(<span style="color: #3ab890;">AVPacket</span> *)pkt;
+
+<span style="color: #da73d2;">@end</span>
+
+
+接下來Bear就來一個個介紹每個method的架構了
+首先到AudioPlayer.m檔內
+
+你需要import的library如下:
+<span style="color: #c2743b;">#import "AudioPlayer.h"</span>
+<span style="color: #c2743b;"> #import &lt;AVFoundation/AVFoundation.h&gt;</span>
+<span style="color: #c2743b;"> #import "AudioUtilities.h"</span>
+<span style="color: #6cb83a;">// According to Apple guide, the number of audio queue buffers is recommended to 3</span>
+<span style="color: #c2743b;"> #define NUM_BUFFER                      3</span>
+<span style="color: #c2743b;"> #define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000</span>
+<span style="color: #c2743b;"> #define AUDIO_BUFFER_SECONDS            1</span>
+<span style="color: #c2743b;"> #define AUDIO_BUFFER_QUANTITY           3</span>
+<span style="color: #c2743b;"> #define DECODE_AUDIO_BY_FFMPEG          1</span>
+
+
+這邊定義了好幾個參數
+NUM_BUFFER 代表會分配三段BUFFER 給AudioToolbox進行encoder, decoder, 這個數字是由Apple官方建議的
+Bear就直接採用過來了!
+接下來是Audio的單一frame最大大小為19200 bytes (約20kb)
+另外兩個則不是如此重要, Bear這邊先偷懶不介紹
+
+接下來我們看全域變數部分
+<span style="color: #da73d2;">@interface</span> AudioPlayer ()
+{
+<span style="color: #6cb83a;">  // ==  This is just refereneced from Apple Queue Service Programming Guide
+// =============================================================
+</span>   <span style="color: #8273da;">AudioStreamBasicDescription</span> mDataFormat;                <span style="color: #6cb83a;">// Represent the audio format </span>
+<span style="color: #7161d0;">AudioQueueRef</span>               mQueue;                   <span style="color: #6cb83a;">  // The playback audio queue created by this app</span>
+<span style="color: #7161d0;">AudioQueueBufferRef</span>         mBuffers[<span style="color: #c2743b;">NUM_BUFFER</span>];       <span style="color: #81c94c;">// An array holding pointers to the audio queue buffer </span>
+<span style="color: #6555c2;">AudioFileID</span>                 mAudioFile;                 <span style="color: #6cb83a;">// Audio file representing the audio file you want to play</span>
+<span style="color: #7161d0;">UInt32</span>                      bufferByteSize;             <span style="color: #3ab890;">// size in bytes for each audio queue, use DervieBufferSize to get</span>
+<span style="color: #7161d0;">SInt64</span>                      mCurrentPacket;             <span style="color: #6cb83a;">// The packet index for the next packet to play in your audiio</span>
+<span style="color: #6555c2;">UInt32</span>                      mNumPacketsToRead;          <span style="color: #6cb83a;">// Number of packets to read on each audio queue's callback
+</span>
+<span style="color: #7161d0;">AudioStreamPacketDescription</span> *mPacketDescs;             <span style="color: #6cb83a;">// For VBR audio data, the array of packet descriptions for the file being played. For CBR data, the value of this field is NULL</span>.
+<span style="color: #da73d2;">bool</span>                        mIsRunning;                 <span style="color: #6cb83a;">// A boolean value indicates the audio queue is running or not
+// =============================================================</span>
+<span style="color: #da73d2;">bool</span> isFormatVBR;
+<span style="color: #3ab890;">AVCodecContext</span>              *aCodecCtx;
+<span style="color: #3a96b8;">AudioPacketQueue</span>            *audioPacketQueue;
+<span style="color: #4cc9a4;">AVFrame</span>                     *pAudioFrame;
+<span style="color: #4cc9a4;">SwrContext</span>                  *pSwrCtx;
+<span style="color: #da73d2;">long</span> lastStartTime;
+}
+
+- (<span style="color: #8273da;">UInt32</span>)putAVPacketsIntoAudioQueue:(<span style="color: #8273da;">AudioQueueBufferRef</span>)audioQueueBuffer;
+- (<span style="color: #da73d2;">int</span>)DeriveBufferSize:(<span style="color: #7161d0;">AudioStreamBasicDescription</span>)ASBdescription withPakcetSize:(<span style="color: #8273da;">UInt32</span>)maxPacketSize andSeconds:(<span style="color: #8273da;">Float64</span>)seconds;
+
+<span style="color: #da73d2;">@end</span>
+
+接下來解析幾個重要的method
+- (<span style="color: #da73d2;">id</span>)initAuido:(<span style="color: #3ab890;">AudioPacketQueue</span> *)audioQueue withCodecCtx:(<span style="color: #3ab890;">AVCodecContext</span> *)aCodecCtx
+{
+<span style="color: #6cb83a;">     //  1. 初始化參數</span>
+<span style="color: #d061c7;">int</span> i = 0;
+<span style="color: #d061c7;">int</span> audio_index = 1;
+<span style="color: #d061c7;">int</span> vBufferSize = 0;
+<span style="color: #d061c7;">int</span> err;
+<span style="color: #6cb83a;">//  2. Support audio play when screen is locked</span>
+<span style="color: #a561d0;">NSError</span> *setCategoryError = nil;
+<span style="color: #a561d0;">NSError</span> *activationError = nil;
+[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&amp;setCategoryError];
+[[AVAudioSession sharedInstance] setActive:YES error:&amp;activationError];
+<span style="color: #6cb83a;">// 3. 如果有建立過Queue, 直接設定, 沒有的話就進行初始化 = &gt; 每一個Player只包含一個audio packet queue, 代表目前正在播放的音訊內容</span>
+if (audioQueue) {
+audioPacketQueue = audioQueue;
+} else {
+audioPacketQueue = [[<span style="color: #4caac9;">AudioPacketQueue</span> alloc] initQueue];
+}
+
+<span style="color: #6cb83a;"> // 4. 設定Codec的context內容, 以及用ffmpeg的API : avcodec_alloc_frame()初始化聲音的frame內容</span>
+aCodecCtx = pAudioCodecCtx;
+pAudioFrame = <span style="color: #4caac9;">avcodec_alloc_frame</span>();
+
+if (audio_index &gt;= 0) {
+<span style="color: #6cb83a;">       // 5. 設定音訊格式內容, 使用AudioStreamBasicDescription這個結構體(struct)</span>
+<span style="color: #7161d0;">AudioStreamBasicDescription</span> audioFormat = {0};
+audioFormat.mFormatID = -1;
+audioFormat.mSampleRate = pAudioCodecCtx-&gt;<span style="color: #81c94c;">sample_rate</span>;
+audioFormat.mFormatFlags = 0;
+<span style="color: #6cb83a;"><strong>       // 6. 利用Codec 的結構資訊: codec_id來判定要使用哪種解析格式播放音樂</strong></span>
+<span style="color: #da73d2;">switch</span> (pAudioCodecCtx-&gt;<span style="color: #3a96b8;">codec_id</span>) {
+<span style="color: #d061c7;">case</span> AV_CODEC_ID_WMAV1:
+<span style="color: #d061c7;">case</span> AV_CODEC_ID_WMAV2:
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatLinearPCM</span>;
+break;
+<span style="color: #d061c7;">case</span> AV_CODEC_ID_MP3:
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatMPEGLayer3</span>;
+break;
+<span style="color: #da73d2;">case</span> AV_CODEC_ID_AAC:
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatMPEG4AAC</span>;
+audioFormat.mFormatFlags = <span style="color: #3ab890;">kMPEG4Object_AAC_Main</span>;
+break;
+<span style="color: #d061c7;">case</span> AV_CODEC_ID_PCM_ALAW:
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatALaw</span>;
+break;
+<span style="color: #da73d2;">case</span> AV_CODEC_ID_PCM_MULAW:
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatULaw</span>;
+break;
+<span style="color: #da73d2;">case</span> AV_CODEC_ID_PCM_U8:
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatLinearPCM</span>;
+break;
+<span style="color: #da73d2;">default</span>:
+NSLog(<span style="color: #da4444;">@"Error: audio format '%s' (%d) is not supported"</span>, pAudioCodecCtx-&gt;<span style="color: #3a96b8;">codec_name</span>, pAudioCodecCtx-&gt;<span style="color: #3a96b8;">codec_id</span>);
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatAC3</span>;
+break;
+}
+
+if (audioFormat.mFormatID != -1) {
+<strong><span style="color: #6cb83a;">            // 7. 成功解析出來音訊以後, 把ffmpeg得到的資訊輸入給audioFormat (也就是 AudioStreamBasicDescription)</span></strong>
+audioFormat.mFormatID = <span style="color: #3ab890;">kAudioFormatLinearPCM</span>;
+audioFormat.mFormatFlags = <span style="color: #3a96b8;">kAudioFormatFlagsCanonical</span>;
+audioFormat.mSampleRate = pAudioCodecCtx-&gt;<span style="color: #3ab890;">sample_rate</span>;
+audioFormat.mBitsPerChannel = 8 * <span style="color: #3ab890;">av_get_bytes_per_sample</span>(AV_SAMPLE_FMT_S16);
+audioFormat.mChannelsPerFrame = pAudioCodecCtx-&gt;<span style="color: #6cb83a;">channels</span>;
+audioFormat.mBytesPerFrame  = pAudioCodecCtx-&gt;<span style="color: #3ab890;">channels</span> * <span style="color: #3ab890;">av_get_bytes_per_sample</span>(AV_SAMPLE_FMT_S16);
+audioFormat.mBytesPerPacket = pAudioCodecCtx-&gt;<span style="color: #3ab890;">channels</span> * <span style="color: #3ab890;">av_get_bytes_per_sample</span>(AV_SAMPLE_FMT_S16);
+audioFormat.mFramesPerPacket = 1;
+audioFormat.mReserved = 0;
+
+<strong><span style="color: #5fa233;">            // 8. 這邊很重要要注意的是: FFmpeg可能會使我們得到32, 16 或是8bits的聲音資料</span></strong>
+<strong><span style="color: #5fa233;">           //  如果得到32bits的結果, 必須要把它轉換成16bits (32bits 的關鍵字是AV_SAMPLE_FMT_FLTP)</span></strong>
+<strong><span style="color: #5fa233;">           // 不然播放時會有雜音產生! (16bits的關鍵字是AV_SAMPLE_FMT_S16)</span></strong>
+<span style="color: #5fa233;"><strong>           // 我們使用swr_alloc_set_opts這個API就能直接進行重新分配sample rate了
+</strong></span> <span style="color: #6cb83a;">            // The default data defined by Apple is 16 bits
+// If we got 32 or 8 bits, then convert it into 16 bits</span>
+<span style="color: #d061c7;">if</span> (pAudioCodecCtx-&gt;sample_fmt == <span style="color: #81c94c;">AV_SAMPLE_FMT_FLTP</span>) {
+if (pAudioCodecCtx-&gt;<span style="color: #4cc9a4;">channel_layout</span> != 0) {
+pSwrCtx = <span style="color: #4caac9;">swr_alloc_set_opts</span>(pSwrCtx,
+pAudioCodecCtx-&gt;<span style="color: #4cc9a4;">channel_layout</span>,
+<span style="color: #4cc9a4;">AV_SAMPLE_FMT_S16</span>,
+pAudioCodecCtx-&gt;sample_rate,
+pAudioCodecCtx-&gt;channel_layout,
+<span style="color: #5cbce0;">AV_SAMPLE_FMT_FLTP</span>,
+pAudioCodecCtx-&gt;sample_rate,
+0,
+0);
+} <span style="color: #da73d2;">else</span> {
+pSwrCtx = <span style="color: #5cbce0;">swr_alloc_set_opts</span>(pSwrCtx,
+pAudioCodecCtx-&gt;channels + 1,
+AV_SAMPLE_FMT_S16,
+pAudioCodecCtx-&gt;sample_rate,
+pAudioCodecCtx-&gt;channels+1,
+AV_SAMPLE_FMT_FLTP,
+pAudioCodecCtx-&gt;sample_rate,
+0,
+0);
+}
+
+<span style="color: #8273da;">NSLog</span>(<span style="color: #da4444;">@"sample_rate=%d, channels=%d, channel_layout=%lld"</span>,pAudioCodecCtx-&gt;sample_rate, pAudioCodecCtx-&gt;channels, pAudioCodecCtx-&gt;channel_layout);
+<span style="color: #6cb83a;">                <strong> // 9. 初始化pSwrCtx, 這樣之後才能用它去顯現音訊的內容</strong></span>
+if (<span style="color: #4caac9;">swr_init</span>(pSwrCtx)&lt;0) {
+NSLog(@"swr_init() for AV_SAMPLE_FMT_FLTP fail");
+return nil;
+}
+} else if(pAudioCodecCtx-&gt;sample_fmt == <span style="color: #3ab890;">AV_SAMPLE_FMT_S16P</span>) {
+pSwrCtx = <span style="color: #4caac9;">swr_alloc_set_opts</span>(pSwrCtx,
+pAudioCodecCtx-&gt;channel_layout,
+AV_SAMPLE_FMT_S16,
+pAudioCodecCtx-&gt;sample_rate,
+pAudioCodecCtx-&gt;channel_layout,
+AV_SAMPLE_FMT_S16P,
+pAudioCodecCtx-&gt;sample_rate,
+0,
+0);
+if(<span style="color: #4caac9;">swr_init</span>(pSwrCtx)&lt;0)
+{
+NSLog(@"swr_init() for AV_SAMPLE_FMT_S16P fail");
+return nil;
+}
+} else if (pAudioCodecCtx-&gt;sample_fmt == <span style="color: #3ab890;">AV_SAMPLE_FMT_U8</span>)
+{
+pSwrCtx = <span style="color: #4caac9;">swr_alloc_set_opts</span>(pSwrCtx,
+1,
+AV_SAMPLE_FMT_S16,
+pAudioCodecCtx-&gt;sample_rate, 1,
+AV_SAMPLE_FMT_U8,
+pAudioCodecCtx-&gt;sample_rate,
+0,
+0);
+if(<span style="color: #4caac9;">swr_init</span>(pSwrCtx)&lt;0)
+{
+NSLog(@"swr_init()  fail");
+return nil;
+}
+}
+<strong><span style="color: #6cb83a;">            // 10. 配置完成sample rate有關的問題後, 使用AudioToolbox的API把callback加入到Queue裡面</span></strong>
+if ((err = <span style="color: #7161d0;">AudioQueueNewOutput</span>(&amp;audioFormat, HandleOutputBuffer, (void *)(self), NULL, NULL, 0, &amp;mQueue)) != noErr) {
+NSLog(<span style="color: #da4444;">@"Error creating audio output queue"</span>);
+} else {
+<span style="color: #6cb83a;">                // Succeed to create a new queue to handle output buffer</span>
+if (pAudioCodecCtx-&gt;bit_rate == 0) {
+pAudioCodecCtx-&gt;bit_rate = 0x100000; <span style="color: #81c94c;">// 1048576 bits</span>
+}
+
+if (pAudioCodecCtx-&gt;frame_size == 0) {
+pAudioCodecCtx-&gt;frame_size = 1024;
+}
+<span style="color: #6cb83a;">               <strong>// 11. 取出目前音訊格式的buffersize大小, 這邊是參考Apple官方example完成</strong></span>
+vBufferSize = [self <span style="color: #8273da;">DeriveBufferSize:</span>audioFormat <span style="color: #7161d0;">withPakcetSize:</span>pAudioCodecCtx-&gt;bit_rate/8 <span style="color: #7161d0;">andSeconds:</span>AUDIO_BUFFER_SECONDS];
+<span style="color: #6cb83a;"> <strong>// 12. 跑3個預先區分好的queue, 分配給每一個queue 的buffer大小好進行播放</strong></span>
+for (i = 0; i &lt; <span style="color: #c2743b;">AUDIO_BUFFER_QUANTITY</span>; i++) {
+if ((err = <span style="color: #8273da;">AudioQueueAllocateBufferWithPacketDescriptions</span>(mQueue, vBufferSize, 1, &amp;mBuffers[i])) != noErr) {
+NSLog(<span style="color: #da4444;">@"Error when allocating audio buffer"</span>);
+<span style="color: #6cb83a;"><strong>// 13. 失敗的話停止播放</strong></span>
+<span style="color: #7161d0;">AudioQueueDispose</span>(mQueue, YES);
+break;
+}
+}
+}
+} /* End of if */
+}
+<strong><span style="color: #6cb83a;">   // 14. 設定播放音量大小</span></strong>
+Float32 gain = 1.0;
+<span style="color: #7161d0;">AudioQueueSetParameter</span>(mQueue, kAudioQueueParam_Volume, gain);
+return self;
+
+}
+
+到這邊為止, 是最核心的初始化參數部分
+接下來Bear會以架構圖概念來解釋整段Code的運作
+有需要看原始碼部分的朋友直接到文章末的github連結下載Code就行囉!
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7689362_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">第一段初始化的修改就是這樣!!
+是不是有點巨大呢?接下來部分內容會比較簡單
+play的method中只要使用以下這一段程式碼會開始執行queue
+<span style="color: #8273da;"><strong>AudioQueueStart(mQueue, nil);</strong></span>
+
+stop的部分則可以利用
+<strong><span style="color: #8273da;">AudioQueueStop(mQueue, bStopImmediatelly);</span></strong> 停止播放
+
+
+再來就是
+檔案轉換的過程主要是以下三部分, 也就是使用FFmpeg把AAC檔案的格式給轉換成PCM檔案格式
+也就是以下Method:
+<strong>- (<span style="color: #7161d0;">UInt32</span>)putAVPacketsIntoAudioQueue:(<span style="color: #8273da;">AudioQueueBufferRef</span>)audioQueueBuffer</strong>
+
+對於Apple支援的AAC格式檔案, 這邊只需要把記憶體複製出來就行
+那如果是Apple不支援的格式呢
+則是採取以下步驟
+<strong><u>1. 使用 FFMPEG 讀取 AVPacket</u></strong>
+<span style="color: #3a96b8;">av_read_frame</span>(pFormatCtx, &amp; AudioPacket)
+
+<strong><u>2. 將 AVPacket 解開為 AVFrame</u></strong>
+av_samples_get_buffer_size(pAVFrame1) 用來取得frame的buffer大小
+<span style="color: #3a96b8;">avcodec_decode_audio4</span>(pAudioCodecCtx, pAudioFrame, &amp;gotFrame, &amp;AudioPacket);
+
+<strong><span style="font-size: small;"><u>3. 將 AVFrame 複製至 Audio Queue 對應的 buffer</u></span></strong>
+此處需注意的是ffmpeg 所解開的檔案，其bitsPerSample 可能為32,16, 8 bits，若其bitsPerSample 不同，則需要進行轉換，以下的例子便需要將 AV_SAMPLE_FMT_FLTP (U32) 轉換至 AV_SAMPLE_FMT_S16 (S16)，才能夠正常播放。否則播放時便會有許多雜音出現。
+
+<strong><u>4. 轉換audio </u></strong>
+outCount = <span style="color: #4caac9;">swr_convert</span>(pSwrCtx,
+(uint8_t **)(&amp;pOut),
+in_samples,
+(const uint8_t **)pAVFrame1-&gt;extended_data,
+in_samples);
+
+<strong><u>5. 轉換完成後去更新bufferRef的資訊: </u></strong>
+bufferRef-&gt;mPacketDescriptions[bufferRef-&gt;<span style="color: #b073da;">mPacketDescriptionCount</span>].<span style="color: #7161d0;">mStartOffset</span> = bufferRef-&gt;mAudioDataByteSize;
+bufferRef-&gt;mPacketDescriptions[bufferRef-&gt;<span style="color: #b073da;">mPacketDescriptionCount</span>].<span style="color: #8273da;">mDataByteSize</span> = data_size;
+bufferRef-&gt;mPacketDescriptions[bufferRef-&gt;<span style="color: #a561d0;">mPacketDescriptionCount</span>].<span style="color: #7161d0;">mVariableFramesInPacket</span>=1;
+bufferRef-&gt;<span style="color: #8273da;">mAudioDataByteSize</span> += data_size;
+
+<strong><u>6. 更新資訊後重新加入到queue中</u></strong>
+err = <span style="color: #8273da;">AudioQueueEnqueueBuffer</span>(mQueue,
+bufferRef,
+0,
+NULL))
+
+至此, 我們就初步完成了新的Audio Player 架構了喔!
+
+但是Bear實驗室的教學還沒結束
+下一篇我們會實際應用這個player去制作網路收音機!
+
+有興趣的版友千萬別錯過喔!
+想先看到完整的程式碼只要到這邊下載就行了:
+<a title="" href="https://github.com/shouian/MMSRadioWithFFmpeg" target="_blank">https://github.com/shouian/MMSRadioWithFFmpeg</a>
+
+下篇教學大家千萬別錯過喔!
+更多有趣消息, 請繼續關注Takobear粉絲團!
+
+</div>
+<div></div>
+<div>
+<div id="166643853152053577" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- Takobear 728x90 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="6620496687"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/bear-iosaudiotoolbox-ffmpeg-part-2\/";
+        this.page.identifier = "677 http:\/\/www.takobear.tw\/201702608526356260322804024687\/bear-iosaudiotoolbox-ffmpeg-part-2";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

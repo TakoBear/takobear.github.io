@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[中級] Xcode - iOS內如何呼叫/分享訊息到其他App?</title>
+  <meta name="description" content="有的時候在Dropbox或其他的一般App內能夠看到這種功能, 也就是當檔案格式是目前App所無法處理的情況時,這些App會將所需的檔案下載下來, 在交由對應的App去執行, 一般名字稱為"分享" 或是"Open In"可以透過一些簡單的方法例如找到有對應的URI就能執行....(如果你不清楚Bear在說什麼, ...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/xcode-iosapp/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[中級] Xcode - iOS內如何呼叫/分享訊息到其他App?</h1>
+    <p class="post-meta"><time datetime="2014-02-15T12:17:19+08:00" itemprop="datePublished">Feb 15, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1514890_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">有的時候在Dropbox或其他的一般App內能夠看到這種功能, 也就是當檔案格式是目前App所無法處理的情況時,
+這些App會將所需的檔案下載下來, 在交由對應的App去執行, 一般名字稱為"分享" 或是"Open In"
+可以透過一些簡單的方法例如找到有對應的URI就能執行....
+(如果你不清楚Bear在說什麼, 內文有詳細解說喔^_&lt;)</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">先讓大家看一下什麼叫做URI Scheme ...
+其實Bear比較喜歡它叫做URL....關於URI Scheme介紹如下:
+<a href="http://en.wikipedia.org/wiki/URI_scheme" target="_blank">http://en.wikipedia.org/wiki/URI_scheme</a>
+
+簡單的說, 就是你可以透過知道某些特定的App id : 例如com.xxx.xxx
+或是知道他的URL存在就能直接開啟它, 如同本文的教學,
+Apple內部有預設一個元件可以直接幫你收集你App內, 有對應jpeg或指定檔案的格式的app
+通通收集起來讓你可以一次選取...
+
+不過Bear既然都把這篇分類為中級了, 當然是沒有這麼簡單啦!!!
+有時候會想要這樣 "啊...我只想要這個App內分享到LINE的功能而已啊..."的情況
+依據使用情境, 其實我們並不需要這麼多功能啊!!
+那要怎麼讓你只打開LINE / Skype / WhatsApp的功能呢?
+
+Bear在這邊先跟大家介紹如何不用透過程式來判斷你有沒有裝這個App,
+首先拿起你的iPhone - &gt; 打開Safari
+輸入以下字串(配合畫面)
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6306046_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">如果你有安裝LINE這款app, 他就會幫你自動導入到LINE這款App內了噢!!!!!是不是很簡單呢?
+講了這原理以後, 我們來實際看看程式碼會長什麼樣子:
+
+<strong><span style="color: #9555c2;">NSURL</span> *url = [<span style="color: #9555c2;">NSURL</span> <span style="color: #9555c2;">URLWithString</span>: <span style="color: #fb0000;">@"line://"</span>];
+<span style="color: #d061c7;">BOOL</span> isAppInstalled = [[<span style="color: #a561d0;">UIApplication</span> <span style="color: #9555c2;">sharedApplication</span>] <span style="color: #9555c2;">canOpenURL</span>: url];</strong>
+
+是不是很簡單呢? 只要透過呼叫UIApplication的實體方法 canOpenURL就能判定你的裝置內有沒有這款App了,
+回傳的布林值 isAppInstalled就能知道判定了
+麻煩的部分在於, 我們要怎麼知道這些App的URL呢?
+
+這邊Bear整理幾個比較常用的message URL :
+
+(1) LINE -&gt;  line://
+(2) SKYPE -&gt; skype://
+(3) WhatsApp -&gt; whatsapp://
+
+值得注意的是, 這三款App分別在自己的網站上都有公開自己的一個特殊語法,
+讓你可以再輸入URL的時候, 順便把你想要傳輸過去的訊息一起傳過去喔!!
+
+參考語法(點選左邊名稱導到官網說明頁)
+(1) <a title="" href="http://media.line.me/howto/ja/" target="_blank">LINE</a>     - &gt; line://msg/&lt;CONTENT TYPE&gt;/&lt;CONTENT KEY&gt;
+(2) <a title="" href="https://developer.skype.com/skype-uris" target="_blank">SKYPE</a>    - &gt; skype://users?call
+(3) <a title="" href="http://www.whatsapp.com/faq/en/iphone/23559013" target="_blank">WhatsApp</a> - &gt; whatsapp://send?text=Hello%2C%20World!
+
+最後一小段, 那, 我的App內要怎麼實際去把想要貼的訊息貼到這些App內呢?
+
+有一個Class 叫做UIPasteboard這個物件可以使用, 不過這個Bear要在下一篇文章中介紹
+現在我們先練習使用開啟URL的方式傳輸過去吧!!!
+方法也很簡單, 以WhatsApp為例
+
+<span style="color: #8273da;">NSURL</span> *whatsappURL = [<span style="color: #b073da;">NSURL</span> <span style="color: #9555c2;">URLWithString</span>:<span style="color: #f50707;">@"whatsapp://send?text=Hello%2C%20World!"</span>];
+[[<span style="color: #9555c2;">UIApplication</span> <span style="color: #9555c2;">sharedApplication</span>] <span style="color: #9555c2;">openURL</span>: whatsappURL];
+
+是不是很簡單呢? 利用openURL就能把字串傳輸過去了!
+要注意一件事, 這個範例是在whatsapp中傳輸過去 "Hello World"的字樣
+那中間那些%2C是怎麼來的呢?
+
+大家只要記得一點, 透過URL傳輸過去的話, 你需要把URL內的字串都轉成UTF8格式
+如果是一般使用者, 比如輸入了 "Hello World"的字串時, 要用以下的方法進行轉換
+
+<span style="color: #9555c2;">NSString</span> *message = <span style="color: #fa0a0a;">@"Hello World"</span>;
+<span style="color: #9555c2;">NSString</span> *newMessage =  [message <span style="color: #9555c2;">stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding</span>];
+
+透過這樣的轉換傳輸時才不會錯!
+
+最後呢, 如果使用者並沒有你對應的App, 你也可以利用openURL把使用者導入到iTunes App Store上
+用法完全一樣!
+
+NSURL *itunesURL = [NSURL URLWithString:<span style="color: #f90c0c;">@"itms-apps://itunes.apple.com/app/</span>APP_ID<span style="color: #f40202;">"</span>];
+(此例子來說, 用LINE的話就是: <a title="" href="https://itunes.apple.com/tw/app/line/id443904275?mt=8" target="_blank">https://itunes.apple.com/tw/app/line/id443904275?mt=8</a> 可參考下圖)
+[[UIApplication <span style="color: #9555c2;">shareApplication</span>] openURL:itunesURL];
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2510124_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div id="990523609887046933" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">不過光是這樣還不夠, Bear下一篇教學還有準備一個Opensource怎麼分享到LINE上面喔!!!
+
+資料來源:<a title="" href="http://kyleiossdk.blogspot.tw/2013/10/app.html" target="_blank"> </a><a title="" href="http://kyleiossdk.blogspot.tw/2013/10/app.html" target="_blank">http://kyleiossdk.blogspot.tw/2013/10/app.html</a>喜歡這篇文章嗎? 或許以下iOS教學也會對你有幫助!
+
+&nbsp;
+
+[入門系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a>[中級系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a>
+2.<a title="" href="http://www.takobear.weebly.com/12/post/2014/01/ios1.html" target="_blank"> 把Log記錄成文字檔  - Debug測試的好方法</a>
+3. <a href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">如何把訊息/圖片分享給其他App? (內含LINE, Skype, WhatsApp)</a>
+
+[進階系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a>
+
+喜歡這篇教學嗎? 趕快加入Takobear粉絲團吧!
+
+</div>
+<div></div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/15\/xcode-iosapp\/";
+        this.page.identifier = "454 http:\/\/www.takobear.tw\/201702608526356260322804024687\/-xcode-iosapp";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

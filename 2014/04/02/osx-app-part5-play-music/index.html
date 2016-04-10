@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>OSX APP 教學 Part5-play music</title>
+  <meta name="description" content="本次教學目標：	學會使用 NSOpenPanel操作環境：	OS X Version 10.9.1	Xcode Version 5.1 (5B130a)本次教學將會寫出一個超簡單的音樂播放器，簡單到只有載入，播放，與停止功能。">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/04/02/osx-app-part5-play-music/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">OSX APP 教學 Part5-play music</h1>
+    <p class="post-meta"><time datetime="2014-04-02T22:30:42+08:00" itemprop="datePublished">Apr 2, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4665503_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">本次教學目標：
+<ol>
+	<li>學會使用 NSOpenPanel</li>
+</ol>
+操作環境：
+<ul>
+	<li>OS X Version 10.9.1</li>
+	<li>Xcode Version 5.1 (5B130a)</li>
+</ul>
+本次教學將會寫出一個超簡單的音樂播放器，簡單到只有載入，播放，與停止功能。
+
+載入音樂的部分我們將不再預先將檔案路徑寫死在程式碼中，或是使用 NSTextField 手動輸入。本次教學將使用 NSOpenPanel，開啓選擇檔案的視窗，讓使用者瀏覽目錄，選擇需要的檔案開啟。
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<h2 class="wsite-content-title"><strong>建立 OS X Application 專案</strong></h2>
+<div class="paragraph">這次我們建立一個名為 HelloMusic 的專案
+
+請參考教學 <a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a> 建立新專案</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1215540_orig.png" alt="图片" /></a>
+<div>新專案名為 HelloMusic。</div>
+</div>
+</div>
+<div class="paragraph">新增 MainWindowController，整理專案結構如下：</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/604178_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>設計版面(layout)</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/266855_orig.png" alt="图片" /></a>
+<div>移除 Main.xib 的 Window 元件。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9504398_orig.png" alt="图片" /></a>
+<div>選擇 MainWindowController.xib，依圖加上 Label 與 Push Button 物件，Label 寬度可以拉長一些。並將視窗調整到適當大小。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5924368_orig.png" alt="图片" /></a>
+<div>修改 Window 屬性，取消勾選 Resize 與 Minimize。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/660437_orig.png" alt="图片" /></a>
+<div>修改各元件的 Title 屬性。</div>
+</div>
+</div>
+<div class="paragraph">Label:Not Loading…
+Push Button 各為：Load, Play, Stop</div>
+<h2 class="wsite-content-title"><strong>編寫邏輯</strong></h2>
+<div class="paragraph">接下來將開始編寫程式碼了。
+
+bearAppDelegate.h/.m 請參考 <a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a></div>
+<div class="paragraph">以下是 MainWindowController 類別的相關程式碼：
+MainWindowController.h</div>
+<div>
+<div id="139459345927886543" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">MainWindowController.m</div>
+<div>
+<div id="302343134683024408" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>連接元件</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7984228_orig.png" alt="图片" /></a>
+<div>連接的項目太多，不一一畫出，請參考以下列表。</div>
+</div>
+</div>
+<div class="paragraph">infoTextField 連接至 Label
+loadSoundOpenPanel: 連接至 Load Button
+play: 連接至 Play Button
+stop: 連接至 Stop Button
+
+</div>
+<h2 class="wsite-content-title"><strong>測試結果</strong></h2>
+<div class="paragraph">接下來測試一下完成的程式。
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5055206_orig.png" alt="图片" /></a>
+<div>初始畫面。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2057344_orig.png" alt="图片" /></a>
+<div>點擊 Load 按鈕，彈出選擇視窗。選擇音樂檔後按下 Open。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6719660_orig.png" alt="图片" /></a>
+<div>顯示音樂檔名。按下 Play 會開始播放音樂，按下 Stop 則會停止。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>後續討論</strong></h2>
+<div class="paragraph">本次教學做出的 player 還可以更好，在 NSSound 類別中，還有許多方法可以使用，如使用 setVolume 設定音量大小，使用setCurrentTime 設定目前播放時間，以及其他設定是否循環播放。
+
+如果配合 NSTableView，就能夠做出播放列表，讓 Player 的功能更加強大。</div>
+<div class="paragraph">關於這次的Sample Code 下載：
+<a href="https://github.com/TakoBear/OSXHelloMusic" target="_blank">https://github.com/TakoBear/OSXHelloMusic</a></div>
+<div>
+<div id="913755968228854251" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>參考</strong></h2>
+<div class="paragraph"><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Sound/Sound.html#//apple_ref/doc/uid/10000104-SW1" target="_blank">Introduction to Sound Programming Topics for Cocoa</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSound_Class/Reference/Reference.html" target="_blank">NSSound Class Reference</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/applicationkit/Classes/NSOpenPanel_Class/Reference/Reference.html" target="_blank">NSOpenPanel Class Reference</a>
+<a title="" href="http://c.gzl.name/archives/tag/nsopenpanel" target="_blank">Mac:打开一个目录</a>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!
+
+</div>
+<div></div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/04\/02\/osx-app-part5-play-music\/";
+        this.page.identifier = "387 http:\/\/www.takobear.tw\/201702608526356260322804024687\/osx-app-part5-play-music";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

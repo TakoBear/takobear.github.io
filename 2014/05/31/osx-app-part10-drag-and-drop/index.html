@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>OSX APP 教學 Part10-Drag and Drop</title>
+  <meta name="description" content="本次教學目標：	如何在 APP 中處理拖曳事件操作環境：OS X Version 10.9.2Xcode Version 5.1 (5B130a)">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/05/31/osx-app-part10-drag-and-drop/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">OSX APP 教學 Part10-Drag and Drop</h1>
+    <p class="post-meta"><time datetime="2014-05-31T23:22:16+08:00" itemprop="datePublished">May 31, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3491495_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">本次教學目標：
+<ol>
+	<li>如何在 APP 中處理拖曳事件</li>
+</ol>
+操作環境：
+OS X Version 10.9.2
+Xcode Version 5.1 (5B130a)
+
+之前我們寫了一個簡單的音樂播放器，利用檔案瀏覽視窗來選擇要播放的音樂。本次教學會教各位如何用拖曳檔案的方式載入音樂。
+
+本次教學延續使用 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/osx-app-part5-play-music.html" target="_blank">OSX APP 教學 Part5 play music</a> 的專案，建立新的 NSView 子類別，自訂拖拉事件。
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<h2 class="wsite-content-title"><strong>建立 OS X Application 專案</strong></h2>
+<div class="paragraph">本次延續使用 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/osx-app-part5-play-music.html" target="_blank">OSX APP 教學 Part5 play music</a> 的專案，不再額外新建。</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4934551_orig.png" alt="图片" /></a>
+<div>新增 Group Views ，並點擊 New File...新增類別。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5593407_orig.png" alt="图片" /></a>
+<div>新增新的類別名為 DragView，並繼承自 NSView。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>編寫邏輯</strong></h2>
+<div class="paragraph">有關 Drag 事件的方法都在 <a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Protocols/NSDraggingDestination_Protocol/Reference/Reference.html" target="_blank">NSDraggingDestination Protocol</a> 中定義，所有繼承 NSView 的類別都可以實作其中的方法，當 Drag 事件被觸發的時候執行自定的邏輯。當拖拉檔案所觸發的事件如下圖表示：
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4967437_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">當拖曳時，滑鼠游標移入倒程式視圖(View)的區域中時，就會觸發 draggingEntered: 方法，在放開的動作之前，只要還在程式視圖的區域中，就會不斷地觸發 draggingUpdated: 方法。如果滑鼠游標移出程式視圖的區域外時，則是觸發 draggingExited: 方法，直到再次移入程式視圖的區域中，才會再次觸發 draggingEntered: 方法。一般來說除非需要在拖曳時不斷取得資訊，不然不需要實作 draggingUpdated: 方法，預設會回傳跟 draggingEntered: 方法的回傳值。
+
+NSDragOperation 類型表示著拖曳動作的類型，除了 NSDragOperationNone 表示不允許拖曳，而直接結束動作，其他的值則會繼續往下呼叫方法執行。
+
+prepareForDragOperation:, performDragOperation:, concludeDragOperation: 方法是一連串的流程，只要前兩個方法其中一個回傳 NO，就回直接結束拖曳的動作。主要處理的程式邏輯應寫在 performDragOperation: 方法中，prepareForDragOperation:, concludeDragOperation: 則是可以做事前事後的處理，例如記錄log。
+
+本次教學的流程是以拖曳檔案，拉近到程式視圖的區域中，載入音樂。
+接下來是相關的程式碼。
+
+</div>
+<div class="paragraph">DragView.h自訂的 DragView，實作 draggingEntered:, performDragOperation: 方法，並將主要的載入音樂的邏輯，透過 <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">delegate</a> 交給 MainWindowController 處理。
+
+</div>
+<div>
+<div id="394868887857714279" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">DragView.m記得要先呼叫 registerForDraggedTypes: 方法註冊，才能夠觸發拖曳事件。
+
+</div>
+<div>
+<div id="475393018253234191" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">MainWindowController.h</div>
+<div>
+<div id="639300273298893764" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">MainWindowController.m在 MainWindowController.m 新增兩個方法
+
+</div>
+<div>
+<div id="437368738695904581" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>連接元件</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7539438_orig.png" alt="图片" /></a>
+<div>選擇 MainWindowController.xib，選擇 Window 的 View。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7753388_orig.png" alt="图片" /></a>
+<div>將 View 的 Custom Class 改成 DragView。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2268166_orig.png" alt="图片" /></a>
+<div>對File’s Owner 點擊右鍵，將 dragView 的圈圈連接到 DragView上。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>測試結果</strong></h2>
+<div class="paragraph">接下來測試一下完成的程式。
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/655439_orig.png" alt="图片" /></a>
+<div>將音樂檔案拖曳到程式的視圖中。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5703308_orig.png" alt="图片" /></a>
+<div>放開後，可以看到程式顯示音樂檔名，代表已經載入音樂檔。接下來我們可以按下 Play 播放音樂。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>後續討論</strong></h2>
+<div class="paragraph">學會拖曳事件的處理能夠讓程式的操作變得更方便，本次教學為了簡化，只能載入單一音樂檔案；如果使用陣列與 TableView，就可以寫出擁有播放列表的播放器，一次載入多個檔案播放，功能更加強大。關於這次的Sample Code 下載：
+<a title="" href="https://github.com/TakoBear/OSXHelloDragAndDrop" target="_blank">https://github.com/TakoBear/OSXHelloDragAndDrop</a>
+
+</div>
+<div>
+<div id="681231627908191114" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>參考</strong></h2>
+<div class="paragraph"><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/DragandDrop/Tasks/acceptingdrags.html" target="_blank">Drag and Drop Programming Topics</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Protocols/NSDraggingDestination_Protocol/Reference/Reference.html" target="_blank">NSDraggingDestination Protocol Reference</a>TakoBear App Tickr 新上線! 想要輕鬆自制貼圖分享給其他人的話,
+用它就對了！！
+
+</div>
+<div>
+<div id="410212829320194610" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/501315046641794" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/501315046641794">貼文</a>。</div>
+</div>
+</div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/05\/31\/osx-app-part10-drag-and-drop\/";
+        this.page.identifier = "346 http:\/\/www.takobear.tw\/201702608526356260322804024687\/osx-app-part10-drag-and-drop";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

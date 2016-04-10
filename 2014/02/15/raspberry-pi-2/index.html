@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>替raspberry pi安裝作業系統</title>
+  <meta name="description" content="繼上次raspberry pi硬體介紹後接下來要替raspberry pi安裝一個實用的作業系統但是raspberry pi畢竟是台電腦安裝方式、驅動程式...等等一大堆問題怎麼處理呢？所幸它的開發公司英國的樹莓派基金會已經替懶惰的小編提供一系列作業系統供小編選擇不用像傳統的安裝過程要自己從頭慢慢弄接下我們跳轉到...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/raspberry-pi-2/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">替raspberry pi安裝作業系統</h1>
+    <p class="post-meta"><time datetime="2014-02-15T12:13:39+08:00" itemprop="datePublished">Feb 15, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div class="paragraph">繼上次<a title="" href="http://gossibear.weebly.com/12/post/2013/06/raspberry-pi.html" target="_blank">raspberry pi硬體介紹</a>後
+接下來要替raspberry pi安裝一個實用的作業系統
+但是raspberry pi畢竟是台電腦
+安裝方式、驅動程式...等等一大堆問題怎麼處理呢？
+所幸它的開發公司英國的樹莓派基金會已經替懶惰的小編提供一系列作業系統供小編選擇
+不用像傳統的安裝過程要自己從頭慢慢弄
+接下我們跳轉到它的官方網頁下載OS(作業系統)吧
+<a title="" href="http://www.raspberrypi.org/">http://www.raspberrypi.org/</a></div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6939020_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">上圖是利用google方式，畫面中第一個選項就是raspberry pi的官方網站
+進入之後，馬上點選Downloads這個選項</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5832020_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">目前raspberry pi提供更為簡易的安裝方式
+就是上圖"New One"，不是，打錯了
+是"New Out Of Box Software"
+這方法很方便又快速
+先下載NOOBS_v1.1.zip
+解壓縮它，然後把解壓縮出來的檔案全部複製到SD卡中
+將SD卡裝到raspberry pi上
+開機！完成！</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4013292_orig.jpg" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">開機後會出現上圖畫面
+可以選擇上述五種作業系統
+小編這裡選擇Raspbian，一來這是raspberry pi基金會推薦
+二來Raspbian是Debian系列，而Debian是Ubuntu的父親（誤）
+而Ubuntu是小編常用的Linux</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8536665_orig.jpg" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4722634_orig.jpg" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1804346_orig.jpg" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">安裝完成了
+三張圖就可以說明這安裝多麼容易，比Windows好裝多了（誤）</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3492564_orig.jpg" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">哎呀，小編錯了，看起來還是沒有比Windows容易多少
+這部份的設定小編下篇再談</div>
+<div class="paragraph">上述這方法雖然很容易很方便，但是有個致命缺點
+raspberry pi必須先接上鍵盤（USB）、螢幕（具有HDMI）
+一般來說，很少人擁有兩個以上的鍵盤、螢幕吧
+或是懶得準備鍵盤、螢幕，那接下介紹比較古老的做法，只要有網路線（具有DHCP區網）就大丈夫回到官方網頁
+<a title="" href="http://www.raspberrypi.org/">http://www.raspberrypi.org/</a>
+Downloads頁面有個Raw Images
+這些都是完整的OS，只要把img檔寫入到SD中就完成安裝了
+這邊小編順便介紹raspberry pi目前支援的OS
+目前最大宗都是Linux，有目前三大主流
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2487920_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">基於Debian
+上述兩者Raw Image，都是基於Debian的Raspbian
+差異在程式編譯一個是用硬體浮點（快、相容性差），一個是用軟體（函式庫）浮點（慢，相容性高）
+簡單的說，沒有編譯上特別需求就選硬體就好了
+另外，小編後續示範還是用Raspbian</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9546442_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">基於Arch Linux的Arch Linux ARM（廢話）
+小編的前輩說過，一個真正的linuxer應該就是要用Arch Linux或是Gentoo
+這表示，使用這兩個得具有深厚的使用經驗，有門檻的
+不過這兩個的自由性可不是其他Linux distribution所比擬</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/611190_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">基於RedHat（Fedora）的Pidora
+是非常著名的商用Server選擇的OS至於RISC OS是ARM公司專為ARM CPU所寫的OS
+它具有與硬體高度相容性、快，不像Linux那般臃腫
+小編這裡式沒有特別嘗試，有興趣的可以自行測試看看
+
+開始安裝前
+用Windows先準備以下工具
+Win32 Disk Imager
+<a title="" href="http://sourceforge.net/projects/win32diskimager/">http://sourceforge.net/projects/win32diskimager/</a>
+這是在Windows底下將img檔寫入SD卡的工具
+來，把剛剛下載的ZIP檔解壓縮，插入SD卡（將此格式化成FAT32）
+點擊執行Win32DiskImager.exe
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3838087_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">選擇要安裝的img檔與SD卡的磁碟機代號（別選錯了，會格式化資料）
+點擊Write，泡杯咖啡，優哉得等它完成
+（如果SD卡裡面有之前為了raspberry pi所安裝的OS，可以選擇Read備份或分享）
+完成後，將SD卡放進pi中，插上網路線、電源開機</div>
+<div class="paragraph">如果像小編一樣，手頭剛好有台Linux（這邊用Ubuntu為例）
+想裝一下Geek的話...
+第一件事情就是到官方網頁抓Raw Image
+解壓縮它
+<span style="color: #3333ff;">$ unzip ~[放置的資料夾]/[檔名].zip</span>
+插上SD卡，掛載後檢查SD卡磁碟代號
+<span style="color: #3333ff;">$ df -h</span>
+看看哪一個最像是SD卡的容量，或是掛載在/media、/mnt底下
+舉例是"/dev/mmcblk0" 或 "/dev/sdd"之類的
+然後卸載它（如果是/dev/sdd1）
+<span style="color: #3333ff;">$ umount /dev/sdd1</span>
+可能需要用到最高執行者權限（加個sudo試試看）
+最後將img檔寫入SD卡中
+<span style="color: #3333ff;">$ sudo dd bs=4M if=~/[放置資料夾]/[檔名].img of=/dev/sdd</span>
+一樣泡杯咖啡，優哉得等它完成</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2445689_orig.png" alt="Picture" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">如果厭惡key指令的話
+可以安裝image writer
+<span style="color: #3333ff;">$ sudo apt-get install usb-imagewriter</span>
+執行image writer
+<span style="color: #3333ff;">$ sudo usb-imagewriter</span>   or   <span style="color: #3333ff;">$ sudo imagewriter</span>
+選擇img檔跟磁碟機代號，寫入
+其實就是用GUI的方式執行
+<span style="color: #3333ff;">$ sudo dd bs=4M if=~/[放置資料夾]/[檔名].img of=/dev/sdd</span>
+完成後，將SD卡放進pi中，插上網路線、電源開機呼，總算弄好安裝了
+至於開機後用SSH遠端raspberry pi來設定它，這部份小編下次再介紹!
+
+
+
+期待看到多消息, 請密切關注TakoBear!
+或是來信到信箱takobearx@gmail.com!
+
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/02\/15\/raspberry-pi-2\/";
+        this.page.identifier = "747 http:\/\/www.takobear.tw\/201702608526356260322804024687\/raspberry-pi-raspbian";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

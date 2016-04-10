@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[iOS 8] 從Objective-C到Swift : 你的第5支Swift程式 - 如何使用委派(delegate)?</title>
+  <meta name="description" content="TakoBear 被自己開的坑給追殺的沒完…總算有時間來放後續的 Swift 教學了!!">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/08/17/ios-8-objective-cswift-5swift-delegate/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[iOS 8] 從Objective-C到Swift : 你的第5支Swift程式 - 如何使用委派(delegate)?</h1>
+    <p class="post-meta"><time datetime="2014-08-17T17:37:55+08:00" itemprop="datePublished">Aug 17, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>TakoBear 被自己開的坑給追殺的沒完…總算有時間來放後續的 Swift 教學了!!</p>
+
+<p>從 objective-c 轉過來 Swift 的開發者一定知道，所有的教學書一定會在前幾章介紹 protocol 與 delegate</p>
+
+<p>對於這麼好的東西 Swift 怎麼可能缺少呢，因此 Bear 今天就要來教大家怎麼使用 Swift 的 protocol 與 delegate 囉！</p>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
+<p>首先我們先建立另一個Swift的檔案，並將之命名為 TakoButton</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7569681_orig.png" alt="" /></p>
+
+<p>跟 objective-c 不同的是，Swift 並不會詢問檔案要繼承於何物件</p>
+
+<p>剛建好的檔案非常的乾淨，只有 import Foundation 而已，剩下的內容都要我們自己撰寫</p>
+
+<p>(記得註解內不能留中文，否則 AutoComplete 的功能可能會失效)</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7449174_orig.png" alt="" /></p>
+
+<p>首先我們需要 import UIKit，不然沒有辦法呼叫 UIView</p>
+
+<p>接者把我們的 TakoButton 指定為繼承自 UIView</p>
+
+<pre><code class="swift">class TakoButton : UIView {
+// 有關 TakoButton 的程式碼都寫在這裡面
+}
+</code></pre>
+
+<p>在 class 外面宣告TakoButton 的協定</p>
+
+<pre><code class="swift">protocol takoButtonProtocol {
+    func didTapButton (takoButton:TakoButton)
+    func labelTextOnTakoButton () -&gt; String
+}
+</code></pre>
+
+<p>兩個function 分別為</p>
+
+<ol>
+<li>didTapButton 點擊 takoButton 後觸發事件，並傳送 takoButton 物件出去</li>
+<li>labelTextOnTakoButton 接收一個外面傳進來的字串而 delegate property 的宣告方式則改為寫在 TakoButton class 內</li>
+</ol>
+
+<pre><code class="swift">var delegate:takoButtonProtocol?
+var dataSource:takoButtonProtocol?
+</code></pre>
+
+<p>Swift 中問號 <code>?</code> 是很常使用的符號，其功能是該值有可能為空，而當該值為空時程式即不執行以避免 crash</p>
+
+<p>而與之類似的就是驚嘆號 <code>!</code> ，其功能則是強制執行，如果該值為空則有 crash 的可能</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/328457_orig.png" alt="" /></p>
+
+<p>接著介紹 TakoButton  class 內的程式碼：</p>
+
+<p>初始化的時候建立一個點擊辨識 (UITapGestureRecognizer) 加到 TakoButton 本身上</p>
+
+<p>點擊後則會觸發 tapGesturenEvent 這個 function</p>
+
+<p>接著 tapGesturenEvent 內呼叫 delegate 的 didTapButton function 並把 takoButton 本身傳出去</p>
+
+<p>在 objective-c 我們會做一些確認防止 crash</p>
+
+<pre><code class="objectivec">if (delegate &amp;&amp; [delegate respondsToSelector ….])
+</code></pre>
+
+<p>這邊 delegate 後面的問號 <code>?</code> 則有效的幫助我們辨別 delegate 是否為空值，空值則不執行</p>
+
+<p>這種寫法在以前的 delegate 是不是也很常見呢? 推薦新手的朋友在製作委派前，都儘量加上這種保險式的寫法, 避免發生一些意外喔!</p>
+
+<pre><code class="swift">init(frame:CGRect ) {
+    super.init(frame:frame)
+    var tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapGesturenEvent")
+    self.addGestureRecognizer(tapGesture)
+}
+
+func tapGesturenEvent (){
+    delegate?.didTapButton(self)
+}
+</code></pre>
+
+<p>setLabelText 這個 function 則是我們希望能在 TakoButton 上加一段文字，而這文字則由 delegate 的 function labelTextOnTakoButton 提供</p>
+
+<p>在 swift 我們寫好的 function 就可以直接被外面調用了，不需要再額外宣告</p>
+
+<pre><code class="swift">func setLabelText (){
+    var label :UILabel = UILabel(frame:CGRectMake(0, 0, 100, 100))
+    self.addSubview(label)
+    label.text = dataSource?.labelTextOnTakoButton()
+}
+</code></pre>
+
+<p>TakoButton 的程式碼到此大功告成，我們接著看 ViewControll 吧！</p>
+
+<p>Swift 很方便的一點是不需要再 import 其他的 Swift 檔案了，直接就可以呼叫了！</p>
+
+<p>首先我們要讓 ViewController 遵循 TakoButton 的 protocol</p>
+
+<pre><code class="swift">class ViewController: UIViewController,takoButtonProtocol
+</code></pre>
+
+<p>接著我們在 ViewController 建立一個 TakoButton 並指定 delegate 及 dataSource</p>
+
+<p>然後就可以來看 delegate 要做什麼事了！</p>
+
+<p>大家應該還記得 didTapButton 是 tapGesturenEvent 被觸發時呼叫的，我們等於是把 event 又拉出來而已，在這裡我們 println 一串字串，println 就跟 objective 的 NSLog 一樣！</p>
+
+<p>接著又呼叫 takoButton 的 setLabelText function</p>
+
+<pre><code class="swift">func didTapButton(takoButton: TakoButton) {
+    println("takoButton is touched")
+    takoButton.setLabelText()
+}
+</code></pre>
+
+<p>而 takoButton 的字串內容則由 labelTextOnTakoButton 這個 delegate 提供</p>
+
+<pre><code class="swift">func labelTextOnTakoButton() -&gt; String  {
+    return "TakoBear"
+}
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2347243_orig.png" alt="" /></p>
+
+<p>來看看這樣的程式碼，有沒有比較有概念了呢？</p>
+
+<p>總結來說，委派(delegate)模式其實就是設計模式的一環(Design Pattern)</p>
+
+<p>重點的概念就是不是由自己的程式碼決定要做什麼內容，而是由交付的 class 來決定</p>
+
+<p>以這個範例來說，我們就是把 takobutton 按鈕，再按到按鈕後要做兩件事情</p>
+
+<p>(按下按鈕, 按完按鈕後顯示的字樣) 給交付讓 ViewController 來做這種方式有什麼好處?</p>
+
+<p>如果你需要一個 class 重複給不同的專案，或是做一個大型的 OpenSource 的物件的時候</p>
+
+<p>往往你不能先決定好後面要做哪些處理情境，或是有可能程式碼之後要做因應架構變化的轉型</p>
+
+<p>在這樣的條件下，你基本上就會要用到委派的方式了，不只是簡化你專案的維護難易度</p>
+
+<p>也讓你的程式功力可以提升喔!</p>
+
+<p>最後, 讓我們來看看 Build 完及點擊後的畫面吧！</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2812554_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/286385_orig.png" alt="" /></p>
+
+<p>點擊後 log 出現  takoButton is touched 的字串！</p>
+
+<p>而 takoButton 上也出現了 TakoBear  的字串！</p>
+
+<p>看起來是不是很簡單呢? 對這次專案有興趣的朋友, 可以到以下網址下載完整檔案喔</p>
+
+<p><a href="https://github.com/TakoBear/Swift-Delegate-Demo">https://github.com/TakoBear/Swift-Delegate-Demo</a></p>
+
+<div id="fb-root"></div>
+
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/08\/17\/ios-8-objective-cswift-5swift-delegate\/";
+        this.page.identifier = "204 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ios-8-objective-cswift-5swift-delegate";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

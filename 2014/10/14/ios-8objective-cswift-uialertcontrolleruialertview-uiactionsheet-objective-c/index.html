@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[iOS 8] 從Objective-C到Swift : UIAlertController取代UIAlertView, UIActionSheet (含Objective-C 語法)</title>
+  <meta name="description" content="隨著 iPhone 6 / 6+ 的面世，各位Developer 們準備好接受 iOS 8 的衝擊了嗎！今天Bear要來介紹一個結和了UIAlertView 跟 UIActionSheet 功能的物件:  UIAlertController !">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/10/14/ios-8objective-cswift-uialertcontrolleruialertview-uiactionsheet-objective-c/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[iOS 8] 從Objective-C到Swift : UIAlertController取代UIAlertView, UIActionSheet (含Objective-C 語法)</h1>
+    <p class="post-meta"><time datetime="2014-10-14T16:48:11+08:00" itemprop="datePublished">Oct 14, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3250034_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">隨著 iPhone 6 / 6+ 的面世，各位Developer 們準備好接受 iOS 8 的衝擊了嗎！
+今天Bear要來介紹一個結和了UIAlertView 跟 UIActionSheet 功能的物件:  UIAlertController !
+
+那他還有什麼新的功能嗎？ 沒有！完全沒有
+是的！你沒看錯，UIAlertController 純粹就是將UIAlertView 與 UIActionSheet 兩者合而為一
+But ! 如果您持續使用 UIAlertView 與 UIActionSheet 可能沒事(目前這兩者都已經被編為Depreciate的狀態了)
+運氣不好你可能會發現你的App不斷閃退或是毫無作用了,
+為了避免這狀況，我們還是花點心思跟隨蘋果的腳步吧！</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="555774618300041735" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">UIActionSheet的影響有哪些? 例如下圖, Bear前陣子正想試用一些App在iOS 8上面的影響
+其中就有注意到這款App的畫面變成如下
+印象中之前應該是有一些選單項目可以選擇, 但是推論是iOS 8的影響造成的其中一項結果, 沒法正常顯示出來</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2557729_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這次的教學也是希望讓大家能避免這樣的情況,
+Bear試著用Swift 與Obj-C的方法來介紹這個Apple在iOS 8所推出的新Class, 其實蠻簡單好用的噢!整個的概念很簡單，
+首先需要建立一個 UIAlertController，這個物件可以設定標題，訊息跟類型
+標題(<strong>Title</strong>)與訊息(<strong>Message</strong>)顧名思義就是這個視窗所顯示的訊息內容與想要呈現的項目主題
+只要給定你想呈現的字串(NSString)就好,
+而類型(<strong>preferredStyle</strong>)則分為 Alert 跟 ActionSheet 兩種，Alert 漂浮在畫面中心，ActionSheet 則從底下浮起
+
+<strong>Tako: 這跟以前有什麼不一樣嗎?
+Bear: 沒有
+Tako: .... (崩潰)</strong>
+
+跟以前比較不一樣的是, 以前是在UlAlertView或是ActionSheet初始化以前,
+給定一組陣列讓我們知道每一個按鈕要顯示哪些字串,
+現在的UIAlertController則是你要先決定每一個動作要做哪些事項,
+透過添加一個<strong>UIAlertAction</strong>到UIAlertController的動作來完成,
+
+其實就跟平常用的取消(Cancel), 確認(OK)這些按鈕的動作沒差多少,
+UIAlertAction在產生的時候, 需要指派以下參數
+<ul>
+	<li>標題(Title): 決定你按鈕的名字</li>
+	<li>樣式(Style): 這邊有3個樣式可以選擇,</li>
+</ul>
+* UIAlertActionStyleDefault       - 沒什麼特別的，一般確定或其他就用這個吧！
+* UIAlertActionStyleCancel        - 取消基本用這個，在ActionSheet 或Alert 按鈕大於三個時會出現在最下方
+* UIAlertActionStyleDestructive  - 讓按鈕變紅色，常用在刪除
+<ul>
+	<li>按鈕事件處理(Handler):  UIAlertAction 也會附帶一個 Block，點擊後要觸發什麼事件直接寫在裡面就可以了！</li>
+</ul>
+這邊有個比較特別的是，當ActionSheet 有加入 Cancel Action 時，
+可以直接點擊 ActionSheet 之外畫面，
+直接觸發 Cancel Action，Alert 則無此功能
+
+講完設定後, 就是要讓AlertController出現在畫面的方式啦!
+直接用以下function呼叫就行了, Self是指UIViewController, 畫面元件,
+<span style="color: #fe0303;"><strong>注意不要寫成self.navigationController</strong></span>
+
+</div>
+<div>
+<div id="584946920639781307" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">這邊Bear寫了 Objective-C 跟 Swift 的 code 讓大家參考怎麼使用它們
+希望讓大家更容易理解啦!<strong><span style="font-size: large;">Objective-C</span></strong>
+
+
+首先我們先建立一個按鈕來當觸發點，不懂的朋友可以參考前面的文章: <a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/-bear-xcode-uibutton" target="_blank"><strong>iOS入門教學 - 如何建立按鈕</strong></a>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6234746_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">在按鈕內實作剛剛所說的UIAlertController的操作方式,
+直接參考下圖部分就行了</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1717185_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph"><strong><span style="color: #c2743b;">Swift </span></strong>流程完全一樣，如果語法有疑惑的朋友可以參考前面的文章: <a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/ios-8-objective-cswift-2swift-swiftuilabeluibutton" target="_blank"><strong>iOS 8 - 如何製作按鈕事件與標籤?</strong></a>
+這邊Bear提一下在Swift中block(GCD)的用法
+以 UIAlertAction 的 handler: 後block為例
+
+</div>
+<div>
+<div id="507516096559531562" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">傳入值為 action (可自定名稱) 為 UIAlertAction 物件
+回傳值則為 void (不需回傳) 我們這邊直接省略不寫
+in 之後就是block 要做的事情了！</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9551748_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">程式的介紹就到這邊, 實測的成果大家就看看下圖吧!!</div>
+<div>
+<div class="wsite-multicol">
+<div class="wsite-multicol-table-wrap">
+<table class="wsite-multicol-table">
+<tbody class="wsite-multicol-tbody">
+<tr class="wsite-multicol-tr">
+<td class="wsite-multicol-col">
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2368219_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div></td>
+<td class="wsite-multicol-col">
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9643226_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div></td>
+<td class="wsite-multicol-col">
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8629457_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div></td>
+<td class="wsite-multicol-col">
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5024460_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">這次的練習下載位置:
+Objective - C版本: <a title="" href="https://github.com/TakoBear/ObjectiveC---UIAlertControllerDemo">https://github.com/TakoBear/ObjectiveC---UIAlertControllerDemo</a>
+Swift版本: <a title="" href="https://github.com/TakoBear/Swift---UIAlertControllerDemo">https://github.com/TakoBear/Swift---UIAlertControllerDemo</a></div>
+<div>
+<div id="167867430541473554" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+</div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/10\/14\/ios-8objective-cswift-uialertcontrolleruialertview-uiactionsheet-objective-c\/";
+        this.page.identifier = "147 http:\/\/www.takobear.tw\/201702608526356260322804024687\/ios-8-objective-cswift-uialertcontrolleruialertview-uiactionsheet-objective-c";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

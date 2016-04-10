@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>OSX APP 教學 Part12-block</title>
+  <meta name="description" content="本次教學目標：	了解什麼是 block	學習如何在程式中使用 block操作環境：OS X Version 10.9.3Xcode Version 5.1.1 (5B1008)">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/06/01/osx-app-part12-block/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">OSX APP 教學 Part12-block</h1>
+    <p class="post-meta"><time datetime="2014-06-01T11:57:57+08:00" itemprop="datePublished">Jun 1, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7984820_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">本次教學目標：
+<ol>
+	<li>了解什麼是 block</li>
+	<li>學習如何在程式中使用 block</li>
+</ol>
+操作環境：
+OS X Version 10.9.3
+Xcode Version 5.1.1 (5B1008)
+
+本次教學會應用 block 實作一個如上圖所示假的讀取畫面。
+
+block 是一段程式碼區塊，可以將 block 指定給變數，用來傳遞給函式使用。這樣的性質，在 OS X的開發中，實做一些需要長時間的任務，或是需要在背景執行的任務時，我們就會使用到 block 與 operation queue。本次教學中先講 block， operation queue 就在以後的教學再詳細說明。
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<h2 class="wsite-content-title"><strong>block</strong></h2>
+<div class="paragraph">開頭講到，block 就是一段程式碼區段，而且可以指定給變數。宣告一個 blcok 變數的語法如下：</div>
+<div>
+<div id="194964653846777794" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">傳入多個參數的 block 變數如下：</div>
+<div>
+<div id="228255871322251665" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">當宣告完 block 變數後，指定值的語法如下(要注意，傳入參數要再次列出來)：</div>
+<div>
+<div id="672552424776063060" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">或是可以在宣告時同時給值：</div>
+<div>
+<div id="392438726209274771" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">如果沒有傳入參數，指定值的時後可以省掉一對括號：</div>
+<div>
+<div id="187129634995193082" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">使用 block 的方式就像使用函式一樣，語法如下：</div>
+<div>
+<div id="677672172690714887" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">另一件要注意的事情是，block 是被儲存在 stack 上的，一旦離開建立block時所在的函式時，就會從記憶體中釋放，要在其他函式呼叫時就會發生錯誤，範例如下：</div>
+<div>
+<div id="105770963957383110" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">我們可以使用 copy ，將 block 複製到 heap 上，避免離開建立 block 時所在的函式時，block 從記憶體中被釋放。</div>
+<div>
+<div id="243311853645853212" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">如果你需要宣告多次相同定義的 block 變數，可以使用 typedef，避免每次都要打冗長的定義。</div>
+<div>
+<div id="600225032263755855" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">接下來我們來實際寫個程式運用一下 block。</div>
+<h2 class="wsite-content-title"><strong>建立 OS X Application 專案</strong></h2>
+<div class="paragraph">這次我們建立一個名為 HelloBlock 的專案請參考教學 <a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a> 建立新專案
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4716038_orig.png" alt="图片" /></a>
+<div>新專案名為 HelloBlock。</div>
+</div>
+</div>
+<div class="paragraph">新增 MainWindowController，整理專案結構如下：</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/351969_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">在 Resources Group 下新增一張圖片，等等用來顯示在畫面上。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/919536_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>設計版面(layout)</strong></h2>
+<div class="paragraph">這次我們就不刪除 Main.xib 的 Window了。選擇 Main.xib，加入 Image Well 與 Level Indicator。
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8055325_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8355032_orig.png" alt="图片" /></a>
+<div>將 Level Indicator 的 Value Maximum 設為 10，current 設為 0，並調整大小。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4641000_orig.png" alt="图片" /></a>
+<div>將 Window 的 resize 與 title bar 屬性取消勾選，並調整大小。</div>
+</div>
+</div>
+<div class="paragraph">接下來是 MainWindowController.xib，這邊隨意就好。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2879020_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>編寫邏輯</strong></h2>
+<div class="paragraph">這次教學主要的邏輯在 bearAppDelegate.h/.m 中。bearAppDelegate.h
+
+</div>
+<div>
+<div id="657419711952102640" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">bearAppDelegate.m</div>
+<div>
+<div id="273325291615573358" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>連接元件</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4963314_orig.png" alt="图片" /></a>
+<div>選擇 Main.xib，對 Bear App Delegate 點擊右鍵，將 levelIndicator 連結至 Level Indicator。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>測試結果</strong></h2>
+<div class="paragraph">接下來測試一下完成的程式。
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2764046_orig.png" alt="图片" /></a>
+<div>程式開始執行後進度條會開始跑。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5020811_orig.png" alt="图片" /></a>
+<div>當進度條跑完之後，就會關閉原本的視窗，顯示另一個視窗。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>後續討論</strong></h2>
+<div class="paragraph">關於這次的Sample Code 下載：
+<a title="" href="https://github.com/TakoBear/OSXHelloBlock" target="_blank">https://github.com/TakoBear/OSXHelloBlock</a></div>
+<div>
+<div id="549914133204732678" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>參考</strong></h2>
+<div class="paragraph"><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Blocks/Articles/00_Introduction.html" target="_blank">Blocks Programming Topics</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/NSOperationQueue_class/Reference/Reference.html" target="_blank">NSOperationQueue Class Reference</a>TakoBear推出自製App Tickr囉! 想要輕鬆做出自己的專屬貼圖用它就對了！
+
+</div>
+<div>
+<div id="558876252775440657" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/501315046641794" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/501315046641794">貼文</a>。</div>
+</div>
+</div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/06\/01\/osx-app-part12-block\/";
+        this.page.identifier = "322 http:\/\/www.takobear.tw\/201702608526356260322804024687\/osx-app-part12-block";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

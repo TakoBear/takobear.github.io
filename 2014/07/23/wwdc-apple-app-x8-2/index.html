@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>WWDC 重點: Apple 怎麼設計出一款App? 在你還沒動手做以前, 不停的假裝你已經做出來了吧! (Fake it Till You Make it)</title>
+  <meta name="description" content="       時隔一段時間, TakoBear因為平常忙碌一直沒空分享之前觀賞WWDC的心得 這次的內容跟Tako, Bear之前所介紹的內容都有點不同, 無關程式, 而是在寫程式之前所要面對的問題 "我要怎麼設計出一款好App?"  不管你是什麼身份, 甚至你完全不會寫程式, 只要你想要進入App開發的領域, ...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/07/23/wwdc-apple-app-x8-2/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">WWDC 重點: Apple 怎麼設計出一款App? 在你還沒動手做以前, 不停的假裝你已經做出來了吧! (Fake it Till You Make it)</h1>
+    <p class="post-meta"><time datetime="2014-07-23T11:33:37+08:00" itemprop="datePublished">Jul 23, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2963932_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 時隔一段時間, TakoBear因為平常忙碌一直沒空分享之前觀賞WWDC的心得<br /> 這次的內容跟Tako, Bear之前所介紹的內容都有點不同, 無關程式, 而是在寫程式之前所要面對的問題<br /> "我要怎麼設計出一款好App?" <br /> 不管你是什麼身份, 甚至你完全不會寫程式, 只要你想要進入App開發的領域, Tako建議大家都該來看看!!!<br /> 這次的內容是蘋果分享給大家他們做出一個產品, 特別是針對App所設計的內容喔! </div>
+<div> <!--BLOG_SUMMARY_END--> </div>
+<div> <div id="799921477329467455" align="left" class="wcustomhtml"> <script async=""> ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); ]]></script><script async=""> ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); ]]></script></div> </div>
+<div class="paragraph"> 現在面對App開發程式難度雖然有不斷降低的趨勢, 但是我們其實都知道<br /> 開發一款App (這邊指的不只是手機App, 包含桌上型應用程式, 網頁等都是)<br /> 是一段相當艱辛而痛苦的過程, 他所牽涉到的內容包含如下圖... </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4721713_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 以這樣的成本來說, 其實不論是大公司, 小型團隊甚至是Soho族都必然面對過這問題<br /> 很多人以為敏捷開發就是開發程式要很快, 一週或兩週直接寫出來程式, <br /> 但是當你陷入直接coding然後又與設計架構不同的時候<br /> 其實對整個開發團隊是很沈重的打擊的, <br /> 當你的團隊遇到這種狀況, 別先責怪你的工程師, 應該要換一種方法 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3517603_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> Apple 強調的概念, 在你一個Idea出來以後, 到它變成一個真正的App, 你應該要不斷的嘗試去Fake,<br /> 也就是做一個假的Prototype App, 而不應該要去動手coding, <br /> 這階段應該是讓工程師與設計師一起攜手討論整個架構應該要做成什麼樣子, <br /> 讓工程師在過程中尋找技術的可能性 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7039469_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> Prototype有多重要? 兩個原因<br /> 1. 嘗試你的想法是否可行 - 每個人的時間與金錢都有限度, 應該把資源用在最正確的地方<br /> 2. 嘗試思考新的idea - 讓你的產品變得更加好, 這點多重要相信不用多提了 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/612285_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 好的, 那我們的重點在於該怎麼做? 做Prototype並不是說不需要coding就沒有任何技術可言, <br /> 基本上他是牽涉到上面的三個步驟循環, <br /> Make Fake Apps -&gt; Show People - &gt; Learn from their feedback <br /> Again and again , 沒錯, 不斷的重複直到你真正逼近真的App </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5221735_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 在這個階段, 你需要問三個問題, <br /> 哪些步份可以變得更加貼進真實? 需不需要導入真正的API或是替換資料?<br /> 我們還能夠fake哪些資料? <br /> 使用者會在哪邊使用到這些資訊? </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5116747_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 給其他人看看吧, <br /> 問問使用者, 你知道如何解決某些問題<br /> 這樣操作會不會讓你覺得很簡單<br /> 我們能不能做得更好? <br /> 這些對象當然應該是要是你目標推行的客戶對象, 也就是未來的使用者<br /><br /> 這個階段很重要一點, 不要去爭執, 嘗試去辯護自己的想法, 應該盡可能地聆聽使用者對這項idea的看法<br /></div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2454471_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 從之前呈現的經驗, 找一下哪些是有用的概念, 哪些是沒用的<br /> 或是哪些是我們應該要新加入給使用者的建議 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4685355_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 在這個測試過程中, 其實還是有些工具Apple特別建議的, 你可以使用Apple的Keynote配合Core Animation工具來調整<br /> 什麼意思? 簡單說就是你用PPT的概念就應當能嘗試出你所想的功能中最重要的部分了!<br /><br /> 接下來呢, Apple就用了一個找附近麵包功能的概念App, 來讓大家了解可以怎麼設計出一款“找麵包”的App囉 </div>
+<div> <div class="wsite-multicol"> <div class="wsite-multicol-table-wrap"> <table class="wsite-multicol-table"><tbody class="wsite-multicol-tbody"><tr class="wsite-multicol-tr"><td class="wsite-multicol-col"> <div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5010897_orig.png" alt="图片" /></a>  <div></div> </div> </div> </td>  <td class="wsite-multicol-col"> <div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2590938_orig.png" alt="图片" /></a>  <div></div> </div> </div> </td> </tr></tbody></table></div> </div> </div>
+<div class="paragraph"> 這款App很簡單, 先定義你的目標, 也就是找出你附近的麵包店, <br /> 找到最好吃的麵包, 評分或是分享心得, <br /> 有了這樣的概念後, 就是先請設計師設計一些草圖流程囉 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7415090_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 在這麼多的設計草圖中, 從裡面挑選你們覺得最合適的概念出來進行組合, <br /> 例如說上圖中, Apple選擇了這四張圖作為概念呈現 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8311007_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 在這一開始, Make的階段必須回答的三個問題, 你的雛形需要多靠近真實情況? <br /> 你能夠fake哪些資料? 照片, 文字, icon, <br /> 要在哪個平台呈現? iPhone, 最好是在戶外呈現 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/222712_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 假設你選定要用這樣的方式呈現, 下一步你就可以利用Keynote來製作囉! </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3292154_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4665976_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6255912_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9471440_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8369029_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/181946_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 在這個過程中, 你應該能夠要先把草圖, 變成實際Keynote的圖片, 例如上面這四張圖, 就是實踐草圖概念後的成果<br /> 之後就把草圖先寄給你們的PM, 設計師, 或是甚至工程師 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1253300_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 讓他們拿在手上感覺一下XDDD 是不是很潮呢<br /> 接下來還有一些步驟, 在Keynote上面還能夠把每一個元件的互動動畫效果都先準備好, <br /> 而你並不需要寫任何一行程式碼, 重點就在於, 你應該盡可能地用一些假元素就把你的概念呈現出來並且測試好效果<br /> 避免在進入實際實作程式時所耗費的巨大資源 </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/10910_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8509993_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 準備好以後, 就把這概念給你們的客戶看看吧! </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1032133_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 在你準備好一切以後, 給你的試用客戶看看, 看他們有什麼想法吧XD </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2100801_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div> <div class="wsite-image wsite-image-border-thin"> <a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8561718_orig.png" alt="图片" /></a>  <div></div> </div> </div>
+<div class="paragraph"> 總結來說, 大家可以上面看一下比較圖, <br /> 這些工具, 其實不僅限於Keynote, 蘋果官方所推出的另一套QuartzCore,<br /> 台灣推出的App POP 還有其他工具, 基本上都是在幫助大家減少進入程式開發時所面臨的到風險<br /> 讓產品實際施工以前就先得到驗證可行性, <br /> Tako在此分享給大家, 希望能對大家有幫助囉!<br /><br /> 這次分享的PPT 可以在WWDC上找到, <br /> 或是可以在這邊<a href="https://mega.co.nz/#!CQNFmQIQ!Ki1ZO3CqvmbI-1nML4XESmLEXhcyn25UEEUesdw7rDA" target="_blank"><strong>點選進行下載</strong></a> </div>
+<div> <div id="836872787170882593" align="left" class="wcustomhtml"> <div id="fb-root"></div><script> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk')); ]]></script><div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466"> <div class="fb-xfbml-parse-ignore"> 由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。 </div> </div> </div> </div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/07\/23\/wwdc-apple-app-x8-2\/";
+        this.page.identifier = "992 http:\/\/www.takobear.tw\/201702608526356260322804024687\/wwdc-apple-app-fake-it-till-you-make-it";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

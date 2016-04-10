@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bear實驗室: 在Xcode上使用OpenCV</title>
+  <meta name="description" content="本週開始的Bear實驗室又要介紹新內容了!這次介紹的主題是如何使用iPhone做視訊串流(Video Streaming)Bear這次要介紹的內容將會以以下主題區分:1. 在Xcode上使用OpenCV, 在Xcode上寫C/C++2. 把電腦WebCam的資料傳輸給iPhone3. 把iPhone現在的影像資料...">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/paginate.css">
+  <link rel="canonical" href="http://www.takobear.tw/2014/01/12/bear-xcodeopencv/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">TAKOBEAR</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/categories/">
+            <i class="fa fa-tags"></i> 分類
+          </a>
+
+          <a class="page-link" href="/feed.xml">
+            <i class="fa fa-rss-square"></i> RSS
+          </a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Bear實驗室: 在Xcode上使用OpenCV</h1>
+    <p class="post-meta"><time datetime="2014-01-12T20:39:11+08:00" itemprop="datePublished">Jan 12, 2014</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7921954_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">本週開始的Bear實驗室又要介紹新內容了!
+這次介紹的主題是如何使用iPhone做視訊串流(Video Streaming)
+Bear這次要介紹的內容將會以以下主題區分:1. 在Xcode上使用OpenCV, 在Xcode上寫C/C++
+2. 把電腦WebCam的資料傳輸給iPhone
+3. 把iPhone現在的影像資料即時傳輸給電腦
+4. 最終階段!!!! 做出一款類似Skype的App!
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph"><strong><span style="color: #f40505; font-size: x-large;">[適用環境]</span></strong>
+<strong>1. Mac OS X 10.8以上</strong>
+<strong>2. Xcode 4.5~4.6 以上 (涵蓋Xcode 5)
+3. Xcode Command Line Tool </strong>
+載點1 [需要Apple developer 帳號]
+<u><a href="https://developer.apple.com/downloads/index.action#" target="_blank">https://developer.apple.com/downloads/index.action#</a></u>
+載點2 [不需要Apple developer帳號]
+<u><a href="https://mega.co.nz/#!mFcBmIYa!UGOWNEARsdBojP9IONKmi3rKR-w21UN_U5z4KUsbgBs" target="_blank">MEGA載點</a></u>
+4. 安裝 <strong>Homebrew</strong>(終端機套件, 安裝如果有問題的人歡迎來信詢問!): <a href="http://brew.sh/" target="_blank"><u>http://brew.sh/</u>  </a>
+
+<strong><span style="color: #f90505; font-size: large;">[安裝步驟]</span></strong>
+1. 到OpenCV官方網站下載 <strong>OpenCV for Linux/Mac</strong>
+<strong>官方網站: </strong><strong><a href="http://opencv.org/downloads.html" target="_blank">http://opencv.org/downloads.html</a></strong></div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2942728_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">2. 下載安裝好的文件到存放的資料夾 (opencv-2.4.4):
+ex: <span style="color: #f60606;">~/Documents/Install</span>
+3. 安裝好Homebrew後 開啓終端機輸入: <strong><span style="color: #f90202;">brew install cmake</span></strong>
+4.   在終端機依次輸入以下指令
+cd  ~/Documents/Install/OpenCV解壓縮後的資料夾
+mkdir release
+cd release
+cmake -G "Unix Makefiles" ..
+make
+sudo make install
+5.    執行完以上指令後就會安裝好OpenCV囉!
+安装好的lib文件存放在“<strong><span style="color: #f90707;">/usr/local/lib</span></strong>”文件夹，h文件存放在“<strong><span style="color: #ef0707;">/usr/local/include</span></strong>”。
+到這邊就在Mac上安裝好OpenCV了!以上內容参考的資料:
+<a href="http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation" target="_blank">http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation</a>
+<a title="" href="http://tilomitra.com/opencv-on-mac-osx/">http://tilomitra.com/opencv-on-mac-osx/</a>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5107189_orig.jpeg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">但是這樣就結束了?
+Bear當然不能這麼混的結束!
+畢竟這篇主題叫做在Xcode上使用OpenCV,
+可想而知這玩意沒有這麼簡單.....</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9798502_orig.jpeg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">使用步驟依照如下!1. 開啓一個Xcode C/C++ 專案[選擇 <span style="color: #f90d0d;"><strong>Command Line Tool</strong></span>]
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8044833_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1732752_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7555850_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">建立一個專案以後, 就是接下來的步驟了!2. 在專案上點右鍵, 選擇 "Add files to ..." (參考下圖)
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/796864_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">3. 視窗彈出來後. 之後按下鍵盤的 Command + shift + g
+(記得要以英打輸入!) 會出現以下畫面</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1819749_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">輸入 <strong>/usr/local/lib</strong>
+會看到以下畫面, 裡面是你用homebrew 安裝的套件
+這邊Bear還有安裝ffmpeg類似的套件噢!
+(<a href="http://www.takobear.weebly.com/12/post/2013/07/ffmpeg-ios-61.html" target="_blank">不知道ffmpeg套件是什麼, 或好奇怎麼安裝的請點這篇連結</a>)</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7137570_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">你需要選擇的套件包含以下所有內容</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9724319_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">4. 理論上你只需要選擇你需要的library, 不過這邊小編想偷懶就全部都加進去啦!
+5. 接下來點到Build Setting =&gt; "Header Search Paths" (如下圖)
+把Header Search Paths 改成/usr/local/include
+把Library Search Paths 改成/usr/local/lib</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3546631_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">有放到cv2.so檔案的, 則是要記得到Build Phases內
+把選項改為optional
+不然會compile失敗!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6156697_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">到這邊安裝就算完成了喔!理論上是如此....
+實際上還是有些小地方要調整的!
+在Xcode 4.6.1以後的版本編譯可能會出現以下錯誤
+
+</div>
+<blockquote><strong>Undefined symbols for architecture x86_64</strong>
+
+“cv::imshow(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;, cv::_InputArray const&amp;)”, referenced from:_main in main1.o
+<span style="color: #f40707;">ld: symbol(s) not found for architecture x86_64</span>
+clang: error: linker command failed with exit code 1 (use -v to see invocation)</blockquote>
+<div class="paragraph">出現以下錯誤當然也有解決辦法啦!
+依照以下步驟設定就能解決了在專案選擇<strong><span style="color: #f50808; font-size: large;">Build Setting</span></strong>
+1. 在"Architectures" 把 "Base SDK" 設定為“Current OS X” (Xcode 5版本的用戶請選擇 Latest OS X )
+2. 在"Apple LLVM 5.0 - Language" 的“C++ Language Dialect”設定為 "Compiler Default"
+3. 在"Apple LLVM 5.0 - Language" 的“C++ Standard Library ”設定為 "<strong><em>libstdc++ (GNU C++ …)"</em></strong>
+參考下圖
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5092714_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3314470_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">到這邊為止就能把安裝設定都完成囉!!完成這邊設定以後, 接下來我們就能在Xcode那編寫有關C++ 嵌入OpenCV的專案了!
+這週稍晚就會進入主題篇了
+
+好奇的版友千萬別錯過!
+
+</div>
+<div></div>
+<div>
+<div id="712485687132237491" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- Takobear 728x90 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="6620496687"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+
+  </div>
+
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http:\/\/www.takobear.tw\/2014\/01\/12\/bear-xcodeopencv\/";
+        this.page.identifier = "654 http:\/\/www.takobear.tw\/201702608526356260322804024687\/xcodeopencv";
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+
+        s.src = '//takobear.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-2">
+        <ul class="contact-list">
+          <li>TAKOBEAR</li>
+          <li><a href="mailto:takobearx@gmail.com">takobearx@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-1 footer-col-right">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/TakoBear">
+  <span class="icon"><i class="fa fa-github fa-fw"></i></span>
+  <span class="username">TakoBear</span>
+</a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/funnytechandnews">
+  <span class="icon"><i class="fa fa-facebook fa-fw"></i></span>
+  <span class="username">funnytechandnews</span>
+</a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-license">
+      2013-2016 TakoBear. All rights reserved.
+    </div>
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
