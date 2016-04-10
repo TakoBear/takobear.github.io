@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[入門] iOS - 什麼是協定(Protocol)與委派(Delegate)?</title>
-  <meta name="description" content="前面小編介紹了已經介紹了 UIView 與 UIButton (前篇: [入門] BEAR實驗室: XCODE製作互動元件 – UIBUTTON)有沒有讀者發現其實兩者很相似，除了按鈕可以點擊之外，兩者幾乎一模一樣今天小編就要教大家自己製作屬於自己的 UIView 做出類似 UIButton 的效果首先我們在要新...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,243 +61,399 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>前面小編介紹了已經介紹了 UIView 與 UIButton (<a href="http://www.takobear.tw/2014/01/12/bear-xcode-uibutton/">前篇: [入門] BEAR實驗室: XCODE製作互動元件 – UIBUTTON</a>)</p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3986631_orig.png" alt="" /></p>
+
+<p>前面小編介紹了已經介紹了 UIView 與 UIButton (<a href="http://www.takobear.tw/2014/01/12/bear-xcode-uibutton/">前篇: [入門] BEAR實驗室: XCODE製作互動元件 – UIBUTTON</a>)</p>
+
 <p>有沒有讀者發現其實兩者很相似，除了按鈕可以點擊之外，兩者幾乎一模一樣</p>
+
 <p>今天小編就要教大家自己製作屬於自己的 UIView 做出類似 UIButton 的效果</p>
-<p><!--more--></p>
+
+<!--more-->
+
 <p>首先我們在要新增一個屬於我們自己的 UIView 從左上角的工具列找出 <code>File -&gt; New -&gt; File…</code></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7126867_orig.png" alt="" /></p>
+
 <p>接著選擇 iOS 中 Cocoa Touch 裡面的 Objective- C class 檔案</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5383703_orig.png" alt="" /></p>
+
 <p>然後我們就可以幫自己的 UIView 命名了</p>
-<p>這裡 Tako 幫自己的 UIView 取名為 "TakoView"</p>
+
+<p>這裡 Tako 幫自己的 UIView 取名為 “TakoView”</p>
+
 <p>繼承(Subclass)的部分我們選擇 UIView</p>
+
 <p>表示我們的 TakoView 尚未編輯時跟 UIView 一模一樣，只有名字不同而已</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6135541_orig.png" alt="" /></p>
+
 <p>建立成功後我們得到一個 <code>TakoView.h</code> 及一個 <code>TakoView.m</code> 檔</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4989385_orig.png" alt="" /></p>
+
 <p>TakoView 暫且先不要動</p>
+
 <p>現在我們回到熟悉的 <code>ViewController.m</code> 裡面</p>
+
 <p>在圖中藍色框框我們引用剛剛建立的 TakoView</p>
-<p><pre><code>#import “TakoView.h”
-<p></p>
+
+<pre><code class="objctivec">#import “TakoView.h”
+</code></pre>
+
 <p>這樣我們才可以在本視圖控制器(ViewController)中建立 TakoView</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2769372_orig.png" alt="" /></p>
+
 <p>在 viewDidLoad 中寫下建立UIView的程式碼   </p>
-<p><pre><code>TakoView *takoview = [[TakoView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
-<p>takoview.backgroundColor = [UIColor redColor];</p>
-<p>[self.view addSubview:takoview];</p>
-<p></p>
+
+<pre><code class="objectivec">TakoView *takoview = [[TakoView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
+takoview.backgroundColor = [UIColor redColor];
+[self.view addSubview:takoview];
+</code></pre>
+
 <p>只是這次我們將 UIView 換成了 TakoView</p>
+
 <p><code>Command + R</code> 執行後</p>
+
 <p>如意料之中的，我們在指定的區域得到一個紅色的方塊</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4530870_orig.png" alt="" /></p>
+
 <p>讀者看到這會不會覺得小編吃飽太閒了</p>
+
 <p>有 UIView 不用，偏偏要弄個這麼麻煩的 TakoView 別急，現在我們開始要來客製化我們的 TakoView 了</p>
+
 <p>首先打開我們的 <code>TakoView.h</code> 檔</p>
+
 <p>我們在裡面宣告一個等會拿來計數的全域整數變數 </p>
-<p><pre><code>int count
-<p></p>
+
+<pre><code class="objctivec">int count
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7199763_orig.png" alt="" /></p>
+
 <p>接著跟著小編在 <code>TakoView.m</code> 中寫入這些程式碼</p>
-<p><pre><code>- (id)initWithFrame:(CGRect)frame
-<p>{</p>
-<p>    self = [super initWithFrame:frame];</p>
-<p>    if (self) { </p>
-<p>        //self 就是 TakoView 本身，條件爲 TakoView 存在時為真，即可執行 if 內容</p>
-<p>        //與 viewDidLoad 相同，只要 TakoView 一建立首先就會執行這塊程式碼</p>
-<p>        count = 0; //幫等下的計數起始為0</p>
-<p>        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];</p>
-<p>        //這裡的坐標是已TakoView本身為坐標軸計算</p>
-<p>        label.text = [NSString stringWithFormat:@"%d",count];</p>
-<p>        label.textColor = [UIColor blackColor];</p>
-<p>        label.textAlignment  = NSTextAlignmentCenter;</p>
-<p>        label.tag = 101;</p>
-<p>        [self addSubview:label];</p>
-<p>    }</p>
-<p>    return self;</p>
-<p>}</p>
-<p></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4658789_orig.png" alt="" /></p>
+
+<pre><code class="objectivec">- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+
+    if (self) { 
+        //self 就是 TakoView 本身，條件爲 TakoView 存在時為真，即可執行 if 內容
+        //與 viewDidLoad 相同，只要 TakoView 一建立首先就會執行這塊程式碼
+
+        count = 0; //幫等下的計數起始為0
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+        //這裡的坐標是已TakoView本身為坐標軸計算
+
+        label.text = [NSString stringWithFormat:@"%d",count];
+        label.textColor = [UIColor blackColor];
+        label.textAlignment  = NSTextAlignmentCenter;
+        label.tag = 101;
+        [self addSubview:label];
+    }
+    return self;
+}
+</code></pre>
+
 <p>接著我們在下面加上一個 UIView 本身就有的實例方法</p>
+
 <p>當 TakoView 本身被觸碰到時會執行</p>
-<p><pre><code>-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-<p>{</p>
-<p>    count++;</p>
-<p>    UILabel *label = (UILabel *)[self viewWithTag:101];</p>
-<p>    label.text = [NSString stringWithFormat:@"%d",count];</p>
-<p>}</p>
-<p></p>
+
+<pre><code class="objective">-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    count++;
+    UILabel *label = (UILabel *)[self viewWithTag:101];
+    label.text = [NSString stringWithFormat:@"%d",count];
+}
+</code></pre>
+
 <p><code>Command + R</code> 試一下結果吧！</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8082911_orig.png" alt="" /></p>
+
 <p>連續觸碰的情況下，數字也跟著增加</p>
+
 <p>是不是跟我們之前建立的UIButton效果一樣呢！ (參考: [[入門] BEAR實驗室: XCODE製作互動元件 – UIBUTTON][iOS Button]</p>
+
 <p>ＰＳ：綠色坐標軸為TakoView中建立元件參考的坐標軸</p>
+
 <p>接下來我們要做的內容更簡單</p>
+
 <p>卻是真正要開始介紹 Protocol 與 Delegate 的觀念!!!!!</p>
+
 <p>協定與委派代理的觀念是 xcode 的精華，但對新手而言卻是難以理解</p>
+
 <p>市面上的書用寫的也很難交代清楚</p>
+
 <p>小編以下將直接用實作介紹 Protocol 與 Delegate 的數種常見用法</p>
+
 <p>現在我們先來訂立目標</p>
+
 <p>我們將要在 ViewController 內輸入參數去控制 TakoView 的 Frame 與 backgroundColor 屬性</p>
+
 <p>咦？！</p>
+
 <p>我們之前不是用 initWithFrame 跟 TakoView.backgroundColor 就可以了嗎？</p>
+
 <p>沒錯，小編要藉由這次的機會教大家蘋果本身是如何設計這些方法的</p>
+
 <p>首先在 <code>TakoView.h</code> 內加入如下程式碼：</p>
-<p><pre><code>@class TakoView;    //本TakoView就是一個類別
-<p>@protocol TakoViewDelegate &lt;NSObject&gt;</p>
-<p>    //protocol就是協定，名稱為 "TakoViewDelegate" 可以自己取名</p>
-<p>    //蘋果本身都是命名為Delegate與DataSource</p>
-<p>    - (UIColor *)setTakoViewColor:(TakoView *)TakoView;</p>
-<p>    - (CGRect)setTakoViewFrame:(TakoView *)TakoView;</p>
-<p>    //協定內的方法在委派的類別(我們的ViewController)內必須具備，某種程度算是防呆裝置</p>
-<p>@end</p>
-<p>@interface TakoView : UIView //我們當初創建時 TakoView 就是選擇繼承自 UIView</p>
-<p>@property(nonatomic) id&lt;TakoViewDelegate&gt; DataSource;</p>
-<p>//ViewController 可藉由 TakoViewDelegate 將自身傳值至 DataSource 然後給 TakoView</p>
-<p>-(void)setTakoViewDataSource;</p>
-<p>//TakoView 內用到的實例方法，宣告後可在 ViewController 內呼叫</p>
-<p>@end</p>
-<p></p>
+
+<pre><code class="objectivec">@class TakoView;    //本TakoView就是一個類別
+
+@protocol TakoViewDelegate &lt;NSObject&gt;
+    //protocol就是協定，名稱為 "TakoViewDelegate" 可以自己取名
+    //蘋果本身都是命名為Delegate與DataSource
+    - (UIColor *)setTakoViewColor:(TakoView *)TakoView;
+
+    - (CGRect)setTakoViewFrame:(TakoView *)TakoView;
+    //協定內的方法在委派的類別(我們的ViewController)內必須具備，某種程度算是防呆裝置
+@end
+
+
+@interface TakoView : UIView //我們當初創建時 TakoView 就是選擇繼承自 UIView
+
+@property(nonatomic) id&lt;TakoViewDelegate&gt; DataSource;
+//ViewController 可藉由 TakoViewDelegate 將自身傳值至 DataSource 然後給 TakoView
+
+-(void)setTakoViewDataSource;
+//TakoView 內用到的實例方法，宣告後可在 ViewController 內呼叫
+
+@end
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9578967_orig.png" alt="" /></p>
+
 <p>接著我們看 <code>TakoView.m</code></p>
+
 <p>initWithFrame 的部分為初始化執行的內容，在此我們不執行任何動作</p>
+
 <p>在下面加入如下程式碼：</p>
-<p><pre><code>-(void)setTakoViewDataSource
-<p>{</p>
-<p>    self.backgroundColor = [_DataSource setTakoViewColor:self];</p>
-<p>    self.frame = [_DataSource setTakoViewFrame:self];</p>
-<p>}</p>
-<p></p>
+
+<pre><code class="objectivec">-(void)setTakoViewDataSource
+{
+    self.backgroundColor = [_DataSource setTakoViewColor:self];
+    self.frame = [_DataSource setTakoViewFrame:self];
+}
+</code></pre>
+
 <p>self 是自己的意思，就是 TakoView 的意思</p>
+
 <p>_DateSource 就是 ViewController 這等下再更詳細介紹</p>
+
 <p>setTakoViewColor 及 Frame 就是剛剛協定 ViewController 必須實作的方法</p>
-<p><pre><code>- (UIColor *)setTakoViewColor:(TakoView *)TakoView;
-<p>- (CGRect)setTakoViewFrame:(TakoView *)TakoView;</p>
-<p></p>
+
+<pre><code class="objectivec">- (UIColor *)setTakoViewColor:(TakoView *)TakoView;
+- (CGRect)setTakoViewFrame:(TakoView *)TakoView;
+</code></pre>
+
 <p>所以這裡就是呼叫 ViewController 中的兩個方法，並給值 TakoView</p>
+
 <p>在我們的範例給的 TakoView 值不會使用到，但有些時候還滿好用的，小編之後再介紹</p>
+
 <p>這兩個方法分別會回傳 UIColor 及 CGRect 兩個屬性給 TakoView 使用</p>
+
 <p>於是我們就得到</p>
-<p><pre><code>self.backgroundColor
-<p>self.frame</p>
-<p></p>
+
+<pre><code class="objectivec">self.backgroundColor
+self.frame
+</code></pre>
+
 <p>用以來設定我們 TakoView 的顏色及大小位置</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5592277_orig.png" alt="" /></p>
+
 <p>最後該是設定我們的 <code>ViewController.m</code> 檔囉</p>
+
 <p>記得一定要 <code>#import "TakoView.h"</code> 要用它就要引用它！！</p>
+
 <p>然後在 @interface ViewController ()  後要加上</p>
-<p><pre><code>&lt;TakoViewDelegate&gt;
-<p></p>
+
+<pre><code class="objectivec">&lt;TakoViewDelegate&gt;
+</code></pre>
+
 <p>表示我們本類別(ViewController)遵守 TakoViewDelegate 這個 protocol 協定</p>
+
 <p>所以我們就必須在下面加上兩個規定的實例方法了</p>
-<p><pre><code>- (UIColor *)setTakoViewColor:(TakoView *)TakoView
-<p>{</p>
-<p>    return [UIColor redColor];  //回傳一個 UIColor</p>
-<p>}</p>
-<p>- (CGRect)setTakoViewFrame:(TakoView *)TakoView;</p>
-<p>{</p>
-<p>    return CGRectMake(100, 100, 100, 100);  //回傳一個 CGRect</p>
-<p>}</p>
-<p></p>
+
+<pre><code class="objectivec">- (UIColor *)setTakoViewColor:(TakoView *)TakoView
+{
+    return [UIColor redColor];  //回傳一個 UIColor
+}
+
+- (CGRect)setTakoViewFrame:(TakoView *)TakoView;
+{
+    return CGRectMake(100, 100, 100, 100);  //回傳一個 CGRect
+}
+</code></pre>
+
 <p>兩方法被 TakoView 呼叫到的話就會回傳屬性</p>
+
 <p>題外話，-(void) 表示回傳空值，換而言之就是不需回傳</p>
+
 <p>然後在 ViewDidLoad 內加入如下程式碼：</p>
-<p><pre><code>TakoView *takoview = [[TakoView alloc]init];
-<p>//建立一個takoview 並不給予任何屬性</p>
-<p>takoview.DataSource = self;</p>
-<p>//將本身(ViewContoller)傳給 DataSource，讓 TakoView 使用</p>
-<p>//但在 TakoView 中會以 _DataSource 使用</p>
-<p>//這是因為synthesize 的關係，現在的xcode會幫我們處理好，小編就不再多談</p>
-<p>[takoview setTakoViewDataSource];</p>
-<p>//呼叫 takoview 內的實例方法，因此 takoview 才會設定本身的顏色及範圍大小</p>
-<p>[self.view addSubview:takoview];</p>
-<p>//最後不要忘記將 takoview 加到畫面上囉</p>
-<p></p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<pre><code class="objectivec">TakoView *takoview = [[TakoView alloc]init];
+//建立一個takoview 並不給予任何屬性
+
+takoview.DataSource = self;
+
+//將本身(ViewContoller)傳給 DataSource，讓 TakoView 使用
+//但在 TakoView 中會以 _DataSource 使用
+//這是因為synthesize 的關係，現在的xcode會幫我們處理好，小編就不再多談
+
+[takoview setTakoViewDataSource];
+
+//呼叫 takoview 內的實例方法，因此 takoview 才會設定本身的顏色及範圍大小
+
+[self.view addSubview:takoview];
+
+//最後不要忘記將 takoview 加到畫面上囉
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1010608_orig.png" alt="" /></p>
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>這邊的邏輯如下：</p>
-<p><ol>
-<p><li>ViewController 建立了一個毫無屬性的 TakoView 名字為 takoview</li></p>
-<p><li>把 ViewController 的值傳給 takoview內的DataSource</li></p>
-<p><li>呼叫 takoview 裡面的 setTakoViewDataSource方法</li></p>
-<p><li>該方法呼叫 ViewController 內的 setTakoViewColor 及 setTakoViewFrame 方法並藉由兩方法回傳的數值設定takoview本身的屬性</li></p>
-<p><li>將 takoview 加到畫面上</li></p>
-<p></p>
+
+<ol>
+<li>ViewController 建立了一個毫無屬性的 TakoView 名字為 takoview</li>
+<li>把 ViewController 的值傳給 takoview內的DataSource</li>
+<li>呼叫 takoview 裡面的 setTakoViewDataSource方法</li>
+<li>該方法呼叫 ViewController 內的 setTakoViewColor 及 setTakoViewFrame 方法並藉由兩方法回傳的數值設定takoview本身的屬性</li>
+<li>將 takoview 加到畫面上</li>
+</ol>
+
 <p>到這裡讀者們不知道有沒有對 Protocol 及 Delegate 有一點點感覺了呢？</p>
+
 <p>其實這就是 openSource 的概念，別人做好的程式碼，我們可以藉由 Delegate 去設定數值或執行 protocol 規定的方法來使用</p>
+
 <p>最常使用到委派與協定的設計不外乎這兩點</p>
-<p><ol>
-<p><li>傳值</li></p>
-<p><li>做成可以 re-use 的 library</li></p>
-<p></p>
+
+<ol>
+<li>傳值</li>
+<li>做成可以 re-use 的 library</li>
+</ol>
+
 <p>當然我們的 TakoView 也可以重複使用</p>
+
 <p>在 <code>ViewController.m</code> 中</p>
+
 <p>宣告全域變數</p>
-<p><pre><code>@interface ViewController ()&lt;TakoViewDelegate&gt;
-<p>{</p>
-<p>    TakoView *takoviewRed;</p>
-<p>    TakoView *takoviewYellow;</p>
-<p>    //宣告兩個TakoView</p>
-<p>}</p>
-<p>@end</p>
-<p></p>
+
+<pre><code class="objectivec">@interface ViewController ()&lt;TakoViewDelegate&gt;
+{
+    TakoView *takoviewRed;
+    TakoView *takoviewYellow;
+    //宣告兩個TakoView
+}
+@end
+</code></pre>
+
 <p>ViewDidLoad 中建立兩個 TakoView</p>
+
 <p>記得兩個是獨立的，皆需給予 DataSource</p>
-<p><pre><code>- (void)viewDidLoad
-<p>{</p>
-<p>    [super viewDidLoad];</p>
-<p>    takoviewRed = [[TakoView alloc]init];</p>
-<p>    takoviewRed.DataSource = self;</p>
-<p>    [takoviewRed setTakoViewDataSource];</p>
-<p>    [self.view addSubview:takoviewRed];</p>
-<p>    takoviewYellow = [[TakoView alloc]init];</p>
-<p>    takoviewYellow.DataSource = self;</p>
-<p>    [takoviewYellow setTakoViewDataSource];</p>
-<p>    [self.view addSubview:takoviewYellow];</p>
-<p>}</p>
-<p></p>
+
+<pre><code class="objectivec">- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    takoviewRed = [[TakoView alloc]init];
+    takoviewRed.DataSource = self;
+    [takoviewRed setTakoViewDataSource];
+    [self.view addSubview:takoviewRed];
+
+    takoviewYellow = [[TakoView alloc]init];
+    takoviewYellow.DataSource = self;
+    [takoviewYellow setTakoViewDataSource];
+    [self.view addSubview:takoviewYellow];
+}
+</code></pre>
+
 <p>當初建立的(TakoView *)TakoView 有用武之地的</p>
+
 <p>藉由 if 判斷式我們可以知道哪個 takoview 要回傳哪個數值</p>
+
 <p>雖然我們只要兩個 if 就可以成立，但是程式碼並不知 道</p>
+
 <p>所以 if 之外記得也要設立一個值回傳，compile 才能成功</p>
-<p><pre><code>- (UIColor *)setTakoViewColor:(TakoView *)TakoView
-<p>{</p>
-<p>    if (TakoView == takoviewRed) {</p>
-<p>        return [UIColor redColor];</p>
-<p>    }</p>
-<p>    else if (TakoView == takoviewYellow) {</p>
-<p>        return [UIColor yellowColor];</p>
-<p>    }</p>
-<p>    return nil;</p>
-<p>}</p>
-<p>- (CGRect)setTakoViewFrame:(TakoView *)TakoView;</p>
-<p>{</p>
-<p>    if (TakoView == takoviewRed) {</p>
-<p>        return CGRectMake(100, 100, 100, 100);</p>
-<p>    }</p>
-<p>    return nil;</p>
-<p>}</p>
-<p></p>
+
+<pre><code class="objectivec">- (UIColor *)setTakoViewColor:(TakoView *)TakoView
+{
+    if (TakoView == takoviewRed) {
+        return [UIColor redColor];
+    }
+    else if (TakoView == takoviewYellow) {
+        return [UIColor yellowColor];
+    }
+    return nil;
+}
+
+- (CGRect)setTakoViewFrame:(TakoView *)TakoView;
+{
+    if (TakoView == takoviewRed) {
+        return CGRectMake(100, 100, 100, 100);
+    }
+    return nil;
+}
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1643606_orig.png" alt="" /></p>
+
 <p>大功告成！！我們得到一上一下，一紅一黃的 TakoView 了！！</p>
+
 <p>這是個簡單的範例，小編也介紹不需要Delegate的簡單傳值方法</p>
+
 <p><code>TakoView.h</code>檔內改寫為</p>
-<p><pre><code>@interface TakoView : UIView
-<p>    -(void)setTakoView:(TakoView*)TakoView BackgroundColor:(UIColor*)color;</p>
-<p>    -(void)setTakoView:(TakoView *)TakoView Frame:(CGRect)rect;</p>
-<p>@end</p>
-<p></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5729921_orig.png" alt="" /></p>
+
+<pre><code class="objectivec">@interface TakoView : UIView
+    -(void)setTakoView:(TakoView*)TakoView BackgroundColor:(UIColor*)color;
+    -(void)setTakoView:(TakoView *)TakoView Frame:(CGRect)rect;
+@end
+</code></pre>
+
 <p>其他都不需要，包含 protocol 也拿掉</p>
+
 <p><code>TakoView.m</code>內 initWithFrame 我們一樣不寫任何東西</p>
+
 <p>下面兩個方法改寫為</p>
-<p><pre><code>-(void)setTakoView:(TakoView*)TakoView BackgroundColor:(UIColor*)color
-<p>{</p>
-<p>    self.backgroundColor = color;</p>
-<p>}</p>
-<p>-(void)setTakoView:(TakoView *)TakoView Frame:(CGRect)rect</p>
-<p>{</p>
-<p>    self.frame = rect;</p>
-<p>}</p>
-<p></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/990705_orig.png" alt="" /></p>
+
+<pre><code class="objectivec">-(void)setTakoView:(TakoView*)TakoView BackgroundColor:(UIColor*)color
+{
+    self.backgroundColor = color;
+}
+
+-(void)setTakoView:(TakoView *)TakoView Frame:(CGRect)rect
+{
+    self.frame = rect;
+}
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3055224_orig.png" alt="" /></p>
+
 <p>ViewController 內依然要 <code>#import "TakoView"</code> 但不需要 DelegateViewDidLoad 內程式碼：</p>
-<p><pre><code>TakoView* takoview = [[TakoView alloc]init];
-<p>[takoview setTakoView:takoview BackgroundColor:[UIColor yellowColor]];</p>
-<p>[takoview setTakoView:takoview Frame:CGRectMake(100, 100, 100, 100)];</p>
-<p>[self.view addSubview:takoview];</p>
-<p></p>
+
+<pre><code class="objectivec">TakoView* takoview = [[TakoView alloc]init];
+[takoview setTakoView:takoview BackgroundColor:[UIColor yellowColor]];
+[takoview setTakoView:takoview Frame:CGRectMake(100, 100, 100, 100)];
+[self.view addSubview:takoview];
+</code></pre>
+
 <p>是不是又更了解xcode內的程式碼是如何運作的了呢！</p>
+
 <p>喜歡這篇文章嗎? 加入Takobear粉絲團吧!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></ol></p></ol></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 

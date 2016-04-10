@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[Opensource] OpenCV SURF detector-應用篇</title>
-  <meta name="description" content="Visualize SURF Detector前面已經介紹了一些利用OpenCV不同的應用, 在這邊我們要介紹的是SURF的一些應用 (理論的部分 之後會再補上)在這邊我們介紹兩個利用SURF這個特徵(feature)的應用1. 利用一張影像 來搜尋其他更多的類似影像2. 如何作出全景圖首先介紹 如何使用SURF...">
+  <meta name="description" content="Visualize SURF Detector前面已經介紹了一些利用OpenCV不同的應用, 在這邊我們要介紹的是SURF的一些應用 (理論的部分 之後會再補上)在這邊我們介紹兩個利用SURF這個特徵(feature)的應用1. 利用一張影像 來搜尋其他更多的類似影像2. 如何作出全景圖">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,82 +61,92 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1393483999.jpg" alt="图片" /></a>
-<p><div>Visualize SURF Detector</div></p>
-<p></p>
-<p></p>
-<p><div>前面已經介紹了一些利用OpenCV不同的應用, 在這邊我們要介紹的是SURF的一些應用 (理論的部分 之後會再補上)</div></p>
-<p><div>在這邊我們介紹兩個利用SURF這個特徵(feature)的應用1. 利用一張影像 來搜尋其他更多的類似影像
-<p>2. 如何作出全景圖</p>
-<p></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="902712392672575794" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>首先介紹 如何使用SURF detector
-<p>基本步驟就是 1. 找到關鍵點(keypoint) 2. 計算敘述子(descriptor) 3. 比較不同影像的feature來做match第一個例子 我們就介紹怎樣找到keypoint接下來把它顯示在畫面上</p>
-<p>我們利用OpenCV內建的 SurfFeatureDetector 宣告一個來找尋關鍵點的class 我們用surf來代表</p>
-<p>constructor內是代表min Hessian 詳細的 我們會在其他文章內做解釋</p>
-<p>surf.detect就是進行找關鍵點的動作 我們利用可口可樂的Logo來做例子</p>
-<p></p>
-<p><div>
-<p><div id="904729206132347146" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8791035.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>第一個例子中 我們可以得到他的這些keypoint 接下來我們要用這個logo來找尋在另外一張影像中的可樂瓶利用上面 找到的這些keypoint怎樣找到 接著 我們利用
-<p>SurfDescriptorExtractor這個class來進行擷取descriptor的動作</p>
-<p>利用其底下的compute這個member function我們就可以得到在每個keypoint的descriptor</p>
-<p>接下來 我們就是要對兩張不同的影像來做match並將其框雷同的地方框選出來</p>
-<p>Match的話我們則是利用FlannBasedMatcher來做一個比較兩個descriptor</p>
-<p>Flann 是 Fast Approximate Nearest Neighbor 基本上就是找到最相似的descriptor</p>
-<p>然後我們去計算這些找到的點 去比較彼此的距離 我們只採用距離在三個最小距離內的這些feature point</p>
-<p>找到好的match points之後 我們利用Homography以及perspectiveTransformation去做找到對應在新影像的點</p>
-<p>並用line這個function標示出來</p>
-<p></p>
-<p><div>
-<p><div id="348537002650777273" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9032918_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>雖然結果有不是很完美(大概是因為曲面的關係) 但是大致上還是可以抓到一些重要的特徵接著我們介紹如何利用相同的方法做全景圖 基本上的步驟都是一樣的
-<p>只是最後我們是用warpPerspective來結合兩張影像</p>
-<p></p>
-<p><div>
-<p><div id="861763115129245576" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1395377494.png" alt="图片" /></a>
-<p><div>images from reference 2.</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9488165_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>參考資料:
-<p>1. http://www.chrisevansdev.com/computer-vision-opensurf.html</p>
-<p>2. http://ramsrigoutham.com/2012/11/22/panorama-image-stitching-in-opencv/</p>
-<p><div>喜歡這篇文章嗎 趕快加入我們</div></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1393483999.jpg" alt="图片" /></a>
+<div>Visualize SURF Detector</div>
+</div>
+</div>
+<div class="paragraph">前面已經介紹了一些利用OpenCV不同的應用, 在這邊我們要介紹的是SURF的一些應用 (理論的部分 之後會再補上)</div>
+<div class="paragraph">在這邊我們介紹兩個利用SURF這個特徵(feature)的應用1. 利用一張影像 來搜尋其他更多的類似影像
+2. 如何作出全景圖
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="902712392672575794" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">首先介紹 如何使用SURF detector
+基本步驟就是 1. 找到關鍵點(keypoint) 2. 計算敘述子(descriptor) 3. 比較不同影像的feature來做match第一個例子 我們就介紹怎樣找到keypoint接下來把它顯示在畫面上
+我們利用OpenCV內建的 SurfFeatureDetector 宣告一個來找尋關鍵點的class 我們用surf來代表
+constructor內是代表min Hessian 詳細的 我們會在其他文章內做解釋
+surf.detect就是進行找關鍵點的動作 我們利用可口可樂的Logo來做例子
+
+</div>
+<div>
+<div id="904729206132347146" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8791035.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">第一個例子中 我們可以得到他的這些keypoint 接下來我們要用這個logo來找尋在另外一張影像中的可樂瓶利用上面 找到的這些keypoint怎樣找到 接著 我們利用
+SurfDescriptorExtractor這個class來進行擷取descriptor的動作
+利用其底下的compute這個member function我們就可以得到在每個keypoint的descriptor
+接下來 我們就是要對兩張不同的影像來做match並將其框雷同的地方框選出來
+
+Match的話我們則是利用FlannBasedMatcher來做一個比較兩個descriptor
+Flann 是 Fast Approximate Nearest Neighbor 基本上就是找到最相似的descriptor
+然後我們去計算這些找到的點 去比較彼此的距離 我們只採用距離在三個最小距離內的這些feature point
+
+找到好的match points之後 我們利用Homography以及perspectiveTransformation去做找到對應在新影像的點
+並用line這個function標示出來
+
+</div>
+<div>
+<div id="348537002650777273" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9032918_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">雖然結果有不是很完美(大概是因為曲面的關係) 但是大致上還是可以抓到一些重要的特徵接著我們介紹如何利用相同的方法做全景圖 基本上的步驟都是一樣的
+只是最後我們是用warpPerspective來結合兩張影像
+
+</div>
+<div>
+<div id="861763115129245576" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1395377494.png" alt="图片" /></a>
+<div>images from reference 2.</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9488165_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">參考資料:
+1. http://www.chrisevansdev.com/computer-vision-opensurf.html
+2. http://ramsrigoutham.com/2012/11/22/panorama-image-stitching-in-opencv/</div>
+<div class="paragraph">喜歡這篇文章嗎 趕快加入我們</div>
+<div></div>
 
   </div>
 

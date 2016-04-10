@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>OSX APP 教學 Part3-NSFormatter</title>
-  <meta name="description" content="本次教學目標：修改 上次教學Part2 的計時器程式碼了解 NSTextField 與 NSTextFieldCell 的關係了解 NSFormatter 與其子類別的用法操作環境：OS X Version 10.9.1Xcode Version 5.0.2 (5A3005)在上回教學的後續討論提到我們讓 Mai...">
+  <meta name="description" content="本次教學目標：修改 上次教學Part2 的計時器程式碼了解 NSTextField 與 NSTextFieldCell 的關係了解 NSFormatter 與其子類別的用法操作環境：OS X Version 10.9.1Xcode Version 5.0.2 (5A3005)">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,165 +61,185 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8956217_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>本次教學目標：
-<p>修改 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">上次教學Part2</a> 的計時器程式碼</p>
-<p>了解 NSTextField 與 NSTextFieldCell 的關係</p>
-<p>了解 NSFormatter 與其子類別的用法</p>
-<p>操作環境：</p>
-<p>OS X Version 10.9.1</p>
-<p>Xcode Version 5.0.2 (5A3005)</p>
-<p>在上回教學的後續討論提到我們讓 MainWindowController 做太多事情了，這一次我們將顯示文字的細節部分移交出去，讓 MainWindowController 只負責指示何時更新繪圖。</p>
-<p></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><h2><strong>建立 OS X Application 專案</strong></h2></p>
-<p><div>本次延續使用<a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">上次教學Part2</a>的專案，不再額外新建。
-<p></p>
-<p><h2><strong>NSTextField 與 NSTextFieldCell 的關係</strong></h2></p>
-<p><div>在這邊 Bear 先講講 NSTextField 與 NSTextFieldCell。</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7684854_orig.png" alt="图片" /></a>
-<p><div>在之前的教學中我們都有從 Object library 中拖拉名為 Label 的元件。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3860763_orig.png" alt="图片" /></a>
-<p><div>但是當拖曳到設計視窗後，卻發現變成了包著 TextFieldCell 的 TextField。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2076806_orig.png" alt="图片" /></a>
-<p><div>我們可以先換到 Identity inspector 頁面，看到 TextField 對應的類別是 NSTextField。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9703377_orig.png" alt="图片" /></a>
-<p><div>TextFieldCell 對應的類別是 NSTextFieldCell。</div></p>
-<p></p>
-<p></p>
-<p><div>NSTextFieldCell 繼承了 NSCell 類別，主要負責是處理文字與背景的繪圖。
-<p>NSTextField 繼承了 NSControl 類別，主要負責互動，也提供了與 NSTextFieldCell 相同的介面，可以透過 NSTextField 設定 NSTextFieldCell。</p>
-<p>簡單來說，如果需要自訂點擊事件，就是要繼承 NSTextField 實作，而自訂顯示繪圖就是繼承 NSTextFieldCell 實作。</p>
-<p>而本次教學是要講自訂顯示字串格式的部分。</p>
-<p></p>
-<p><h2><strong>新增類別</strong></h2></p>
-<p><div>接下來要新增一個繼承 NSTextFieldCell 的類別，並將設計視窗中的 Text Field Cell的類別改成我們自訂的類別。
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7349233_orig.png" alt="图片" /></a>
-<p><div>對 HelloTimer Group 點擊右鍵，點擊 New Group，建立新的 Group 用來放置新建的類別。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1013217_orig.png" alt="图片" /></a>
-<p><div>取名為 Models。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8500676_orig.png" alt="图片" /></a>
-<p><div>對 Models Group 點擊右鍵，點擊 New File…。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3799009_orig.png" alt="图片" /></a>
-<p><div>於左側選單選擇 OS X 下的 Cocoa，在右側選單選擇 Objective-C class，點擊 Next。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4074548_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>Class 欄位輸入：TimerTextFieldCell
-<p>Subclass of 欄位輸入：NSTextFieldCell</p>
-<p>輸入完成後點擊 Next。</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2064560_orig.png" alt="图片" /></a>
-<p><div>點擊 Create。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6549623_orig.png" alt="图片" /></a>
-<p><div>產生 TimerTextFieldCell.h/.m 兩個檔案。</div></p>
-<p></p>
-<p></p>
-<p><h2><strong>編寫邏輯</strong></h2></p>
-<p><div>這次教學中我們提到我們要將格式化的部分移到 TimerTextFieldCell 處理。</div></p>
-<p><div>
-<p><div id="150341971829765816" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>說到格式化就會講到有個用來處理字串格式化叫做 NSFormatter 的類別，它的主要方法為 stringForObjectValue:，藉由判斷傳進來參數的類別，而產生不同對應的格式化字串回傳。</div></p>
-<p><div>
-<p><div id="106620012911545137" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>本次教學是需要將 NSDate 格式化成字串，剛好有個 NSDateFormatter 的類別專門用來將 NSDate 格式化成字串。
-<p>TextFieldCell 可以透過 setFormatter: 來設定 NSFormatter 類別的物件，以下便是相關的程式碼：</p>
-<p><div>
-<p><div id="523274611294975932" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>再來是修改 MainWindowController 的 update 方法：</div></p>
-<p><div>
-<p><div id="287853998299593529" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><h2><strong>連接元件</strong></h2></p>
-<p><div>接下來我們修改版面上 TextFieldCell 的類別：</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2751240_orig.png" alt="图片" /></a>
-<p><div>選擇 MainWindowController.m，在設計視窗中選擇 Text Field Cell。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1923519_orig.png" alt="图片" /></a>
-<p><div>在右方選單換到 Identity inspector 頁面，修改類別為 TimerTextFieldCell。</div></p>
-<p></p>
-<p></p>
-<p><h2><strong>測試結果</strong></h2></p>
-<p><div>接下來測試一下完成的程式。
-<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
-<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
-<p>照理說執行結果會跟上篇教學一樣。</p>
-<p><h2><strong>後續討論</strong></h2></p>
-<p><div>如果想自己實作 NSFormatter 的子類別，依本次教學的需求，以下寫個 TimerFormatter 的範例。新建繼承 NSFormatter 的類別叫做 TimerFormatter，並在 TimerFormatter.m 中覆寫 stringForObjectValue: 方法：</div></p>
-<p><div>
-<p><div id="437593060273028740" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>修改 TimerTextFieldCell.m</div></p>
-<p><div>
-<p><div id="271491125235979126" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>存檔後，按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
-<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
-<p>也會得到相同的執行結果。</p>
-<p>關於這次的Sample Code 下載：</p>
-<p><a title="" href="https://github.com/TakoBear/OSXHelloTimer2" target="_blank">https://github.com/TakoBear/OSXHelloTimer2</a></p>
-<p><div>
-<p><div id="361688043386078063" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><h2><strong>參考</strong></h2></p>
-<p><div><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/applicationkit/classes/NSTextField_Class/Reference/Reference.html" target="_blank">NSTextField Class Reference</a>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/applicationkit/classes/NSTextFieldCell_Class/Reference/Reference.html" target="_blank">NSTextFieldCell Class Reference</a></p>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/foundation/classes/NSFormatter_Class/Reference/Reference.html" target="_blank">NSFormatter Class Reference</a></p>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSDateFormatter_Class/Reference/Reference.html" target="_blank">NSDateFormatter Class Reference</a>喜歡這篇文章嗎? 更多Mac教學請<a href="http://www.takobear.weebly.com/12/post/2014/03/bear-mac1.html" target="_blank">點此處前往</a></p>
-<p>Takobear粉絲人數突破1500人!! 更多有趣消息請加入Takobear粉絲團喔!</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8956217_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">本次教學目標：
+修改 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank"><span style="font-size: small;">上次教學Part2</span></a> 的計時器程式碼
+了解 NSTextField 與 NSTextFieldCell 的關係
+了解 NSFormatter 與其子類別的用法
+操作環境：
+OS X Version 10.9.1
+Xcode Version 5.0.2 (5A3005)
+
+在上回教學的後續討論提到我們讓 MainWindowController 做太多事情了，這一次我們將顯示文字的細節部分移交出去，讓 MainWindowController 只負責指示何時更新繪圖。
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<h2 class="wsite-content-title"><strong>建立 OS X Application 專案</strong></h2>
+<div class="paragraph">本次延續使用<a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">上次教學Part2</a>的專案，不再額外新建。
+
+</div>
+<h2 class="wsite-content-title"><strong>NSTextField 與 NSTextFieldCell 的關係</strong></h2>
+<div class="paragraph">在這邊 Bear 先講講 NSTextField 與 NSTextFieldCell。</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7684854_orig.png" alt="图片" /></a>
+<div>在之前的教學中我們都有從 Object library 中拖拉名為 Label 的元件。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3860763_orig.png" alt="图片" /></a>
+<div>但是當拖曳到設計視窗後，卻發現變成了包著 TextFieldCell 的 TextField。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2076806_orig.png" alt="图片" /></a>
+<div>我們可以先換到 Identity inspector 頁面，看到 TextField 對應的類別是 NSTextField。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9703377_orig.png" alt="图片" /></a>
+<div>TextFieldCell 對應的類別是 NSTextFieldCell。</div>
+</div>
+</div>
+<div class="paragraph">NSTextFieldCell 繼承了 NSCell 類別，主要負責是處理文字與背景的繪圖。
+NSTextField 繼承了 NSControl 類別，主要負責互動，也提供了與 NSTextFieldCell 相同的介面，可以透過 NSTextField 設定 NSTextFieldCell。
+
+簡單來說，如果需要自訂點擊事件，就是要繼承 NSTextField 實作，而自訂顯示繪圖就是繼承 NSTextFieldCell 實作。
+
+而本次教學是要講自訂顯示字串格式的部分。
+
+</div>
+<h2 class="wsite-content-title"><strong>新增類別</strong></h2>
+<div class="paragraph">接下來要新增一個繼承 NSTextFieldCell 的類別，並將設計視窗中的 Text Field Cell的類別改成我們自訂的類別。
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7349233_orig.png" alt="图片" /></a>
+<div>對 HelloTimer Group 點擊右鍵，點擊 New Group，建立新的 Group 用來放置新建的類別。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1013217_orig.png" alt="图片" /></a>
+<div>取名為 Models。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8500676_orig.png" alt="图片" /></a>
+<div>對 Models Group 點擊右鍵，點擊 New File…。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3799009_orig.png" alt="图片" /></a>
+<div>於左側選單選擇 OS X 下的 Cocoa，在右側選單選擇 Objective-C class，點擊 Next。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4074548_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">Class 欄位輸入：TimerTextFieldCell
+Subclass of 欄位輸入：NSTextFieldCell
+輸入完成後點擊 Next。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2064560_orig.png" alt="图片" /></a>
+<div>點擊 Create。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6549623_orig.png" alt="图片" /></a>
+<div>產生 TimerTextFieldCell.h/.m 兩個檔案。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>編寫邏輯</strong></h2>
+<div class="paragraph">這次教學中我們提到我們要將格式化的部分移到 TimerTextFieldCell 處理。</div>
+<div>
+<div id="150341971829765816" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">說到格式化就會講到有個用來處理字串格式化叫做 NSFormatter 的類別，它的主要方法為 stringForObjectValue:，藉由判斷傳進來參數的類別，而產生不同對應的格式化字串回傳。</div>
+<div>
+<div id="106620012911545137" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">本次教學是需要將 NSDate 格式化成字串，剛好有個 NSDateFormatter 的類別專門用來將 NSDate 格式化成字串。
+
+TextFieldCell 可以透過 setFormatter: 來設定 NSFormatter 類別的物件，以下便是相關的程式碼：</div>
+<div>
+<div id="523274611294975932" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">再來是修改 MainWindowController 的 update 方法：</div>
+<div>
+<div id="287853998299593529" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>連接元件</strong></h2>
+<div class="paragraph">接下來我們修改版面上 TextFieldCell 的類別：</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2751240_orig.png" alt="图片" /></a>
+<div>選擇 MainWindowController.m，在設計視窗中選擇 Text Field Cell。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1923519_orig.png" alt="图片" /></a>
+<div>在右方選單換到 Identity inspector 頁面，修改類別為 TimerTextFieldCell。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>測試結果</strong></h2>
+<div class="paragraph">接下來測試一下完成的程式。
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。
+
+照理說執行結果會跟上篇教學一樣。</div>
+<h2 class="wsite-content-title"><strong>後續討論</strong></h2>
+<div class="paragraph">如果想自己實作 NSFormatter 的子類別，依本次教學的需求，以下寫個 TimerFormatter 的範例。新建繼承 NSFormatter 的類別叫做 TimerFormatter，並在 TimerFormatter.m 中覆寫 stringForObjectValue: 方法：</div>
+<div>
+<div id="437593060273028740" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">修改 TimerTextFieldCell.m</div>
+<div>
+<div id="271491125235979126" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">存檔後，按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。
+
+也會得到相同的執行結果。
+
+關於這次的Sample Code 下載：
+<a title="" href="https://github.com/TakoBear/OSXHelloTimer2" target="_blank">https://github.com/TakoBear/OSXHelloTimer2</a></div>
+<div>
+<div id="361688043386078063" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>參考</strong></h2>
+<div class="paragraph"><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/applicationkit/classes/NSTextField_Class/Reference/Reference.html" target="_blank">NSTextField Class Reference</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/applicationkit/classes/NSTextFieldCell_Class/Reference/Reference.html" target="_blank">NSTextFieldCell Class Reference</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/foundation/classes/NSFormatter_Class/Reference/Reference.html" target="_blank">NSFormatter Class Reference</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSDateFormatter_Class/Reference/Reference.html" target="_blank">NSDateFormatter Class Reference</a>喜歡這篇文章嗎? 更多Mac教學請<a href="http://www.takobear.weebly.com/12/post/2014/03/bear-mac1.html" target="_blank">點此處前往</a>
+
+Takobear粉絲人數突破1500人!! 更多有趣消息請加入Takobear粉絲團喔!
+
+</div>
+<div></div>
 
   </div>
 

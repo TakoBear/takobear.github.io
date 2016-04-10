@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[iOS 8] 從Objective-C到Swift : 你的第一支Swift程式 - 如何在Swift使用UIView? </title>
-  <meta name="description" content="隨著蘋果的推陳出新Swift成為潮流的趨勢顯然銳不可擋，Bear 這次也來跟風介紹一下大家可以如何開始從Objective-C 轉換到Swift上!要進行這次教學前, 大家得先到Apple Developer 網站上下載Xcode 6 beta版本點選前往開發者下載載點註: 本系列教學適用於從原本已學會Objec...">
+  <meta name="description" content="隨著蘋果的推陳出新Swift成為潮流的趨勢顯然銳不可擋，Bear 這次也來跟風介紹一下大家可以如何開始從Objective-C 轉換到Swift上!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,97 +61,101 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3956765_orig.jpeg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>隨著蘋果的推陳出新Swift成為潮流的趨勢顯然銳不可擋，
-<p>Bear 這次也來跟風介紹一下大家可以如何開始從Objective-C 轉換到Swift上!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="509998952987589861" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>要進行這次教學前, 大家得先到Apple Developer 網站上下載Xcode 6 beta版本
-<p><strong><a title="" href="https://developer.apple.com/devcenter/ios/index.action" target="_blank">點選前往開發者下載載點</a></strong>註: 本系列教學適用於從原本已學會Objective-c的使用者想要轉換學習Swift上, 已假設對於objective-c有一定認識</p>
-<p>有關基礎知識可參考本站<a href="http://www.takobear.weebly.com/201702608526356260322804024687/bear-ios" target="_blank"><strong>iOS系列教學入口網頁</strong></a></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5502801_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>安裝好Xcode 6以後,
-<p>首先我們開啟一個single view的新專案，這裡都跟以前Xcode 5 一樣 (參考: <strong><a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/-bear-xcode-5-ios" target="_blank">如何建立第一支Xcode專案?)</a></strong></p>
-<p>或是依照下圖步驟也能新增喔</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/568637_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3144948_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>最後一步則要記得將語言選取Swift!!!!</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2844905_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>建好後的專案跟objective-c完全一樣，會得到一個AppDelegate跟ViewController的swift檔
-<p>現在就沒有分.m或是.h了，而下圖我們就直接實作一個UIView當範例</p>
-<p><div>
-<p><div id="390550035499711991" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>Swift的宣告都是用<strong>var</strong> (可變)或 <strong>let</strong> (固定)，而冒號後面則是該變數(或是物件)的形態等號後面則是init 該物件，view的屬性設定跟obj-c類似，
-<p>而Swift把obj-c的中括號概念捨棄，改成用點符號呼叫, 例如UIColor.redColor()及addSubview都是</p>
-<p>這點就跟主流的java或是C#的運算符號相同</p>
-<p>算是方便從其他領域轉過來的開發者入手吧!</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5563707_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>大家可以看得出來, 這邊function的命名基本上還是跟以前Objective-C時期沒有什麼差別,
-<p>一樣是有基本的viewDidLoad, didRecevieMemoryWarning架構,</p>
-<p>大概對於Objective-C的人來說, 只需要知道物件宣告上的差異,</p>
-<p>沒有記憶體回收的問題等幾點事項, 其他部分均與以前開發iOS大同小異</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9106164_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>值得一提的是, 在XCode6 beta中,
-<p>如果最上面的<strong>註解內有中文</strong>的話，將會失去自動補完的功能(AutoComplete)，</p>
-<p>大家都知道這有多痛苦吧！所以記得將中文名字或是2014“年”去掉</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8740424_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>最後附上精美的結果圖呈現！如果沒有iOS 8的Device的話，可以使用simulator模擬器也可以！</div></p>
-<p><div>
-<p><div id="482233608220819842" align="left">
-<p><div id="fb-root"></div></p>
-<p><script>// < ![CDATA[</p>
-<p> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>// ]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
-<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div></p>
-<p></p>
-<p></p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3956765_orig.jpeg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">隨著蘋果的推陳出新Swift成為潮流的趨勢顯然銳不可擋，
+Bear 這次也來跟風介紹一下大家可以如何開始從Objective-C 轉換到Swift上!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="509998952987589861" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">要進行這次教學前, 大家得先到Apple Developer 網站上下載Xcode 6 beta版本
+<strong><span style="font-size: large;"><a title="" href="https://developer.apple.com/devcenter/ios/index.action" target="_blank">點選前往開發者下載載點</a></span></strong>註: 本系列教學適用於從原本已學會Objective-c的使用者想要轉換學習Swift上, 已假設對於objective-c有一定認識
+有關基礎知識可參考本站<a href="http://www.takobear.weebly.com/201702608526356260322804024687/bear-ios" target="_blank"><strong>iOS系列教學入口網頁</strong></a>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5502801_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">安裝好Xcode 6以後,
+首先我們開啟一個single view的新專案，這裡都跟以前Xcode 5 一樣 (參考: <strong><a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/-bear-xcode-5-ios" target="_blank">如何建立第一支Xcode專案?)</a></strong>
+或是依照下圖步驟也能新增喔</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/568637_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3144948_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">最後一步則要記得將語言選取Swift!!!!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2844905_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">建好後的專案跟objective-c完全一樣，會得到一個AppDelegate跟ViewController的swift檔
+現在就沒有分.m或是.h了，而下圖我們就直接實作一個UIView當範例</div>
+<div>
+<div id="390550035499711991" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">Swift的宣告都是用<strong><span style="color: #f00303;">var</span></strong> (可變)或 <strong><span style="color: #f90606;">let</span></strong> (固定)，而冒號後面則是該變數(或是物件)的形態等號後面則是init 該物件，view的屬性設定跟obj-c類似，
+而Swift把obj-c的中括號概念捨棄，改成用點符號呼叫, 例如UIColor.redColor()及addSubview都是
+這點就跟主流的java或是C#的運算符號相同
+算是方便從其他領域轉過來的開發者入手吧!
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5563707_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">大家可以看得出來, 這邊function的命名基本上還是跟以前Objective-C時期沒有什麼差別,
+一樣是有基本的viewDidLoad, didRecevieMemoryWarning架構,
+大概對於Objective-C的人來說, 只需要知道物件宣告上的差異,
+沒有記憶體回收的問題等幾點事項, 其他部分均與以前開發iOS大同小異</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9106164_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">值得一提的是, 在XCode6 beta中,
+如果最上面的<span style="color: #f60202; font-size: medium;"><strong>註解內有中文</strong></span>的話，將會失去自動補完的功能(AutoComplete)，
+大家都知道這有多痛苦吧！所以記得將中文名字或是2014“年”去掉</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8740424_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">最後附上精美的結果圖呈現！如果沒有iOS 8的Device的話，可以使用simulator模擬器也可以！</div>
+<div>
+<div id="482233608220819842" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+</div>
+</div>
 
   </div>
 

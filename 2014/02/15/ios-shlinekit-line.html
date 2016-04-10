@@ -61,144 +61,153 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8822739_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>上篇教學: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內要如何分享資訊到到其他App</a> 內
-<p>Bear簡單介紹了怎麼透過網址(URL)的方式分享訊息到其他App內</p>
-<p>那, 要怎麼傳輸圖片過去呢? 別急, Bear在這篇將介紹怎麼做了!</p>
-<p>同樣的OpenSource也放到github上了噢!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="421894899775256238" align="left"><script async="">// < ![CDATA[</p>
-<p>// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>如果不想看內文想直接用的, <a title="" href="https://github.com/shouian/SHLineKit" target="_blank">點選這邊前往github連結: https://github.com/shouian/SHLineKit</a>在介紹這次的Opensource時,
-<p>一樣我們先來看看這個Class (物件) 有哪些Method可用</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7433499_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>非常簡單, 只有3個Method需要用到
-<p>1. 判斷你的iDevice有沒有安裝LINE</p>
-<p>2. 分享訊息到LINE上</p>
-<p>3. 分享圖片到LINE上範例上相當簡單, 我們目標是做出一個這樣的App界面</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6907025_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>用一個預設的訊息"Hello this is a test to share with Line" 送出就行了
-<p>(如果不清楚Button怎麼設計的, 請到本文最末參考入門系列教學內容)那我們先來看看, 這個Class內部的設計是怎麼進行的呢?</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9456334_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>判斷有沒有安裝很簡單, 只要看能不能開起URL的部分就行了
-<p>詳細的原理介紹請參考這篇: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內如何呼叫其他App作動?</a>接下來再看怎麼製作分訊息的部分</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/56501_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>動作原理也跟這篇文章: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內如何呼叫其他App作動?</a> 介紹一樣
-<p>如果大家想要替換成支援Skype / WhatsApp , 只要把line://msg/text/@的部分換成對應的URL就行囉</p>
-<p>詳細URL替換文章參考: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內如何呼叫其他App作動?</a>但是比較麻煩的部分, 是在於我們要怎麼傳輸圖片過去呢?</p>
-<p>這邊需要用到一個自從iOS 3.0版本開始就存在的古老Class:  UIPasteboard</p>
-<p>近代的iOS書本已經較少著墨在他身上了, 我們先來看看在我們的Class內部是怎麼使用的呢?</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7213716_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>我們內部建了一個category method : generatePasteLineBoard
-<p>詳細內容如下:</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/488331_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這裡如果您是這一兩年內才加入iOS的開發者行列的朋友可能對他認識不深
-<p>這個古老的Class的簡介如下</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7974294_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>照字面上的意思來看, 它可以讓你的App分享資料(data)給另一個App
-<p>只要利用對應的id就能呼叫出來, 我們可以把它想像成複製貼上,<strong>它的原理就是: 會先把你的data資料給暫存在系統的某個部分</strong></p>
-<p><strong>之後當你在另一款App內要叫起他的時候, 再用對應的key值把資料給叫出來</strong>利用這樣的方式我們就能把圖片給傳輸給另一款App了!</p>
-<p>那, 為什麼我們還開了一個category 來處理呢?</p>
-<p>在iOS 7 以前, 當你要貼給對應的app時, 你只要有對應App的pasteboard的名稱就行</p>
-<p>兩者名稱一樣是沒有關係的, 也就是說你把要貼過去的圖片給命名為jp.naver.*的任何名稱都行</p>
-<p>不過在iOS7 後, Pasteboard不能再這樣做了, 如果你貼過去的UIPasteboard名稱跟對應的app有命名空間重複</p>
-<p>（以LINE為例, 有jp.naver.*的關鍵字） 就不能貼過去了, 就必須改成用</p>
-<p>[UIPasteboard generalPasteboard]來產生,</p>
-<p>實際上傳圖的時候, 概念也跟傳輸文字訊息一樣, 只是最末端要接的是你的Pasteboard的名稱</p>
-<p>[NSURL URLWithString:[NSString stringWithFormat:@"line://msg/image/%@", pasteboard.name]]</p>
-<p>如果是其他的skype / WhatsApp也能一樣很簡單的實作出來噢! 有機會Bear再把它擴充成支援其他的IM App...</p>
-<p>那, 我們來看看實際跳出的效果吧!</p>
-<p></p>
-<p><div>按下上面的文字傳輸按鈕後呢, 就會自動導入到LINE上, 只要選擇你有興趣的人或群組就可以了
-<p>剩下LINE會負責幫你把文字貼上去!</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5383442_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>Bear一般喜歡傳送到聊天室, 我們看看聊天室內會有什麼效果吧</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7531357_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這樣是不是看出來, 文字被完美地貼上去了呢!?
-<p>那我們看看圖片能不能正常選擇呢?</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2115441_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這邊教學中用預設的元件會跳出選擇相片的功能, 就簡單挑張相片吧!!
-<p>選完後就直接分享了!</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8264134_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這樣就能完成了, 是不是很輕鬆呢?想要下載的朋友直接點選github連結就行囉(本篇文章前面有連結)
-<p>這篇文章的Opensource參考改編自此連結: <a title="" href="https://github.com/dlackty/LineKit" target="_blank">https://github.com/dlackty/LineKit</a>[入門系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a></p>
-<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a></p>
-<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a></p>
-<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a></p>
-<p>[中級系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a></p>
-<p>2.<a title="" href="http://www.takobear.weebly.com/12/post/2014/01/ios1.html" target="_blank"> 把Log記錄成文字檔  - Debug測試的好方法</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">如何把訊息/圖片分享給其他App? (內含LINE, Skype, WhatsApp)</a></p>
-<p>4.<a href="http://www.takobear.weebly.com/12/post/2014/02/-ios-shlinekit-line.html" target="_blank"> OpenSource - SHLineKit: 分享訊息/圖片到LINE上</a></p>
-<p>[進階系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a></p>
-<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a></p>
-<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a></p>
-<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a></p>
-<p>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8822739_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">上篇教學: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內要如何分享資訊到到其他App</a> 內
+Bear簡單介紹了怎麼透過網址(URL)的方式分享訊息到其他App內
+那, 要怎麼傳輸圖片過去呢? 別急, Bear在這篇將介紹怎麼做了!
+同樣的OpenSource也放到github上了噢!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="421894899775256238" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">如果不想看內文想直接用的, <a title="" href="https://github.com/shouian/SHLineKit" target="_blank">點選這邊前往github連結: https://github.com/shouian/SHLineKit</a>在介紹這次的Opensource時,
+一樣我們先來看看這個Class (物件) 有哪些Method可用</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7433499_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">非常簡單, 只有3個Method需要用到
+1. 判斷你的iDevice有沒有安裝LINE
+2. 分享訊息到LINE上
+3. 分享圖片到LINE上範例上相當簡單, 我們目標是做出一個這樣的App界面</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6907025_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">用一個預設的訊息"Hello this is a test to share with Line" 送出就行了
+(如果不清楚Button怎麼設計的, 請到本文最末參考入門系列教學內容)那我們先來看看, 這個Class內部的設計是怎麼進行的呢?</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9456334_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">判斷有沒有安裝很簡單, 只要看能不能開起URL的部分就行了
+詳細的原理介紹請參考這篇: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內如何呼叫其他App作動?</a>接下來再看怎麼製作分訊息的部分</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/56501_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">動作原理也跟這篇文章: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內如何呼叫其他App作動?</a> 介紹一樣
+如果大家想要替換成支援Skype / WhatsApp , 只要把line://msg/text/@的部分換成對應的URL就行囉
+詳細URL替換文章參考: <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">iOS內如何呼叫其他App作動?</a>但是比較麻煩的部分, 是在於我們要怎麼傳輸圖片過去呢?
+這邊需要用到一個自從iOS 3.0版本開始就存在的古老Class:  UIPasteboard
+近代的iOS書本已經較少著墨在他身上了, 我們先來看看在我們的Class內部是怎麼使用的呢?</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7213716_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">我們內部建了一個category method : generatePasteLineBoard
+詳細內容如下:</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/488331_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這裡如果您是這一兩年內才加入iOS的開發者行列的朋友可能對他認識不深
+這個古老的Class的簡介如下</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7974294_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">照字面上的意思來看, 它可以讓你的App分享資料(data)給另一個App
+只要利用對應的id就能呼叫出來, 我們可以把它想像成複製貼上,<span style="color: #f40b0b;"><strong>它的原理就是: 會先把你的data資料給暫存在系統的某個部分</strong></span>
+<span style="color: #f40b0b;"><strong>之後當你在另一款App內要叫起他的時候, 再用對應的key值把資料給叫出來</strong></span>利用這樣的方式我們就能把圖片給傳輸給另一款App了!
+
+那, 為什麼我們還開了一個category 來處理呢?
+在iOS 7 以前, 當你要貼給對應的app時, 你只要有對應App的pasteboard的名稱就行
+兩者名稱一樣是沒有關係的, 也就是說你把要貼過去的圖片給命名為jp.naver.*的任何名稱都行
+
+不過在iOS7 後, Pasteboard不能再這樣做了, 如果你貼過去的UIPasteboard名稱跟對應的app有命名空間重複
+（以LINE為例, 有jp.naver.*的關鍵字） 就不能貼過去了, 就必須改成用
+[UIPasteboard generalPasteboard]來產生,
+
+實際上傳圖的時候, 概念也跟傳輸文字訊息一樣, 只是最末端要接的是你的Pasteboard的名稱
+[<span style="color: #9555c2;">NSURL</span> <span style="color: #9555c2;">URLWithString</span>:[<span style="color: #9555c2;">NSString</span> <span style="color: #9555c2;">stringWithFormat</span>:<span style="color: #f20a0a;">@"line://msg/image/%@"</span>, pasteboard.name]]
+
+如果是其他的skype / WhatsApp也能一樣很簡單的實作出來噢! 有機會Bear再把它擴充成支援其他的IM App...
+
+那, 我們來看看實際跳出的效果吧!
+
+</div>
+<div class="paragraph">按下上面的文字傳輸按鈕後呢, 就會自動導入到LINE上, 只要選擇你有興趣的人或群組就可以了
+剩下LINE會負責幫你把文字貼上去!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5383442_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">Bear一般喜歡傳送到聊天室, 我們看看聊天室內會有什麼效果吧</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7531357_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這樣是不是看出來, 文字被完美地貼上去了呢!?
+那我們看看圖片能不能正常選擇呢?</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2115441_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這邊教學中用預設的元件會跳出選擇相片的功能, 就簡單挑張相片吧!!
+選完後就直接分享了!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8264134_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這樣就能完成了, 是不是很輕鬆呢?想要下載的朋友直接點選github連結就行囉(本篇文章前面有連結)
+這篇文章的Opensource參考改編自此連結: <a title="" href="https://github.com/dlackty/LineKit" target="_blank">https://github.com/dlackty/LineKit</a>[入門系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a>
+
+[中級系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a>
+2.<a title="" href="http://www.takobear.weebly.com/12/post/2014/01/ios1.html" target="_blank"> 把Log記錄成文字檔  - Debug測試的好方法</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">如何把訊息/圖片分享給其他App? (內含LINE, Skype, WhatsApp)</a>
+4.<a href="http://www.takobear.weebly.com/12/post/2014/02/-ios-shlinekit-line.html" target="_blank"> OpenSource - SHLineKit: 分享訊息/圖片到LINE上</a>
+
+[進階系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a>
+
+喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧
+
+</div>
+<div></div>
 
   </div>
 

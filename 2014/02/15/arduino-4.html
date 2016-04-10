@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>動手做自己的智能家電- 確認ARDUINO運作: 一閃一閃</title>
-  <meta name="description" content="上篇安裝驅動程式的教學裡_ 我們說到可以確認Arduino是接在電腦上的COM3(不知道的可以看以下圖片參考!) 現在我們就要介紹第一個範例，順便測試Arduino有沒有被正常驅動!!希望看完這篇，能讓毫無底子的你也能了解用Arduino作控制，一點也沒你想的困難!!不多說就讓我們看下去!! 首先很簡單的點了ar...">
+  <meta name="description" content="上篇安裝驅動程式的教學裡_ 我們說到可以確認Arduino是接在電腦上的COM3(不知道的可以看以下圖片參考!) 現在我們就要介紹第一個範例，順便測試Arduino有沒有被正常驅動!!希望看完這篇，能讓毫無底子的你也能了解用Arduino作控制，一點也沒你想的困難!!不多說就讓我們看下去!!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,104 +61,113 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>上篇安裝驅動程式的教學裡<a title="" href="http://gossibear.weebly.com/2/post/2013/05/-arduino1.html" target="_blank">_</a> 我們說到可以確認Arduino是接在電腦上的COM3
-<p>(不知道的可以看以下圖片參考!)</p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/776472_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>現在我們就要介紹第一個範例，順便測試Arduino有沒有被正常驅動!!
-<p>希望看完這篇，能讓毫無底子的你也能了解用Arduino作控制，一點也沒你想的困難!!不多說就讓我們看下去!!</p>
-<p></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5640281_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>首先很簡單的點了arduino.exe開始執行程式</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4854020_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>選擇最上面一排的<u>Tools→Board→Arduino Mega 2560 or Mega ADK
-<p></p>
-<p><strong>這邊是選擇你用的Arduino板子，依照你購買的型號再挑選對應的板號就行了!</strong></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3040098_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>跟圖說的一樣，選擇Serial Port就是選擇對應的Port孔，剛剛提到過，<strong>COM3</strong>是我們Arduino現在連接在電腦上的孔位，<strong>資料會從「電腦的COM3」傳輸到Arduino</strong><strong>(要確實注意好資料是從誰流到誰的問題! 這在之後的應用很重要)</strong>
-<p><strong>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2688743_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>現在我們先從第一個簡單的Example開始測試板子到底能不能正常work，從左上角的<u>File→Example→Basics→Blink</u>
-<p>就是一閃一閃的意思…簡單說就是讓你的LED燈<strong>一閃一閃</strong>!</p>
-<p>接下來我們要簡單介紹關於Arduino的介面與操作</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8189581_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2990584_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>程式碼跟介面如上<strong><u>為什麼是LED = 13 ? </u>
-<p><u>這邊簡單說一下，</u></p>
-<p><u>因為我們的Arduion在代號13的腳位上已經有嵌入一個LED燈，</u></p>
-<p><u>當你指定13的腳位時，即使我們不外接任何的感測器，也能控制這顆LED燈動作!</u></p>
-<p>另外這兩張圖，我們在上面都有標註，</p>
-<p>打勾的名字叫做<strong>Verify，</strong></p>
-<p>向右的箭頭叫做<strong>Upload，</strong></p>
-<p>在Arduino的世界，</p>
-<p><strong><u>Verify就是編譯(compile)的意思，單純只是編譯程式碼，</u></strong></p>
-<p>可以確保你的程式語法有沒有任何錯誤，</p>
-<p>當你手邊沒有板子卻又想確認程式碼有沒有問題時就可以靠它了!</p>
-<p><strong><u>另外一個Upload，就是編譯跟燒錄，</u></strong></p>
-<p><strong><u>能把編譯通過的程式碼直接寫入到我們的arduino板子，</u></strong></p>
-<p>完成燒錄後的arduino就會依據你寫的程式碼進行動作了!</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5540119_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>於是我們什麼也不改! 直接點upload，就能看到燒錄過程囉!!!</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5018948_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>現在!! 我們總算完成第一支燒錄程式了!!! 接下來你會看到黃色的LED燈在一閃一閃(參考上圖)回憶一下版主剛剛說的，我們啟動的腳位是13，
-<p><strong>這時候注意你的板子閃爍的位置旁有寫個13，</strong></p>
-<p><strong>13的腳位旁邊就有一顆黃色的LED燈! </strong></p>
-<p><strong>我們指定的PIN13就是這個位址，</strong></p>
-<p><strong>之後也可以指定其他的腳位，</strong></p>
-<p><strong>如圖上的1~12號作不同的控制</strong></p>
-<p>到這邊我們已經可以確定第一隻的Arduino程式可以正常compile跟運作了!</p>
-<p>想看成果的可以看以下影片</p>
-<p></p>
-<p><div>
-<p><div>
-<p><div id="wsite-video-container-174118187511427565"><iframe id="video-iframe-174118187511427565" src="about:blank" width="300" height="150" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"> 						</iframe><script>// < ![CDATA[</p>
-<p> 							document.getElementById("video-iframe-174118187511427565").style.opacity = 0; 							document.getElementById("wsite-video-container-174118187511427565").style.background = "none"; 							var videoIframe174118187511427565Content = '< !DOCTYPE html>' 							+ '<head>' 								+ '<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">\x3C/script>' 								+ '</p>
-<p>// ]]></script><script src="//www.weebly.com/weebly/apps/generateVideo.php?source=weebly&amp;output=js&amp;elementid=174118187511427565&amp;user=19975491&amp;ineditor=0&amp;align=left&amp;margintop=10px&amp;marginbottom=10px&amp;downloadable=0&amp;height=282&amp;video=1/9/9/7/19975491/img_3604_123.mp4&amp;image=1/9/9/7/19975491/img_3604_123.jpg" type="text/javascript">// < ![CDATA[</p>
-<p>\x3C/script>' 							+ '' 							+ '<body>' 							+ ']]></body></p>
-<p>// ]]></script></div></p>
-<p></p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></strong></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></strong></p></div></p></div></p></div></p></u></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div class="paragraph">上篇安裝驅動程式的教學裡<a title="" href="http://gossibear.weebly.com/2/post/2013/05/-arduino1.html" target="_blank">_</a> 我們說到可以確認Arduino是接在電腦上的COM3
+(不知道的可以看以下圖片參考!)</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/776472_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">現在我們就要介紹第一個範例，順便測試Arduino有沒有被正常驅動!!
+希望看完這篇，能讓毫無底子的你也能了解用Arduino作控制，一點也沒你想的困難!!不多說就讓我們看下去!!
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5640281_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">首先很簡單的點了arduino.exe開始執行程式</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4854020_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">選擇最上面一排的<u><span style="color: #ff0000;">Tools→Board→Arduino Mega 2560 or Mega ADK</span>
+</u>
+<strong>這邊是選擇你用的Arduino板子，依照你購買的型號再挑選對應的板號就行了!</strong></div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3040098_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">跟圖說的一樣，選擇Serial Port就是選擇對應的Port孔，剛剛提到過，<strong>COM3</strong>是我們Arduino現在連接在電腦上的孔位，<strong>資料會從「電腦的COM3」傳輸到Arduino</strong><strong><span style="color: #ff0000;">(要確實注意好資料是從誰流到誰的問題! 這在之後的應用很重要)</span></strong>
+<strong>
+</strong>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2688743_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">現在我們先從第一個簡單的Example開始測試板子到底能不能正常work，從左上角的<u><span style="color: #ff0000;">File→Example→Basics→Blink</span></u>
+
+就是一閃一閃的意思…簡單說就是讓你的LED燈<strong>一閃一閃</strong>!
+
+接下來我們要簡單介紹關於Arduino的介面與操作
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8189581_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2990584_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">程式碼跟介面如上<strong><span style="color: #ff0000;"><u>為什麼是LED = 13 ? </u>
+<u>這邊簡單說一下，</u>
+<u>因為我們的Arduion在代號13的腳位上已經有嵌入一個LED燈，</u>
+</span><u><span style="color: #ff0000;">當你指定13的腳位時，即使我們不外接任何的感測器，也能控制這顆LED燈動作!</span></u></strong>
+
+另外這兩張圖，我們在上面都有標註，
+打勾的名字叫做<strong>Verify，</strong>
+向右的箭頭叫做<strong>Upload，</strong>
+在Arduino的世界，
+<strong><u>Verify就是編譯(compile)的意思，單純只是編譯程式碼，</u></strong>
+可以確保你的程式語法有沒有任何錯誤，
+當你手邊沒有板子卻又想確認程式碼有沒有問題時就可以靠它了!
+<strong><u>另外一個Upload，就是編譯跟燒錄，</u></strong>
+<strong><u>能把編譯通過的程式碼直接寫入到我們的arduino板子，</u></strong>
+完成燒錄後的arduino就會依據你寫的程式碼進行動作了!
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5540119_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">於是我們什麼也不改! 直接點upload，就能看到燒錄過程囉!!!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5018948_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">現在!! 我們總算完成第一支燒錄程式了!!! 接下來你會看到黃色的LED燈在一閃一閃(參考上圖)回憶一下版主剛剛說的，我們啟動的腳位是13，
+<strong>這時候注意你的板子閃爍的位置旁有寫個13，</strong>
+<strong>13的腳位旁邊就有一顆黃色的LED燈! </strong>
+<strong>我們指定的PIN13就是這個位址，</strong>
+<strong>之後也可以指定其他的腳位，</strong>
+<strong>如圖上的1~12號作不同的控制</strong>
+
+到這邊我們已經可以確定第一隻的Arduino程式可以正常compile跟運作了!
+
+想看成果的可以看以下影片
+
+</div>
+<div class="wsite-video">
+<div class="wsite-video-wrapper wsite-video-height-282 wsite-video-align-left">
+<div id="wsite-video-container-174118187511427565" class="wsite-video-container"><iframe id="video-iframe-174118187511427565" src="about:blank" width="300" height="150" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"> 						</iframe><script>// < ![CDATA[
+ 							document.getElementById("video-iframe-174118187511427565").style.opacity = 0; 							document.getElementById("wsite-video-container-174118187511427565").style.background = "none"; 							var videoIframe174118187511427565Content = '< !DOCTYPE html>' 							+ '<head>' 								+ '<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">\x3C/script>' 								+ '
+// ]]></script><script src="//www.weebly.com/weebly/apps/generateVideo.php?source=weebly&amp;output=js&amp;elementid=174118187511427565&amp;user=19975491&amp;ineditor=0&amp;align=left&amp;margintop=10px&amp;marginbottom=10px&amp;downloadable=0&amp;height=282&amp;video=1/9/9/7/19975491/img_3604_123.mp4&amp;image=1/9/9/7/19975491/img_3604_123.jpg" type="text/javascript">// < ![CDATA[
+\x3C/script>' 							+ '' 							+ '<body style="margin:0; padding: 0;border:none;overflow:hidden;">' 							+ ']]></body>
+// ]]></script></div>
+</div>
+</div>
 
   </div>
 

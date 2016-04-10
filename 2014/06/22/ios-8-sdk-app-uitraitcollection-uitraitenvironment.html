@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[iOS 8] SDK 介紹 - 如何做出適應不同尺寸的App? (UITraitCollection, UITraitEnvironment)</title>
-  <meta name="description" content="TakoBear 這陣子忙碌許久，除了準備我們新的小驚喜外，也還在努力熟悉新的 Apple SDK其實這次 Apple 推出的新語言 Swift 雖然很亮眼，但我們仍然把重點放在如何利用它與已經既有的 Objective-C SDK 進行整合即使是到iOS 8，這次更新了將近有4000筆API，我們相信把這些銜接...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,105 +61,213 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>TakoBear 這陣子忙碌許久，除了準備我們新的小驚喜外，也還在努力熟悉新的 Apple SDK</p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4377144_orig.png" alt="" /></p>
+
+<p>TakoBear 這陣子忙碌許久，除了準備我們新的小驚喜外，也還在努力熟悉新的 Apple SDK</p>
+
 <p>其實這次 Apple 推出的新語言 Swift 雖然很亮眼，但我們仍然把重點放在如何利用它與已經既有的 Objective-C SDK 進行整合</p>
+
 <p>即使是到iOS 8，這次更新了將近有4000筆API，我們相信把這些銜接好才是真正迎接這樣新世代的做法</p>
+
 <p>這篇其實是 Tako 在看完 WWDC 影片後，覺得相當要緊的一個開發心得，也就是如何做出不同尺寸的 iOS 8 App!</p>
+
 <p>這項的 API 更動似乎意味著蘋果有更多不同尺寸的 App 會要同步，而這也是一個新起步囉!</p>
-<p><!--more--></p>
-<p>[cjtoolbox name='google_ad']</p>
-<p><h2>UISplitViewController的變化: 可以自在伸縮顯示配合尺寸</h2></p>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
+<h2>UISplitViewController的變化: 可以自在伸縮顯示配合尺寸</h2>
+
 <p>先來說說這次 Tako 認為很重要的兩個觀念: Collapsing 跟 Expanding</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7255985_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2329591_orig.png" alt="" /></p>
+
 <p>上面兩張圖所列出的 Method 都是這次更動於 UISplitViewControllerDelegate 的內容</p>
+
 <p>我們先簡單看看這個 Protocol 原本可以做些什麼吧</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2624266_orig.png" alt="" /></p>
+
 <p>原本這個 Protocol 主要應用在 iPad 上面的開發，一般是用在你需要分割視窗的 UI 界面上</p>
+
 <p>如果沒有從事過 iPad 上面開發的朋友可能不會很熟悉，不過從 iOS 8 以後</p>
+
 <p>大家可能都必須要熟悉這項 Protocol 了，它包含會偵測解析度自動展開(Expand)或是收縮(Collapse)</p>
+
 <p>來調整解析度的畫面，這樣說的話，就是大家可以想像，當你拿著 iPhone 往左右橫躺的時候，你所看到的畫面就會跟 iPad 的畫面一樣，分割兩個視窗拉正後，又是原本iPhone的界面畫面</p>
+
 <p>這次的教學主要是利用 WWDC 上的 AdaptivePhoto 來解釋</p>
+
 <p>有需要的朋友可以到這邊下載: <a href="https://developer.apple.com/library/prerelease/ios/samplecode/AdaptivePhotos/Introduction/Intro.html">點選下載SampleCode</a></p>
+
 <p>先從前面開始介紹，關於這次 UISplitViewControllerDelegate 的伸展與收縮的 Protocol 如下</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8028140_orig.png" alt="" /></p>
+
 <p>這項 Protocol 會回傳你畫面上所需要呈現的 ViewController，根據文件上的介紹</p>
+
 <p>當你的 SplitViewController 從水平正規(horizontal regular)方向轉到所謂的水平緊縮方向(horizontal compact)方向</p>
+
 <p>(如果你不知道 regular 跟 compact 意義的話，請往下滑後面有介紹XD)這個 Method 就會自動被系統呼叫到，他會通知你當過場動畫完成以後會由哪個 ViewController 來顯示</p>
+
 <p>而你所回報出去的 ViewController 就會變成新的主畫面</p>
+
 <p>開發者可以透過這方法來定義你所希望呈現的 ViewController，如果都不去覆寫(override)掉畫面的話，這項 Method 會回傳你上一個你希望呈現的 ViewController</p>
+
 <p>用上面的兩張圖片來介紹的話，全景的 iPhone 版面就是你的 Primary View Controller</p>
+
 <p>必須注意的是, 如果你有去寫這項 Method 的內容，你就必須要去實作底下的另一道 method，他則是去當你橫躺的時候會去展開的 ViewController</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6939420_orig.png" alt="" /></p>
+
 <p>講得這麼複雜，其實很簡單啦，大家只需要知道你目前要呈現的是哪個 ViewController　</p>
+
 <p>換場景的時候要由哪個場景顯現就行了，有問題的話，大家只需要對照上面那兩隻可愛的鳥圖就行囉XD</p>
+
 <p>如果你有想要對分割的 ViewController 進行客製化，參考底下的兩個 Method，他們會分別在畫面展開跟收縮時一起被啟動到，就能在這邊進行你想要的客製化了</p>
-<p><h2>UITraitCollection - 讓你的iPhone界面適應不同版面(任意尺寸都行!)</h2></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4184398_orig.png" alt="" /></p>
+
+<h2>UITraitCollection - 讓你的iPhone界面適應不同版面(任意尺寸都行!)</h2>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9989069_orig.png" alt="" /></p>
+
 <p>在 Xcode 6 以後對於 Simulator 的功能變得更強大了，在模擬 runtime 的過程中，大家可以注意左下角多了 resize 的功能，大家可以任意調整模擬器版面所占用的解析度(想要1080*1080都行!?) 並且即時調整你的App會呈現的版面</p>
+
 <p>這點很重要，不管你是用 Swift 或用 Objective-C，都必須要注意到，這些意味著蘋果未來可能對解析度放寬的程度超乎我們的想像，而程式碼內要應付這麼大量的可能性，蘋果所提出的是原本在 UIViewController 這開發上增設了這一項 Class - UITraitCollection</p>
-<p>這次這個部分可是苦惱 Tako 好一陣子...</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1337706_orig.jpeg" alt="" /></p>
+
+<p>這次這個部分可是苦惱 Tako 好一陣子…</p>
+
 <p>蘋果為了能夠處理更多不同的尺寸做法，導入的這個 Class 可是令人相當混亂啊，最近在 Stackoverflow 上也看得到有人在求救了，關於他的介紹, 大家可以先到蘋果的官方文件:</p>
+
 <p><a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS8.html">點選前往蘋果官方文件</a>再找到 Unified Storyboards for Universal Apps 的介紹內容</p>
+
 <p>不過，在這邊給大家一個建議，其實蘋果這次的更動，所有的多解析度程式碼概念</p>
+
 <p>基本上大家可以想成跟撰寫網頁的 Web Responsive Design 一樣，都是透過寬度解析度的偵測大小來判斷現在你使用的版面應該大小在哪個範圍進行呈現囉!</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8832505_orig.png" alt="" /></p>
+
 <p>在介紹這個 Class 以前，我們必須先了解蘋果心中認為怎麼樣處理多解析度的方式是最好的，以下Tako來簡單結論一下蘋果的官方說法:</p>
+
 <p>在 iOS 8 以後為了要能夠處理更多的不同解析度 App，蘋果很希望你的 App 也能夠同時在 iPad 與 iPhone 上同時使用，在這個基礎上，iOS 8 對於物件 Class 作出了兩個定義 :</p>
-<p><ol>
-<p><li>Regular</li></p>
-<p><li>Compact</li></p>
-<p></p>
+
+<ol>
+<li>Regular</li>
+<li>Compact</li>
+</ol>
+
 <p>所謂的一個正規尺寸級別 (regular size class)他代表的就是一個很大螢幕的空間(例如 iPad)，或是一個讓你視覺上看起來是個很大的螢幕空間(比如說當你在滑動 iPhone 的時候)</p>
+
 <p>每一裝置都有被定義它所專屬的尺寸級別，又稱為 size class(包含水平與垂直方向)</p>
+
 <p>例如上圖, 大家就能看到這是一個iPad對於他的長寬所定義的正規長寬螢幕尺寸，大家也必須有個觀念，之後的尺寸規劃，是以 iPad 的尺寸規劃為出發點，iPad 的尺寸不論你如何旋轉他永遠都是 regular * regular 的定義</p>
+
 <p>而 iPhone 只是延伸出來的物件，怎麼說呢? 我們看一下蘋果對於 iPhone 的版面定義就知道了</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5037875_orig.png" alt="" /></p>
+
 <p>基於每一台 iPhone 在不同方向時都有不同的尺寸，蘋果把 iPhone 在直立(Portrait)的模式下，水平方向的寬度定義為 compact width (注意iPad稱為regular width)</p>
+
 <p>compact 本身就是緊縮，壓縮的意思，這邊可以視為水平方向是壓縮後的視窗大小，而高度的部分 iPhone 仍定義為 Regular 常規高度，而當 iPhone 進行轉向變成橫躺(landscape)的時候，大家就會發現蘋果這時候把它的高度與寬度都以 compact 來定義基本上小尺寸的視圖(View)轉到大尺寸的時候不會有太大問題，問題都會發生在大尺寸的視圖如何轉成小尺寸的畫面</p>
+
 <p>蘋果文件上說明有對以下的物件(Class)進行修正</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/51807_orig.png" alt="" /></p>
+
 <p>而這次我們要介紹的重點就是這個 Class UITraitCollection 啦!!!</p>
+
 <p>(前置作業這麼多總算可以進入重點了Q_Q)這個Class簡單來說是用來描述物件在不同方向的行為，它包含定義了尺寸的級別(size class)，顯示的百分比(display scale)還有相關的物件，凡是有去實作 UITraitEnvironmnet 這個 protocol 的物件也都能夠在方向改變的時候進行調整(基本上來說 UIViewController 以及 UIView 都有去遵循!)</p>
+
 <p>依據<a href="https://developer.apple.com/library/prerelease/ios/documentation/UIKit/Reference/UITraitSet_ClassReference/index.html#//apple_ref/occ/clm/UITraitCollection/traitCollectionWithDisplayScale:">蘋果的官方文件</a>，UITraitCollection 基本上就是給 UIViewController 所使用的一個物件</p>
+
 <p>它主要涵蓋以下四個屬性(property)</p>
-<p><pre><code>@property(nonatomic, readonly) UIUserInterfaceSizeClass horizontalSizeClass
-<p>Discussion</p>
-<p>Defaults to UIUserInterfaceSizeClassUnspecified.</p>
-<p>@property(nonatomic, readonly) CGFloat displayScale</p>
-<p>Defaults to 0.0 for an unspecified scale.</p>
-<p>@property(nonatomic, readonly) UIUserInterfaceIdiom userInterfaceIdiom</p>
-<p>Defaults to UIUserInterfaceIdiomUnspecified.</p>
-<p>@property(nonatomic, readonly) UIUserInterfaceSizeClass verticalSizeClass</p>
-<p>Defaults to UIUserInterfaceSizeClassUnspecified.</p>
-<p></p>
+
+<pre><code class="swift">@property(nonatomic, readonly) UIUserInterfaceSizeClass horizontalSizeClass
+Discussion
+Defaults to UIUserInterfaceSizeClassUnspecified.
+
+@property(nonatomic, readonly) CGFloat displayScale
+Defaults to 0.0 for an unspecified scale.
+
+@property(nonatomic, readonly) UIUserInterfaceIdiom userInterfaceIdiom
+Defaults to UIUserInterfaceIdiomUnspecified.
+
+@property(nonatomic, readonly) UIUserInterfaceSizeClass verticalSizeClass
+Defaults to UIUserInterfaceSizeClassUnspecified.
+</code></pre>
+
 <p>大家可以發現這四個 property 都是 readonly 所產生的，他們都是在物件被初始化的時候才會被建立數值，如果不是很清楚這四個數值是什麼意思的話，這邊可以舉一個例子，如果你是一台iPad，直接印出 <code>self.traitCollection</code>的話</p>
+
 <p>可以得到以下內容</p>
-<p><pre><code>&lt;UITraitCollection: 0x10df4c7f0; _UITraitNameUserInterfaceIdiom = Pad,
-<p>    _UITraitNameDisplayScale = 2.000000, _UITraitNameHorizontalSizeClass = Regular, </p>
-<p>    _UITraitNameVerticalSizeClass = Regular, _UITraitNameTouchLevel = 0, </p>
-<p>    _UITraitNameInteractionModel = 1&gt;</p>
-<p></p>
+
+<pre><code class="swift">&lt;UITraitCollection: 0x10df4c7f0; _UITraitNameUserInterfaceIdiom = Pad,
+    _UITraitNameDisplayScale = 2.000000, _UITraitNameHorizontalSizeClass = Regular, 
+    _UITraitNameVerticalSizeClass = Regular, _UITraitNameTouchLevel = 0, 
+    _UITraitNameInteractionModel = 1&gt;
+</code></pre>
+
 <p>其實這個範例是來自 Stackoverflow 上的一個疑問，這個人的問題是為什麼 iPad 不論怎麼旋轉</p>
+
 <p>這些數值都完全一樣，這些其實看上面的圖片蘋果的定義中我們就能了解</p>
+
 <p>iPad 本身的定義就是永遠都是 regular * regular 的形式</p>
+
 <p>而 iPhone 在直立為 regular * compact, 橫躺的時候則是 compact * compact 的定義</p>
+
 <p>這些數值則會在你顯示的時候會有所不同</p>
+
 <p>從 UserIdiom 就能看得出來，它可以抓得出你目前所屬在的裝置是 Phone 還是 Pad</p>
+
 <p>知道粗略的定義後，我們再看看他的介紹吧</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5193467_orig.png" alt="" /></p>
+
 <p>只要更新這些 Trait 的數值，其實就能更新每一個畫面元件在你的裝置界面上所會呈現的樣貌</p>
+
 <p>而這個你只需要去實作 UITraitEnvironment 這項 protocol 的唯一一項 method 即可</p>
-<p><pre><code>- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
-<p></p>
+
+<pre><code class="swift">- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+</code></pre>
+
 <p>一般而言你並不需要去更動這項 method，除非你有特別的客製化需求，例如當畫面變成 iPad 大小的時候你希望你的按鈕變成多大之類的，可以在這一部分作處理</p>
-<p><pre><code>- (void)setOverrideTraitCollection:(UITraitCollection *)collection
-<p>            forChildViewController:(UIViewController *)childViewController</p>
-<p></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3700593_orig.png" alt="" /></p>
+
+<pre><code class="swift">- (void)setOverrideTraitCollection:(UITraitCollection *)collection
+            forChildViewController:(UIViewController *)childViewController
+</code></pre>
+
 <p>在 UIViewController中，也新加入了這項 Method，它可以做些什麼呢?</p>
+
 <p>一般而言，Traits 當你從最上層的視圖控制器(ViewController)傳到子視圖控制器(Child ViewController)時都不會有任何修改</p>
+
 <p>不過，如果你有客製化的需求需要變動的話，可以對你想要更動的子視圖控制器傳入新的 Traits，就能有所變化太抽象了?</p>
+
 <p>舉例來說呢，如果你跳出一個視圖控制器是水平 compact 轉變成水平 regular 的狀態，你就必須要傳入一個新的 trait 來使畫面能夠與使用者所期望的呈現方式一致 (例如下圖)</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8554522_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3375457_orig.png" alt="" /></p>
+
 <p>如果想要抓出這些 trait 在方向轉變的時候有做哪些更動，可以看上圖大概了解整個變化過程喔!關於這部分的教學是不是覺得很頭暈呢?</p>
+
 <p>別急我們很快就會有相關的教學介紹，希望能讓大家更簡單理解這些不同尺寸的 App 應用該怎麼實作出來!!</p>
-<p><div id="fb-root"></div></p>
-<p><script>// < ![CDATA[</p>
-<p> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>// ]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
-<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div></p>
-<p></p>
-</div></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></ol></p>
+
+<div id="fb-root"></div>
+
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
 
   </div>
 

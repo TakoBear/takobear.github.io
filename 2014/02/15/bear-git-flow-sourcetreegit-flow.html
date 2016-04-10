@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Bear 實驗室: 什麼是Git flow ? 如何在SourceTree使用Git flow管理開發! </title>
-  <meta name="description" content="今天Bear實驗室的主題不是要介紹程式，而是來好好介紹一下有關管理進度開發的工具!那今天實驗室的主題是.....Git Flow!!!!使用 git 的開發者都知道 git 有 branch 這個功能，但要如何運用在開發流程呢？(以下內容將以 Source Tree 講解，不知道Source Tree是什麼的請點...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,150 +61,331 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>今天Bear實驗室的主題不是要介紹程式，而是來好好介紹一下有關管理進度開發的工具!</p>
-<p>那今天實驗室的主題是.....Git Flow!!!!</p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6983164_orig.jpg" alt="" /></p>
+
+<p>今天Bear實驗室的主題不是要介紹程式，而是來好好介紹一下有關管理進度開發的工具!</p>
+
+<p>那今天實驗室的主題是…..Git Flow!!!!</p>
+
 <p>使用 git 的開發者都知道 git 有 branch 這個功能，但要如何運用在開發流程呢？</p>
+
 <p>(以下內容將以 Source Tree 講解，<a href="http://www.takobear.tw/2013/10/05/macapp-sourcetree/">不知道Source Tree是什麼的請點此連結</a></p>
-<p><!--more--></p>
-<p>[cjtoolbox name='google_ad']</p>
-<p><h1>什麼是 git flow?</h1></p>
-<p>有關Git flow呢，現在網路上有人整理出了一套模型流程：<a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></p>
-<p>附上簡體翻譯版：<a href="http://www.juvenxu.com/2010/11/28/a-successful-git-branching-model/">一个成功的Git分支模型</a></p>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
+<h1>什麼是 git flow?</h1>
+
+<p>有關Git flow呢，現在網路上有人整理出了一套模型流程：<a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a>
+附上簡體翻譯版：<a href="http://www.juvenxu.com/2010/11/28/a-successful-git-branching-model/">一个成功的Git分支模型</a></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1308801_orig.png" alt="" /></p>
+
 <p>一個Git flow，其中的內容大致可以區分如下：</p>
-<p><h2>主要分支</h2></p>
-<p><ul>
-<p><li>master：釋出的版本，只從 release 與 hotfix merge  回來，不直接在上面 commit 變更。</li></p>
-<p><li>develop：開發中的版本，預設在這 branch 上，開發修改功能都從這分支出去。</li></p>
-<p></p>
-<p><h2>支援性分支</h2></p>
-<p><ul>
-<p><li>feature branches：從 develop 分支出來，當功能開發修改完成後 merge 回 develop</li></p>
-<p><li>release branches：從 develop 分支出來，是準備釋出的版本，只修改版本號與 bug，完成後 merge 回 develop 與 master，並在 master 標上版本號的 tag</li></p>
-<p><li>hotfix branches：從 master 分支出來，主要是處理已釋出版本需要立即修改的錯誤，完成後 merge 回 develop 與 master，並在 master 標上版本號的 tag</li></p>
-<p></p>
+
+<h2>主要分支</h2>
+
+<ul>
+<li>master：釋出的版本，只從 release 與 hotfix merge  回來，不直接在上面 commit 變更。</li>
+<li>develop：開發中的版本，預設在這 branch 上，開發修改功能都從這分支出去。</li>
+</ul>
+
+<h2>支援性分支</h2>
+
+<ul>
+<li>feature branches：從 develop 分支出來，當功能開發修改完成後 merge 回 develop</li>
+<li>release branches：從 develop 分支出來，是準備釋出的版本，只修改版本號與 bug，完成後 merge 回 develop 與 master，並在 master 標上版本號的 tag</li>
+<li>hotfix branches：從 master 分支出來，主要是處理已釋出版本需要立即修改的錯誤，完成後 merge 回 develop 與 master，並在 master 標上版本號的 tag</li>
+</ul>
+
 <p>在本篇教學中，採用 <a href="http://www.sourcetreeapp.com/">SourceTree</a> 這套 git gui 工具，因為它有整合了git flow的功能，很方便。</p>
+
 <p>如果你超愛指令，但又不想打太多，你可以參考 <a href="http://fann.im/blog/2012/03/12/git-flow-notes/">Git-flow 使用笔记</a> 安裝git-flow工具操作。</p>
+
 <p>本篇教學範例將以圖說的方式，列出以下步驟，並在部分步驟中列出相對應的指令以供參考：</p>
-<p><ul>
-<p><li>初始化專案的 git flow 設定</li></p>
-<p><li>開發新功能(feature)</li></p>
-<p><li>釋出專案(release)</li></p>
-<p><li>緊急上版(hotfix)</li></p>
-<p></p>
-<p>以下教學需要使用到SourceTree，關於SourceTree官方網站請點以下連結</p>
-<p><a href="https://www.sourcetreeapp.com/">SourceTree下載連結 (Mac, Windows皆適用)</a></p>
-<p><h1>初始化專案的 git flow 設定</h1></p>
+
+<ul>
+<li>初始化專案的 git flow 設定</li>
+<li>開發新功能(feature)</li>
+<li>釋出專案(release)</li>
+<li>緊急上版(hotfix)</li>
+</ul>
+
+<p>以下教學需要使用到SourceTree，關於SourceTree官方網站請點以下連結
+<a href="https://www.sourcetreeapp.com/">SourceTree下載連結 (Mac, Windows皆適用)</a></p>
+
+<h1>初始化專案的 git flow 設定</h1>
+
 <p>執行 SourceTree 點擊 Add Repository。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4283529_orig.png" alt="" /></p>
+
 <p>因為我們是建立一個新的空目錄，所以切換到 Create Repository頁面，輸入資訊後點擊 Create。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3372276_orig.png" alt="" /></p>
+
 <p>雙擊剛剛建立的 Repository。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8748411_orig.png" alt="" /></p>
+
 <p>因為整個專案都是空的，所以我們需要 commit 一次，以建立 master branch。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1263542_orig.png" alt="" /></p>
+
 <p>先在專案目錄下新增一個文字檔。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6888501_orig.png" alt="" /></p>
+
 <p>在 Working Copy頁面中，選取剛剛放進專案目錄中的文字檔，點擊 Add。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/983335_orig.png" alt="" /></p>
+
 <p>檔案就會從下方移到上方，準備 commit。接著點擊 Commit。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6570646_orig.png" alt="" /></p>
+
 <p>輸入 Commit message 後，點擊 Commit。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6709311_orig.png" alt="" /></p>
+
 <p>Commit 之後就可以看到 BRANCHES 下多出了 master。接下來就可以點擊 Git Flow 為專案初始化 git flow設定。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6581430_orig.png" alt="" /></p>
+
 <p>基本上不用再調什麼設定，直接點擊 OK。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3973610_orig.png" alt="" /></p>
+
 <p>參考指令:</p>
-<p><pre><code>git checkout -b develop master
-<p></p>
+
+<pre><code class="bash">git checkout -b develop master
+</code></pre>
+
 <p>完成後就會看到在 BRANCHES 下出現 develop 了，這樣就完成了 git flow 的初始化。</p>
-<p><h2>開發新功能(feature)</h2></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6784243_orig.png" alt="" /></p>
+
+<h2>開發新功能(feature)</h2>
+
 <p>點擊 Git flow 開啟選單。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9166139_orig.png" alt="" /></p>
+
 <p>點擊 Start a New Feature。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9065052_orig.png" alt="" /></p>
+
 <p>輸入 Feature Name，然後點擊 OK，建立新的 branch 用來開發新功能。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4525742_orig.png" alt="" /></p>
+
 <p>參考指令：</p>
-<p><pre><code>git checkout -b feature/f1 develop
-<p></p>
+
+<pre><code class="bash">git checkout -b feature/f1 develop
+</code></pre>
+
 <p>在 BRANCHES 下可以看到新增了 feature/f1 這個 branch，我們在這 branch 上開發新功能。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9355154_orig.png" alt="" /></p>
+
 <p>在專案目錄下新增一檔案，用來代表新功能，接下來就是老樣子的 commmit 動作。</p>
+
 <p>這邊我們隨意建了一個新檔案叫做 <code>main.c</code> !</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3066326_orig.png" alt="" /></p>
+
 <p>在 Working Copy 頁面中，選取剛剛放進專案目錄中的檔案，點擊 Add。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9437315_orig.png" alt="" /></p>
+
 <p>檔案就會從下方移到上方，準備 commit。接著點擊 Commit。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2263727_orig.png" alt="" /></p>
+
 <p>輸入 Commit message 後，點擊 Commit。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4178706_orig.png" alt="" /></p>
+
 <p>回到 BRANCHES，因為新功能完成了，所以我們要將 feature/f1 merge 回 develop。點擊 Git Flow 叫出選單。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3985234_orig.png" alt="" /></p>
+
 <p>因為目前我們在 feature/f1 上，所以點擊 Finish Current 就可以了。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7458637_orig.png" alt="" /></p>
+
 <p>這邊直接點擊 OK。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4138903_orig.png" alt="" /></p>
+
 <p>參考指令：</p>
-<p><pre><code>git checkout develop
-<p>git merge --no-ff feature/f1</p>
-<p>git branch -d feature/f1</p>
-<p></p>
+
+<pre><code>git checkout develop
+git merge --no-ff feature/f1
+git branch -d feature/f1
+</code></pre>
+
 <p>回到只有 develop 與 master 兩個 branch 的狀態了。重複以上動作直到功能開發完成，就要進行下一個步驟，釋出專案給使用者。</p>
-<p><h2>釋出專案(release)</h2></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2471874_orig.png" alt="" /></p>
+
+<h2>釋出專案(release)</h2>
+
 <p>當功能都開發完成之後，就可以進行準備釋出專案，在這 release branch 上做的動作主要就是修改版本號之類的釋出設定。</p>
+
 <p>釋出專案的話，就代表你開發完成了要出去給測試或是準備上架囉!!</p>
+
 <p>點擊 Git Flow。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7689682_orig.png" alt="" /></p>
+
 <p>點擊 Start a New Release。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/647090_orig.png" alt="" /></p>
+
 <p>輸入版本號，點擊 OK(預設是從 develop 最新的版本分支)。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/224449_orig.png" alt="" /></p>
+
 <p>參考指令：</p>
-<p><pre><code>git checkout -b release/v0.1.0 develop
-<p>````</p>
-<p>在 BRANCHES 下可以看到出現了 release/v0.1.0 的 branch。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9078051_orig.png)</p>
-<p>現在讓我們修改一下專案目錄下的 README.md 的內容，加上版本號資訊後存檔。</p>
-<p>(畫面中使用的是 [Mou Markdown 編輯器](http://mouapp.com/), 在 Mac 上編輯 README 相當好用, 有機會Bear再詳加介紹)</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5068778_orig.png)</p>
-<p>接下來 commit 剛剛的變更，一樣切換到 Working Copy 頁面，選取變更的檔案，點擊 Add。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/389527_orig.png)</p>
-<p>點擊 Commit。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2237938_orig.png)</p>
-<p>輸入 Commit message 後點擊 Commit。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3877164_orig.png)</p>
-<p>回到 BRANCHES 頁面，可以看到 Graph 有變動了。接下來請點擊 Git Flow。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9237225_orig.png)</p>
-<p>因為目前我們正在 release/v0.1.0 branch，所以直接點擊 Finish Current。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7321146_orig.png)</p>
-<p>點擊 OK。請注意在 Git Flow 流程中，release branch 只負責釋出設定與修正 bug，千萬不要在上面開發新功能。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/727766_orig.png)</p>
-<p>參考指令：</p>
-<p>```bash</p>
-<p>git checkout master</p>
-<p>git merge --no-ff release/v0.1.0</p>
-<p>git tag -a v0.1.0</p>
-<p>git checkout develop</p>
-<p>git merge --no-ff release/v0.1.0</p>
-<p>git branch -d release/v0.1.0</p>
-<p></p>
+
+<pre><code class="bash">git checkout -b release/v0.1.0 develop
+````
+
+在 BRANCHES 下可以看到出現了 release/v0.1.0 的 branch。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9078051_orig.png)
+
+現在讓我們修改一下專案目錄下的 README.md 的內容，加上版本號資訊後存檔。
+
+(畫面中使用的是 [Mou Markdown 編輯器](http://mouapp.com/), 在 Mac 上編輯 README 相當好用, 有機會Bear再詳加介紹)
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5068778_orig.png)
+
+接下來 commit 剛剛的變更，一樣切換到 Working Copy 頁面，選取變更的檔案，點擊 Add。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/389527_orig.png)
+
+點擊 Commit。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2237938_orig.png)
+
+輸入 Commit message 後點擊 Commit。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3877164_orig.png)
+
+回到 BRANCHES 頁面，可以看到 Graph 有變動了。接下來請點擊 Git Flow。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9237225_orig.png)
+
+因為目前我們正在 release/v0.1.0 branch，所以直接點擊 Finish Current。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7321146_orig.png)
+
+點擊 OK。請注意在 Git Flow 流程中，release branch 只負責釋出設定與修正 bug，千萬不要在上面開發新功能。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/727766_orig.png)
+
+參考指令：
+
+```bash
+git checkout master
+git merge --no-ff release/v0.1.0
+
+git tag -a v0.1.0
+
+git checkout develop
+git merge --no-ff release/v0.1.0
+
+git branch -d release/v0.1.0
+</code></pre>
+
 <p>Graph 就會出現了變更，release/v0.1.0 會 merge 到 master 跟 develop。並在 master 上標上 v0.1.0 的 tag。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6398162_orig.png" alt="" /></p>
+
 <p>經由以上步驟，我們就學會了依照 Git Flow 從開發到釋出的流程。</p>
-<p><h2>緊急上版(hotfix)</h2></p>
+
+<h2>緊急上版(hotfix)</h2>
+
 <p>當專案釋出之後，可能才發現有重大的錯誤，</p>
-<p>但一時之間新功能也正在開發，無法及時釋出新版本.....</p>
+
+<p>但一時之間新功能也正在開發，無法及時釋出新版本…..</p>
+
 <p>這時候可以從  master 分支出 hotfix branch 做緊急上版。</p>
+
 <p>假設目前專案正在進行新功能的開發，如上圖所示，但突然發現版本v0.1.0有錯誤需要馬上修改。請點擊 Git Flow。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4460637_orig.png" alt="" /></p>
+
 <p>因為目前我們在正 feature/f2 branch上，所以我們點擊 Other Action…開啟選單。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2402940_orig.png" alt="" /></p>
+
 <p>點擊 Start Hotfix。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6734112_orig.png" alt="" /></p>
+
 <p>輸入版本號，因為目前我們要修正的版本是v0.1.0，所以按照慣例這裡輸入v0.1.1。點擊 OK。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4712139_orig.png" alt="" /></p>
+
 <p>參考指令：</p>
-<p><pre><code>git checkout -b hotfix/v0.1.1 master`
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4438899_orig.png)</p>
-<p>可以看到 Graph 發生了變動，hotfix/v0.1.1是從 master 分支出來的，接下來就可以修正錯誤，這邊就不再重複講述 commmit 的步驟。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2283436_orig.png)</p>
-<p>錯誤已經修復好也 commit 了，接下來就是釋出更新的版本。請點擊 Git Flow。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8968311_orig.png)</p>
-<p>因為目前我們就在 hotfix/v0.1.1上，所以直接點擊 Finish Current。</p>
-<p>![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5429617_orig.png)</p>
-<p>點擊 OK。</p>
-<p>參考指令：</p>
-<p>```bash</p>
-<p>git checkout master</p>
-<p>git merge --no-ff hotfix/v0.1.1</p>
-<p>git tag -a v0.1.1</p>
-<p>git checkout develop</p>
-<p>git merge --no-ff -b hotfix/v0.1.1</p>
-<p>git branch -d hotfix/v0.1.1</p>
-<p></p>
+
+<pre><code class="bash">git checkout -b hotfix/v0.1.1 master`
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4438899_orig.png)
+
+可以看到 Graph 發生了變動，hotfix/v0.1.1是從 master 分支出來的，接下來就可以修正錯誤，這邊就不再重複講述 commmit 的步驟。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2283436_orig.png)
+
+錯誤已經修復好也 commit 了，接下來就是釋出更新的版本。請點擊 Git Flow。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8968311_orig.png)
+
+因為目前我們就在 hotfix/v0.1.1上，所以直接點擊 Finish Current。
+
+![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5429617_orig.png)
+
+點擊 OK。
+
+參考指令：
+
+```bash
+git checkout master
+git merge --no-ff hotfix/v0.1.1
+
+git tag -a v0.1.1
+
+git checkout develop
+git merge --no-ff -b hotfix/v0.1.1
+
+git branch -d hotfix/v0.1.1
+</code></pre>
+
 <p>可以在 Graph 中看到了變更，hotfix/v0.1.1 會 merge 到 master 跟 develop。並在 master 上標上 v0.1.1 的 tag。之後再切換到 feature/f2 繼續開發新功能。</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1116585_orig.png" alt="" /></p>
+
 <p>以上就是在 SourceTree 使用 Git flow 開發流程的方式。</p>
+
 <p><a href="http://www.sourcetreeapp.com/">最後如果希望下載SourceTree的，請點此處下載</a></p>
+
 <p><a href="http://www.takobear.tw/2013/10/05/macapp-sourcetree/">想了解SourceTree是什麼的，請參考Takobear: SourceTree簡介一文</a></p>
+
 <p>參考網站：</p>
+
 <p><a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></p>
+
 <p><a href="http://ihower.tw/blog/archives/5140">Git flow 開發流程</a></p>
+
 <p><a href="http://fann.im/blog/2012/03/12/git-flow-notes/">Git-flow 使用笔记</a></p>
+
 <p><a href="http://blog.wu-boy.com/2011/03/git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6-branch-model-%E5%88%86%E6%94%AF%E6%A8%A1%E7%B5%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9/">Git 版本控制 branch model 分支模組基本介紹</a></p>
+
 <p><a href="https://www.facebook.com/funnytechandnews/">喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</a></p>
-</code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></ul></p></ul></p></ul></p>
 
   </div>
 

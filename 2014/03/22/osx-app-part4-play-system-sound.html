@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>OSX APP 教學 Part4-play system sound</title>
-  <meta name="description" content="本教學目標：	修改 上回教學Part3 的計時器程式碼	使用 NSSound 播放系統音效操作環境：	OS X Version 10.9.1	Xcode Version 5.1 (5B130a)本次教學將爲 HelloTimer 的按鈕加上系統音效。建立 OS X Application 專案本次延續使用 上回教...">
+  <meta name="description" content="本教學目標：	修改 上回教學Part3 的計時器程式碼	使用 NSSound 播放系統音效操作環境：	OS X Version 10.9.1	Xcode Version 5.1 (5B130a)本次教學將爲 HelloTimer 的按鈕加上系統音效。">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,88 +61,102 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2908976_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>本教學目標：
-<p><ol>
-<p>	<li>修改 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/osx-app-part3-nsformatter.html" target="_blank">上回教學Part3</a> 的計時器程式碼</li></p>
-<p>	<li>使用 NSSound 播放系統音效</li></p>
-<p></p>
-<p>操作環境：</p>
-<p><ul>
-<p>	<li>OS X Version 10.9.1</li></p>
-<p>	<li>Xcode Version 5.1 (5B130a)</li></p>
-<p></p>
-<p>本次教學將爲 HelloTimer 的按鈕加上系統音效。</p>
-<p></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="731012933711687879" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><h2><strong>建立 OS X Application 專案</strong></h2></p>
-<p><div>本次延續使用 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/osx-app-part3-nsformatter.html" target="_blank">上回教學Part3</a> 的專案，不再額外新建。
-<p></p>
-<p><h2><strong>NSSound 類別</strong></h2></p>
-<p><div>本次教學要介紹的是使用 <a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSound_Class/Reference/Reference.html#//apple_ref/doc/uid/20000393-41128" target="_blank">NSSound</a> 類別播放系統音效。
-<p>NSSound 提供了簡單的介面讓我們去播放被 Core Audio 與 QuickTime 所支援格式的音效檔，AIFF、WAVE、與 MP3 等等。</p>
-<p>NSSound 有提供許多方法用來載入音效檔，但本次教學先教最簡單的使用 soundName: 方法透過自動搜尋載入符合名稱的音效檔。</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7678682_orig.png" alt="图片" /></a>
-<p><div>/System/Library/Sounds</div></p>
-<p></p>
-<p></p>
-<p><div>在本次教學中，我們預計使用在 /System/Library/Sounds下的系統預設的音效檔，soundName:方法傳入的檔案名稱，可以從該目錄中的檔案挑選(不必加上副檔名)。
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/508026_orig.png" alt="图片" /></a>
-<p><div>HelloSystemSound</div></p>
-<p></p>
-<p></p>
-<p><div>如果覺得開目錄一個個點開檔案播放很麻煩，可以下載 Bear 寫好的<a title="" href="https://github.com/TakoBear/HelloSystemSound" target="_blank">測試程式</a>，直接點擊試聽。
-<p></p>
-<p><h2><strong>編寫邏輯</strong></h2></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9753098_orig.png" alt="图片" /></a>
-<p><div>點擊專案中 MainWindowController.m 檔案。</div></p>
-<p></p>
-<p></p>
-<p><div>新增 - (void) playSystemSound 方法用來播放系統音效，這裡我們使用 Glass.aiff 音效檔。</div></p>
-<p><div>
-<p><div id="249387981675506729" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>修改 - (IBAction)handleClick:(id)sender 方法，呼叫 playSystemSound 方法。</div></p>
-<p><div>
-<p><div id="822423708627751719" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><h2><strong>測試結果</strong></h2></p>
-<p><div>接下來測試一下完成的程式。
-<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
-<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
-<p>現在按下按鈕，就會聽到所設定的音效了。</p>
-<p></p>
-<p><h2><strong>後續討論</strong></h2></p>
-<p><div>這次介紹了使用 soundName: 方法載入音效並播放，使得計時器越來越有趣了，下次教學將介紹其它更多關於播放聲音的方法。關於這次的 Sample Code 下載：<a href="https://github.com/TakoBear/OSXHelloTimer3" target="_blank">https://github.com/TakoBear/OSXHelloTimer3</a>
-<p></p>
-<p><h2><strong>參考</strong></h2></p>
-<p><div><a title="" href="http://stackoverflow.com/questions/9157842/how-do-i-trigger-sound-alert-in-osx-using-cocoa" target="_blank">How do I trigger sound alert in OSX using Cocoa?</a>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Sound/Sound.html#//apple_ref/doc/uid/10000104-SW1" target="_blank">Introduction to Sound Programming Topics for Cocoa</a></p>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSound_Class/Reference/Reference.html#//apple_ref/doc/uid/20000393-41128" target="_blank">NSSound Class Reference</a></p>
-<p><a title="" href="https://github.com/TakoBear/HelloSystemSound" target="_blank">HelloSystemSound</a>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></ul></p></ol></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2908976_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">本教學目標：
+<ol>
+	<li>修改 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/osx-app-part3-nsformatter.html" target="_blank">上回教學Part3</a> 的計時器程式碼</li>
+	<li>使用 NSSound 播放系統音效</li>
+</ol>
+操作環境：
+<ul>
+	<li>OS X Version 10.9.1</li>
+	<li>Xcode Version 5.1 (5B130a)</li>
+</ul>
+本次教學將爲 HelloTimer 的按鈕加上系統音效。
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="731012933711687879" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>建立 OS X Application 專案</strong></h2>
+<div class="paragraph">本次延續使用 <a title="" href="http://www.takobear.weebly.com/12/post/2014/03/osx-app-part3-nsformatter.html" target="_blank">上回教學Part3</a> 的專案，不再額外新建。
+
+</div>
+<h2 class="wsite-content-title"><strong>NSSound 類別</strong></h2>
+<div class="paragraph">本次教學要介紹的是使用 <a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSound_Class/Reference/Reference.html#//apple_ref/doc/uid/20000393-41128" target="_blank">NSSound</a> 類別播放系統音效。
+
+NSSound 提供了簡單的介面讓我們去播放被 Core Audio 與 QuickTime 所支援格式的音效檔，AIFF、WAVE、與 MP3 等等。
+
+NSSound 有提供許多方法用來載入音效檔，但本次教學先教最簡單的使用 soundName: 方法透過自動搜尋載入符合名稱的音效檔。
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7678682_orig.png" alt="图片" /></a>
+<div>/System/Library/Sounds</div>
+</div>
+</div>
+<div class="paragraph">在本次教學中，我們預計使用在 /System/Library/Sounds下的系統預設的音效檔，soundName:方法傳入的檔案名稱，可以從該目錄中的檔案挑選(不必加上副檔名)。
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/508026_orig.png" alt="图片" /></a>
+<div>HelloSystemSound</div>
+</div>
+</div>
+<div class="paragraph">如果覺得開目錄一個個點開檔案播放很麻煩，可以下載 Bear 寫好的<a title="" href="https://github.com/TakoBear/HelloSystemSound" target="_blank">測試程式</a>，直接點擊試聽。
+
+</div>
+<h2 class="wsite-content-title"><strong>編寫邏輯</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9753098_orig.png" alt="图片" /></a>
+<div>點擊專案中 MainWindowController.m 檔案。</div>
+</div>
+</div>
+<div class="paragraph">新增 - (void) playSystemSound 方法用來播放系統音效，這裡我們使用 Glass.aiff 音效檔。</div>
+<div>
+<div id="249387981675506729" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">修改 - (IBAction)handleClick:(id)sender 方法，呼叫 playSystemSound 方法。</div>
+<div>
+<div id="822423708627751719" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>測試結果</strong></h2>
+<div class="paragraph">接下來測試一下完成的程式。
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。
+
+現在按下按鈕，就會聽到所設定的音效了。
+
+</div>
+<h2 class="wsite-content-title"><strong>後續討論</strong></h2>
+<div class="paragraph">這次介紹了使用 soundName: 方法載入音效並播放，使得計時器越來越有趣了，下次教學將介紹其它更多關於播放聲音的方法。關於這次的 Sample Code 下載：<a href="https://github.com/TakoBear/OSXHelloTimer3" target="_blank">https://github.com/TakoBear/OSXHelloTimer3</a>
+
+</div>
+<h2 class="wsite-content-title"><strong>參考</strong></h2>
+<div class="paragraph"><a title="" href="http://stackoverflow.com/questions/9157842/how-do-i-trigger-sound-alert-in-osx-using-cocoa" target="_blank">How do I trigger sound alert in OSX using Cocoa?</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Sound/Sound.html#//apple_ref/doc/uid/10000104-SW1" target="_blank">Introduction to Sound Programming Topics for Cocoa</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSound_Class/Reference/Reference.html#//apple_ref/doc/uid/20000393-41128" target="_blank">NSSound Class Reference</a>
+<a title="" href="https://github.com/TakoBear/HelloSystemSound" target="_blank">HelloSystemSound</a>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!
+
+</div>
+<div></div>
 
   </div>
 

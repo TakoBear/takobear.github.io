@@ -61,262 +61,282 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/892120_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>各位親愛的Takobear粉絲朋友們!!
-<p>感謝大家一直以來的支持, 終於我們要從iOS教學階段, 邁入到Mac OSX的開發教學了!!</p>
-<p>接下來的教學一系列會有Xcode外掛的開發, OS X App的開發教學等文章, 有興趣的朋友別錯過囉!</p>
-<p>既然是第一篇教學, 這次Bear就從Hello World開始啦!!!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>這次教學目標：
-<p><ol>
-<p>	<li>建立簡單的 OS X Application</li></p>
-<p>	<li>更改 OS X Application Icon</li></p>
-<p></p>
-<p> 操作環境：</p>
-<p>OS X Version 10.9.1</p>
-<p>Xcode Version 5.0.2 (5A3005)</p>
-<p>OS X App 與 iOS App 主要都以 Objective-C 為主要開發語言，已經有 iOS 開發基礎的朋友相信很快就可以上手。</p>
-<p>(對iOS 開發有興趣的朋友, 請點選前往本站<a href="http://www.takobear.weebly.com/12/category/bear-ioseafa354002/1.html" target="_blank">Bear與蘋果教學內容</a>)</p>
-<p>從以下開始, Bear還是一步步開始解釋如何建立Mac App專案啦</p>
-<p></p>
-<p><h2><strong>建立 OS X Application 專案</strong></h2></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4564295_orig.png" alt="图片" /></a>
-<p><div>執行Xcode，點擊 Create a new Xcode project。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6008754_orig.png" alt="图片" /></a>
-<p><div>選擇左側 OS X 下的 Application，再選擇右側畫面的 Cocoa Application，點擊 Next。</div></p>
-<p></p>
-<p></p>
-<p><div>這邊就要開始認識到, Mac的開發上, 著重的Framework就是從Cocoa開始的,
-<p>在Mac上沒有UIKit的概念, 相對的著重在於AppKit, Cocoa以及Foundation等基礎的Framwork,</p>
-<p>接下來我們在慢慢往下介紹吧</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6156209_orig.png" alt="图片" /></a>
-<p><div>依序輸入如圖中的資訊。</div></p>
-<p></p>
-<p></p>
-<p><div>Product Name:就是你的 APP 名稱。
-<p>Organization Name:組織名稱，可以不填。</p>
-<p>Company Identifier:這會套用在 Bundle Identifier。</p>
-<p>Bundle Identifier:用來識別 APP 的唯一識別串字串。</p>
-<p>Class Prefix:class 的前綴字串，用在 Application Delegate的名稱上：Class Prefix + AppDelegate(.h/.m)。</p>
-<p>App Store Category:App Store 的類別，本練習填 none 就可以了。</p>
-<p>Document Extension:本練習不填, Bear之後會在慢慢介紹</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1050363_orig.png" alt="图片" /></a>
-<p><div>選擇專案存放路徑，點擊 Create。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3365119_orig.png" alt="图片" /></a>
-<p><div>就會產生如圖專案基本所需的設定與檔案。</div></p>
-<p></p>
-<p></p>
-<p><h2><strong>專案說明</strong></h2></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3948712_orig.png" alt="图片" /></a>
-<p><div>點擊 HelloWorld，中間畫面就會出現專案設定。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8734764_orig.png" alt="图片" /></a>
-<p><div>HelloWorld下放置了最基本的程式檔。</div></p>
-<p></p>
-<p></p>
-<p><div>bearAppDelegate(.h/.m):預設的程式碼。
-<p>MainMenu.xib:提供預設的選單與空視窗。</p>
-<p>Images.xcassets:專案Icon所參考的目錄</p>
-<p>Supporting Files:基本上不會直接動到裡面的檔案</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/243225_orig.png" alt="图片" /></a>
-<p><div>點擊執行。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6164143_orig.png" alt="图片" /></a>
-<p><div>執行結果：選單與空視窗。</div></p>
-<p></p>
-<p></p>
-<p><h2><strong>設計版面(layout)</strong></h2></p>
-<p><div>接下來給 APP 提供一些互動功能。
-<p>跟iOS不太一樣, 在開發行動裝置時, 我們很長需要計算到滿畫面也就是最大寬度或最大高度解析度下的畫面中,</p>
-<p>元件需要怎麼配置的問題, 但是在桌機的應用程式開發中, 其實對於版面的配置要求跟手機上的需求確實是不同的</p>
-<p>在手機上的開發, Bear不太建議大家採用這種XIB概念設計, 因為變動幅度實在太大而且機率太高了,</p>
-<p>也為了能夠快速開發每個不同的專案, 採用程式化的開發才比較容易減輕之後的負擔,</p>
-<p>當然這裡說多了, 其實Bear只是想簡化教學而已XD</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4043762_orig.png" alt="图片" /></a>
-<p><div>選擇 MainMeni.xib、Objects下的 Window - HelloWorld，就會在設計版面中顯示空視窗。</div></p>
-<p></p>
-<p></p>
-<p><div><strong>本教學暫不說明選單的部分, 大家先知道怎麼用就好了XD</strong></div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6310973_orig.png" alt="图片" /></a>
-<p><div>從右下角的 UI 元件選單中，拖曳對應的元件到視窗中，並將視窗調整到適當大小。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6341922_orig.png" alt="图片" /></a>
-<p><div>點擊視窗中的 Label 元件，於右方屬性欄修改 Title 爲 Enter your name below:。</div></p>
-<p></p>
-<p></p>
-<p><div>在圖中你可以發現，在 OS X APP 中 Label 元件，
-<p>其實就是 Text Field 元件，只是子畫面的 Text Field Cell 的屬性不同而已。</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7375710_orig.png" alt="图片" /></a>
-<p><div>點擊視窗中的 Push Button 元件，於右方屬性欄修改 Title 爲 Submit。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/931365_orig.png" alt="图片" /></a>
-<p><div>選擇 bearAppDelegate.h，新增以下內容。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div id="300945201410695063" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1942807_orig.png" alt="图片" /></a>
-<p><div>選擇 bearAppDelegate.m，新增以下內容。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div id="618674050224300282" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1400738_orig.png" alt="图片" /></a>
-<p><div>選擇 MainMenu.xib，對 Bear App Delegate 點擊右鍵。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3402729_orig.png" alt="图片" /></a>
-<p><div>點擊 message 的圈不放，拖曳至 Label 放開。點擊 yourname 的圈不放，拖曳至 Text Field 放開。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1435269_orig.png" alt="图片" /></a>
-<p><div>點擊 submit 的圈不放，拖曳至 Push Button 放開。</div></p>
-<p></p>
-<p></p>
-<p><div>接下來測試剛寫好的程式。
-<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
-<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8436914_orig.png" alt="图片" /></a>
-<p><div>顯示新的版面。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6862597_orig.png" alt="图片" /></a>
-<p><div>於 Text Field 輸入名字。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7493810_orig.png" alt="图片" /></a>
-<p><div>顯示 Welcome, [名字]! 字串。</div></p>
-<p></p>
-<p></p>
-<p><h2><strong>更換 APP 圖示(icon)</strong></h2></p>
-<p><div>這裡Bear得提一下, 如何在Mac App內更換掉原本的iCon方法, 遵照以下步驟才能把你的Mac App icon變得跟其他人不一樣噢!</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2401789_orig.png" alt="图片" /></a>
-<p><div>點開 Products ，點擊 HelloWorld.app 可以看到目前 APP 所使用的圖示。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6368312_orig.png" alt="图片" /></a>
-<p><div>選擇 Images.xcassets、選擇 Appicon，就會顯示不同解析度的 icon 設定畫面。</div></p>
-<p></p>
-<p></p>
-<p><div>關於 icon 的解析度大小，請參考 <a href="https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/AppleHIGuidelines/IconsImages/IconsImages.html#//apple_ref/doc/uid/20000967-TP6" target="_blank">OS X Human Interface Guidelines</a>。</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7492984_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4782701_orig.png" alt="图片" /></a>
-<p><div>製作不同解析度的 icon 圖片。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1005567_orig.png" alt="图片" /></a>
-<p><div>將圖片依照解析度，拖曳至適當位置。如果螢幕寬度太小，無法看到 256 或是 512 的欄位，可以先關閉側邊欄。</div></p>
-<p></p>
-<p></p>
-<p><div>接著重新產生 APP
-<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
-<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4341051_orig.png" alt="图片" /></a>
-<p><div>點開 Products ，點擊 HelloWorld.app 可以看到目前 APP 所使用的圖示已經換成凝視的熊臉了。</div></p>
-<p></p>
-<p></p>
-<p><div>到這邊是不是覺得很有趣呢XDDDD</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7446554_orig.png" alt="图片" /></a>
-<p><div>對 HelloWorld.app 點擊右鍵叫出選單，點擊 Show in Finder。</div></p>
-<p></p>
-<p></p>
-<p><div>點選Show In Finder, 就能發現你的App所在的資料夾位址囉
-<p>有使用Mac的朋友們, 大家對這種狀況應該不陌生吧? 一款Mac App下載下來後, 最重要的就是把這個編譯出來的熊臉...</p>
-<p>呃不是, 是App放到應用程式的資料夾內, 一般只要點選他就能啟動程式了</p>
-<p>到這邊是不是理解整個結構了呢?</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9965781_orig.png" alt="图片" /></a>
-<p><div>可以看到圖示爲凝視的熊臉的 App ：HelloWorld。</div></p>
-<p></p>
-<p></p>
-<p><div>關於這次的Sample Code &amp; Icon Image 下載：
-<p><a title="" href="https://github.com/TakoBear/OSXHelloWorld" target="_blank">https://github.com/TakoBear/OSXHelloWorld</a></p>
-<p><div>
-<p><div id="369217102561554168" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>參考：
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/General/Conceptual/MOSXAppProgrammingGuide/CoreAppDesign/CoreAppDesign.html">Mac App Programming Guide</a></p>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/AppleHIGuidelines/IconsImages/IconsImages.html#//apple_ref/doc/uid/20000967-TP6" target="_blank">OS X Human Interface Guidelines</a>關於iOS開發系列文, 請參考以下文章介紹</p>
-<p>[入門系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a></p>
-<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a></p>
-<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a></p>
-<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a></p>
-<p>6. <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-notificationcenter.html" target="_blank">Xcode 5 - 什麼是通知中心?</a></p>
-<p>[中級系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a></p>
-<p>2.<a title="" href="http://www.takobear.weebly.com/12/post/2014/01/ios1.html" target="_blank"> 把Log記錄成文字檔  - Debug測試的好方法</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">如何把訊息/圖片分享給其他App? (內含LINE, Skype, WhatsApp)</a></p>
-<p>4.<a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-ios-shlinekit-line.html" target="_blank"> OpenSource - SHLineKit: 分享訊息/圖片到LINE上</a></p>
-<p>[進階系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a></p>
-<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a></p>
-<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a></p>
-<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a></p>
-<p>喜歡這篇文章嗎？ 趕快加入Takobear粉絲團吧!</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></ol></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/892120_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">各位親愛的Takobear粉絲朋友們!!
+感謝大家一直以來的支持, 終於我們要從iOS教學階段, 邁入到Mac OSX的開發教學了!!
+接下來的教學一系列會有Xcode外掛的開發, OS X App的開發教學等文章, 有興趣的朋友別錯過囉!
+既然是第一篇教學, 這次Bear就從Hello World開始啦!!!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">這次教學目標：
+<ol>
+	<li>建立簡單的 OS X Application</li>
+	<li>更改 OS X Application Icon</li>
+</ol>
+<span style="font-size: small;">
+</span> 操作環境：
+OS X Version 10.9.1
+Xcode Version 5.0.2 (5A3005)
+
+OS X App 與 iOS App 主要都以 Objective-C 為主要開發語言，已經有 iOS 開發基礎的朋友相信很快就可以上手。
+
+(對iOS 開發有興趣的朋友, 請點選前往本站<a href="http://www.takobear.weebly.com/12/category/bear-ioseafa354002/1.html" target="_blank">Bear與蘋果教學內容</a>)
+從以下開始, Bear還是一步步開始解釋如何建立Mac App專案啦
+
+</div>
+<h2 class="wsite-content-title"><strong>建立 OS X Application 專案</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4564295_orig.png" alt="图片" /></a>
+<div>執行Xcode，點擊 Create a new Xcode project。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6008754_orig.png" alt="图片" /></a>
+<div>選擇左側 OS X 下的 Application，再選擇右側畫面的 Cocoa Application，點擊 Next。</div>
+</div>
+</div>
+<div class="paragraph">這邊就要開始認識到, Mac的開發上, 著重的Framework就是從Cocoa開始的,
+在Mac上沒有UIKit的概念, 相對的著重在於AppKit, Cocoa以及Foundation等基礎的Framwork,
+接下來我們在慢慢往下介紹吧</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6156209_orig.png" alt="图片" /></a>
+<div>依序輸入如圖中的資訊。</div>
+</div>
+</div>
+<div class="paragraph">Product Name:就是你的 APP 名稱。
+Organization Name:組織名稱，可以不填。
+Company Identifier:這會套用在 Bundle Identifier。
+Bundle Identifier:用來識別 APP 的唯一識別串字串。
+Class Prefix:class 的前綴字串，用在 Application Delegate的名稱上：Class Prefix + AppDelegate(.h/.m)。
+App Store Category:App Store 的類別，本練習填 none 就可以了。
+Document Extension:本練習不填, Bear之後會在慢慢介紹
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1050363_orig.png" alt="图片" /></a>
+<div>選擇專案存放路徑，點擊 Create。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3365119_orig.png" alt="图片" /></a>
+<div>就會產生如圖專案基本所需的設定與檔案。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>專案說明</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3948712_orig.png" alt="图片" /></a>
+<div>點擊 HelloWorld，中間畫面就會出現專案設定。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8734764_orig.png" alt="图片" /></a>
+<div>HelloWorld下放置了最基本的程式檔。</div>
+</div>
+</div>
+<div class="paragraph">bearAppDelegate(.h/.m):預設的程式碼。
+MainMenu.xib:提供預設的選單與空視窗。
+Images.xcassets:專案Icon所參考的目錄
+Supporting Files:基本上不會直接動到裡面的檔案
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/243225_orig.png" alt="图片" /></a>
+<div>點擊執行。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6164143_orig.png" alt="图片" /></a>
+<div>執行結果：選單與空視窗。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>設計版面(layout)</strong></h2>
+<div class="paragraph">接下來給 APP 提供一些互動功能。
+
+
+跟iOS不太一樣, 在開發行動裝置時, 我們很長需要計算到滿畫面也就是最大寬度或最大高度解析度下的畫面中,
+元件需要怎麼配置的問題, 但是在桌機的應用程式開發中, 其實對於版面的配置要求跟手機上的需求確實是不同的
+在手機上的開發, Bear不太建議大家採用這種XIB概念設計, 因為變動幅度實在太大而且機率太高了,
+也為了能夠快速開發每個不同的專案, 採用程式化的開發才比較容易減輕之後的負擔,
+當然這裡說多了, 其實Bear只是想簡化教學而已XD
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4043762_orig.png" alt="图片" /></a>
+<div>選擇 MainMeni.xib、Objects下的 Window - HelloWorld，就會在設計版面中顯示空視窗。</div>
+</div>
+</div>
+<div class="paragraph"><strong>本教學暫不說明選單的部分, 大家先知道怎麼用就好了XD</strong></div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6310973_orig.png" alt="图片" /></a>
+<div>從右下角的 UI 元件選單中，拖曳對應的元件到視窗中，並將視窗調整到適當大小。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6341922_orig.png" alt="图片" /></a>
+<div>點擊視窗中的 Label 元件，於右方屬性欄修改 Title 爲 Enter your name below:。</div>
+</div>
+</div>
+<div class="paragraph">在圖中你可以發現，在 OS X APP 中 Label 元件，
+其實就是 Text Field 元件，只是子畫面的 Text Field Cell 的屬性不同而已。
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7375710_orig.png" alt="图片" /></a>
+<div>點擊視窗中的 Push Button 元件，於右方屬性欄修改 Title 爲 Submit。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/931365_orig.png" alt="图片" /></a>
+<div>選擇 bearAppDelegate.h，新增以下內容。</div>
+</div>
+</div>
+<div>
+<div id="300945201410695063" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1942807_orig.png" alt="图片" /></a>
+<div>選擇 bearAppDelegate.m，新增以下內容。</div>
+</div>
+</div>
+<div>
+<div id="618674050224300282" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1400738_orig.png" alt="图片" /></a>
+<div>選擇 MainMenu.xib，對 Bear App Delegate 點擊右鍵。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3402729_orig.png" alt="图片" /></a>
+<div>點擊 message 的圈不放，拖曳至 Label 放開。點擊 yourname 的圈不放，拖曳至 Text Field 放開。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1435269_orig.png" alt="图片" /></a>
+<div>點擊 submit 的圈不放，拖曳至 Push Button 放開。</div>
+</div>
+</div>
+<div class="paragraph"><span style="font-size: small;">接下來測試剛寫好的程式。</span>
+
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8436914_orig.png" alt="图片" /></a>
+<div>顯示新的版面。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6862597_orig.png" alt="图片" /></a>
+<div>於 Text Field 輸入名字。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7493810_orig.png" alt="图片" /></a>
+<div>顯示 Welcome, [名字]! 字串。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>更換 APP 圖示(icon)</strong></h2>
+<div class="paragraph">這裡Bear得提一下, 如何在Mac App內更換掉原本的iCon方法, 遵照以下步驟才能把你的Mac App icon變得跟其他人不一樣噢!</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2401789_orig.png" alt="图片" /></a>
+<div>點開 Products ，點擊 HelloWorld.app 可以看到目前 APP 所使用的圖示。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6368312_orig.png" alt="图片" /></a>
+<div>選擇 Images.xcassets、選擇 Appicon，就會顯示不同解析度的 icon 設定畫面。</div>
+</div>
+</div>
+<div class="paragraph">關於 icon 的解析度大小，請參考 <a href="https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/AppleHIGuidelines/IconsImages/IconsImages.html#//apple_ref/doc/uid/20000967-TP6" target="_blank">OS X Human Interface Guidelines</a>。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7492984_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4782701_orig.png" alt="图片" /></a>
+<div>製作不同解析度的 icon 圖片。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1005567_orig.png" alt="图片" /></a>
+<div>將圖片依照解析度，拖曳至適當位置。如果螢幕寬度太小，無法看到 256 或是 512 的欄位，可以先關閉側邊欄。</div>
+</div>
+</div>
+<div class="paragraph">接著重新產生 APP
+
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4341051_orig.png" alt="图片" /></a>
+<div>點開 Products ，點擊 HelloWorld.app 可以看到目前 APP 所使用的圖示已經換成凝視的熊臉了。</div>
+</div>
+</div>
+<div class="paragraph">到這邊是不是覺得很有趣呢XDDDD</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7446554_orig.png" alt="图片" /></a>
+<div>對 HelloWorld.app 點擊右鍵叫出選單，點擊 Show in Finder。</div>
+</div>
+</div>
+<div class="paragraph">點選Show In Finder, 就能發現你的App所在的資料夾位址囉
+有使用Mac的朋友們, 大家對這種狀況應該不陌生吧? 一款Mac App下載下來後, 最重要的就是把這個編譯出來的熊臉...
+呃不是, 是App放到應用程式的資料夾內, 一般只要點選他就能啟動程式了
+到這邊是不是理解整個結構了呢?</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9965781_orig.png" alt="图片" /></a>
+<div>可以看到圖示爲凝視的熊臉的 App ：HelloWorld。</div>
+</div>
+</div>
+<div class="paragraph">關於這次的Sample Code &amp; Icon Image 下載：
+<a title="" href="https://github.com/TakoBear/OSXHelloWorld" target="_blank">https://github.com/TakoBear/OSXHelloWorld</a></div>
+<div>
+<div id="369217102561554168" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">參考：
+<a title="" href="https://developer.apple.com/library/mac/documentation/General/Conceptual/MOSXAppProgrammingGuide/CoreAppDesign/CoreAppDesign.html">Mac App Programming Guide</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/AppleHIGuidelines/IconsImages/IconsImages.html#//apple_ref/doc/uid/20000967-TP6" target="_blank">OS X Human Interface Guidelines</a>關於iOS開發系列文, 請參考以下文章介紹
+[入門系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a>
+6. <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-notificationcenter.html" target="_blank">Xcode 5 - 什麼是通知中心?</a>
+
+[中級系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a>
+2.<a title="" href="http://www.takobear.weebly.com/12/post/2014/01/ios1.html" target="_blank"> 把Log記錄成文字檔  - Debug測試的好方法</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-xcode-iosapp.html" target="_blank">如何把訊息/圖片分享給其他App? (內含LINE, Skype, WhatsApp)</a>
+4.<a title="" href="http://www.takobear.weebly.com/12/post/2014/02/-ios-shlinekit-line.html" target="_blank"> OpenSource - SHLineKit: 分享訊息/圖片到LINE上</a>
+
+[進階系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a>
+
+喜歡這篇文章嗎？ 趕快加入Takobear粉絲團吧!
+
+</div>
+<div></div>
 
   </div>
 

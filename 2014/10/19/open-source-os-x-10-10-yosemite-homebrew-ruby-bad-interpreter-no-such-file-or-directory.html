@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[Open Source] 升級成OS X 10.10 (Yosemite) - Homebrew 發生 ruby bad interpreter: No such file or directory</title>
-  <meta name="description" content="最近應該蠻多朋友興高彩烈的升級成OS X 10.10 (Yosemite)吧,不過如果你是喜歡用終端機(Terminal)進行編譯開發的朋友,可能會發現最近你愛用的brew 命令不能使用了...Bear也是今天測試的時候才發現, 但是要解決它並不困難喔!今天原本Bear要跟之前一樣安裝新套件,不過沒想到一下bre...">
+  <meta name="description" content="最近應該蠻多朋友興高彩烈的升級成OS X 10.10 (Yosemite)吧,不過如果你是喜歡用終端機(Terminal)進行編譯開發的朋友,可能會發現最近你愛用的brew 命令不能使用了...Bear也是今天測試的時候才發現, 但是要解決它並不困難喔!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,55 +61,62 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4484578_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>最近應該蠻多朋友興高彩烈的升級成OS X 10.10 (Yosemite)吧,
-<p>不過如果你是喜歡用終端機(Terminal)進行編譯開發的朋友,</p>
-<p>可能會發現最近你愛用的<a title="" href="https://github.com/Homebrew/homebrew" target="_blank">brew</a> 命令不能使用了...</p>
-<p>Bear也是今天測試的時候才發現, 但是要解決它並不困難喔!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="513977567347810648" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>今天原本Bear要跟之前一樣安裝新套件,
-<p>不過沒想到一下brew install 的指令就出現以下錯誤.../usr/local/bin/brew: /usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</p>
-<p>這種事情真的麻煩, 每次作業系統升級時可能或多或少都會遇到,</p>
-<p>要解決這個問題的話步驟蠻簡單的!</p>
-<p>這邊主要是brew的指令沒有正確對應到路徑, 只要稍微調整一下就好了!!</p>
-<p>步驟如下:</p>
-<p>1) 打開你的終端機 （Terminal）</p>
-<p>2) 輸入 nano /usr/local/Library/brew.rb</p>
-<p>3) 把你看到的畫面第一行有一個 "1.8" 改成 "Current" 就可以解決啦!!</p>
-<p>#!/System/Library/Frameworks/Ruby.framework/Versions/<strong>Current</strong>/usr/bin/ruby -W0</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9365455_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>改完後按下ctrl + x就搞定啦!!
-<p>換版本這陣子應該陸陸續續還會有很多問題, TakoBear如果發現有更多問題會再通知大家如何解決!!</p>
-<p><div>
-<p><div id="918768233886476616" align="left">
-<p><div id="fb-root"></div></p>
-<p><script>// < ![CDATA[</p>
-<p> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>// ]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
-<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div></p>
-<p></p>
-<p></p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4484578_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">最近應該蠻多朋友興高彩烈的升級成OS X 10.10 (Yosemite)吧,
+不過如果你是喜歡用終端機(Terminal)進行編譯開發的朋友,
+可能會發現最近你愛用的<a title="" href="https://github.com/Homebrew/homebrew" target="_blank">brew</a> 命令不能使用了...
+Bear也是今天測試的時候才發現, 但是要解決它並不困難喔!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="513977567347810648" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">今天原本Bear要跟之前一樣安裝新套件,
+不過沒想到一下brew install 的指令就出現以下錯誤.../usr/local/bin/brew: /usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory
+
+這種事情真的麻煩, 每次作業系統升級時可能或多或少都會遇到,
+要解決這個問題的話步驟蠻簡單的!
+這邊主要是brew的指令沒有正確對應到路徑, 只要稍微調整一下就好了!!
+
+步驟如下:
+1) 打開你的終端機 （Terminal）
+
+2) 輸入 nano /usr/local/Library/brew.rb
+
+3) 把你看到的畫面第一行有一個 "1.8" 改成 "Current" 就可以解決啦!!
+
+#!/System/Library/Frameworks/Ruby.framework/Versions/<span style="color: #fa0101;"><strong>Current</strong></span>/usr/bin/ruby -W0
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9365455_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">改完後按下ctrl + x就搞定啦!!
+換版本這陣子應該陸陸續續還會有很多問題, TakoBear如果發現有更多問題會再通知大家如何解決!!</div>
+<div>
+<div id="918768233886476616" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+</div>
+</div>
 
   </div>
 

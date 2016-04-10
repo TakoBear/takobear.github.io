@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[Windows]利用Open VPN連線</title>
-  <meta name="description" content="Bear來實現諾言了!這篇是接著上篇架設openvpn server後的一項小測試小測試，輕鬆點！就採用的通用 windows 系統作為介紹吧先說聲抱歉，Bear 這邊用的是Windows 8，不過過程大同小異，不用擔心首先，Bear 希望讀者先到 OpenVPN 官方網站下載 OpenVpn client 的 ...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,44 +61,84 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>Bear來實現諾言了!</p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9303932_orig.png" alt="" /></p>
+
+<p>Bear來實現諾言了!</p>
+
 <p>這篇是接著<a href="http://www.takobear.tw/2013/10/27/raspberry-pivpn-server/">上篇架設openvpn server</a>後的一項小測試小測試，輕鬆點！</p>
+
 <p>就採用的通用 windows 系統作為介紹吧</p>
+
 <p>先說聲抱歉，Bear 這邊用的是Windows 8，不過過程大同小異，不用擔心</p>
-<p><!--more--></p>
+
+<!--more-->
+
 <p>首先，Bear 希望讀者先到 OpenVPN 官方網站下載 OpenVpn client 的 App <a href="http://openvpn.net/index.php/download/community-downloads.html">http://openvpn.net/index.php/download/community-downloads.html</a></p>
+
 <p>依系統類型下載並安裝</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6507174_orig.png" alt="" /></p>
+
 <p>安裝過程單純，過程皆預設即可</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4584474_orig.png" alt="" /></p>
+
 <p>安裝完後會出現openvpn的相關程式（win7 開始－所有程式－Openvpn）</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7340011_orig.png" alt="" /></p>
+
 <p>此時先別執行任何應用程式，先更名新增加的虛擬網卡卡名需更名的網卡為｢TAP-Win32 Adapter V9｣或類似型號，將其更名為｢pvpn2｣，必須與下述設定檔一致</p>
+
 <p>接下來，建立連線所需要的 client 設定檔隨意打開一文件檔（*.txt file），更名成 *.ovpn file（example.ovpn）</p>
-<p><pre><code>client
-<p>dev tun</p>
-<p>dev-node pvpn2</p>
-<p>proto tcp</p>
-<p>remote YourServerIP 443</p>
-<p>resolv-retry infinite</p>
-<p>nobind</p>
-<p>persist-key</p>
-<p>persist-tun</p>
-<p>ca ca.crt</p>
-<p>cert UserName.crt</p>
-<p>key UserName.key</p>
-<p>;auth-user-passns-cert-type server</p>
-<p>tls-auth tls.key 1</p>
-<p>comp-lzo</p>
-<p>verb 3</p>
-<p></p>
+
+<pre><code>client
+dev tun
+dev-node pvpn2
+proto tcp
+remote YourServerIP 443
+resolv-retry infinite
+nobind
+
+persist-key
+persist-tun
+ca ca.crt
+cert UserName.crt
+key UserName.key
+
+;auth-user-passns-cert-type server
+tls-auth tls.key 1
+comp-lzo
+verb 3
+</code></pre>
+
 <p>注意 <em><strong>YourServerIP</strong></em></p>
+
 <p>必須是可對外的 IP，如果是非固定 IP，Bear 建議申請一個 DDNS 域名推薦 no-ip 服務<a href="http://www.noip.com/">http://www.noip.com/</a>相關教學網路上很多，Bear 就不多說了</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5916529_orig.png" alt="" /></p>
+
 <p>完成後將憑證跟設定檔拖曳至｢C:\Program Files\OpenVPN\config\｣內</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4912064_orig.png" alt="" /></p>
+
 <p>以｢系統管理者｣身分啟動｢OpenVPN GUI｣</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5936652_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6492765_orig.png" alt="" /></p>
+
 <p>工作列會多出上述圖案，對此右鍵點擊｢example（視命名而變）｣－｢Connect｣</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4520612_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9608084_orig.png" alt="" /></p>
+
 <p>等待OpenVPN連線，連線完後出現上右圖表示連線成功！恭喜，各位版友成功翻牆出去了 :)</p>
+
 <p>更多有趣消息還請繼續關注TakoBear! 我們會帶來更多更豐富有趣的文章!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 

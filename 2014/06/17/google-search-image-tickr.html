@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[中級] Google Search Image 如何找圖片? Tickr內輕鬆做到的方式</title>
-  <meta name="description" content="上週Tickr挺進了社交分類第四名打敗了Facebook, 在不分類App Store排行榜進到了前24名,非常感謝大家的支持! 有朋友好奇Bear是怎麼把Google Search找圖片的方式整合到我們的App中的,這邊的技術還是簡單跟大家分享一下噢! 即使替換成了Swift的語法也並不會有太大差異的!不曉得大...">
+  <meta name="description" content="上週Tickr挺進了社交分類第四名打敗了Facebook, 在不分類App Store排行榜進到了前24名,非常感謝大家的支持! 有朋友好奇Bear是怎麼把Google Search找圖片的方式整合到我們的App中的,這邊的技術還是簡單跟大家分享一下噢! 即使替換成了Swift的語法也並不會有太大差異的!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,78 +61,88 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/386425_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>上週Tickr挺進了社交分類第四名打敗了Facebook, 在不分類App Store排行榜進到了前24名,
-<p>非常感謝大家的支持! 有朋友好奇Bear是怎麼把Google Search找圖片的方式整合到我們的App中的,</p>
-<p>這邊的技術還是簡單跟大家分享一下噢! 即使替換成了Swift的語法也並不會有太大差異的!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="971964576486212585" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>不曉得大家之前有沒有下載過Tickr來玩呢?
-<p>我們搜尋圖片是藉由 Google Image Search API 來完成的</p>
-<p>關於這項方式可參考此網頁 : <a title="" href="https://developers.google.com/image-search/v1/jsondevguide">https://developers.google.com/image-search/v1/jsondevguide</a>這個搜尋的原理也相當簡單, 也就是透過發出一個HTTP請求到Google的伺服器(Server)</p>
-<p>利用Google回傳的結果進行呈現, 這項API的用法相當簡單</p>
-<p></p>
-<p><div>
-<p><div id="307971654212848786" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>這邊我們發出HTTP Request的方式是在App內嵌入ASIHTTPRequest,
-<p>喜歡用ARC的朋友也可以利用AFNetworking或是Apple內建的NSURLRequest做到一樣的效果這邊需要注意,  如果沒有特別要求Request只會回四個圖片的數據</p>
-<p>我們在網址後面多加了 &amp;開始數字&amp;rsz=搜尋圖片數</p>
-<p>來增加回傳結果</p>
-<p></p>
-<p><div>
-<p><div id="576976850133974379" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>這邊搜尋圖片數最多只能到8，換而言之就是一次Request最多只能要到8組圖片的數據
-<p>而由於API的限制，同一個關鍵字我們最多只能要到第64張圖片，超過就會回傳null</p>
-<p>這裡我們的處理方法就是跑6次迴圈，每次給予不同開始數字並要8張圖要回來的Request 是JSON格式的數據， (<a href="http://j796160836.pixnet.net/blog/post/30530326-%E7%9E%AD%E8%A7%A3json%E6%A0%BC%E5%BC%8F" target="_blank"><strong>不了解JSON是什麼想知道的請點這裡</strong></a>)</p>
-<p>裡面包了一層層的Dictionary，我們分別用key去找到我們想要的資訊，解析的程式碼如下：</p>
-<p></p>
-<p><div>
-<p><div id="670821368180037735" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>result這個Dictionary裡面就包含了我們搜尋圖片的相關資訊，而我們的程式只需要圖片的的縮圖及原圖URL，所以我們分別拿取key為 tbUrl 及 url 的值(值即為該圖URL)各位讀者如果想直接看URL會回傳什麼的話，可以直接將URL貼上瀏覽器，一開始我們的Request會回一堆字串，像是：
-<p></p>
-<p><div>
-<p><div id="728100344906623610" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>取出格式內的url欄位, 在貼到瀏覽器上面的話 ,你就能直接看到圖片了噢, 例如下圖</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4544337_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>對於Tickr這個App程式有興趣的話, 歡迎到我們的Github上下載喔!<strong>下載位址:</strong>
-<p><a title="" href="https://github.com/TakoBear/Tickr-by-TakoBear">https://github.com/TakoBear/Tickr-by-TakoBear</a></p>
-<p></p>
-<p><div>
-<p><div id="113028980191479224" align="left">
-<p><div id="fb-root"></div></p>
-<p><script>// < ![CDATA[</p>
-<p> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>// ]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
-<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div></p>
-<p></p>
-<p></p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/386425_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">上週Tickr挺進了社交分類第四名打敗了Facebook, 在不分類App Store排行榜進到了前24名,
+非常感謝大家的支持! 有朋友好奇Bear是怎麼把Google Search找圖片的方式整合到我們的App中的,
+這邊的技術還是簡單跟大家分享一下噢! 即使替換成了Swift的語法也並不會有太大差異的!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="971964576486212585" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">不曉得大家之前有沒有下載過Tickr來玩呢?
+我們搜尋圖片是藉由 Google Image Search API 來完成的
+關於這項方式可參考此網頁 : <a title="" href="https://developers.google.com/image-search/v1/jsondevguide">https://developers.google.com/image-search/v1/jsondevguide</a>這個搜尋的原理也相當簡單, 也就是透過發出一個HTTP請求到Google的伺服器(Server)
+利用Google回傳的結果進行呈現, 這項API的用法相當簡單
+
+</div>
+<div>
+<div id="307971654212848786" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">這邊我們發出HTTP Request的方式是在App內嵌入ASIHTTPRequest,
+喜歡用ARC的朋友也可以利用AFNetworking或是Apple內建的NSURLRequest做到一樣的效果這邊需要注意,  如果沒有特別要求Request只會回四個圖片的數據
+我們在網址後面多加了 &amp;開始數字&amp;rsz=搜尋圖片數
+來增加回傳結果
+
+</div>
+<div>
+<div id="576976850133974379" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">這邊搜尋圖片數最多只能到8，換而言之就是一次Request最多只能要到8組圖片的數據
+而由於API的限制，同一個關鍵字我們最多只能要到第64張圖片，超過就會回傳null
+這裡我們的處理方法就是跑6次迴圈，每次給予不同開始數字並要8張圖要回來的Request 是JSON格式的數據， (<a href="http://j796160836.pixnet.net/blog/post/30530326-%E7%9E%AD%E8%A7%A3json%E6%A0%BC%E5%BC%8F" target="_blank"><strong>不了解JSON是什麼想知道的請點這裡</strong></a>)
+裡面包了一層層的Dictionary，我們分別用key去找到我們想要的資訊，解析的程式碼如下：
+
+</div>
+<div>
+<div id="670821368180037735" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">result這個Dictionary裡面就包含了我們搜尋圖片的相關資訊，而我們的程式只需要圖片的的縮圖及原圖URL，所以我們分別拿取key為 tbUrl 及 url 的值(值即為該圖URL)各位讀者如果想直接看URL會回傳什麼的話，可以直接將URL貼上瀏覽器，一開始我們的Request會回一堆字串，像是：
+
+</div>
+<div>
+<div id="728100344906623610" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">取出格式內的url欄位, 在貼到瀏覽器上面的話 ,你就能直接看到圖片了噢, 例如下圖</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4544337_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">對於Tickr這個App程式有興趣的話, 歡迎到我們的Github上下載喔!<strong>下載位址:</strong>
+<a title="" href="https://github.com/TakoBear/Tickr-by-TakoBear">https://github.com/TakoBear/Tickr-by-TakoBear</a>
+
+</div>
+<div>
+<div id="113028980191479224" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+</div>
+</div>
 
   </div>
 

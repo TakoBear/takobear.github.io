@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>動手做自己的智能家電 - 藍芽聊天室</title>
-  <meta name="description" content=" 這次較長篇的動手做自己的智能家電終於迎來第一階段的完結了!今天我們會講解完第一款以iPhone與Arduino自製的聊天器進行互動聊天目標就是讓自己輸入的字回傳回來! (ex: iPhone內輸入 width , arduino會回傳width)(小編知道這樣有點空虛....不過, 萬事起頭難吧!!)接下來我們...">
+  <meta name="description" content=" ">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,431 +61,533 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7743530_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這次較長篇的動手做自己的智能家電終於迎來第一階段的完結了!
-<p>今天我們會講解完第一款以iPhone與Arduino自製的聊天器進行互動聊天</p>
-<p>目標就是讓自己輸入的字回傳回來! (ex: iPhone內輸入 width , arduino會回傳width)</p>
-<p>(小編知道這樣有點空虛....不過, 萬事起頭難吧!!)</p>
-<p>接下來我們就繼續看下去吧!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>這篇內容稍微有點深, 第一次來板上的朋友請先注意我們使用的器材是
-<p>1. Arduino Atmega 2560             (參考DIY動手做系列文章: <a title="" href="http://www.takobear.weebly.com/12/post/2013/05/-arduino3.html" target="_blank">購買篇</a> 與 <a href="http://www.takobear.weebly.com/12/post/2013/06/-arduino-drive.html" target="_blank">驅動篇</a>)</p>
-<p>2. BLE Shield                                    (參考DIY動手做系列文章: <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-ble-shield.html" target="_blank">BLE Shield簡介</a>)</p>
-<p>3. CoreBluetooth frameWork   (參考Gossi! iOS Develop: <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">Corebluetooth 簡介</a>)本篇文章完成時, 各位應該可以跟小編一樣看到一樣的畫面</p>
-<p>接下來就要真正進入開發階段了!</p>
-<p>先請各位到這個網址:<a title="" href="https://github.com/RedBearLab/BLEShield" target="_blank"> https://github.com/RedBearLab/BLEShield</a></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1373725696.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這邊同樣是由Red Bear所開發出來的framework, 包含了iOS簡易的framework
-<p>以及arduino的sample code我們這次的主題也是從這裡修改而來的!</p>
-<p>先看到我們的arduino code如下</p>
-<p>新建一個arudino專案名稱如下</p>
-<p><strong>Chat_Sketch.ino</strong></p>
-<p></p>
-<p><div>#include &lt;Arduino.h&gt;
-<p>#include &lt;SPI.h&gt;</p>
-<p>#include "ble.h"void setup()</p>
-<p>{</p>
-<p>SPI.setDataMode(SPI_MODE0);</p>
-<p>SPI.setBitOrder(LSBFIRST);</p>
-<p>SPI.setClockDivider(SPI_CLOCK_DIV16);</p>
-<p>SPI.begin();</p>
-<p>ble_begin();</p>
-<p>Serial.begin(57600);</p>
-<p>}</p>
-<p>unsigned char buf[16] = {0};</p>
-<p>unsigned char len = 0;</p>
-<p>void loop()</p>
-<p>{</p>
-<p>while (ble_available()){</p>
-<p>unsigned char c = ble_read();</p>
-<p>Serial.write(c);</p>
-<p>buf[len++] = c;</p>
-<p>}</p>
-<p>for (int i = 0; i &lt; len; i++)</p>
-<p>ble_write(buf[i]);</p>
-<p>len = 0;</p>
-<p>ble_do_events();</p>
-<p>}</p>
-<p></p>
-<p><div>ble.h 以及Arduino.h兩個標頭檔的使用, 請參考 <u><strong><a title="" href="http://www.gossibear.tw/12/post/2013/06/-bluetooth-ble-shield.html" target="_blank">DIY動手做 藍芽模組教學</a></strong></u>
-<p><strong>有關於arduino BLE開發所需要的詳細的設定說明!</strong>這次在load程式以前, 請務必注意以下兩項設定:</p>
-<p>(1) 開啓你的Serial Monitor</p>
-<p>(2) 調整Serial Monitor的設定為:</p>
-<p><strong>                               -Carriage return</strong></p>
-<p><strong>                               -57600 baud rate</strong></p>
-<p>開啓Serial Monitor的位置如下:</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4426256_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這邊小編要特別提醒!! 
-<p>如果沒把arduino 插上去電腦, 是不能打開Serial Monitor的喔!</p>
-<p>使用時請特別注意!這裡我們簡單解釋一下arduino端的程式碼:</p>
-<p><u><strong>setup部分</strong></u></p>
-<p>(1) 前面四行SPI的程式碼在設定SPI pin腳位的數值 (這邊我們先不談細節, 例如什麼是SPI)</p>
-<p>(2) ble_begin(). 用來初始化BLE framework的函式庫, 這行很重要千萬不能忘記</p>
-<p>(3) 設定Serial Monitor的baud rate 為57600</p>
-<p><u><strong>loop部分</strong></u></p>
-<p>(1) while ble_avaiable() ... -&gt; 代表有收到寫入藍牙的資訊</p>
-<p>從外部傳到arduino的封包一旦結束就會跳離while迴圈</p>
-<p>(2) arduino 這邊寫入的方式是: 1次1個字元character, 用ble_read()來接</p>
-<p>(3) Serial.write 會把字元c寫到serial monitor 上</p>
-<p>最後用一個陣列buf記錄起來每一個字元c, 就會形成一個原本輸入的字串了!</p>
-<p>(4) 離開while迴圈後, 我們在用for 迴圈把每一個字元c 寫出去用ble_write()就可以把字元傳出去給iPhone囉!</p>
-<p>(5) 把len歸為0, 下一次進入loop後重新從0開始記錄字元</p>
-<p>(6) 最後ble_do_events(); 完成藍芽一次的傳輸行為</p>
-<p>到這邊我們總算把外部藍芽設備(peripheral)端的程式碼寫完了!</p>
-<p>接下來就是要開始寫iOS Xcode專案了!</p>
-<p>我們這次新建一個專案叫做BluetoothArduinoChat</p>
-<p>這次也是使用ARC建成的專案喔!!!</p>
-<p>新建成的專案架構跟下圖一樣</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/857282_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>你所需要做的步驟如下:
-<p>1. import Quartzcore framework (這個我們只是用來導圓角作效果的, 版友可依據需求決定是否要加)</p>
-<p>2. import Corebluetooth framework (這個的重要性我想不用我多說了....)</p>
-<p>3. import BLE.h, BLE.m, BLEDefines.h</p>
-<p>(這些可以在RedBear 在上面github所放的內容中找到,</p>
-<p>但是因為這邊我們有微幅調整他程式內一些會造成使用上混亂的情形,</p>
-<p>一兩個method有被我們更動, 有需傲的可以在文章最後面看到下載連結!)我們這次只在ViewController 內寫完所有動作以及UI的產生</p>
-<p>版友最後會看到的畫面應當如下:</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4672811_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>我們定義的行為如下:
-<p>1. 按下connect, 出現轉轉轉的等待畫面</p>
-<p>2. 等成功找到外部機器(peripheral)或是失敗時, 將轉轉轉停掉效果</p>
-<p>3. 成功時把button 顯示為disconnect, 失敗時維持為connect</p>
-<p>(成功時再次點下按鈕, 進行斷開與外部設備的連接)</p>
-<p>4. 成功與外部機器連結時, 在底下空白的textfield輸入字以後, 會在底下的Text: received收到同樣的訊息</p>
-<p>同時在送出時把textfield內的字串給清空</p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4256124_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>轉轉轉的等待效果</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3924649_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>接下來我們就要開始介紹整段程式的運作以及ble framework如何幫我們進行藍芽設備的溝通.首先在ViewController.m檔案最上面一層
-<p>輸入以下程式碼:</p>
-<p></p>
-<p><div>#import "ViewController.h"#import &lt;QuartzCore/QuartzCore.h&gt;
-<p>#import &lt;CoreBluetooth/CoreBluetooth.h&gt;</p>
-<p>#import "BLE.h"</p>
-<p>@interface ViewController () &lt;BLEDelegate, UITextFieldDelegate&gt;</p>
-<p>{</p>
-<p>BLE *bleShield;</p>
-<p>UIActivityIndicatorView *spinnerIndicator;</p>
-<p>UITextField *textField;</p>
-<p>UILabel *rssiLabel;</p>
-<p>UITextView *receiveTextView;</p>
-<p>UIButton *connectButton;</p>
-<p>}</p>
-<p>@end</p>
-<p></p>
-<p><div>我們只需要import
-<p>BLE.h</p>
-<p>QuartzCore</p>
-<p>Corebluetooth 三個frameworkViewController部分,</p>
-<p>最重要的是要去承接BLEDelegate才能進行這次的範例喔!!!</p>
-<p>BLEDelegate包含了與藍芽外部設備互動的協定,</p>
-<p>要注意的是它是由RedBear 提供的library, 應用在其它藍芽設備時未必可直接喔!</p>
-<p>(其實重點在於BLEDefine.h所定義的service type 現在只能支援BLE Shield的serivce type</p>
-<p>未來小編也會提供類似的藍芽框架上來, 把彈性給拉高! )</p>
-<p>我們首先宣告幾個全域變數在ViewController內</p>
-<p>1. BLE *bleShield  代表這次的藍牙通訊物件實體</p>
-<p>2. UI面原件作為interact 用的 (後面會有詳細介紹)</p>
-<p>接下來我們就進一步介紹這次的iOS程式細節囉!</p>
-<p></p>
-<p><div>@implementation ViewController
-<p>- (void)viewDidLoad</p>
-<p>{</p>
-<p>[super viewDidLoad];</p>
-<p>// Do any additional setup after loading the view, typically from a nib.</p>
-<p>bleShield = [[BLE alloc] init];</p>
-<p>[bleShield controlSetup];</p>
-<p>bleShield.delegate = self;</p>
-<p>}</p>
-<p>- (void)viewWillAppear:(BOOL)animated</p>
-<p>{</p>
-<p>[super viewWillAppear:animated];</p>
-<p>[self.view setBackgroundColor:[UIColor colorWithRed:0.436 green:0.693 blue:1.000 alpha:1.000]];     // Set Connect Button</p>
-<p>connectButton = [[UIButton alloc] initWithFrame:CGRectMake(110, 15, 100, 37)];</p>
-<p>[connectButton setTitle:@"Connect" forState:UIControlStateNormal];</p>
-<p>[connectButton addTarget:self action:@selector(beginToScanPeripheral:) forControlEvents:UIControlEventTouchUpInside];</p>
-<p>[connectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];</p>
-<p>[connectButton setBackgroundColor:[UIColor whiteColor]];</p>
-<p>[self.view addSubview:connectButton];</p>
-<p>     // Set Sending label</p>
-<p>UILabel *textSendLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 60, 150, 21)];</p>
-<p>[textSendLabel setText:@"Text: for sending"];</p>
-<p>[textSendLabel setBackgroundColor:[UIColor clearColor]];</p>
-<p>[self.view addSubview:textSendLabel];</p>
-<p>     // Setup textfield</p>
-<p>textField = [[UITextField alloc] initWithFrame:CGRectMake(58, 89, 210, 31)];</p>
-<p>[textField.layer setCornerRadius:5.0f];</p>
-<p>[textField setBackgroundColor:[UIColor whiteColor]];</p>
-<p>[textField setDelegate:self];</p>
-<p>[textField setClearButtonMode:UITextFieldViewModeWhileEditing];</p>
-<p>[self.view addSubview:textField];</p>
-<p>     // Set receiving label</p>
-<p>UILabel *textReceiveLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 128, 150, 21)];</p>
-<p>[textReceiveLabel setText:@"Text: received"];</p>
-<p>[textReceiveLabel setBackgroundColor:[UIColor clearColor]];</p>
-<p>[self.view addSubview:textReceiveLabel];</p>
-<p>// Set receiving Text</p>
-<p>receiveTextView = [[UITextView alloc] initWithFrame:CGRectMake(58, 160, 150, 30)];</p>
-<p>[receiveTextView setBackgroundColor:[UIColor clearColor]];</p>
-<p>receiveTextView.editable = NO;</p>
-<p>receiveTextView.font = [UIFont fontWithName:@"Arial" size:[UIFont systemFontSize]];</p>
-<p>[self.view addSubview:receiveTextView];</p>
-<p>     // Set receiving RSSI signal</p>
-<p>UILabel *rssi = [[UILabel alloc] initWithFrame:CGRectMake(58, 200, 100, 40)];</p>
-<p>[rssi setText:@"RSSI"];</p>
-<p>[rssi setBackgroundColor:[UIColor clearColor]];</p>
-<p>[self.view addSubview:rssi];</p>
-<p>rssiLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 240, 100, 40)];</p>
-<p>[rssiLabel setBackgroundColor:[UIColor clearColor]];</p>
-<p>[self.view addSubview:rssiLabel];</p>
-<p>     // Set up activityindicator view</p>
-<p>spinnerIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];</p>
-<p>[spinnerIndicator setColor:[UIColor blackColor]];</p>
-<p>[spinnerIndicator setHidesWhenStopped:YES];</p>
-<p>[spinnerIndicator setCenter:CGPointMake(CGRectGetWidth(connectButton.frame)/2, CGRectGetHeight(connectButton.frame)/2)];</p>
-<p>[connectButton addSubview:spinnerIndicator];</p>
-<p>}</p>
-<p>- (void)didReceiveMemoryWarning</p>
-<p>{</p>
-<p>[super didReceiveMemoryWarning];</p>
-<p>// Dispose of any resources that can be recreated.</p>
-<p>}</p>
-<p></p>
-<p><div>首先要先初始化BLE Shield的物件
-<p>這三段函式就是初始化的步驟:bleShield = [[BLE alloc] init];</p>
-<p>[bleShield controlSetup];</p>
-<p>bleShield.delegate = self;</p>
-<p>[bleShield controlSetup] 會把BLE物件內的一個CBCentralManger給初始化</p>
-<p>(這個CBCentralManger是在BLE的class內名為CM的property)</p>
-<p>原本github的版本上還要輸入一個timeout, 但是因為原本的method內並沒有使用到該參數</p>
-<p>所以我們修正掉此method 避免讀者混亂!</p>
-<p>其實上面基本上都是設定UI的行為</p>
-<p>我們重點的核心只在這一行, connectButton就是最上層連接的button</p>
-<p>[connectButton addTarget:self action:@selector(beginToScanPeripheral:) forControlEvents:UIControlEventTouchUpInside];</p>
-<p>beginToScanPeripheral:就是定義搜尋外部設備的Method</p>
-<p>接下來我們將會仔細介紹每個行為...</p>
-<p></p>
-<p><div>#pragma mark - UIAction
-<p>- (void)beginToScanPeripheral:(id)sender</p>
-<p>{</p>
-<p>if (bleShield.activePeripheral) {</p>
-<p>if (bleShield.activePeripheral.isConnected) {</p>
-<p>[[bleShield CM] cancelPeripheralConnection:[bleShield activePeripheral]];</p>
-<p>return;</p>
-<p>}</p>
-<p>}</p>
-<p>if (bleShield.peripherals) {</p>
-<p>bleShield.peripherals = nil;</p>
-<p>}</p>
-<p>[bleShield findBLEPeripherals:5]; // Timeout: 5 seconds    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(connectToBLETimer:) userInfo:nil repeats:NO];</p>
-<p>[spinnerIndicator startAnimating];</p>
-<p>[connectButton setTitle:@"" forState:UIControlStateNormal];</p>
-<p>}</p>
-<p> #pragma mark - Timer Action</p>
-<p>- (void)connectToBLETimer:(NSTimer *)timer</p>
-<p>{</p>
-<p>[spinnerIndicator stopAnimating];</p>
-<p>if (bleShield.peripherals.count &gt; 0) {</p>
-<p>  // Connect to the first peripheral</p>
-<p>[bleShield connectPeripheral:[bleShield.peripherals objectAtIndex:0]];</p>
-<p>[connectButton setTitle:@"Disconnect" forState:UIControlStateNormal];</p>
-<p>} else {</p>
-<p>[connectButton setTitle:@"Connect" forState:UIControlStateNormal];</p>
-<p>}</p>
-<p>}</p>
-<p></p>
-<p><div>我們這邊的邏輯是
-<p>按下connect button後</p>
-<p>if (bleShield.activePeripheral) {</p>
-<p>if (bleShield.activePeripheral.isConnected) {</p>
-<p>[[bleShield CM] cancelPeripheralConnection:[bleShield activePeripheral]];</p>
-<p>return;</p>
-<p>}</p>
-<p>}</p>
-<p>....</p>
-<p>[bleShield findBLEPeripherals:5]; // Timeout: 5 seconds</p>
-<p>[NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(connectToBLETimer:) userInfo:nil repeats:NO];</p>
-<p>[spinnerIndicator startAnimating];</p>
-<p>1. 會先判斷有沒有正在運作的外部設備, 有的話會用cancelPeripheralConnection:的method斷開與外部設備的連結</p>
-<p>2. BLE Class內有一個method =&gt; findBLEPeripherals: 會去尋找外部設備, 設定timeout時間為5秒</p>
-<p>(這邊要注意的是, findBLEPeripherals: 是實作我們在CoreBluetooth framework中的 [centralManger scanForPeripheralsWithServices: ] method)</p>
-<p>我們再用NSTimer啓動一個計時器, 五秒後會執行connectToBLETimer: 這個method</p>
-<p>(設定repeat為NO, 表示只在按下按鈕後才執行), 最後再叫indicator在畫面上旋轉再來看ConnectBLETimer:內的method</p>
-<p>這邊的意思就是</p>
-<p>五秒到以後, 先叫indicator 停止旋轉的動畫</p>
-<p>如果有外部設備連接時, 用BLE class內的connectPeripheral: 進行連接</p>
-<p>並且把button的按鈕標題設定為Disconnect,</p>
-<p>相反, 如果沒找到時, 就直接顯示為Connect即可</p>
-<p></p>
-<p><div>#pragma mark - UITexfield Delegate
-<p>- (BOOL)textFieldShouldClear:(UITextField *)textField</p>
-<p>{</p>
-<p>return YES;</p>
-<p>}</p>
-<p>- (BOOL)textFieldShouldEndEditing:(UITextField *)aTextField</p>
-<p>{</p>
-<p>return YES;</p>
-<p>}</p>
-<p>- (BOOL)textFieldShouldReturn:(UITextField *)aTextField</p>
-<p>{</p>
-<p>     // Send Data</p>
-<p>NSString *sendString;    if (aTextField.text.length &gt; 16) {</p>
-<p>sendString = [aTextField.text substringToIndex:16];</p>
-<p>} else {</p>
-<p>sendString = aTextField.text;</p>
-<p>}</p>
-<p>sendString = [NSString stringWithFormat:@"%@\r\n", sendString];</p>
-<p>NSData *sendData = [sendString dataUsingEncoding:NSUTF8StringEncoding];</p>
-<p>[bleShield write:sendData];</p>
-<p>aTextField.text = @"";</p>
-<p>[aTextField resignFirstResponder];</p>
-<p>return YES;</p>
-<p>}</p>
-<p></p>
-<p><div>這邊我們是對TextField 的委派事件作處理
-<p>前兩個method代表以下兩個意思</p>
-<p>1. textfield在輸入完成會清除</p>
-<p>2. textfield結束編輯</p>
-<p>3. 第三個代表的意思是, 按下return的按鈕後會對外部設備送出去字串的內容</p>
-<p>這邊我們的ble shield 設定了字串最多長度只能16個字母</p>
-<p>超過的話會由iOS端截掉後面的字元</p>
-<p>送出時也包含了\r\n進行換行等動作</p>
-<p>最後因為寫入到外部設備時, 只能用NSData的方式送出</p>
-<p>(其實也可以用char *等比較low-level的C function, 但此處我們不多談細節)</p>
-<p>在呼叫bleShield的write:  method便可以把字串傳輸給外部設備了喔!最後用再按下return後, 用resignFirstResponder把小鍵盤退出畫面就可以了!</p>
-<p></p>
-<p><div>#pragma mark - BLE Delegate
-<p>- (void)bleDidUpdateRSSI:(NSNumber *)rssi</p>
-<p>{</p>
-<p>[rssiLabel setText:[rssi stringValue]];</p>
-<p>}</p>
-<p>- (void)bleDidReceiveData:(unsigned char *)data length:(int)length</p>
-<p>{</p>
-<p>NSData *receiveData = [NSData dataWithBytes:data length:length];</p>
-<p>NSString *decodeString = [[NSString alloc] initWithData:receiveData encoding:NSUTF8StringEncoding];</p>
-<p>NSLog(@"Hey we recevie %@", decodeString);</p>
-<p>receiveTextView.text = decodeString;</p>
-<p>}</p>
-<p>- (void)bleDidConnect</p>
-<p>{</p>
-<p>NSLog(@"Connect Successfully");</p>
-<p>}</p>
-<p>- (void)bleDidDisconnect</p>
-<p>{</p>
-<p>[connectButton setTitle:@"Connect" forState:UIControlStateNormal];</p>
-<p>}</p>
-<p></p>
-<p><div>這邊我們發現RedBear Lab很貼心的為我們實作了最簡單的4個狀態
-<p>UpdateRSSI -&gt; 收到RSSI 強度</p>
-<p>DidReceiveData: length: - &gt; 確實收到來自外部設備的資料, 以unsigned char為資料格式</p>
-<p>DidConnect - &gt; 確實與外部設備成功連結上的狀態</p>
-<p>DidDisconnect - &gt;確實與外部設備斷開連結的狀態到這邊我們就完全完成所有的行為了!!!</p>
-<p>接下來就是我們的Demo了, 順利執行程式後各位應該會看到以下畫面..</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1260926_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>首先upload 已經寫好的arduino bluetooth code, 打開Serial Monitor (設定同之前)</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7944134_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8129085_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>打開Xcode, 一樣把檔案compile到手機內, 按下connect的按鈕後
-<p>會跟上圖一樣, 右下角可以收到類似以下的資訊:<strong>didDiscoverPeripheral</strong></p>
-<p><strong>Stopped Scanning</strong></p>
-<p><strong>Known peripherals : 1</strong></p>
-<p><strong>List of currently known peripherals : </strong></p>
-<p><strong>0  |  62B88054-AF8D-0241-D9D0-474D577FD748</strong></p>
-<p><strong>------------------------------------</strong></p>
-<p><strong>Peripheral Info :</strong></p>
-<p><strong>UUID : 62B88054-AF8D-0241-D9D0-474D577FD748</strong></p>
-<p><strong>Name : BLE Shield</strong></p>
-<p><strong>-------------------------------------</strong></p>
-<p><strong>Connecting to peripheral with UUID : 62B88054-AF8D-0241-D9D0-474D577FD748</strong></p>
-<p><strong>這邊就可以讓你知道你連結上的外部機器有多少台, 以及相關的資訊 (包含UUID, 機器名稱等)</strong></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9637343_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7791992_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這邊我們先從app 內輸入一個 Width的字
-<p>然後就會看到Xcode的output有以下的字樣</p>
-<p><strong>Connected to 62B88054-AF8D-0241-D9D0-474D577FD748 successful</strong></p>
-<p><strong>2013-07-14 21:29:15.123 BlueToothArduinoChat[3423:907] Connect Successfully</strong></p>
-<p><strong>2013-07-14 21:29:15.359 BlueToothArduinoChat[3423:907] no error</strong></p>
-<p><strong>2013-07-14 21:29:15.419 BlueToothArduinoChat[3423:907] no error</strong></p>
-<p><strong>2013-07-14 21:29:15.421 BlueToothArduinoChat[3423:907] set vendor value</strong></p>
-<p><strong>2013-07-14 21:30:07.350 BlueToothArduinoChat[3423:907] no error</strong></p>
-<p><strong>2013-07-14 21:30:07.351 BlueToothArduinoChat[3423:907] receive data</strong></p>
-<p><strong>2013-07-14 21:30:07.353 BlueToothArduinoChat[3423:907] Hey we recevie Width</strong>顯示我們收到了 Width 這個字, 這時我們看一下Serial Monitor 可以看到以下畫面</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8745192_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這裡就能看到Serial Monitor顯示出來, Arduino確實收到了Width這個的字樣!到這邊我們算是整個app都完成了
-<p>對操作過程有疑問的版友可以看以下我們錄製的影片!</p>
-<p></p>
-<p><div>
-<p><div>
-<p><div><iframe src="//www.youtube.com/embed/i-NTB0mN5EU?wmode=opaque" width="300" height="150" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div></p>
-<p></p>
-<p></p>
-<p><div>影片拍得有點不清楚
-<p>不過概念上就是這些流程!!有興趣的朋友可以到這裡來下載:</p>
-<p><a title="" href="http://www.4shared.com/zip/PqO57tqh/BLE_iOS_frameWork.html?" target="_blank">BLE iOS FrameWork 下載請點這裡</a></p>
-<p><a title="" href="http://www.4shared.com/zip/rtkJjO6k/tutorial.html?" target="_blank">本次教學完整下載請點這裡</a></p>
-<p>藍芽聊天室互動的部分到這邊算是告一段落了!</p>
-<p>各位板友有興趣的話請繼續關注TakoBear!</p>
-<p>我們將為大家帶來更多更有趣的DIY制作教學 以及更多有趣的八卦消息!</p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7743530_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">這次較長篇的動手做自己的智能家電終於迎來第一階段的完結了!
+今天我們會講解完第一款以iPhone與Arduino自製的聊天器進行互動聊天
+目標就是讓自己輸入的字回傳回來! (ex: iPhone內輸入 width , arduino會回傳width)
+(小編知道這樣有點空虛....不過, 萬事起頭難吧!!)
+接下來我們就繼續看下去吧!</div>
+
+<div><!--BLOG_SUMMARY_END--></div>
+
+<div class="paragraph">這篇內容稍微有點深, 第一次來板上的朋友請先注意我們使用的器材是
+1. Arduino Atmega 2560             (參考DIY動手做系列文章: <a title="" href="http://www.takobear.weebly.com/12/post/2013/05/-arduino3.html" target="_blank">購買篇</a> 與 <a href="http://www.takobear.weebly.com/12/post/2013/06/-arduino-drive.html" target="_blank">驅動篇</a>)
+2. BLE Shield                                    (參考DIY動手做系列文章: <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-ble-shield.html" target="_blank">BLE Shield簡介</a>)
+3. CoreBluetooth frameWork   (參考Gossi! iOS Develop: <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">Corebluetooth 簡介</a>)本篇文章完成時, 各位應該可以跟小編一樣看到一樣的畫面
+接下來就要真正進入開發階段了!
+
+先請各位到這個網址:<a title="" href="https://github.com/RedBearLab/BLEShield" target="_blank"> https://github.com/RedBearLab/BLEShield</a>
+
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-border-width:0 "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1373725696.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">這邊同樣是由Red Bear所開發出來的framework, 包含了iOS簡易的framework
+以及arduino的sample code我們這次的主題也是從這裡修改而來的!
+先看到我們的arduino code如下
+
+新建一個arudino專案名稱如下
+<span style="color: #f51111; font-size: medium;"><strong>Chat_Sketch.ino</strong></span>
+
+</div>
+
+<div class="paragraph"><span style="color: #c2743b;">#include &lt;Arduino.h&gt;
+#include &lt;SPI.h&gt;
+#include "ble.h"</span><span style="color: #a85f2e;">void setup()</span>
+{
+SPI.<span style="color: #a85f2e;">setDataMode</span>(SPI_MODE0);
+SPI.<span style="color: #a85f2e;">setBitOrder</span>(LSBFIRST);
+SPI.<span style="color: #a85f2e;">setClockDivider</span>(SPI_CLOCK_DIV16);
+SPI.<span style="color: #a85f2e;">begin</span>();
+
+<span style="color: #a85f2e;">ble_begin</span>();
+
+Serial.begin(57600);
+}
+
+<span style="color: #d061c7;">unsigned char</span> buf[16] = {0};
+<span style="color: #d061c7;">unsigned char</span> len = 0;
+
+<span style="color: #a85f2e;">void loop()</span>
+{
+<span style="color: #24678d;">while</span> (ble_available()){
+unsigned char c = ble_read();
+Serial.write(c);
+buf[len++] = c;
+}
+for (int i = 0; i &lt; len; i++)
+ble_write(buf[i]);
+len = 0;
+
+ble_do_events();
+}
+
+</div>
+
+<div class="paragraph">ble.h 以及Arduino.h兩個標頭檔的使用, 請參考 <u><strong><span style="color: #a82e2e; font-size: large;"><a title="" href="http://www.gossibear.tw/12/post/2013/06/-bluetooth-ble-shield.html" target="_blank">DIY動手做 藍芽模組教學</a></span></strong></u>
+<strong>有關於arduino BLE開發所需要的詳細的設定說明!</strong>這次在load程式以前, 請務必注意以下兩項設定:
+(1) 開啓你的Serial Monitor
+(2) 調整Serial Monitor的設定為:
+<strong><span style="color: #f20e0e;">                               -Carriage return</span></strong>
+<strong><span style="color: #f20e0e;">                               -57600 baud rate</span></strong>
+開啓Serial Monitor的位置如下:
+
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4426256_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph"><span style="font-size: large;">這邊小編要特別提醒!! </span>
+<span style="color: #d01717; font-size: large;">如果沒把arduino 插上去電腦, 是不能打開Serial Monitor的喔!</span>
+使用時請特別注意!這裡我們簡單解釋一下arduino端的程式碼:
+
+<u><strong>setup部分</strong></u>
+(1) 前面四行SPI的程式碼在設定SPI pin腳位的數值 (這邊我們先不談細節, 例如什麼是SPI)
+(2) <span style="color: #df0c0c;">ble_begin().</span> 用來初始化BLE framework的函式庫, 這行很重要千萬不能忘記
+(3) 設定Serial Monitor的baud rate 為57600
+
+<u><strong>loop部分</strong></u>
+(1) while <span style="color: #d90202;">ble_avaiable() </span>... -&gt; 代表有收到寫入藍牙的資訊
+從外部傳到arduino的封包一旦結束就會跳離while迴圈
+(2) arduino 這邊寫入的方式是: 1次1個字元character, 用<span style="color: #d00404;">ble_read()</span>來接
+(3) Serial.write 會把字元c寫到serial monitor 上
+最後用一個陣列buf記錄起來每一個字元c, 就會形成一個原本輸入的字串了!
+
+(4) 離開while迴圈後, 我們在用for 迴圈把每一個字元c 寫出去用<span style="color: #e20d0d;">ble_write()</span>就可以把字元傳出去給iPhone囉!
+(5) 把len歸為0, 下一次進入loop後重新從0開始記錄字元
+(6) 最後<span style="color: #f20909;">ble_do_events()</span>; 完成藍芽一次的傳輸行為
+
+到這邊我們總算把外部藍芽設備(peripheral)端的程式碼寫完了!
+接下來就是要開始寫iOS Xcode專案了!
+
+我們這次新建一個專案叫做BluetoothArduinoChat
+這次也是使用ARC建成的專案喔!!!
+新建成的專案架構跟下圖一樣
+
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/857282_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">你所需要做的步驟如下:
+1. import Quartzcore framework (這個我們只是用來導圓角作效果的, 版友可依據需求決定是否要加)
+2. import Corebluetooth framework (這個的重要性我想不用我多說了....)
+3. import <span style="color: #d31a1a;">BLE.h</span>, <span style="color: #d81818;">BLE.m</span>, <span style="color: #d51212;">BLEDefines.h</span>
+(這些可以在RedBear 在上面github所放的內容中找到,
+但是因為這邊我們有微幅調整他程式內一些會造成使用上混亂的情形,
+一兩個method有被我們更動, 有需傲的可以在文章最後面看到下載連結!)我們這次只在ViewController 內寫完所有動作以及UI的產生
+版友最後會看到的畫面應當如下:
+
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4672811_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">我們定義的行為如下:
+1. 按下connect, 出現轉轉轉的等待畫面
+2. 等成功找到外部機器(peripheral)或是失敗時, 將轉轉轉停掉效果
+3. 成功時把button 顯示為disconnect, 失敗時維持為connect
+(成功時再次點下按鈕, 進行斷開與外部設備的連接)
+4. 成功與外部機器連結時, 在底下空白的textfield輸入字以後, 會在底下的Text: received收到同樣的訊息
+同時在送出時把textfield內的字串給清空</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4256124_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">轉轉轉的等待效果</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3924649_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">接下來我們就要開始介紹整段程式的運作以及ble framework如何幫我們進行藍芽設備的溝通.首先在ViewController.m檔案最上面一層
+輸入以下程式碼:
+
+</div>
+
+<div class="paragraph"><span style="color: #a85f2e;"><span style="color: #a85f2e;">#import "ViewController.h"</span></span>#import &lt;QuartzCore/QuartzCore.h&gt;
+#import &lt;CoreBluetooth/CoreBluetooth.h&gt;
+#import "BLE.h"
+
+<span style="color: #b748ae;">@interface</span> ViewController () &lt;<span style="color: #3a96b8;">BLEDelegate</span>, <span style="color: #3387a2;">UITextFieldDelegate</span>&gt;
+{
+<span style="color: #33a27f;">BLE</span> *bleShield;
+
+<span style="color: #8c48b7;">UIActivityIndicatorView</span> *spinnerIndicator;
+<span style="color: #5848b7;">UITextField</span> *textField;
+<span style="color: #8c48b7;">UILabel</span> *rssiLabel;
+<span style="color: #8c48b7;">UITextView</span> *receiveTextView;
+<span style="color: #8c48b7;">UIButton</span> *connectButton;
+}
+<span style="color: #b748ae;">@end</span>
+
+</div>
+
+<div class="paragraph">我們只需要import
+BLE.h
+QuartzCore
+Corebluetooth 三個frameworkViewController部分,
+最重要的是要去承接BLEDelegate才能進行這次的範例喔!!!
+BLEDelegate包含了與藍芽外部設備互動的協定,
+要注意的是它是由RedBear 提供的library, 應用在其它藍芽設備時未必可直接喔!
+(其實重點在於<span style="color: #d81e1e;">BLEDefine.h所定義的service type</span> 現在只能支援BLE Shield的serivce type
+未來小編也會提供類似的藍芽框架上來, 把彈性給拉高! )
+
+我們首先宣告幾個全域變數在ViewController內
+1. BLE *bleShield  代表這次的藍牙通訊物件實體
+2. UI面原件作為interact 用的 (後面會有詳細介紹)
+
+接下來我們就進一步介紹這次的iOS程式細節囉!
+
+</div>
+
+<div class="paragraph"><span style="color: #b748ae;">@implementation</span> ViewController
+- (<span style="color: #c255b9;">void</span>)viewDidLoad
+{
+[super viewDidLoad];
+<span style="color: #508d24;">// Do any additional setup after loading the view, typically from a nib.</span>
+bleShield = [[BLE alloc] init];
+[bleShield controlSetup];
+bleShield.delegate = self;
+
+}
+
+- (<span style="color: #c255b9;">void</span>)viewWillAppear:(<span style="color: #b748ae;">BOOL</span>)animated
+{
+[super viewWillAppear:animated];
+[self.view setBackgroundColor:[UIColor colorWithRed:0.436 green:0.693 blue:1.000 alpha:1.000]];<span style="color: #5fa233;">     // Set Connect Button</span>
+connectButton = [[UIButton alloc] initWithFrame:CGRectMake(110, 15, 100, 37)];
+[connectButton setTitle:@"Connect" forState:UIControlStateNormal];
+[connectButton addTarget:self action:@selector(beginToScanPeripheral:) forControlEvents:UIControlEventTouchUpInside];
+
+[connectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+[connectButton setBackgroundColor:[UIColor whiteColor]];
+[self.view addSubview:connectButton];
+
+<span style="color: #5fa233;">     // Set Sending label</span>
+UILabel *textSendLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 60, 150, 21)];
+[textSendLabel setText:@"Text: for sending"];
+[textSendLabel setBackgroundColor:[UIColor clearColor]];
+[self.view addSubview:textSendLabel];
+
+<span style="color: #508d24;">     // Setup textfield</span>
+textField = [[UITextField alloc] initWithFrame:CGRectMake(58, 89, 210, 31)];
+[textField.layer setCornerRadius:5.0f];
+[textField setBackgroundColor:[UIColor whiteColor]];
+[textField setDelegate:self];
+[textField setClearButtonMode:UITextFieldViewModeWhileEditing];
+[self.view addSubview:textField];
+
+<span style="color: #508d24;">     // Set receiving label</span>
+UILabel *textReceiveLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 128, 150, 21)];
+[textReceiveLabel setText:@"Text: received"];
+[textReceiveLabel setBackgroundColor:[UIColor clearColor]];
+[self.view addSubview:textReceiveLabel];
+<span style="color: #508d24;">
+// Set receiving Text</span>
+receiveTextView = [[UITextView alloc] initWithFrame:CGRectMake(58, 160, 150, 30)];
+[receiveTextView setBackgroundColor:[UIColor clearColor]];
+receiveTextView.editable = NO;
+receiveTextView.font = [UIFont fontWithName:@"Arial" size:[UIFont systemFontSize]];
+
+[self.view addSubview:receiveTextView];
+
+<span style="color: #508d24;">     // Set receiving RSSI signal</span>
+UILabel *rssi = [[UILabel alloc] initWithFrame:CGRectMake(58, 200, 100, 40)];
+[rssi setText:@"RSSI"];
+[rssi setBackgroundColor:[UIColor clearColor]];
+[self.view addSubview:rssi];
+
+rssiLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 240, 100, 40)];
+[rssiLabel setBackgroundColor:[UIColor clearColor]];
+[self.view addSubview:rssiLabel];
+
+<span style="color: #5fa233;">     // Set up activityindicator view</span>
+spinnerIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+
+[spinnerIndicator setColor:[UIColor blackColor]];
+[spinnerIndicator setHidesWhenStopped:YES];
+[spinnerIndicator setCenter:CGPointMake(CGRectGetWidth(connectButton.frame)/2, CGRectGetHeight(connectButton.frame)/2)];
+[connectButton addSubview:spinnerIndicator];
+}
+
+- (<span style="color: #c255b9;">void</span>)didReceiveMemoryWarning
+{
+[super didReceiveMemoryWarning];
+// Dispose of any resources that can be recreated.
+}
+
+</div>
+
+<div class="paragraph">首先要先初始化BLE Shield的物件
+這三段函式就是初始化的步驟:<span style="color: #a85f2e;">bleShield = [[BLE alloc] init];
+[bleShield controlSetup];
+bleShield.delegate = self;</span>
+
+[bleShield <span style="color: #ee1515;">controlSetup</span>] 會把BLE物件內的一個CBCentralManger給初始化
+(這個CBCentralManger是在BLE的class內名為CM的property)
+原本github的版本上還要輸入一個timeout, 但是因為原本的method內並沒有使用到該參數
+所以我們修正掉此method 避免讀者混亂!
+
+其實上面基本上都是設定UI的行為
+我們重點的核心只在這一行, connectButton就是最上層連接的button
+[connectButton addTarget:self action:@selector(<span style="color: #e82727;">beginToScanPeripheral</span>:) forControlEvents:UIControlEventTouchUpInside];
+
+beginToScanPeripheral:就是定義搜尋外部設備的Method
+接下來我們將會仔細介紹每個行為...
+
+</div>
+
+<div class="paragraph"><span style="color: #a85f2e;">#pragma mark - UIAction</span>
+- (<span style="color: #c255b9;">void</span>)beginToScanPeripheral:(<span style="color: #c255b9;">id</span>)sender
+{
+if (<span style="color: #3a96b8;">bleShield</span>.activePeripheral) {
+if (<span style="color: #3a96b8;">bleShield</span>.activePeripheral.isConnected) {
+[[<span style="color: #3a96b8;">bleShield</span> CM] cancelPeripheralConnection:[bleShield activePeripheral]];
+return;
+}
+}
+if (<span style="color: #3a96b8;">bleShield</span>.peripherals) {
+<span style="color: #3a96b8;">bleShield</span>.peripherals = nil;
+}
+
+[<span style="color: #3a96b8;">bleShield</span> findBLEPeripherals:5]; // Timeout: 5 seconds    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(connectToBLETimer:) userInfo:nil repeats:NO];
+[spinnerIndicator startAnimating];
+[connectButton setTitle:@"" forState:UIControlStateNormal];
+}
+
+<span style="color: #a85f2e;"> #pragma mark - Timer Action</span>
+- (<span style="color: #d061c7;">void</span>)connectToBLETimer:(<span style="color: #b748ae;">NSTimer</span> *)timer
+{
+[spinnerIndicator stopAnimating];
+<span style="color: #c255b9;">if</span> (<span style="color: #3a96b8;">bleShield</span>.peripherals.count &gt; 0) {
+<span style="color: #508d24;">  // Connect to the first peripheral</span>
+[<span style="color: #3a96b8;">bleShield</span> connectPeripheral:[bleShield.peripherals objectAtIndex:0]];
+[connectButton setTitle:<span style="color: #da4444;">@"Disconnect"</span> forState:UIControlStateNormal];
+} <span style="color: #b748ae;">else</span> {
+[connectButton setTitle:<span style="color: #f30f0f;">@"Connect"</span> forState:UIControlStateNormal];
+}
+}
+
+</div>
+
+<div class="paragraph">我們這邊的邏輯是
+按下connect button後
+if (bleShield.activePeripheral) {
+if (bleShield.activePeripheral.isConnected) {
+[[bleShield CM] cancelPeripheralConnection:[bleShield activePeripheral]];
+return;
+}
+}
+....
+[bleShield findBLEPeripherals:5]; // Timeout: 5 seconds
+[NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(connectToBLETimer:) userInfo:nil repeats:NO];
+[spinnerIndicator startAnimating];
+
+
+1. 會先判斷有沒有正在運作的外部設備, 有的話會用cancelPeripheralConnection:的method斷開與外部設備的連結
+2. BLE Class內有一個method =&gt; <span style="color: #f50f0f;">findBLEPeripherals</span>: 會去尋找外部設備, 設定timeout時間為5秒
+<span style="color: #3387a2;">(這邊要注意的是, findBLEPeripherals: 是實作我們在CoreBluetooth framework中的 [centralManger scanForPeripheralsWithServices: ] method)</span>
+
+我們再用NSTimer啓動一個計時器, 五秒後會執行connectToBLETimer: 這個method
+(設定repeat為NO, 表示只在按下按鈕後才執行), 最後再叫indicator在畫面上旋轉再來看ConnectBLETimer:內的method
+這邊的意思就是
+五秒到以後, 先叫indicator 停止旋轉的動畫
+如果有外部設備連接時, 用BLE class內的<span style="color: #e01010;">connectPeripheral</span>: 進行連接
+並且把button的按鈕標題設定為Disconnect,
+相反, 如果沒找到時, 就直接顯示為Connect即可
+
+</div>
+
+<div class="paragraph"><span style="color: #a85f2e;">#pragma mark - UITexfield Delegate</span>
+- (<span style="color: #c255b9;">BOOL</span>)textFieldShouldClear:(<span style="color: #c255b9;">UITextField</span> *)textField
+{
+<span style="color: #c255b9;">return</span> YES;
+}
+- (<span style="color: #d061c7;">BOOL</span>)textFieldShouldEndEditing:(<span style="color: #c255b9;">UITextField</span> *)aTextField
+{
+<span style="color: #d061c7;">return</span> YES;
+}
+- (<span style="color: #c255b9;">BOOL</span>)textFieldShouldReturn:(<span style="color: #c255b9;">UITextField</span> *)aTextField
+{
+<span style="color: #508d24;">     // Send Data</span>
+<span style="color: #b748ae;">NSString</span> *sendString;    <span style="color: #c255b9;">if</span> (aTextField.text.length &gt; 16) {
+sendString = [aTextField.text substringToIndex:16];
+} <span style="color: #c255b9;">else</span> {
+sendString = aTextField.text;
+}
+
+sendString = [NSString stringWithFormat:<span style="color: #da4444;">@"%@\r\n"</span>, sendString];
+<span style="color: #b748ae;">NSData</span> *sendData = [sendString dataUsingEncoding:NSUTF8StringEncoding];
+
+[bleShield write:sendData];
+aTextField.text = <span style="color: #da4444;">@""</span>;
+
+[aTextField resignFirstResponder];
+<span style="color: #c255b9;">return</span> YES;
+}
+
+</div>
+
+<div class="paragraph">這邊我們是對TextField 的委派事件作處理
+前兩個method代表以下兩個意思
+1. textfield在輸入完成會清除
+2. textfield結束編輯
+3. 第三個代表的意思是, 按下return的按鈕後會對外部設備送出去字串的內容
+這邊我們的ble shield 設定了字串最多長度只能16個字母
+超過的話會由iOS端截掉後面的字元
+送出時也包含了\r\n進行換行等動作
+最後因為寫入到外部設備時, 只能用NSData的方式送出
+(其實也可以用char *等比較low-level的C function, 但此處我們不多談細節)
+在呼叫bleShield的<span style="color: #e41414;">write</span>:  method便可以把字串傳輸給外部設備了喔!最後用再按下return後, 用resignFirstResponder把小鍵盤退出畫面就可以了!
+
+</div>
+
+<div class="paragraph"><span style="color: #a85f2e;">#pragma mark - BLE Delegate</span>
+- (<span style="color: #c255b9;">void</span>)bleDidUpdateRSSI:(<span style="color: #b748ae;">NSNumber</span> *)rssi
+{
+[rssiLabel setText:[rssi stringValue]];
+}
+- (<span style="color: #c255b9;">void</span>)bleDidReceiveData:(<span style="color: #c255b9;">unsigned char</span> *)data length:(<span style="color: #c255b9;">int</span>)length
+{
+<span style="color: #b748ae;">NSData</span> *receiveData = [NSData dataWithBytes:data length:length];
+<span style="color: #b748ae;">NSString</span> *decodeString = [[NSString alloc] initWithData:receiveData encoding:NSUTF8StringEncoding];
+<span style="color: #b748ae;">NSLog</span>(<span style="color: #da4444;">@"Hey we recevie %@"</span>, decodeString);
+receiveTextView.text = decodeString;
+}
+- (<span style="color: #c255b9;">void</span>)bleDidConnect
+{
+NSLog(<span style="color: #da4444;">@"Connect Successfully"</span>);
+}
+- (<span style="color: #c255b9;">void</span>)bleDidDisconnect
+{
+[connectButton setTitle:<span style="color: #da4444;">@"Connect" </span>forState:UIControlStateNormal];
+}
+
+</div>
+
+<div class="paragraph">這邊我們發現RedBear Lab很貼心的為我們實作了最簡單的4個狀態
+UpdateRSSI -&gt; 收到RSSI 強度
+DidReceiveData: length: - &gt; 確實收到來自外部設備的資料, 以unsigned char為資料格式
+DidConnect - &gt; 確實與外部設備成功連結上的狀態
+DidDisconnect - &gt;確實與外部設備斷開連結的狀態到這邊我們就完全完成所有的行為了!!!
+接下來就是我們的Demo了, 順利執行程式後各位應該會看到以下畫面..
+
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1260926_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">首先upload 已經寫好的arduino bluetooth code, 打開Serial Monitor (設定同之前)</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7944134_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8129085_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">打開Xcode, 一樣把檔案compile到手機內, 按下connect的按鈕後
+會跟上圖一樣, 右下角可以收到類似以下的資訊:<span style="color: #db0a0a;"><strong>didDiscoverPeripheral</strong>
+<strong>Stopped Scanning</strong>
+<strong>Known peripherals : 1</strong></span>
+<span style="color: #db0a0a;"><strong>List of currently known peripherals : </strong>
+<strong>0  |  62B88054-AF8D-0241-D9D0-474D577FD748</strong>
+<strong>------------------------------------</strong>
+<strong>Peripheral Info :</strong>
+<strong>UUID : 62B88054-AF8D-0241-D9D0-474D577FD748</strong>
+<strong>Name : BLE Shield</strong>
+<strong>-------------------------------------</strong>
+<strong>Connecting to peripheral with UUID : 62B88054-AF8D-0241-D9D0-474D577FD748</strong></span>
+
+<strong>這邊就可以讓你知道你連結上的外部機器有多少台, 以及相關的資訊 (包含UUID, 機器名稱等)</strong>
+
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9637343_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7791992_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">這邊我們先從app 內輸入一個 Width的字
+然後就會看到Xcode的output有以下的字樣
+
+<span style="color: #f50d0d;"><strong>Connected to 62B88054-AF8D-0241-D9D0-474D577FD748 successful</strong>
+<strong>2013-07-14 21:29:15.123 BlueToothArduinoChat[3423:907] Connect Successfully</strong>
+<strong>2013-07-14 21:29:15.359 BlueToothArduinoChat[3423:907] no error</strong>
+<strong>2013-07-14 21:29:15.419 BlueToothArduinoChat[3423:907] no error</strong>
+<strong>2013-07-14 21:29:15.421 BlueToothArduinoChat[3423:907] set vendor value</strong>
+<strong>2013-07-14 21:30:07.350 BlueToothArduinoChat[3423:907] no error</strong>
+<strong>2013-07-14 21:30:07.351 BlueToothArduinoChat[3423:907] receive data</strong>
+<strong>2013-07-14 21:30:07.353 BlueToothArduinoChat[3423:907] Hey we recevie Width</strong></span>顯示我們收到了 Width 這個字, 這時我們看一下Serial Monitor 可以看到以下畫面
+
+</div>
+
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8745192_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+
+<div class="paragraph">這裡就能看到Serial Monitor顯示出來, Arduino確實收到了Width這個的字樣!到這邊我們算是整個app都完成了
+對操作過程有疑問的版友可以看以下我們錄製的影片!
+
+</div>
+
+<div class="wsite-youtube">
+<div class="wsite-youtube-wrapper wsite-youtube-size-auto wsite-youtube-align-center">
+<div class="wsite-youtube-container"><iframe src="//www.youtube.com/embed/i-NTB0mN5EU?wmode=opaque" width="300" height="150" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+</div>
+</div>
+
+<div class="paragraph">影片拍得有點不清楚
+不過概念上就是這些流程!!有興趣的朋友可以到這裡來下載:
+<a title="" href="http://www.4shared.com/zip/PqO57tqh/BLE_iOS_frameWork.html?" target="_blank">BLE iOS FrameWork 下載請點這裡</a>
+<a title="" href="http://www.4shared.com/zip/rtkJjO6k/tutorial.html?" target="_blank">本次教學完整下載請點這裡</a>
+
+藍芽聊天室互動的部分到這邊算是告一段落了!
+各位板友有興趣的話請繼續關注TakoBear!
+我們將為大家帶來更多更有趣的DIY制作教學 以及更多有趣的八卦消息!
+
+</div>
 
   </div>
 

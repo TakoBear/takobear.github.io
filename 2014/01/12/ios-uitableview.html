@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[入門] iOS - 如何建立表格: UITableView</title>
-  <meta name="description" content="Bear 好陣子沒來更新了...由於最近工作繁忙一直沒更新(囧)上次入門篇教學我們談到什麼是協定跟委派 (Protocol &amp; Delegate)這次我們繼續來介紹 iOS 內另一個重量級元件: UITableView，也就是各位在 App 內隨處可見的表格呈現！[cjtoolbox name='goog...">
+  <meta name="description" content="Bear 好陣子沒來更新了…由於最近工作繁忙一直沒更新(囧)">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,72 +61,118 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>Bear 好陣子沒來更新了...由於最近工作繁忙一直沒更新(囧)</p>
+    <p>Bear 好陣子沒來更新了…由於最近工作繁忙一直沒更新(囧)</p>
+
 <p>上次入門篇教學我們談到<a href="http://www.takobear.tw/2014/01/12/ios-protocoldelegate/">什麼是協定跟委派 (Protocol &amp; Delegate)</a></p>
+
 <p>這次我們繼續來介紹 iOS 內另一個重量級元件: UITableView，也就是各位在 App 內隨處可見的表格呈現！</p>
-<p><!--more--></p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>相信經過前面那篇 Protocol 與 Delegate 的教學後，大家腦袋應該都打結了吧！</p>
+
 <p>讓我們實際用一下 UITableView 來感受委派與協定的用法首先我們要在 <code>@interface ViewController ()</code> 後面加上 <code>&lt;uitableviewdatasource ,UITableViewDelegate&gt;</code></p>
+
 <p>表示本類別遵循 UITableView 的兩個委派協定</p>
+
 <p>之後我們就要在本類別添加規定的方法</p>
+
 <p>忘記的話 xcode 也會很貼心的提醒喔！然後在 viewDidLoad 內建立 UITableView</p>
-<p><pre><code>UITableView *takoTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-<p></p>
+
+<pre><code class="objectivec">UITableView *takoTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+</code></pre>
+
 <p>大小範圍設定跟畫面一樣大 <code>self.view.bounds</code></p>
+
 <p>款式有 Grouped 跟 plain 可以選擇</p>
-<p><pre><code>takoTableView.dataSource = self;
-<p>takoTableView.delegate = self;</p>
-<p></p>
+
+<pre><code class="objectivec">takoTableView.dataSource = self;
+takoTableView.delegate = self;
+</code></pre>
+
 <p>委派都是 self(viewController)</p>
-<p><pre><code>[self.view addSubview: takoTableView];
-<p></p>
+
+<pre><code class="objectivec">[self.view addSubview: takoTableView];
+</code></pre>
+
 <p>最重要的還是要貼在畫面上！千萬別忘了</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3241509_orig.png" alt="" /></p>
+
 <p>協定中 <code>@required</code> 是規定要在本類別使用的方法</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9824172_orig.png" alt="" /></p>
+
 <p><code>＠optional</code> 則是自由調用</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3896078_orig.png" alt="" /></p>
+
 <p>下面添加三個方法</p>
-<p>其中兩個是遵循協定一定要有的三個方法，我們的邏輯分別是</p>
-<p>1.設定section為2個</p>
-<p>2.第一個section有三列，第二個section有五列</p>
-<p>3.設定列的內容</p>
-<p><pre><code>-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-<p>{</p>
-<p>    return 2;</p>
-<p>}</p>
-<p>-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section</p>
-<p>{</p>
-<p>    if (section == 0) {</p>
-<p>        return 3;</p>
-<p>    }</p>
-<p>    else if (section == 1){</p>
-<p>        return 5;</p>
-<p>    }</p>
-<p>    return 0; </p>
-<p>    //if 之外也要設一個值讓return回傳，不然是無法編譯的</p>
-<p>}</p>
-<p>-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;</p>
-<p>{</p>
-<p>    static NSString *cellIdentifier = @"cell";</p>
-<p>    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];</p>
-<p>    // 以上兩行是制式寫法</p>
-<p>    if (cell == nil) {</p>
-<p>        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];</p>
-<p>    }</p>
-<p>    // cell就是我們表格的內容了</p>
-<p>    return cell;</p>
-<p>}</p>
-<p></p>
+
+<p>其中兩個是遵循協定一定要有的三個方法，我們的邏輯分別是
+1.設定section為2個
+2.第一個section有三列，第二個section有五列
+3.設定列的內容</p>
+
+<pre><code class="objectivec">-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 3;
+    }
+    else if (section == 1){
+        return 5;
+    }
+    return 0; 
+    //if 之外也要設一個值讓return回傳，不然是無法編譯的
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    static NSString *cellIdentifier = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    // 以上兩行是制式寫法
+
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    // cell就是我們表格的內容了
+
+    return cell;
+}
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5598689_orig.png" alt="" /></p>
+
 <p>另外眼尖的讀者有沒有發現箭頭指的地方有一行 <code>#pragma mark - TableView DataSource#pragma mark</code> 就是書簽的功能喔</p>
+
 <p>如下圖箭頭處，點擊後會列出我們所使用的方法</p>
+
 <p>標簽則可讓我們更好的分類，當code變得相當巨大的時候就很好用囉!</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/879801_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6325350_orig.png" alt="" /></p>
+
 <p>這次的教學雖然簡單，但是已經把前面的原理給完整的結合囉！</p>
+
 <p>剛入門的朋友記得要多加練習喔！藉由UITableView後有沒有對委派協定更理解呢？</p>
+
 <p>一般來說，UITableView 通常都是搭配 NSArray 或 NSDictionary 等集合物件使用</p>
+
 <p>等下次有空 Bear 再介紹囉！這是很有趣的挑戰，卡關的話歡迎隨時寄信問 Bear 喔！！</p>
+
 <p>喜歡這篇文章嗎? 加入Takobear粉絲團吧!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
+
 
   </div>
 

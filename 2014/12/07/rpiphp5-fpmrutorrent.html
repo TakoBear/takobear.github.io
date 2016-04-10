@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[RPI]php5-fpm更新導致ruTorrent出錯</title>
-  <meta name="description" content="拿RPI做BT下載器(rtorrent+rutorrent)且有替RPI更新php-fpm的夥伴們明明rtorrent是正常運作，但是rutorrent卻連不到啟動測試頁面http://[RPI's IP]/info.php可能會遇到下面文字問題"The page you are looking for is t...">
+  <meta name="description" content="拿RPI做BT下載器(rtorrent+rutorrent)且有替RPI更新php-fpm的夥伴們明明rtorrent是正常運作，但是rutorrent卻連不到">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,62 +61,76 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5722185_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>拿RPI<a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/rpiraspberry-pibt">做BT下載器</a>(rtorrent+rutorrent)且有替RPI更新php-fpm的夥伴們
-<p>明明rtorrent是正常運作，但是rutorrent卻連不到</p>
-<p>啟動測試頁面</p>
-<p>http://[RPI's IP]/info.php</p>
-<p>可能會遇到下面文字問題</p>
-<p>"The page you are looking for is temporarily unavailable. Please try again later. "</p>
-<p>這並不是nginx出錯，而是php5-fpm內的權限發生錯誤</p>
-<p>那該怎麼辦呢?</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="493097975436625621" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>其因是nginx沒有權限導致不能正常利用FastCGI執行PHP
-<p>那就修改FastCGI的權限吧</p>
-<p>首先查詢FastCGI路徑在哪</p>
-<p>可以利用nginx目前架設的設定檔來找</p>
-<p>打開終端機(putty之類的)</p>
-<p>$cat /etc/nginx/sites-available/rutorrent</p>
-<p>或其他設定檔</p>
-<p>找到"fastcgi_pass unix:/var/run/php5-fpm.sock;"</p>
-<p>那就可以得知FastCGI的位置了</p>
-<p>增加寫入的權限</p>
-<p>$sudo chmod o+w /var/run/php5-fpm.sock</p>
-<p>如果不行，那就試試看</p>
-<p>$sudo chmod 662 /var/run/php5-fpm.sock</p>
-<p>再次打開測試頁面</p>
-<p>http://[RPI's IP]/info.php</p>
-<p>看是否正常</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8734236_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div id="358533875155120377" align="left">
-<p><div id="fb-root"></div></p>
-<p><script>// < ![CDATA[</p>
-<p> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>// ]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
-<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div></p>
-<p></p>
-<p></p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5722185_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">拿RPI<a title="" href="http://www.takobear.weebly.com/201702608526356260322804024687/rpiraspberry-pibt">做BT下載器</a>(rtorrent+rutorrent)且有替RPI更新php-fpm的夥伴們
+明明rtorrent是正常運作，但是rutorrent卻連不到
+
+啟動測試頁面
+
+<span style="color: #0000ff;">http://</span><span style="color: #ff0000;">[RPI's IP]</span>/info.php
+
+可能會遇到下面文字問題
+"The page you are looking for is temporarily unavailable. Please try again later. "
+這並不是nginx出錯，而是php5-fpm內的權限發生錯誤
+那該怎麼辦呢?</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="493097975436625621" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">其因是nginx沒有權限導致不能正常利用FastCGI執行PHP
+那就修改FastCGI的權限吧
+
+首先查詢FastCGI路徑在哪
+可以利用nginx目前架設的設定檔來找
+打開終端機(putty之類的)
+
+<span style="color: #248d6c;">$cat /etc/nginx/sites-available/rutorrent</span>
+
+或其他設定檔
+找到"<span style="color: #8d5024;">fastcgi_pass unix:/var/run/php5-fpm.sock;</span>"
+那就可以得知FastCGI的位置了
+
+增加寫入的權限
+
+<span style="color: #248d6c;">$sudo chmod o+w /var/run/php5-fpm.sock</span>
+
+如果不行，那就試試看
+<span style="color: #248d6c;">
+</span><span style="color: #248d6c;">$sudo chmod 662 /var/run/php5-fpm.sock</span>
+
+再次打開測試頁面
+
+<span style="color: #0000ff;">http://</span><span style="color: #ff0000;">[RPI's IP]</span>/info.php
+
+看是否正常</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8734236_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div id="358533875155120377" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/517325755040723" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/517325755040723">貼文</a>。</div>
+</div>
+</div>
+</div>
 
   </div>
 

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[iOS]  中級: 如何把測試的訊息記錄成文字檔?</title>
-  <meta name="description" content="在開發比較大型的專案, 或是有牽涉到多執行緒的時候公司內如果有測試QA進行時, 最可怕的問題不在於碰到了Bug, 而是碰到了Bug你卻不知道到底發生了什麼事...總不能什麼測試都自己來測吧!!! 這次Bear要分享一個在公司開發過程中曾經使用的技巧,也就是把App過程中的Log給記錄在檔案中的方法!首先Bear先...">
+  <meta name="description" content="在開發比較大型的專案, 或是有牽涉到多執行緒的時候公司內如果有測試QA進行時, 最可怕的問題不在於碰到了Bug, 而是碰到了Bug你卻不知道到底發生了什麼事...總不能什麼測試都自己來測吧!!! 這次Bear要分享一個在公司開發過程中曾經使用的技巧,也就是把App過程中的Log給記錄在檔案中的方法!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,81 +61,90 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1450379_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>在開發比較大型的專案, 或是有牽涉到多執行緒的時候
-<p>公司內如果有測試QA進行時, 最可怕的問題不在於碰到了Bug, 而是碰到了Bug你卻不知道到底發生了什麼事...</p>
-<p>總不能什麼測試都自己來測吧!!! 這次Bear要分享一個在公司開發過程中曾經使用的技巧,</p>
-<p>也就是把App過程中的Log給記錄在檔案中的方法!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="910362342878838099" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9034175_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>首先Bear先建立了一個Class名為DebugLog,
-<p>這次的Class目的相當簡單, 我們希望能在程式打開define : __DEBUG__的時候</p>
-<p>把log的訊息給存進一個txt檔案內, 不過希望在App Release到App Store的時候不要讓使用者看到這些訊息</p>
-<p>那, 因為是要存取Log的訊息, 所以用法也會希望如同NSLog一樣, 是一個不定參數 (或是稱為 可變參數)的輸入方式那來看看這個Class要怎麼使用吧!!</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6523411_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>在Import進來DebugLog後, 只要在你想要加上Log的地方
-<p>使用function : BugLog().. 就能如同NSLog一樣印出在畫面上 （如上圖）</p>
-<p>除此之外, 也能到你的App內的SandBox中的Document資料夾 (如下圖)</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7911149_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>此時你會發現你多了一個record的資料夾, 裡面也有一個txt檔案附上了年月日的時間
-<p>如果我們點開txt檔就會看到這樣的訊息</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6923168_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>內容中我們把年月日, 秒分 還有Log的訊息都印上去了!
-<p>要注意我們這個Class的使用中, 只能大約記錄1000筆資料</p>
-<p>因為每次會把檔案內的資料讀出來再記錄回去, 對於大量反覆操作的動作中, 會因為記憶體問題而發生crash</p>
-<p>不過只要把__DEBUG__的define給關閉後就能變回一般的NSLog操作了!針對這個class還有一些優化的方式, 例如一個檔案只記錄500筆數據後自動換成下一個檔案等操作方式</p>
-<p>不過這篇僅為了Demo教學用, 就不放上這些進階技巧了!!</p>
-<p>有需要的朋友可以到Github上下載:</p>
-<p><a title="" href="https://github.com/shouian/DebugLogTrace" target="_blank">https://github.com/shouian/DebugLogTrace</a></p>
-<p>這篇文章對你有用嗎? 對iOS有興趣的話也能參考以下文章:</p>
-<p>[入門系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a></p>
-<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a></p>
-<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a></p>
-<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a></p>
-<p>[中級系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a></p>
-<p>[進階系列]</p>
-<p>1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a></p>
-<p>2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a></p>
-<p>3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a></p>
-<p>4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a></p>
-<p>5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a></p>
-<p>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1450379_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">在開發比較大型的專案, 或是有牽涉到多執行緒的時候
+公司內如果有測試QA進行時, 最可怕的問題不在於碰到了Bug, 而是碰到了Bug你卻不知道到底發生了什麼事...
+總不能什麼測試都自己來測吧!!! 這次Bear要分享一個在公司開發過程中曾經使用的技巧,
+也就是把App過程中的Log給記錄在檔案中的方法!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="910362342878838099" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9034175_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">首先Bear先建立了一個Class名為DebugLog,
+這次的Class目的相當簡單, 我們希望能在程式打開define : __DEBUG__的時候
+把log的訊息給存進一個txt檔案內, 不過希望在App Release到App Store的時候不要讓使用者看到這些訊息
+那, 因為是要存取Log的訊息, 所以用法也會希望如同NSLog一樣, 是一個不定參數 (或是稱為 可變參數)的輸入方式那來看看這個Class要怎麼使用吧!!
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6523411_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">在Import進來DebugLog後, 只要在你想要加上Log的地方
+使用function : BugLog().. 就能如同NSLog一樣印出在畫面上 （如上圖）
+除此之外, 也能到你的App內的SandBox中的Document資料夾 (如下圖)</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7911149_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">此時你會發現你多了一個record的資料夾, 裡面也有一個txt檔案附上了年月日的時間
+如果我們點開txt檔就會看到這樣的訊息</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6923168_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">內容中我們把年月日, 秒分 還有Log的訊息都印上去了!
+要注意我們這個Class的使用中, 只能大約記錄1000筆資料
+因為每次會把檔案內的資料讀出來再記錄回去, 對於大量反覆操作的動作中, 會因為記憶體問題而發生crash
+不過只要把__DEBUG__的define給關閉後就能變回一般的NSLog操作了!針對這個class還有一些優化的方式, 例如一個檔案只記錄500筆數據後自動換成下一個檔案等操作方式
+不過這篇僅為了Demo教學用, 就不放上這些進階技巧了!!
+
+有需要的朋友可以到Github上下載:
+<a title="" href="https://github.com/shouian/DebugLogTrace" target="_blank">https://github.com/shouian/DebugLogTrace</a>
+
+這篇文章對你有用嗎? 對iOS有興趣的話也能參考以下文章:
+
+[入門系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-bear-xcode-5-ios.html" target="_blank">Xcode 5 - 你的第一支Hello World iOS程式</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/bear-xcode.html" target="_blank">Xcode 5 - UIView 與 UILabel</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-bear-xcode-uibutton.html" target="_blank">Xcode 5 - 第一顆互動按鈕 UIButton</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/12/-ios-protocoldelegate.html" target="_blank">Xcode 5 - 協定與委派</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2014/01/xcode5-uitableview.html" target="_blank">Xcode 5 - 如何建立表格 UITableView?</a>
+
+[中級系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/11/-ios-uicollectionview-draggablecollectionview.html" target="_blank">OpenSource - 可拖曳的UICollectionView (DraggableCollectionView)</a>
+
+[進階系列]
+1. <a title="" href="http://www.takobear.weebly.com/12/post/2013/09/bear-audiotoolboxffmpeg-part-end.html" target="_blank">iOS 製作廣播電台</a>
+2. <a title="" href="http://www.takobear.weebly.com/12/post/2013/10/bear-diy-webcam.html" target="_blank">iOS 製作視訊串流</a>
+3. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/-diy-bluetooth-ios.html" target="_blank">iOS 與Arduino製作藍芽聊天室</a>
+4. <a title="" href="http://www.takobear.weebly.com/12/post/2013/08/iphone-avfoundation.html" target="_blank">iOS 製作長曝光相機</a>
+5. <a title="" href="http://www.takobear.weebly.com/12/post/2013/07/ble-corebluetooth-framework.html" target="_blank">iOS CoreblueTooth FrameWork</a>
+
+喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!
+
+</div>
+<div></div>
 
   </div>
 

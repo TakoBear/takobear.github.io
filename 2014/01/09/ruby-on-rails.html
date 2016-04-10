@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Ruby on Rails ! 網站前端開發利器!  </title>
-  <meta name="description" content="今天要介紹的Ruby on rails 是近年來進行網站前端開發的新興工具，能大幅減輕傳統前端工程師開發時一堆冗長的div, div,.... &amp; div，永遠 import 不完的javascript (泣)常常要透過Crunch或是sass的其他工具編譯css後再整合在一起(大哭)對於剛要入門做前端網...">
+  <meta name="description" content="今天要介紹的Ruby on rails 是近年來進行網站前端開發的新興工具，能大幅減輕傳統前端工程師開發時一堆冗長的div, div,…. &amp; div，永遠 import 不完的javascript (泣)">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,33 +61,55 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>今天要介紹的Ruby on rails 是近年來進行網站前端開發的新興工具，能大幅減輕傳統前端工程師開發時一堆冗長的div, div,.... &amp; div，永遠 import 不完的javascript (泣)</p>
+    <p>今天要介紹的Ruby on rails 是近年來進行網站前端開發的新興工具，能大幅減輕傳統前端工程師開發時一堆冗長的div, div,…. &amp; div，永遠 import 不完的javascript (泣)</p>
+
 <p>常常要透過Crunch或是sass的其他工具編譯css後再整合在一起(大哭)對於剛要入門做前端網站設計的新手或是要整理大型網站專案，快速開發這些東西都是十分不方便的!</p>
+
 <p>從開始的不知名的Web工具，到近幾年來台灣許多新興公司，外商都逐漸導入這工具了!</p>
-<p>他到底是什麼呢? 就讓小編簡單介紹一下...</p>
-<p><!--more--></p>
+
+<p>他到底是什麼呢? 就讓小編簡單介紹一下…</p>
+
+<!--more-->
+
 <p>早前的php &amp; mySQL 程式碼常會看到以下的編碼(資料來源:<a href="http://ihower.tw/rails3/intro.html">前往Ruby on rails 實戰聖經</a>)</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1376233277.jpg" alt="" /></p>
+
 <p>這種架構在專案變得很巨大，或是需要快速實踐測試service 可行性的時候就會變得很困難</p>
+
 <p>這幾年也就提倡了新興的 MVC (Model - View - Controller)架構(Tako編按: 連同 iOS 的 app 開發也是使用這個框架喔!)它的架構主要如下：</p>
-<p><ul>
-<p><li><strong>Model</strong> 物件包裝了資料，也就是資料的來源</li></p>
-<p><li><strong>View</strong> 表示使用者介面，顯示及編輯表單，特別的UI顯現都在這邊</li></p>
-<p><li><strong>Controller</strong> 負責將前面兩者整合，在 web 上也就是處理 HTTP Request，將 model 傳輸的資料整理顯示在 View 上面</li></p>
-<p></p>
+
+<ul>
+<li><strong>Model</strong> 物件包裝了資料，也就是資料的來源</li>
+<li><strong>View</strong> 表示使用者介面，顯示及編輯表單，特別的UI顯現都在這邊</li>
+<li><strong>Controller</strong> 負責將前面兩者整合，在 web 上也就是處理 HTTP Request，將 model 傳輸的資料整理顯示在 View 上面</li>
+</ul>
+
 <p>(架構可以參考如下，iOS內參考的還有導入委派(delegate)的概念在設計上! )</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9268318_orig.jpg" alt="" /></p>
+
 <p><em><strong>Ruby on Rails</strong></em> (官方簡稱為 <em><strong>Rails</strong></em>，<em><strong>RoR</strong></em>非官方簡稱)是使用 <em><strong>Ruby</strong></em> 這套開放原始碼(採用 MIT授權)、物件導向程式語言所開發的 Web 開發框架，主要用於開發資料庫網站應用程式。</p>
+
 <p><em><strong>Rails</strong></em> 是一套專業的開發框架，採用了 MVC(Model-View-Control) 模式、內建支援單元測試和整合測試、支援 Ajax 和 RESTful 介面、ORM 機制，以及支援各種最新的業界標準像是 HTML5、JQuery 等等功能。它的發明人是 David Heinemeier Hanson(DHH)，DHH 是2004年將 <em><strong>Rails</strong></em>從 <a href="http://www.37signals.com/">37signals</a> 商業產品中獨立出來成為開源專案。</p>
+
 <p>(資料來源: <a href="http://ihower.tw/rails3/intro.html">Ruby on rails 聖經</a>)</p>
+
 <p>其實有關為何什麼要使用Ruby的概念相當簡單，因為它已經有相當多的開發框架(framework)，同時它本身也已經與主流的應用程式設計概念(MVC相符)，最重要的是它本身已經可以整合相當多有用的工具(less，sass等)。</p>
+
 <p>不只是短期開發，連同維護，擴充等項目都能很快速的實踐完成</p>
-<p>程式碼特別的少!!!</p>
-<p>程式碼特別的少!</p>
-<p>程式碼特別的少!  (因為很重要要講三遍)不過話雖如此，其實一開始的門檻還是有存在的</p>
+
+<p>程式碼特別的少!!!
+程式碼特別的少!
+程式碼特別的少!  (因為很重要要講三遍)不過話雖如此，其實一開始的門檻還是有存在的</p>
+
 <p>台灣部分目前也沒有足夠多的中文資料</p>
+
 <p><em>Ruby on rails 實戰聖經</em>有關的文章整理相當詳細,</p>
+
 <p>小編這裡也只是簡單介紹他的用處接下來會放一些有關 Ruby 的開發筆記,</p>
+
 <p>有興趣的版友請多多支持!!!</p>
-</ul></p>
 
   </div>
 

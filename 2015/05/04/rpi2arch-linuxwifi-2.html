@@ -61,212 +61,211 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div>
-<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/834085_orig.jpg" alt="图片" /></a></p>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p>某次米*節時，Bear受約團購大量的小米隨身wifi<br /></p>
-<p>一部分送人，一部份正在使用，當然有一部份放在櫃子裡生灰塵....<br /></p>
-<p>恰好入手RPi2，乾脆拿它（小米隨身wifi）來當wifi client<br /></p>
-<p>不用則以，一用卻發現有夠麻煩的QAQ</p>
-<p></p>
-<p><div>
-<p><!--BLOG_SUMMARY_END--></p>
-<p></p>
-<p><div>
-<p><div id="630965874997981418" align="left">
-<p><script async=""></p>
-<p>]]></script><!-- takobear 336*280 --> <script></p>
-<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>]]></script><script async=""></p>
-<p>]]></script><!-- takobear 336*280 --> <script></p>
-<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>]]></script></p>
-<p></p>
-<p><div>
-<p>為什麼麻煩呢？<br /></p>
-<p>因為Linux kernel沒有支援小米隨身wifi！！！<br /></p>
-<p>（或說沒有支援MTK MT7601U，這個wifi晶片）</p>
-<p><p>所幸，MTK有釋出MT7601U的驅動程式原始碼<br /></p>
-<p>有程式碼就好辦，就靠gcc編一下吧</p></p>
-<p><div>
-<p><div>
-<p><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/129109_orig.png" alt="图片" /></a></p>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><a href="http://www.mediatek.com/zh-TW/downloads/mt7601u-usb/" target="_blank" title=""><strong>&gt;&gt;點我前往MTK 驅動程式載點&lt;&lt;</strong></a><br /></p>
-<p>各位可以在上面網址填資料下載，或是等會兒用指令（另有網址提供）</p>
-<p><p>好了，讓我們開始進行吧<br /></p>
-<p>首先，接上螢幕、鍵盤、滑鼠本機操作；或是SSH連線操作都可</p></p>
-<p><p>再來，安裝編譯工具</p>
-<p></p></p>
-<p><div>
-<p><div id="336279239751296896" align="left">
-<p><div>
-<p><code>$ sudo pacman -Syy</code><br /><code>$ sudo pacman -S gcc make curl</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>對了，編譯需要linux-headers<br /></p>
-<p>如果跟Bear一樣用Arch linux就很簡單的用pacman安裝<br /></p>
-<p>若是Raspbian可能就得自己編或是到<a title="" href="http://www.niksula.hut.fi/~mhiienka/Rpi/linux-headers-rpi/">這裡</a>下載試試看<br /></p>
-<p>（要裝目前使用的linux kernel版本，別裝錯了）</p>
-<p><p>繼續介紹Arch liunx安裝linux-headers</p>
-<p></p></p>
-<p><div>
-<p><div id="833709936905681437" align="left">
-<p><div>
-<p><code>$ sudo pacman -S dkms linux-headers</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>別忘了，要選擇目前kernel版本</p>
-<p><p>接著，下載MT7601U驅動程式碼</p>
-<p></p></p>
-<p><div>
-<p><div id="798976557253925385" align="left">
-<p><div>
-<p><code>$ cd</code><code><br /></code><code>$ curl -L -o DPO_MT7601U_LinuxSTA_3.0.0.4_20130913.tar.bz2 https://www.dropbox.com/s/u6o2xgjcseb28ld/DPO_MT7601U_LinuxSTA_3.0.0.4_20130913.tar.bz2?dl=1</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>解壓縮吧，它是用bzip2，參數要用對哦</p>
-<p></p>
-<p><div>
-<p><div id="323925931581445964" align="left">
-<p><div>
-<p><code>$ tar -jxvf ./DPO_MT7601U_LinuxSTA_3.0.0.4_20130913.tar.bz2</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>畢竟這是MTK客製給小米產品<br /></p>
-<p>在編譯前要修改程式碼以便符合小米隨身wifi<br /></p>
-<p>用lsusb查看小米隨身wifi的代號吧<br /></p>
-<p>沒意外，應該是 2717:4106</p>
-<p></p>
-<p><div>
-<p><div id="488624875291069052" align="left">
-<p><div>
-<p><code>$ lsusb</code><br /><code>$ cd ./DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/</code><br /><code>$ vim ./common/rtusb_dev_id.c</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>在ifdef MT7601U下面補上</p>
-<p></p>
-<p><div>
-<p><div id="926904010669460244" align="left">
-<p><div>
-<p><code>{USB_DEVICE(0x2717,0x4106)}, /* XiaoMi wifi */</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>程式碼還有兩處要改<br /></p>
-<p>一處是因為Arch linux採用gcc的版本是4.9<br /></p>
-<p>有個地方gcc4.8是ok的，而4.9卻變成了Error，修改之</p>
-<p></p>
-<p><div>
-<p><div id="708326907193161467" align="left">
-<p><div>
-<p><code>$ vim ./sta/sta_cfg.c</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>第5766行，在vim裡可用 " / " 來搜尋<br /></p>
-<p>ex: /__DATE__</p>
-<p></p>
-<p><div>
-<p><div id="445844916555290456" align="left">
-<p><div>
-<p><code>snprintf(extra, size, "Driver version-%s, %s %s\n", STA_DRIVER_VERSION, __DATE__, __TIME__ );</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>改成</p>
-<p></p>
-<p><div>
-<p><div id="285197811717891212" align="left">
-<p><div>
-<p><code>snprintf(extra, size, "Driver version-%s, (date and time removed for sanity)\n", STA_DRIVER_VERSION );</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p><a href="https://github.com/archlinuxarm/PKGBUILDs/issues/1074" title="">參考資料</a><br /></p>
-<p>另一處則是有地方的變數沒有宣告</p>
-<p></p>
-<p><div>
-<p><div id="105226759582321503" align="left">
-<p><div>
-<p><code>$ vim ./os/linux/rt_linux.c</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>第1121、1122行，可用 " /current_fsuid() " 尋找</p>
-<p></p>
-<p><div>
-<p><div id="688186273642872227" align="left">
-<p><div>
-<p><code>pOSFSInfo-&gt;fsuid = current_fsuid();</code><br /><code>pOSFSInfo-&gt;fsgid = current_fsgid();</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>改成</p>
-<p></p>
-<p><div>
-<p><div id="798572137250084979" align="left">
-<p><div>
-<p><code>pOSFSInfo-&gt;fsuid = (int )&amp;current_fsuid();</code><br /><code>pOSFSInfo-&gt;fsgid = (int )&amp;current_fsgid();</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>改完就可以開始編code、安裝跟啟用了<br /></p>
-<p>使用ip addr檢查是否有抓到網卡（ra0）</p>
-<p></p>
-<p><div>
-<p><div id="146437309840866897" align="left">
-<p><div>
-<p><code>$ make</code><br /><code>$ sudo make install</code><br /><code>$ sudo modprobe mt7601Usta</code><br /><code>$ ip addr</code></p>
-<p></p>
-<p></p>
-<p></p>
-<p><div>
-<p>大功告成，但是卻有一個問題<br /></p>
-<p>因為有用到linux-headers<br /></p>
-<p>可能每次更新linux-kernel就得重編一次....<br /></p>
-<p>很麻煩QAQ</p>
-<p><p>接下來呢？<br /></p>
-<p>下篇將會介紹如何用無線網卡上網<br /></p></p>
-<p></p>
-<p><div>
-<p><div id="619559608368524567" align="left">
-<p><div id="fb-root"></div></p>
-<p><p><script></p>
-<p>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
-<p><div>
-<p>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。</p>
-<p></p>
-<p></p>
-<p></p></div></p>
-<p></p>
-</div></p></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-none">
+<a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/834085_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">
+某次米*節時，Bear受約團購大量的小米隨身wifi<br />
+一部分送人，一部份正在使用，當然有一部份放在櫃子裡生灰塵....<br />
+恰好入手RPi2，乾脆拿它（小米隨身wifi）來當wifi client<br />
+不用則以，一用卻發現有夠麻煩的QAQ
+</div>
+<div>
+<!--BLOG_SUMMARY_END-->
+</div>
+<div>
+<div id="630965874997981418" align="left" class="wcustomhtml">
+<script async="">
+]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins> <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+]]></script><script async="">
+]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins> <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+]]></script></div>
+</div>
+<div class="paragraph">
+<span>為什麼麻煩呢？</span><br />
+因為Linux kernel沒有支援小米隨身wifi！！！<br />
+（或說沒有支援MTK MT7601U，這個wifi晶片）
+<p>所幸，MTK有釋出MT7601U的驅動程式原始碼<br />
+有程式碼就好辦，就靠gcc編一下吧</p></div>
+<div>
+<div class="wsite-image wsite-image-border-thin">
+<a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/129109_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">
+<a href="http://www.mediatek.com/zh-TW/downloads/mt7601u-usb/" target="_blank" title=""><strong><font size="4">&gt;&gt;點我前往MTK 驅動程式載點&lt;&lt;</font></strong></a><br />
+各位可以在上面網址填資料下載，或是等會兒用指令（另有網址提供）
+<p>好了，讓我們開始進行吧<br />
+首先，接上螢幕、鍵盤、滑鼠本機操作；或是SSH連線操作都可</p>
+<p>再來，安裝編譯工具
+</p></div>
+<div>
+<div id="336279239751296896" align="left" class="wcustomhtml">
+<div>
+<code><span>$ sudo pacman -Syy</span></code><br /><code><span>$ sudo pacman -S gcc make curl</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+對了，編譯需要linux-headers<br />
+如果跟Bear一樣用Arch linux就很簡單的用pacman安裝<br />
+若是Raspbian可能就得自己編或是到<a title="" href="http://www.niksula.hut.fi/~mhiienka/Rpi/linux-headers-rpi/">這裡</a>下載試試看<br />
+（要裝目前使用的linux kernel版本，別裝錯了）
+<p>繼續介紹Arch liunx安裝linux-headers
+</p></div>
+<div>
+<div id="833709936905681437" align="left" class="wcustomhtml">
+<div>
+<code><span>$ sudo pacman -S dkms linux-headers</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+別忘了，要選擇目前kernel版本
+<p>接著，下載MT7601U驅動程式碼
+</p></div>
+<div>
+<div id="798976557253925385" align="left" class="wcustomhtml">
+<div>
+<code><span>$ cd</span></code><code><br /></code><code><span>$ curl -L -o DPO_MT7601U_LinuxSTA_3.0.0.4_20130913.tar.bz2 https://www.dropbox.com/s/u6o2xgjcseb28ld/DPO_MT7601U_LinuxSTA_3.0.0.4_20130913.tar.bz2?dl=1</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+解壓縮吧，它是用bzip2，參數要用對哦
+</div>
+<div>
+<div id="323925931581445964" align="left" class="wcustomhtml">
+<div>
+<code><span>$ tar -jxvf ./DPO_MT7601U_LinuxSTA_3.0.0.4_20130913.tar.bz2</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+畢竟這是MTK客製給小米產品<br />
+在編譯前要修改程式碼以便符合小米隨身wifi<br />
+用lsusb查看小米隨身wifi的代號吧<br />
+沒意外，應該是 2717:4106
+</div>
+<div>
+<div id="488624875291069052" align="left" class="wcustomhtml">
+<div>
+<code><span>$ lsusb</span></code><br /><code><span>$ cd ./DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/</span></code><br /><code><span>$ vim ./common/rtusb_dev_id.c</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+在ifdef MT7601U下面補上
+</div>
+<div>
+<div id="926904010669460244" align="left" class="wcustomhtml">
+<div>
+<code><span>{USB_DEVICE(0x2717,0x4106)}, /* XiaoMi wifi */</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+程式碼還有兩處要改<br />
+一處是因為Arch linux採用gcc的版本是4.9<br />
+有個地方gcc4.8是ok的，而4.9卻變成了Error，修改之
+</div>
+<div>
+<div id="708326907193161467" align="left" class="wcustomhtml">
+<div>
+<code><span>$ vim ./sta/sta_cfg.c</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+第5766行，在vim裡可用 " / " 來搜尋<br />
+ex: /__DATE__
+</div>
+<div>
+<div id="445844916555290456" align="left" class="wcustomhtml">
+<div>
+<code><span>snprintf(extra, size, "Driver version-%s, %s %s\n", STA_DRIVER_VERSION, __DATE__, __TIME__ );</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+改成
+</div>
+<div>
+<div id="285197811717891212" align="left" class="wcustomhtml">
+<div>
+<code><span>snprintf(extra, size, "Driver version-%s, (date and time removed for sanity)\n", STA_DRIVER_VERSION );</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<a href="https://github.com/archlinuxarm/PKGBUILDs/issues/1074" title="">參考資料</a><br />
+另一處則是有地方的變數沒有宣告
+</div>
+<div>
+<div id="105226759582321503" align="left" class="wcustomhtml">
+<div>
+<code><span>$ vim ./os/linux/rt_linux.c</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+第1121、1122行，可用 " /current_fsuid() " 尋找
+</div>
+<div>
+<div id="688186273642872227" align="left" class="wcustomhtml">
+<div>
+<code><span>pOSFSInfo-&gt;fsuid = current_fsuid();</span></code><br /><code><span>pOSFSInfo-&gt;fsgid = current_fsgid();</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+改成
+</div>
+<div>
+<div id="798572137250084979" align="left" class="wcustomhtml">
+<div>
+<code><span>pOSFSInfo-&gt;fsuid = (int )&amp;current_fsuid();</span></code><br /><code><span>pOSFSInfo-&gt;fsgid = (int )&amp;current_fsgid();</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+改完就可以開始編code、安裝跟啟用了<br />
+使用ip addr檢查是否有抓到網卡（ra0）
+</div>
+<div>
+<div id="146437309840866897" align="left" class="wcustomhtml">
+<div>
+<code><span>$ make</span></code><br /><code><span>$ sudo make install</span></code><br /><code><span>$ sudo modprobe mt7601Usta</span></code><br /><code><span>$ ip addr</span></code>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<span><span><span><span><span>大功告成，但是卻有一個問題<br />
+因為有用到linux-headers<br />
+可能每次更新linux-kernel就得重編一次....<br />
+很麻煩QAQ
+<p>接下來呢？<br />
+下篇將會介紹如何用無線網卡上網<br /></p></span></span></span></span></span>
+</div>
+<div>
+<div id="619559608368524567" align="left" class="wcustomhtml">
+<div id="fb-root"></div>
+<p><script>
+(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
+<div class="fb-xfbml-parse-ignore">
+由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。
+</div>
+</div>
+</p></div>
+</div>
 
   </div>
 

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>OSX APP 教學 Part5-play music</title>
-  <meta name="description" content="本次教學目標：	學會使用 NSOpenPanel操作環境：	OS X Version 10.9.1	Xcode Version 5.1 (5B130a)本次教學將會寫出一個超簡單的音樂播放器，簡單到只有載入，播放，與停止功能。載入音樂的部分我們將不再預先將檔案路徑寫死在程式碼中，或是使用 NSTextField ...">
+  <meta name="description" content="本次教學目標：	學會使用 NSOpenPanel操作環境：	OS X Version 10.9.1	Xcode Version 5.1 (5B130a)本次教學將會寫出一個超簡單的音樂播放器，簡單到只有載入，播放，與停止功能。">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,127 +61,137 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4665503_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>本次教學目標：
-<p><ol>
-<p>	<li>學會使用 NSOpenPanel</li></p>
-<p></p>
-<p>操作環境：</p>
-<p><ul>
-<p>	<li>OS X Version 10.9.1</li></p>
-<p>	<li>Xcode Version 5.1 (5B130a)</li></p>
-<p></p>
-<p>本次教學將會寫出一個超簡單的音樂播放器，簡單到只有載入，播放，與停止功能。</p>
-<p>載入音樂的部分我們將不再預先將檔案路徑寫死在程式碼中，或是使用 NSTextField 手動輸入。本次教學將使用 NSOpenPanel，開啓選擇檔案的視窗，讓使用者瀏覽目錄，選擇需要的檔案開啟。</p>
-<p></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><h2><strong>建立 OS X Application 專案</strong></h2></p>
-<p><div>這次我們建立一個名為 HelloMusic 的專案
-<p>請參考教學 <a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a> 建立新專案</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1215540_orig.png" alt="图片" /></a>
-<p><div>新專案名為 HelloMusic。</div></p>
-<p></p>
-<p></p>
-<p><div>新增 MainWindowController，整理專案結構如下：</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/604178_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><h2><strong>設計版面(layout)</strong></h2></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/266855_orig.png" alt="图片" /></a>
-<p><div>移除 Main.xib 的 Window 元件。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9504398_orig.png" alt="图片" /></a>
-<p><div>選擇 MainWindowController.xib，依圖加上 Label 與 Push Button 物件，Label 寬度可以拉長一些。並將視窗調整到適當大小。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5924368_orig.png" alt="图片" /></a>
-<p><div>修改 Window 屬性，取消勾選 Resize 與 Minimize。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/660437_orig.png" alt="图片" /></a>
-<p><div>修改各元件的 Title 屬性。</div></p>
-<p></p>
-<p></p>
-<p><div>Label:Not Loading…
-<p>Push Button 各為：Load, Play, Stop</p>
-<p><h2><strong>編寫邏輯</strong></h2></p>
-<p><div>接下來將開始編寫程式碼了。
-<p>bearAppDelegate.h/.m 請參考 <a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a></p>
-<p><div>以下是 MainWindowController 類別的相關程式碼：
-<p>MainWindowController.h</p>
-<p><div>
-<p><div id="139459345927886543" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>MainWindowController.m</div></p>
-<p><div>
-<p><div id="302343134683024408" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><h2><strong>連接元件</strong></h2></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7984228_orig.png" alt="图片" /></a>
-<p><div>連接的項目太多，不一一畫出，請參考以下列表。</div></p>
-<p></p>
-<p></p>
-<p><div>infoTextField 連接至 Label
-<p>loadSoundOpenPanel: 連接至 Load Button</p>
-<p>play: 連接至 Play Button</p>
-<p>stop: 連接至 Stop Button</p>
-<p></p>
-<p><h2><strong>測試結果</strong></h2></p>
-<p><div>接下來測試一下完成的程式。
-<p>按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。</p>
-<p>按下鍵盤上的 Command + R，編譯並執行程式。</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5055206_orig.png" alt="图片" /></a>
-<p><div>初始畫面。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2057344_orig.png" alt="图片" /></a>
-<p><div>點擊 Load 按鈕，彈出選擇視窗。選擇音樂檔後按下 Open。</div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6719660_orig.png" alt="图片" /></a>
-<p><div>顯示音樂檔名。按下 Play 會開始播放音樂，按下 Stop 則會停止。</div></p>
-<p></p>
-<p></p>
-<p><h2><strong>後續討論</strong></h2></p>
-<p><div>本次教學做出的 player 還可以更好，在 NSSound 類別中，還有許多方法可以使用，如使用 setVolume 設定音量大小，使用setCurrentTime 設定目前播放時間，以及其他設定是否循環播放。
-<p>如果配合 NSTableView，就能夠做出播放列表，讓 Player 的功能更加強大。</p>
-<p><div>關於這次的Sample Code 下載：
-<p><a href="https://github.com/TakoBear/OSXHelloMusic" target="_blank">https://github.com/TakoBear/OSXHelloMusic</a></p>
-<p><div>
-<p><div id="913755968228854251" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><h2><strong>參考</strong></h2></p>
-<p><div><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Sound/Sound.html#//apple_ref/doc/uid/10000104-SW1" target="_blank">Introduction to Sound Programming Topics for Cocoa</a>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSound_Class/Reference/Reference.html" target="_blank">NSSound Class Reference</a></p>
-<p><a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/applicationkit/Classes/NSOpenPanel_Class/Reference/Reference.html" target="_blank">NSOpenPanel Class Reference</a></p>
-<p><a title="" href="http://c.gzl.name/archives/tag/nsopenpanel" target="_blank">Mac:打开一个目录</a>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></ul></p></ol></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4665503_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">本次教學目標：
+<ol>
+	<li>學會使用 NSOpenPanel</li>
+</ol>
+操作環境：
+<ul>
+	<li>OS X Version 10.9.1</li>
+	<li>Xcode Version 5.1 (5B130a)</li>
+</ul>
+本次教學將會寫出一個超簡單的音樂播放器，簡單到只有載入，播放，與停止功能。
+
+載入音樂的部分我們將不再預先將檔案路徑寫死在程式碼中，或是使用 NSTextField 手動輸入。本次教學將使用 NSOpenPanel，開啓選擇檔案的視窗，讓使用者瀏覽目錄，選擇需要的檔案開啟。
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<h2 class="wsite-content-title"><strong>建立 OS X Application 專案</strong></h2>
+<div class="paragraph">這次我們建立一個名為 HelloMusic 的專案
+
+請參考教學 <a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a> 建立新專案</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1215540_orig.png" alt="图片" /></a>
+<div>新專案名為 HelloMusic。</div>
+</div>
+</div>
+<div class="paragraph">新增 MainWindowController，整理專案結構如下：</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/604178_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>設計版面(layout)</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/266855_orig.png" alt="图片" /></a>
+<div>移除 Main.xib 的 Window 元件。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9504398_orig.png" alt="图片" /></a>
+<div>選擇 MainWindowController.xib，依圖加上 Label 與 Push Button 物件，Label 寬度可以拉長一些。並將視窗調整到適當大小。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5924368_orig.png" alt="图片" /></a>
+<div>修改 Window 屬性，取消勾選 Resize 與 Minimize。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/660437_orig.png" alt="图片" /></a>
+<div>修改各元件的 Title 屬性。</div>
+</div>
+</div>
+<div class="paragraph">Label:Not Loading…
+Push Button 各為：Load, Play, Stop</div>
+<h2 class="wsite-content-title"><strong>編寫邏輯</strong></h2>
+<div class="paragraph">接下來將開始編寫程式碼了。
+
+bearAppDelegate.h/.m 請參考 <a href="http://www.takobear.weebly.com/12/post/2014/03/bearmac-os-x-app-part2-hellotimer.html" target="_blank">OSX APP 教學 Part2-Timer</a></div>
+<div class="paragraph">以下是 MainWindowController 類別的相關程式碼：
+MainWindowController.h</div>
+<div>
+<div id="139459345927886543" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">MainWindowController.m</div>
+<div>
+<div id="302343134683024408" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>連接元件</strong></h2>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7984228_orig.png" alt="图片" /></a>
+<div>連接的項目太多，不一一畫出，請參考以下列表。</div>
+</div>
+</div>
+<div class="paragraph">infoTextField 連接至 Label
+loadSoundOpenPanel: 連接至 Load Button
+play: 連接至 Play Button
+stop: 連接至 Stop Button
+
+</div>
+<h2 class="wsite-content-title"><strong>測試結果</strong></h2>
+<div class="paragraph">接下來測試一下完成的程式。
+按下鍵盤上的 Command + Shift + K，清除專案之前編譯的檔案。
+按下鍵盤上的 Command + R，編譯並執行程式。</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5055206_orig.png" alt="图片" /></a>
+<div>初始畫面。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2057344_orig.png" alt="图片" /></a>
+<div>點擊 Load 按鈕，彈出選擇視窗。選擇音樂檔後按下 Open。</div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6719660_orig.png" alt="图片" /></a>
+<div>顯示音樂檔名。按下 Play 會開始播放音樂，按下 Stop 則會停止。</div>
+</div>
+</div>
+<h2 class="wsite-content-title"><strong>後續討論</strong></h2>
+<div class="paragraph">本次教學做出的 player 還可以更好，在 NSSound 類別中，還有許多方法可以使用，如使用 setVolume 設定音量大小，使用setCurrentTime 設定目前播放時間，以及其他設定是否循環播放。
+
+如果配合 NSTableView，就能夠做出播放列表，讓 Player 的功能更加強大。</div>
+<div class="paragraph">關於這次的Sample Code 下載：
+<a href="https://github.com/TakoBear/OSXHelloMusic" target="_blank">https://github.com/TakoBear/OSXHelloMusic</a></div>
+<div>
+<div id="913755968228854251" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<h2 class="wsite-content-title"><strong>參考</strong></h2>
+<div class="paragraph"><a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Sound/Sound.html#//apple_ref/doc/uid/10000104-SW1" target="_blank">Introduction to Sound Programming Topics for Cocoa</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSound_Class/Reference/Reference.html" target="_blank">NSSound Class Reference</a>
+<a title="" href="https://developer.apple.com/library/mac/documentation/cocoa/reference/applicationkit/Classes/NSOpenPanel_Class/Reference/Reference.html" target="_blank">NSOpenPanel Class Reference</a>
+<a title="" href="http://c.gzl.name/archives/tag/nsopenpanel" target="_blank">Mac:打开一个目录</a>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!
+
+</div>
+<div></div>
 
   </div>
 

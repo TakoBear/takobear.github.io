@@ -61,73 +61,79 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5212388_orig.jpeg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這個問題困擾Bear許多時日...
-<p>上一篇教學使用OpenCV時發生了一些狀況 (參考<a title="" href="http://www.takobear.weebly.com/12/post/2013/09/xcodeopencv.html" target="_blank">在Xcode上使用OpenCV</a>)</p>
-<p>如果是最近更新到OS X Mavericks (10.9) 或是安裝 opencv 2.4.6的朋友, 應該是無法順利執行動作的喔!!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="257983636418230633" align="left"><script async="">// < ![CDATA[</p>
-<p>// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p>// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>可以先下cmake -version確認現在cmake的版本,
-<p>Bear的版本是</p>
-<p>cmake version 2.8.11.2更新到OS X 10.9後, Xcode command line tool也會遺失掉</p>
-<p>也不能再從Xcode內安裝了, 但是只要下這個command 就行</p>
-<p><strong>xcode-select --install</strong></p>
-<p>就能順利安裝了 (詳細介紹Bear在另外一篇介紹)一般會碰到的問題多半是以下狀況:</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7633198_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><blockquote>錯誤碼:
-<p><strong>/Users/shouian/Desktop/AppDev/ProtocolOpenSource/opencv-2.4.4/modules/core/perf/perf_main.cpp:3:1: </strong><strong>error: </strong><strong>multiple unsequenced modifications to 'argc'</strong><strong>      [-Werror,-Wunsequenced]</strong></p>
-<p>CV_PERF_TEST_MAIN(core)</p>
-<p><strong>^~~~~~~~~~~~~~~~~~~~~~~</strong></p>
-<p><strong>/Users/shouian/Desktop/AppDev/ProtocolOpenSource/opencv-2.4.4/modules/ts/include/opencv2/ts/ts_perf.hpp:481:12: note: </strong>expanded from macro 'CV_PERF_TEST_MAIN'</p>
-<p>while (++argc &gt;= (--argc,-1)) {__VA_ARGS__; break;} /*this ugly construction is needed for VS 2005*/\</p>
-<p><strong>           ^          ~~</strong></p>
-<p>1 error generated.</p>
-<p>make[2]: *** [modules/core/CMakeFiles/opencv_perf_core.dir/perf/perf_main.cpp.o] Error 1</p>
-<p>make[1]: *** [modules/core/CMakeFiles/opencv_perf_core.dir/all] Error 2</p>
-<p>make: *** [all] Error 2</p>
-<p><div>通常是在Build 到40%的時候會死掉
-<p>這項問題困擾Bear將近一週, 就在昨天才在<a title="" href="http://stackoverflow.com/questions/19537206/opencv-for-python-on-mavericks" target="_blank">StackOverflow</a>找到解法先下載<a title="" href="https://github.com/Itseez/opencv/archive/2.4.3.tar.gz">opencv2.4.3 source</a> (請勿載其他版本)接下來在終端機輸入以下指令</p>
-<p><strong>tar -xf opencv-2.4.3.tar.gz
-<p>cd opencv-2.4.3 </p>
-<p>echo "#define GTEST_USE_OWN_TR1_TUPLE 1" | cat &gt; temp1 </p>
-<p>cat modules/ts/include/opencv2/ts/ts_gtest.h &gt; temp2 </p>
-<p>cat temp1 temp2 &gt; modules/ts/include/opencv2/ts/ts_gtest.h </p>
-<p>mkdir build </p>
-<p>cd build cmake .. -Wno-dev </p>
-<p>make -j8 &amp;&amp; sudo make install</p>
-<p>就會發現原本build不過去的opencv 的error變成了Warning囉</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5318812_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這邊會發現在Build的時候出現一堆warning....
-<p>但是是沒辦法的, 目前網路上屍橫遍野...</p>
-<p>推測是opencv 還來不及支援Mavericks,</p>
-<p>因此即使command 用brew install opencv也會同樣錯誤如果已經升級成Mavericks 或是安裝2.4.6無法成功的朋友可以試試看這解法喔!喜歡這篇消息嗎? 加入Takobear粉絲團吧!</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></strong></p></div></p></blockquote></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5212388_orig.jpeg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這個問題困擾Bear許多時日...
+上一篇教學使用OpenCV時發生了一些狀況 (參考<a title="" href="http://www.takobear.weebly.com/12/post/2013/09/xcodeopencv.html" target="_blank">在Xcode上使用OpenCV</a>)
+如果是最近更新到OS X Mavericks (10.9) 或是安裝 opencv 2.4.6的朋友, 應該是無法順利執行動作的喔!!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="257983636418230633" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+// < ![CDATA[
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+// < ![CDATA[  (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">可以先下cmake -version確認現在cmake的版本,
+Bear的版本是
+cmake version 2.8.11.2更新到OS X 10.9後, Xcode command line tool也會遺失掉
+也不能再從Xcode內安裝了, 但是只要下這個command 就行
+<strong>xcode-select --install</strong>
+就能順利安裝了 (詳細介紹Bear在另外一篇介紹)一般會碰到的問題多半是以下狀況:
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7633198_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<blockquote>錯誤碼:
+
+<strong>/Users/shouian/Desktop/AppDev/ProtocolOpenSource/opencv-2.4.4/modules/core/perf/perf_main.cpp:3:1: </strong><strong>error: </strong><strong>multiple unsequenced modifications to 'argc'</strong><strong>      [-Werror,-Wunsequenced]</strong>
+
+CV_PERF_TEST_MAIN(core)
+<strong>^~~~~~~~~~~~~~~~~~~~~~~</strong>
+<strong>/Users/shouian/Desktop/AppDev/ProtocolOpenSource/opencv-2.4.4/modules/ts/include/opencv2/ts/ts_perf.hpp:481:12: note: </strong>expanded from macro 'CV_PERF_TEST_MAIN'
+while (++argc &gt;= (--argc,-1)) {__VA_ARGS__; break;} /*this ugly construction is needed for VS 2005*/\
+<strong>           ^          ~~</strong>
+1 error generated.
+make[2]: *** [modules/core/CMakeFiles/opencv_perf_core.dir/perf/perf_main.cpp.o] Error 1
+make[1]: *** [modules/core/CMakeFiles/opencv_perf_core.dir/all] Error 2
+make: *** [all] Error 2</blockquote>
+<div class="paragraph">通常是在Build 到40%的時候會死掉
+這項問題困擾Bear將近一週, 就在昨天才在<a title="" href="http://stackoverflow.com/questions/19537206/opencv-for-python-on-mavericks" target="_blank">StackOverflow</a>找到解法先下載<a title="" href="https://github.com/Itseez/opencv/archive/2.4.3.tar.gz">opencv2.4.3 source</a> (請勿載其他版本)接下來在終端機輸入以下指令
+
+<span style="color: #2a2a2a;"><strong><span style="font-size: medium;">tar -xf opencv-2.4.3.tar.gz</span>
+<span style="font-size: medium;">cd opencv-2.4.3 </span>
+<span style="font-size: medium;">echo "#define GTEST_USE_OWN_TR1_TUPLE 1" | cat &gt; temp1 </span>
+<span style="font-size: medium;">cat modules/ts/include/opencv2/ts/ts_gtest.h &gt; temp2 </span>
+<span style="font-size: medium;">cat temp1 temp2 &gt; modules/ts/include/opencv2/ts/ts_gtest.h </span>
+<span style="font-size: medium;">mkdir build </span>
+<span style="font-size: medium;">cd build cmake .. -Wno-dev </span>
+<span style="font-size: medium;">make -j8 &amp;&amp; sudo make install</span></strong></span>
+
+就會發現原本build不過去的opencv 的error變成了Warning囉
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5318812_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這邊會發現在Build的時候出現一堆warning....
+但是是沒辦法的, 目前網路上屍橫遍野...
+推測是opencv 還來不及支援Mavericks,
+因此即使command 用brew install opencv也會同樣錯誤如果已經升級成Mavericks 或是安裝2.4.6無法成功的朋友可以試試看這解法喔!喜歡這篇消息嗎? 加入Takobear粉絲團吧!
+
+</div>
+<div></div>
 
   </div>
 

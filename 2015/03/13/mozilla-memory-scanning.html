@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Mozilla 釋出針對伺服器的記憶體掃描（Memory-Scanning）技術開放原始碼</title>
-  <meta name="description" content="今天早上Mozilla發佈了另一項開放原始碼的專案，主要可以讓你用來監控伺服器內的處理序的記憶體狀態，這項新技術名叫Masche，對於伺服器開發人員，這邊的資訊希望對你有幫助！&gt;&gt;點我前往Mozilla官方部落格消息&lt;&lt;這項工具可以掃描記憶體的處理程序而不影響你的正常操作，是不是聽起來很美...">
+  <meta name="description" content="今天早上Mozilla發佈了另一項開放原始碼的專案，主要可以讓你用來監控伺服器內的處理序的記憶體狀態，這項新技術名叫Masche，對於伺服器開發人員，這邊的資訊希望對你有幫助！">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,61 +61,69 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/930648_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>今天早上Mozilla發佈了另一項開放原始碼的專案，
-<p>主要可以讓你用來監控伺服器內的處理序的記憶體狀態，這項新技術名叫Masche，</p>
-<p>對於伺服器開發人員，這邊的資訊希望對你有幫助！</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="427955306897278626" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div><a title="" href="http://boo.tw/o_vj2" target="_blank"><strong>&gt;&gt;點我前往Mozilla官方部落格消息&lt;&lt;</strong></a>這項工具可以掃描記憶體的處理程序而不影響你的正常操作，
-<p>是不是聽起來很美好？現在很多的記憶體清楚工具常常一掃就讓你的電腦會陷入幾乎當機的狀態，</p>
-<p>如果在檢查的過程中不影響整個操作，對開發人員以及未來一般的使用者都是相當有意的！</p>
-<p>其實這款Mache已經被Mozilla應用在他們的一項開源程式碼專案 Mozilla InvestiGator，或是又稱為MIG的平台上</p>
-<p>（Tako：MIG這個平台主要是用來同時檢查數以千計的系統調查，讓開發者或管理人員能夠同時得到多台系統的資訊，</p>
-<p>加快大家的檢查速度，他網站上的標誌就是一個扮成福爾摩斯的鱷魚XD）</p>
-<p><a title="" href="http://mig.mozilla.org/" target="_blank"><strong>&gt;&gt;點我了解什麼是MIG&lt;&lt;</strong></a></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2836196_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>根據官方的說明，Masche的技術提供了非常快速的記憶體掃描，但不會提供像是<a title="" href="https://code.google.com/p/volatility/">Volatility</a> 或 <a title="" href="http://www.rekall-forensic.com/">Rekall</a>兩套框架的功能
-<p>他所做的就是針對「最佳化在搜尋大系統內的處理程序中字串與bytes的狀況，而且速度非常快！」這項框架可以支援的平台是由<a title="" href="http://www.wikiwand.com/zh/%E5%B8%83%E5%AE%9C%E8%AF%BA%E6%96%AF%E8%89%BE%E5%88%A9%E6%96%AF%E5%A4%A7%E5%AD%A6" target="_blank">布宜諾斯艾利斯大學</a>的學生們所設計出來的，</p>
-<p>可以在Linux、Mac OS X 以及Windows上運行！</p>
-<p><strong><a title="" href="https://air.mozilla.org/mwos-2014-masche-2/video/?embedded=false&amp;autoplay=true" target="_blank">&gt;&gt;點我到Mascheg說明影片頁&lt;&lt;</a></strong></p>
-<p>當然不能少的開放程式碼位置！！</p>
-<p><a title="" href="https://github.com/mozilla/masche" target="_blank"><strong>&gt;&gt;點我到Masche Github&lt;&lt;</strong></a></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6712511_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div id="536064472203254888" align="left">
-<p><div id="fb-root"></div></p>
-<p><script>// < ![CDATA[</p>
-<p> (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>// ]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
-<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。</div></p>
-<p></p>
-<p></p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/930648_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">今天早上Mozilla發佈了另一項開放原始碼的專案，
+主要可以讓你用來監控伺服器內的處理序的記憶體狀態，這項新技術名叫Masche，
+對於伺服器開發人員，這邊的資訊希望對你有幫助！</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="427955306897278626" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph"><a title="" href="http://boo.tw/o_vj2" target="_blank"><strong><span style="font-size: large;">&gt;&gt;點我前往Mozilla官方部落格消息&lt;&lt;</span></strong></a>這項工具可以掃描記憶體的處理程序而不影響你的正常操作，
+是不是聽起來很美好？現在很多的記憶體清楚工具常常一掃就讓你的電腦會陷入幾乎當機的狀態，
+如果在檢查的過程中不影響整個操作，對開發人員以及未來一般的使用者都是相當有意的！
+
+其實這款Mache已經被Mozilla應用在他們的一項開源程式碼專案 Mozilla InvestiGator，或是又稱為MIG的平台上
+
+（Tako：MIG這個平台主要是用來同時檢查數以千計的系統調查，讓開發者或管理人員能夠同時得到多台系統的資訊，
+加快大家的檢查速度，他網站上的標誌就是一個扮成福爾摩斯的鱷魚XD）
+
+<a title="" href="http://mig.mozilla.org/" target="_blank"><strong><span style="font-size: large;">&gt;&gt;點我了解什麼是MIG&lt;&lt;</span></strong></a>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2836196_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">根據官方的說明，Masche的技術提供了非常快速的記憶體掃描，但不會提供像是<a title="" href="https://code.google.com/p/volatility/">Volatility</a> 或 <a title="" href="http://www.rekall-forensic.com/">Rekall</a>兩套框架的功能
+他所做的就是針對「最佳化在搜尋大系統內的處理程序中字串與bytes的狀況，而且速度非常快！」這項框架可以支援的平台是由<a title="" href="http://www.wikiwand.com/zh/%E5%B8%83%E5%AE%9C%E8%AF%BA%E6%96%AF%E8%89%BE%E5%88%A9%E6%96%AF%E5%A4%A7%E5%AD%A6" target="_blank">布宜諾斯艾利斯大學</a>的學生們所設計出來的，
+可以在Linux、Mac OS X 以及Windows上運行！
+
+<span style="font-size: large;"><strong><a title="" href="https://air.mozilla.org/mwos-2014-masche-2/video/?embedded=false&amp;autoplay=true" target="_blank">&gt;&gt;點我到Mascheg說明影片頁&lt;&lt;</a></strong></span>
+
+<span style="font-size: large;">當然不能少的開放程式碼位置！！</span>
+<a title="" href="https://github.com/mozilla/masche" target="_blank"><span style="font-size: large;"><strong>&gt;&gt;點我到Masche Github&lt;&lt;</strong></span></a>
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6712511_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div id="536064472203254888" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+ (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。</div>
+</div>
+</div>
+</div>
 
   </div>
 

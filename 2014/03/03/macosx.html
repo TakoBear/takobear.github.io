@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[MacOSX小技巧]關閉開機音效</title>
-  <meta name="description" content="MacOSX 在開機時會有「登」的一聲，雖然不是很苦惱的事但是在夜深人靜、圖書館時，這麼一聲，總是會嚇到人（說不定是嚇到自己）那....有沒有什麼好方案呢？[cjtoolbox name='google_ad']Bear：其實只要養成好習慣，關機時把聲音調成靜音不就解決了嗎（大誤Tako：如果是這樣就不是什麼小技...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,68 +61,112 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>MacOSX 在開機時會有「登」的一聲，雖然不是很苦惱的事</p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4224125_orig.png" alt="" /></p>
+
+<p>MacOSX 在開機時會有「登」的一聲，雖然不是很苦惱的事</p>
+
 <p>但是在夜深人靜、圖書館時，這麼一聲，總是會嚇到人（說不定是嚇到自己）</p>
-<p>那....有沒有什麼好方案呢？</p>
-<p><!--more--></p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<p>那….有沒有什麼好方案呢？</p>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>Bear：其實只要養成好習慣，關機時把聲音調成靜音不就解決了嗎（大誤</p>
+
 <p>Tako：如果是這樣就不是什麼小技巧了吧（怒</p>
+
 <p>好吧，專為不想多做靜音的懶人所做的技巧介紹</p>
+
 <p>原理就是當 MacOSX 進行登出行為後，啟動靜音</p>
+
 <p>登入行為後，關閉靜音</p>
+
 <p>知道原理後，開始動手做吧</p>
+
 <p>首先打開終端機</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5395415_orig.png" alt="" /></p>
+
 <p>在終端機內鍵入</p>
-<p><pre><code>sudo vim /Library/Scripts/mute-on.sh
-<p></p>
+
+<pre><code class="bash">sudo vim /Library/Scripts/mute-on.sh
+</code></pre>
+
 <p>這邊可能需要輸入開機密碼</p>
+
 <p>如果不會用（或沒有vim）可以用 nano，vi 替代</p>
+
 <p>接下來按 i 在文本內輸入（可用 <code>command + c</code>；<code>command + v</code>處理）</p>
+
 <p>（下面的意思就是啟動靜音）</p>
-<p><pre><code>#!/bin/bash
-<p>osascript -e 'set volume with output muted'</p>
-<p></p>
+
+<pre><code class="bash">#!/bin/bash
+osascript -e 'set volume with output muted'
+</code></pre>
+
 <p>ESC 鍵後輸入 <code>:wq!</code> 完成存檔並離開</p>
+
 <p>接下來一樣在終端機上鍵入</p>
-<p><pre><code>sudo vim /Library/Scripts/mute-off.sh
-<p></p>
+
+<pre><code class="bash">sudo vim /Library/Scripts/mute-off.sh
+</code></pre>
+
 <p>輸入</p>
-<p><pre><code>#!/bin/bash
-<p>osascript -e 'set volume without output muted'</p>
-<p></p>
+
+<pre><code class="bash">#!/bin/bash
+osascript -e 'set volume without output muted'
+</code></pre>
+
 <p>ESC 鍵後輸入 <code>:wq!</code> 完成存檔並離開</p>
+
 <p>再來必須給于上述兩個命令檔執行權限</p>
-<p><pre><code>sudo chmod u+x /Library/Scripts/mute-on.sh
-<p>sudo chmod u+x /Library/Scripts/mute-off.sh</p>
-<p></p>
+
+<pre><code class="bash">sudo chmod u+x /Library/Scripts/mute-on.sh
+sudo chmod u+x /Library/Scripts/mute-off.sh
+</code></pre>
+
 <p>最後把它們放進開（關）機時的執行序列中</p>
+
 <p>不過，先檢查是不是之前有做過</p>
-<p><pre><code>sudo defaults read com.apple.loginwindow LoginHook
-<p>sudo defaults read com.apple.loginwindow LogoutHook</p>
-<p></p>
+
+<pre><code class="bash">sudo defaults read com.apple.loginwindow LoginHook
+sudo defaults read com.apple.loginwindow LogoutHook
+</code></pre>
+
 <p>如果查無此檔就表示沒做過，可以放心放進開（關）機動作中</p>
-<p><pre><code>sudo defaults write com.apple.loginwindow LogoutHook /Library/Scripts/mute-on.sh
-<p>sudo defaults write com.apple.loginwindow LoginHook /Library/Scripts/mute-off.sh</p>
-<p></p>
+
+<pre><code class="bash">sudo defaults write com.apple.loginwindow LogoutHook /Library/Scripts/mute-on.sh
+sudo defaults write com.apple.loginwindow LoginHook /Library/Scripts/mute-off.sh
+</code></pre>
+
 <p>Ok，到這邊就完成了</p>
+
 <p>假若不喜歡這種被動操作的行為的話，當然可以刪除</p>
-<p><pre><code>sudo defaults delete com.apple.loginwindow LoginHook
-<p>sudo defaults delete com.apple.loginwindow LogoutHook</p>
-<p>sudo rm /Library/Scripts/mute-on.sh</p>
-<p>sudo rm /Library/Scripts/mute-off.sh</p>
-<p></p>
+
+<pre><code class="bash">sudo defaults delete com.apple.loginwindow LoginHook
+sudo defaults delete com.apple.loginwindow LogoutHook
+sudo rm /Library/Scripts/mute-on.sh
+sudo rm /Library/Scripts/mute-off.sh
+</code></pre>
+
 <p>呼，給懶人的介紹就完成了</p>
+
 <p>等等，眼尖的你是不是察覺到 osascript 這個滿實用的指令呢？</p>
+
 <p>這個指令可以執行 script 語法，直接叫 MacOSX 做一些簡單的事</p>
+
 <p>當然這部分就留給各位自行研究了, 或是 Bear 有時間再慢慢詳談其他介紹吧(懶)</p>
-<p>參考來源：</p>
-<p><a href="https://discussions.apple.com/thread/4001727?start=15">(1) How To Disable the Mac Start Up Sound</a></p>
-<p><a href="http://apple.itsprite.com/applehow-do-i-disable-or-get-rid-of-the-startup-sound-my-mac-makes/">(2) Apple:How do I disable or get rid of the startup sound my Mac makes?</a></p>
+
+<p>參考來源：
+<a href="https://discussions.apple.com/thread/4001727?start=15">(1) How To Disable the Mac Start Up Sound</a>
+<a href="http://apple.itsprite.com/applehow-do-i-disable-or-get-rid-of-the-startup-sound-my-mac-makes/">(2) Apple:How do I disable or get rid of the startup sound my Mac makes?</a></p>
+
 <p>喜歡這篇文章嗎？趕快來加入Takobear粉絲團吧!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 

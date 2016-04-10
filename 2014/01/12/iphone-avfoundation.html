@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>iPhone也能長曝光! AVFoundation與濾鏡的魔術</title>
-  <meta name="description" content=" 這照片作為封面實在手震得很厲害....不過Bear希望能傳達一個重點! 就是如何利用iOS 的framework來製作出長曝光的效果!利用Bear 很早之前研究的一個framework - AVFoundation 以及CoreImage兩項核心就能完成了喔!下一篇Bear還會介紹如何使用音量鍵作為快門鍵的教學...">
+  <meta name="description" content=" 這照片作為封面實在手震得很厲害....不過Bear希望能傳達一個重點! 就是如何利用iOS 的framework來製作出長曝光的效果!利用Bear 很早之前研究的一個framework - AVFoundation 以及CoreImage兩項核心就能完成了喔!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,455 +61,591 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6166088_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這照片作為封面實在手震得很厲害....不過Bear希望能傳達一個重點! 就是如何利用iOS 的framework來製作出長曝光的效果!
-<p>利用Bear 很早之前研究的一個framework - AVFoundation 以及CoreImage兩項核心就能完成了喔!</p>
-<p>下一篇Bear還會介紹如何使用音量鍵作為快門鍵的教學示範</p>
-<p></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>市面上已經有太多的相機App
-<p>很多剛入門iOS的朋友也會想寫個把iPhone當作單眼相機使用的功能</p>
-<p>老牌的類似單眼App如 Slow Shutter就有支援這樣的功能</p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6974678_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>它的操作界面介紹如下面兩張:</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4638105_orig.jpeg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7242445_orig.jpeg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>很多剛接觸iOS , 有一些開發經驗的朋友看到這樣子的App
-<p>通常直覺上會這樣想的"噢~ 看起來很簡單 Duration就是曝光時間, FPS 就是Frame per second, Sensitivity 一定就是感光度"</p>
-<p>大概就是對應單眼相機最重要的三元素: 快門時間, 光圈 以及iSO吧!!!</p>
-<p>這很簡單吧</p>
-<p>只要找到Apple 開放iPhone這些操作的SDk就能做到啦</p>
-<p>完全不需要費什麼心!</p>
-<p>Bear剛開始的時候也是這麼覺得的....</p>
-<p>直到後來才發現....</p>
-<p>錯！！！！</p>
-<p>如果這麼簡單就能做到的話....</p>
-<p>也不會有人能賣1.99 USD 了(掩面哭泣)</p>
-<p>事實上iPhone對於開放裝置的支援程度相當低落</p>
-<p>不亂你想要調整光圈(F值在iPhone 4s 固定為2.4)</p>
-<p>iso (沒有選項)</p>
-<p>調整曝光時間(你想都別想)</p>
-<p>基本上都是做不到的!!!</p>
-<p>Apple的政策中基本上就是不允許你對於相機做一切類似單眼的調整</p>
-<p>．．．</p>
-<p>那這樣的App 又是怎麼做出來的呢!!?</p>
-<p>等等</p>
-<p>這邊我們在冷靜看一下那三個參數</p>
-<p><strong>Duration</strong></p>
-<p><strong>FPS</strong></p>
-<p><strong>Sensitivity </strong></p>
-<p>仔細看看 不曉得版友有沒有發現奇怪的地方</p>
-<p>Duration作為曝光時間解釋沒有問題</p>
-<p>FPS 代表每秒拍攝幾張照片, 可是我們只是要拍照而已為什麼需要調整FPS的參數!?</p>
-<p>Sensitivity....雖然可以解釋為曝光度 但是為什麼會用一個這麼不接近單眼的參數數值呢?</p>
-<p>理由很簡單</p>
-<p>就是他們真的就有跟字面上一樣的意思....</p>
-<p>他們不是單眼的參數</p>
-<p>而是一個可以讓你模擬出更加接近真實長曝光的參數</p>
-<p>後來可以觀察其他同類型App都會使用類似的3個參數</p>
-<p>這點我們就必須認知道一件事實</p>
-<p><strong>“符合這三個名字的參數調整, 能使iPhone 模擬出長曝光的效果”</strong></p>
-<p>基於這些元素, Bear想到了一個可能的邏輯架構如下圖:</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5659735_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>簡單的說我們的概念在於1. 用一個計時器錄影 (沒錯!  就是錄影, 這裡也就是duration跟fps的重點, 因為我們實際上是在錄影)
-<p>2. 把一個錄影拍到的frame 儲存在一個陣列</p>
-<p>3. 時間到結束儲存 (完成配置)</p>
-<p>4. 把陣列裡的每一張照片疊加在一起</p>
-<p>就是這麼簡單</p>
-<p>只要把每一張照片疊加起來就好!</p>
-<p>不過現實是光是疊加還不夠</p>
-<p>我們還需要對每一張照片做特殊的處理</p>
-<p>這裡必須導入Sensitivity的概念, 我們也就必須透過一些逆向工程的方法來推測出Sensitivity實際上是什麼數值</p>
-<p>不過依據使用Photoshop的概念, 通常我們需要的是調整模糊程度(blur)以及透明度(opacity)</p>
-<p>有了初步的規劃</p>
-<p>接下來就能讓我們正式進入這段程式的架構了!</p>
-<p>Bear 先表現一個預期看到的UI界面 (很醜不過基本功能都該有了^_&lt;)</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5355469_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5452918_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>一個看起來很像但是不太一樣的功能界面!概念就是這樣:
-<p>右邊的藍色Option按鈕按下去後, 可以跳出三個參數的選項</p>
-<p>按下Done以後會記錄參數</p>
-<p>最後按下Snap 會儲存在本地端的相簿內!</p>
-<p>這邊我們設計出一個Singleton</p>
-<p>(單件物件：又稱作Instance, 是一個在一整個App周期中只會存在唯一一個物件的存在, 以iOS內來說,</p>
-<p>最常見到的就是UIApplication這個class, 他就代表這個App, 之後我們會講到一些關於他的操作)</p>
-<p>接下來我們談怎麼設計囉! ( 很重要一點, Bear為求懶惰, 這邊是用ARC來建立的喔!)</p>
-<p>建立一個名叫做SHCamera的物件, 繼承自NSObject</p>
-<p>他的界面如下:</p>
-<p>#import &lt;Foundation/Foundation.h&gt;</p>
-<p> typedef void (^CameraResult) (UIImage *image);</p>
-<p> typedef void (^CameraBegin) (void);</p>
-<p> @interface SHCamera : NSObject</p>
-<p> @property (nonatomic)           CGFloat sensitivity;</p>
-<p>@property (nonatomic)           CGFloat ev;</p>
-<p> @property (nonatomic)           float   exposureTime;</p>
-<p> @property (nonatomic)           BOOL    isCameraBack;</p>
-<p> @property (nonatomic, readonly) UIView *imgView;</p>
-<p>+ (id)sharedInstance;</p>
-<p>- (void)showViewInCamera;</p>
-<p>- (void)stopViewInCamera;</p>
-<p>- (void)setUpPreviewView:(UIView *)imgView;</p>
-<p>- (void)takeSnap:(CameraBegin)begin withCompletetion:(CameraResult)result;</p>
-<p> @end</p>
-<p>我們這邊思考的界面概念很簡單:</p>
-<p>1. sharedinstance 用來建立物件實體</p>
-<p>2. showViewInCamera 與 stopViewInCamera 分別用作顯示畫面在手機App上以及停止顯示畫面在手機上的行為</p>
-<p>3. setUpPreviewView:(UIView *)imgView; 這隻比較特別, Bear暫時沒想到怎麼處理它最好, 基本上他就是讓畫面的View設定為顯示攝影機畫面的method, 如果不執行的話就看不到畫面了!</p>
-<p>4. - (void)takeSnap:(CameraBegin)begin withCompletetion:(CameraResult)result; 這隻method 最重要了, 只要呼叫他, 我們可以在begin這個block內撰寫 "開始拍照的動作" 跟 在result內寫"拍完照片後要做的事"</p>
-<p>透過這樣的形式就能最簡單的實現“長曝光”了!!</p>
-<p>從圖面來看的話, 這個物件就長得像這樣</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4232314_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>好吧小編繪畫能力實在很崩潰 （大哭）不過重點就是像上面這樣! 我們主要是對外實作出上面四個method, 跟提供該有的property可以操作就好
-<p>接下來就一步一步跟著Bear往下走吧!</p>
-<p>進入SHCamera.m中, 這邊很重要,</p>
-<p>在project內記得要到 Build Phases - &gt;Link Binary With Libraries 加入這四個framework</p>
-<p>AVFoundation, CoreImage, Accelerate 跟MediaPlayer !</p>
-<p>#import "SHCamera.h"</p>
-<p>#import &lt;AVFoundation/AVFoundation.h&gt;</p>
-<p>#import &lt;CoreImage/CoreImage.h&gt;</p>
-<p>#import &lt;Accelerate/Accelerate.h&gt;</p>
-<p>#import &lt;MediaPlayer/MediaPlayer.h&gt;</p>
-<p> @interface SHCamera() &lt;AVCaptureVideoDataOutputSampleBufferDelegate&gt;</p>
-<p>{</p>
-<p>     // Device Session</p>
-<p>AVCaptureSession *session;</p>
-<p>AVCaptureDevice  *cameraDevice;</p>
-<p>CIContext        *imageContext;</p>
-<p>CIVector         *alphaVector;</p>
-<p>CGFloat          alpha;</p>
-<p>     // Mixing Filter</p>
-<p>CIFilter *blendFilter;</p>
-<p>CIFilter *mixFilter;</p>
-<p>CIFilter *alphaFilterInput;</p>
-<p>CIFilter *outCompositing;</p>
-<p>CIFilter *contrastFilter;</p>
-<p>CIFilter *gammaFilter;</p>
-<p>CIFilter *fStopFilter;</p>
-<p>     // Image Session</p>
-<p>NSMutableArray  *imageArray;</p>
-<p>CIImage         *tmpSnapImage;</p>
-<p>// Control Setting</p>
-<p>BOOL startToTakePhotos;</p>
-<p>int  imageCounterCount;</p>
-<p>     // Result Block to pass result</p>
-<p>CameraResult resultBlock;</p>
-<p>}</p>
-<p>- (id)initWithCamera;</p>
-<p>- (void)setUpFilter;</p>
-<p>- (void)setUpCamera;</p>
-<p>- (AVCaptureVideoPreviewLayer *) previewInView: (UIView *) view;</p>
-<p>- (void)timerSnap:(NSTimer *)timer;</p>
-<p> @end</p>
-<p>我們有五個private method, 這是不希望給外面看到的XD</p>
-<p>接下來一個一個介紹吧!!</p>
-<p>@implementation SHCamera</p>
-<p>@synthesize sensitivity  = _sensitivity;</p>
-<p> @synthesize ev           = _ev;</p>
-<p> @synthesize exposureTime = _exposureTime;</p>
-<p> @synthesize isCameraBack = _isCameraBack;</p>
-<p> @synthesize imgView      = _imgView;</p>
-<p>//  這邊是標準要產生Singleton的寫法! dispatch_once 能確保這一段的程式碼在整個App中只會被執行到一次// 也就是說這個物件只會被init一次! 所有的property 或是傳輸就都能透過他進行了</p>
-<p>+ (id)sharedInstance</p>
-<p>{</p>
-<p>static SHCamera *camrea = nil;</p>
-<p>static dispatch_once_t onceToken;</p>
-<p>dispatch_once(&amp;onceToken, ^{</p>
-<p>camrea = [[SHCamera alloc] initWithCamera];</p>
-<p>});</p>
-<p>return camrea;</p>
-<p>}</p>
-<p>//  這邊很簡單, 就是單純的起始化</p>
-<p>- (id)initWithCamera</p>
-<p>{</p>
-<p>self = [super init];</p>
-<p>if (self) {</p>
-<p>         // Basic parameters</p>
-<p>imageContext = [CIContext contextWithOptions:nil];</p>
-<p>imageArray   = [NSMutableArray array];</p>
-<p>         // Parameter to record</p>
-<p>startToTakePhotos = NO;</p>
-<p>         // Default parameters</p>
-<p>_sensitivity    = 1.0f;</p>
-<p>_exposureTime   = 0.5f;</p>
-<p>_ev             = 2.0f;</p>
-<p>_isCameraBack   = YES;  // 我們預設都是用背後的Camera</p>
-<p>[self setUpFilter];</p>
-<p>[self setUpCamera];</p>
-<p>}</p>
-<p>return self;</p>
-<p>}</p>
-<p>接下來就是一連串的設定Fileter跟利用AVFoundation 設定攝影機的步驟</p>
-<p>- (void)setUpFilter</p>
-<p>{</p>
-<p>blendFilter         = [CIFilter filterWithName:@"CILightenBlendMode"];</p>
-<p>mixFilter           = [CIFilter filterWithName:@"CIMaximumCompositing"];</p>
-<p>alphaFilterInput    = [CIFilter filterWithName:@"CIColorMatrix"];</p>
-<p>contrastFilter      = [CIFilter filterWithName:@"CIColorControls"];</p>
-<p>[contrastFilter setDefaults];</p>
-<p>fStopFilter         = [CIFilter filterWithName:@"CIExposureAdjust"];</p>
-<p>[fStopFilter setDefaults];</p>
-<p>gammaFilter         = [CIFilter filterWithName:@"CIGammaAdjust"];</p>
-<p>[gammaFilter setValue:[NSNumber numberWithFloat:1.0f] forKey:@"inputPower"];</p>
-<p>alphaVector         = [CIVector vectorWithX:0 Y:0 Z:0 W:1.0f];</p>
-<p>}</p>
-<p>- (void)setUpCamera</p>
-<p>{</p>
-<p>     // In ARC. we do not have to handle its release problem</p>
-<p>session = [[AVCaptureSession alloc] init];</p>
-<p>     // Set resolution</p>
-<p>     session.sessionPreset = AVCaptureSessionPresetMedium;</p>
-<p>[session beginConfiguration]; // Begin to setup session</p>
-<p>NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];</p>
-<p>if (_isCameraBack) {</p>
-<p>         // Set up back camera</p>
-<p>for (AVCaptureDevice *device in devices) {</p>
-<p>if (device.position == AVCaptureDevicePositionBack) {</p>
-<p>cameraDevice = device;</p>
-<p>break;</p>
-<p>}</p>
-<p>}</p>
-<p>} else {</p>
-<p>for (AVCaptureDevice *device in devices) {</p>
-<p>      // Setup front camera</p>
-<p>      if (device.position == AVCaptureDevicePositionFront) {</p>
-<p>cameraDevice = device;</p>
-<p>break;</p>
-<p>}</p>
-<p>}</p>
-<p>}</p>
-<p>     // Add Input device</p>
-<p>NSError *error;</p>
-<p>AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:cameraDevice error:&amp;error];</p>
-<p>[session addInput:input];</p>
-<p>     // Add output device</p>
-<p>AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];</p>
-<p>[output setAlwaysDiscardsLateVideoFrames:YES];</p>
-<p>[output setSampleBufferDelegate:self queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)];</p>
-<p>output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];</p>
-<p>[session addOutput:output];</p>
-<p>[session commitConfiguration];</p>
-<p>}</p>
-<p>呼....到這邊基本的設定完成了, 我們就要繼續往下把其他method給實作出來囉!</p>
-<p>以下兩隻method很簡單, 只要單純讓session 跑或不跑而已</p>
-<p>- (void)showViewInCamera</p>
-<p>{</p>
-<p>  // Start to show image</p>
-<p>  [session startRunning];</p>
-<p>}</p>
-<p>- (void)stopViewInCamera</p>
-<p>{</p>
-<p>     // Stop configuring image</p>
-<p>[session stopRunning];</p>
-<p>}</p>
-<p>接下來是比較大的重點, 我們要指定畫面的某一個View 能顯現攝影機的畫面, 必須透過以下三個method的串聯才行!</p>
-<p>- (void)setUpPreviewView:(UIView *)imgView</p>
-<p>{</p>
-<p>if (!session) {</p>
-<p>NSLog(@"There is no session");</p>
-<p>return;</p>
-<p>}</p>
-<p>_imgView = imgView;</p>
-<p>AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];</p>
-<p>previewLayer.frame = CGRectMake(0, 0, _imgView.frame.size.width, _imgView.frame.size.height);</p>
-<p>previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;</p>
-<p>     // Show preview layer on this image view</p>
-<p>     [_imgView.layer addSublayer:previewLayer];</p>
-<p>     // Set the orientation layout subview</p>
-<p>     [self layoutPreviewInView];</p>
-<p>}</p>
-<p>- (AVCaptureVideoPreviewLayer *) previewInView: (UIView *) view</p>
-<p>{</p>
-<p>for (CALayer *layer in view.layer.sublayers)</p>
-<p>if ([layer isKindOfClass:[AVCaptureVideoPreviewLayer class]])</p>
-<p>return (AVCaptureVideoPreviewLayer *)layer;</p>
-<p>return nil;</p>
-<p>}</p>
-<p>- (void) layoutPreviewInView</p>
-<p>{</p>
-<p>AVCaptureVideoPreviewLayer *layer = [self previewInView:_imgView];</p>
-<p>if (!layer) return;</p>
-<p>UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;</p>
-<p>CATransform3D transform = CATransform3DIdentity;</p>
-<p>if (orientation == UIDeviceOrientationPortrait) ;</p>
-<p>else if (orientation == UIDeviceOrientationLandscapeLeft)</p>
-<p>transform = CATransform3DMakeRotation(-M_PI_2, 0.0f, 0.0f, 1.0f);</p>
-<p>else if (orientation == UIDeviceOrientationLandscapeRight)</p>
-<p>transform = CATransform3DMakeRotation(M_PI_2, 0.0f, 0.0f, 1.0f);</p>
-<p>else if (orientation == UIDeviceOrientationPortraitUpsideDown)</p>
-<p>transform = CATransform3DMakeRotation(M_PI, 0.0f, 0.0f, 1.0f);</p>
-<p>layer.transform = transform;</p>
-<p>layer.frame = CGRectMake(0, 0, _imgView.frame.size.width, _imgView.frame.size.height);</p>
-<p>}</p>
-<p>接下來我們就要進入重點中的重點啦!!!!(拖了很久總算要進入正題了....)</p>
-<p>#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate</p>
-<p>- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection</p>
-<p>{</p>
-<p>     @autoreleasepool {</p>
-<p>CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);</p>
-<p>CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);</p>
-<p>CIImage *image = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer options:(__bridge_transfer NSDictionary *)attachments];</p>
-<p>image = [image imageByApplyingTransform:CGAffineTransformMakeRotation(-M_PI_2)];</p>
-<p>CGPoint origin = [image extent].origin;</p>
-<p>image = [image imageByApplyingTransform:CGAffineTransformMakeTranslation(-origin.x, -origin.y)];</p>
-<p>         // Start to record image</p>
-<p>if (startToTakePhotos == YES) {</p>
-<p>           // Add image to image array</p>
-<p>[imageArray addObject:image];</p>
-<p>}</p>
-<p>}</p>
-<p>}</p>
-<p>這邊做法是這樣的, 我們會不斷去讀取frame buffer (利用這個的AVCaptureVideoDataOutputSampleBufferDelegate method, iOS SDK會自動幫你把一張攝影機拍到的frame取出來)</p>
-<p>然後不斷去檢查startToTakePhotos這個布林變數</p>
-<p>只要他是YES的狀態</p>
-<p>我們就把目前的frame 一直儲存到imageArray內</p>
-<p>這樣就能完成以下的步驟:</p>
-<p>觸發開始拍照後 - &gt;計時 -&gt; 儲存相片 - &gt; 計時時間到 - &gt; 合成相片</p>
-<p>一張長曝光的合成照片就能完成了喔!</p>
-<p>接下來就是最後的步驟了!!</p>
-<p>#pragma mark - Action Method</p>
-<p>- (void)takeSnap:(CameraBegin)begin withCompletetion:(CameraResult)result</p>
-<p>{</p>
-<p>resultBlock = [result copy];</p>
-<p>startToTakePhotos = YES;</p>
-<p>     // Execute the beginning block</p>
-<p>begin();</p>
-<p>     // Set up timer to record</p>
-<p>[NSTimer scheduledTimerWithTimeInterval:_exposureTime target:self selector:@selector(timerSnap:) userInfo:nil repeats:NO];</p>
-<p>}</p>
-<p>-(void)timerSnap:(NSTimer *)timer</p>
-<p>{</p>
-<p>startToTakePhotos = NO;</p>
-<p>[timer invalidate];</p>
-<p>timer = nil;</p>
-<p>     // The first image</p>
-<p>CIImage *firstSnapImage = [imageArray objectAtIndex:0];</p>
-<p>     // BlockImage</p>
-<p>CIImage *backImage = firstSnapImage;</p>
-<p>CIImage *inputImage = [[CIImage alloc] init];</p>
-<p>CGImageRef tmpRef   = [imageContext createCGImage:backImage fromRect:backImage.extent];</p>
-<p>UIImage *imageBack  = [[UIImage alloc] initWithCGImage:tmpRef];</p>
-<p>UIImage *imageInput = [[UIImage alloc] init];</p>
-<p>for (int i = 0; i &lt; imageArray.count; i++) {</p>
-<p>         // Add Autorealse pool to release imageref, without release, your app will definitely crash</p>
-<p> @autoreleasepool {</p>
-<p>             // Get the CIImage in each of item for imageArray</p>
-<p>inputImage = [imageArray objectAtIndex:i];</p>
-<p>             // Transfer CIImage to CIImageRef</p>
-<p>CGImageRef inputImageRef = [imageContext createCGImage:inputImage fromRect:inputImage.extent];</p>
-<p>             // Transfer CIImage to UIImage</p>
-<p>imageInput = [UIImage imageWithCGImage:inputImageRef];</p>
-<p>             // Set up the two CIImage</p>
-<p>backImage   = [[CIImage alloc] initWithImage:imageBack];</p>
-<p>inputImage  = [[CIImage alloc] initWithImage:imageInput];</p>
-<p>             // Actually, the value for sensitivity is just the alpha or opacity value</p>
-<p>// Set up the CIImage filter chain</p>
-<p>// 1. Alpha opacity filter</p>
-<p>alpha = _sensitivity;</p>
-<p>alphaVector = [CIVector vectorWithX:0 Y:0 Z:0 W:alpha];</p>
-<p>[alphaFilterInput setValue:alphaVector forKey:@"inputAVector"];</p>
-<p>[alphaFilterInput setValue:inputImage forKey:@"inputImage"];</p>
-<p>inputImage = alphaFilterInput.outputImage;</p>
-<p>             // 2. Enhance Contrast</p>
-<p>[contrastFilter setValue:inputImage forKey:@"inputImage"];</p>
-<p>[contrastFilter setValue:[NSNumber numberWithFloat:1.1f] forKey:@"inputContrast"];</p>
-<p>[contrastFilter setValue:[NSNumber numberWithFloat:0.05f] forKey:@"inputBrightness"];</p>
-<p>inputImage = contrastFilter.outputImage;</p>
-<p>             // 3. Add Gamma</p>
-<p>[gammaFilter setValue:inputImage forKey:@"inputImage"];</p>
-<p>inputImage = gammaFilter.outputImage;</p>
-<p>             // 4. Blend backimage and inputimage</p>
-<p>[blendFilter setValue:backImage forKey:@"inputBackgroundImage"];</p>
-<p>[blendFilter setValue:inputImage forKey:@"inputImage"];</p>
-<p>backImage = blendFilter.outputImage;</p>
-<p>             // 5. Release all image</p>
-<p>CGImageRef backRef = [imageContext createCGImage:backImage fromRect:backImage.extent];</p>
-<p>imageBack =  [UIImage imageWithCGImage:backRef];</p>
-<p>CGImageRelease(inputImageRef);</p>
-<p>CGImageRelease(backRef);</p>
-<p>imageInput = nil;</p>
-<p>inputImage = nil;</p>
-<p>}</p>
-<p>}</p>
-<p>     // Bloom Effect</p>
-<p>[fStopFilter setValue:[NSNumber numberWithFloat:_ev] forKey:@"inputEV"];</p>
-<p>[fStopFilter setValue:backImage forKey:@"inputImage"];</p>
-<p>backImage = fStopFilter.outputImage;</p>
-<p>     // Compositing the firstImage with the blurred image</p>
-<p>[mixFilter setValue:firstSnapImage forKey:@"inputBackgroundImage"];</p>
-<p>[mixFilter setValue:backImage forKey:@"inputImage"];</p>
-<p>backImage = mixFilter.outputImage;</p>
-<p>     // Finally, Generate the UIImage</p>
-<p>CGImageRef cgImageOutPut = [imageContext createCGImage:backImage fromRect:backImage.extent];</p>
-<p>UIImage *resultImage = [UIImage imageWithCGImage:cgImageOutPut];</p>
-<p>    // Pass the result image to the block, and user can use this result to do things they want to do</p>
-<p>resultBlock(resultImage);</p>
-<p>     // Reset the image array</p>
-<p>imageArray = [NSMutableArray array];</p>
-<p>     // Release the rest image resource</p>
-<p>imageBack = nil;</p>
-<p>backImage = nil;</p>
-<p>firstSnapImage = nil;</p>
-<p>resultImage = nil;</p>
-<p>CGImageRelease(cgImageOutPut);</p>
-<p>CGImageRelease(tmpRef);</p>
-<p>}</p>
-<p>@end</p>
-<p>詳細濾鏡的步驟大家看上面的Code就行囉!!</p>
-<p>我們利用block變數來處理拍攝前與拍攝後的動作</p>
-<p>這樣可以在畫面上放上一些比如警告標示之類的!</p>
-<p>以下可以看到Bear拍攝的一些成果參考看看!</p>
-<p></p>
-<p><div>
-<p><div></div></p>
-<p><div id="955737914299147592-slideshow"></div></p>
-<p><script type="text/javascript">// < ![CDATA[</p>
-<p> (function(jQuery) { function init() { wSlideshow.render({elementID:"955737914299147592",nav:"thumbnails",navLocation:"bottom",captionLocation:"bottom",transition:"fade",autoplay:"0",speed:"5",aspectRatio:"auto",showControls:"true",randomStart:"false",images:[{"url":"1\/9\/9\/7\/19975491\/1912652.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/9861483.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/4342192.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/970851.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/681323.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/8361983.jpg","width":187,"height":250,"fullHeight":643,"fullWidth":483}]}) } jQuery ? jQuery(init) : document.observe('dom:loaded', init) })(window._W &#038;& _W.jQuery)</p>
-<p>// ]]></script></p>
-<p><div></div></p>
-<p></p>
-<p><div>Bear 拍攝的時候並沒有使用腳架!!
-<p>手震是非常明顯的QQ如果有興趣的版友可以到github上參考完整的code喔!</p>
-<p><a href="https://github.com/shouian/SHLongExposureDemo" target="_blank">https://github.com/shouian/SHLongExposureDemo</a></p>
-<p>有任何疑問歡迎來信到我們的信箱</p>
-<p>有興趣的朋友請繼續關注TakoBear的新消息!!!</p>
-<p>近期我們也會整理更多開發文章與有趣的新聞分享給大家!</p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6166088_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這照片作為封面實在手震得很厲害....不過Bear希望能傳達一個重點! 就是如何利用iOS 的framework來製作出長曝光的效果!
+利用Bear 很早之前研究的一個framework - AVFoundation 以及CoreImage兩項核心就能完成了喔!
+
+下一篇Bear還會介紹如何使用音量鍵作為快門鍵的教學示範
+
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">市面上已經有太多的相機App
+很多剛入門iOS的朋友也會想寫個把iPhone當作單眼相機使用的功能
+老牌的類似單眼App如 Slow Shutter就有支援這樣的功能</div>
+<div>
+<div class="wsite-image wsite-image-border-none "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6974678_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">它的操作界面介紹如下面兩張:</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4638105_orig.jpeg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7242445_orig.jpeg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">很多剛接觸iOS , 有一些開發經驗的朋友看到這樣子的App
+通常直覺上會這樣想的"噢~ 看起來很簡單 Duration就是曝光時間, FPS 就是Frame per second, Sensitivity 一定就是感光度"
+大概就是對應單眼相機最重要的三元素: 快門時間, 光圈 以及iSO吧!!!
+這很簡單吧
+
+只要找到Apple 開放iPhone這些操作的SDk就能做到啦
+完全不需要費什麼心!
+Bear剛開始的時候也是這麼覺得的....
+
+直到後來才發現....
+
+錯！！！！
+
+如果這麼簡單就能做到的話....
+也不會有人能賣1.99 USD 了(掩面哭泣)
+
+事實上iPhone對於開放裝置的支援程度相當低落
+不亂你想要調整光圈(F值在iPhone 4s 固定為2.4)
+iso (沒有選項)
+調整曝光時間(你想都別想)
+基本上都是做不到的!!!
+Apple的政策中基本上就是不允許你對於相機做一切類似單眼的調整
+
+．．．
+
+那這樣的App 又是怎麼做出來的呢!!?
+
+等等
+這邊我們在冷靜看一下那三個參數
+
+<strong><span style="color: #e30b0b; font-size: small;">Duration</span></strong>
+<strong><span style="color: #e30b0b; font-size: small;">FPS</span></strong>
+<strong><span style="color: #e30b0b; font-size: small;">Sensitivity </span></strong>
+
+仔細看看 不曉得版友有沒有發現奇怪的地方
+
+Duration作為曝光時間解釋沒有問題
+FPS 代表每秒拍攝幾張照片, 可是我們只是要拍照而已為什麼需要調整FPS的參數!?
+Sensitivity....雖然可以解釋為曝光度 但是為什麼會用一個這麼不接近單眼的參數數值呢?
+
+理由很簡單
+就是他們真的就有跟字面上一樣的意思....
+他們不是單眼的參數
+而是一個可以讓你模擬出更加接近真實長曝光的參數
+
+後來可以觀察其他同類型App都會使用類似的3個參數
+這點我們就必須認知道一件事實
+<strong><span style="color: #a82e2e;">“符合這三個名字的參數調整, 能使iPhone 模擬出長曝光的效果”</span></strong>
+
+基於這些元素, Bear想到了一個可能的邏輯架構如下圖:
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5659735_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">簡單的說我們的概念在於1. 用一個計時器錄影 (沒錯!  就是錄影, 這裡也就是duration跟fps的重點, 因為我們實際上是在錄影)
+2. 把一個錄影拍到的frame 儲存在一個陣列
+3. 時間到結束儲存 (完成配置)
+4. 把陣列裡的每一張照片疊加在一起
+
+就是這麼簡單
+只要把每一張照片疊加起來就好!
+不過現實是光是疊加還不夠
+我們還需要對每一張照片做特殊的處理
+這裡必須導入Sensitivity的概念, 我們也就必須透過一些逆向工程的方法來推測出Sensitivity實際上是什麼數值
+
+不過依據使用Photoshop的概念, 通常我們需要的是調整模糊程度(blur)以及透明度(opacity)
+有了初步的規劃
+接下來就能讓我們正式進入這段程式的架構了!
+
+Bear 先表現一個預期看到的UI界面 (很醜不過基本功能都該有了^_&lt;)
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5355469_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5452918_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">一個看起來很像但是不太一樣的功能界面!概念就是這樣:
+右邊的藍色Option按鈕按下去後, 可以跳出三個參數的選項
+按下Done以後會記錄參數
+最後按下Snap 會儲存在本地端的相簿內!
+
+這邊我們設計出一個Singleton
+(單件物件：又稱作Instance, 是一個在一整個App周期中只會存在唯一一個物件的存在, 以iOS內來說,
+最常見到的就是UIApplication這個class, 他就代表這個App, 之後我們會講到一些關於他的操作)
+
+接下來我們談怎麼設計囉! ( 很重要一點, Bear為求懶惰, 這邊是用ARC來建立的喔!)
+
+建立一個名叫做SHCamera的物件, 繼承自NSObject
+他的界面如下:
+
+<span style="color: #a85f2e;">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span style="color: #b748ae;"> typedef void</span> (^CameraResult) (<span style="color: #5040ae;">UIImage</span> *image);
+<span style="color: #b748ae;"> typedef void</span> (^CameraBegin) (<span style="color: #c255b9;">void</span>);
+
+<span style="color: #c255b9;"> @interface</span> SHCamera : <span style="color: #5848b7;">NSObject</span>
+
+<span style="color: #b748ae;"> @property</span> (<span style="color: #b748ae;">nonatomic</span>)           <span style="color: #5040ae;">CGFloat</span> sensitivity;
+<span style="color: #c255b9;">@property</span> (<span style="color: #c255b9;">nonatomic</span>)           <span style="color: #5040ae;">CGFloat</span> ev;
+<span style="color: #c255b9;"> @property</span> (<span style="color: #c255b9;">nonatomic</span>)           <span style="color: #da73d2;">float</span>   exposureTime;
+<span style="color: #d061c7;"> @property</span> (<span style="color: #c255b9;">nonatomic</span>)           <span style="color: #da73d2;">BOOL</span>    isCameraBack;
+<span style="color: #d061c7;"> @property</span> (<span style="color: #c255b9;">nonatomic</span>, <span style="color: #c255b9;">readonly</span>) <span style="color: #5040ae;">UIView</span> *imgView;
+
++ (<span style="color: #da73d2;">id</span>)sharedInstance;
+
+- (<span style="color: #da73d2;">void</span>)showViewInCamera;
+- (<span style="color: #da73d2;">void</span>)stopViewInCamera;
+- (<span style="color: #da73d2;">void</span>)setUpPreviewView:(UIView *)imgView;
+- (<span style="color: #da73d2;">void</span>)takeSnap:(<span style="color: #248d6c;">CameraBegin</span>)begin withCompletetion:(<span style="color: #248d6c;">CameraResult</span>)result;
+
+<span style="color: #d061c7;"> @end</span>
+
+
+我們這邊思考的界面概念很簡單:
+1. sharedinstance 用來建立物件實體
+2. showViewInCamera 與 stopViewInCamera 分別用作顯示畫面在手機App上以及停止顯示畫面在手機上的行為
+3. setUpPreviewView:(UIView *)imgView; 這隻比較特別, Bear暫時沒想到怎麼處理它最好, 基本上他就是讓畫面的View設定為顯示攝影機畫面的method, 如果不執行的話就看不到畫面了!
+4. - (<span style="color: #da73d2;">void</span>)takeSnap:(<span style="color: #248d6c;">CameraBegin</span>)begin withCompletetion:(<span style="color: #248d6c;">CameraResult</span>)result; 這隻method 最重要了, 只要呼叫他, 我們可以在begin這個block內撰寫 "開始拍照的動作" 跟 在result內寫"拍完照片後要做的事"
+透過這樣的形式就能最簡單的實現“長曝光”了!!
+
+從圖面來看的話, 這個物件就長得像這樣
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4232314_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">好吧小編繪畫能力實在很崩潰 （大哭）不過重點就是像上面這樣! 我們主要是對外實作出上面四個method, 跟提供該有的property可以操作就好
+接下來就一步一步跟著Bear往下走吧!
+
+進入SHCamera.m中, 這邊很重要,
+在project內記得要到 Build Phases - &gt;Link Binary With Libraries 加入這四個framework
+AVFoundation, CoreImage, Accelerate 跟MediaPlayer !
+
+<span style="color: #c2743b;">#import "SHCamera.h"
+</span>
+<span style="color: #c2743b;">#import &lt;AVFoundation/AVFoundation.h&gt;
+#import &lt;CoreImage/CoreImage.h&gt;
+#import &lt;Accelerate/Accelerate.h&gt;
+#import &lt;MediaPlayer/MediaPlayer.h&gt;</span>
+
+<span style="color: #da73d2;"> @interface</span> SHCamera() &lt;<span style="color: #8c48b7;">AVCaptureVideoDataOutputSampleBufferDelegate</span>&gt;
+{
+<span style="color: #5fa233;">     // Device Session</span>
+<span style="color: #5848b7;">AVCaptureSession</span> *session;
+<span style="color: #6555c2;">AVCaptureDevice</span>  *cameraDevice;
+
+<span style="color: #6555c2;">CIContext</span>        *imageContext;
+<span style="color: #6555c2;">CIVector</span>         *alphaVector;
+<span style="color: #6555c2;">CGFloat</span>          alpha;
+
+<span style="color: #5fa233;">     // Mixing Filter</span>
+<span style="color: #7161d0;">CIFilter</span> *blendFilter;
+<span style="color: #6555c2;">CIFilter</span> *mixFilter;
+<span style="color: #6555c2;">CIFilter</span> *alphaFilterInput;
+<span style="color: #6555c2;">CIFilter</span> *outCompositing;
+<span style="color: #7161d0;">CIFilter</span> *contrastFilter;
+<span style="color: #7161d0;">CIFilter</span> *gammaFilter;
+<span style="color: #7161d0;">CIFilter</span> *fStopFilter;
+
+<span style="color: #5fa233;">     // Image Session</span>
+<span style="color: #5848b7;">NSMutableArray</span>  *imageArray;
+<span style="color: #5848b7;">CIImage</span>         *tmpSnapImage;
+
+<span style="color: #5fa233;">// Control Setting</span>
+<span style="color: #da73d2;">BOOL</span> startToTakePhotos;
+<span style="color: #da73d2;">int</span>  imageCounterCount;
+
+<span style="color: #6cb83a;">     // Result Block to pass result</span>
+<span style="color: #5fa233;">CameraResult</span> resultBlock;
+
+}
+
+- (<span style="color: #da73d2;">id</span>)initWithCamera;
+- (<span style="color: #d061c7;">void</span>)setUpFilter;
+- (<span style="color: #da73d2;">void</span>)setUpCamera;
+- (<span style="color: #7161d0;">AVCaptureVideoPreviewLayer</span> *) previewInView: (<span style="color: #6555c2;">UIView</span> *) view;
+- (<span style="color: #da73d2;">void</span>)timerSnap:(<span style="color: #7161d0;">NSTimer</span> *)timer;
+
+<span style="color: #d061c7;"> @end</span>
+
+
+我們有五個private method, 這是不希望給外面看到的XD
+接下來一個一個介紹吧!!
+
+<span style="color: #d061c7;">@implementation</span> SHCamera
+
+<span style="color: #d061c7;">@synthesize</span> sensitivity  = _sensitivity;
+<span style="color: #da73d2;"> @synthesize</span> ev           = _ev;
+<span style="color: #da73d2;"> @synthesize</span> exposureTime = _exposureTime;
+<span style="color: #da73d2;"> @synthesize</span> isCameraBack = _isCameraBack;
+<span style="color: #da73d2;"> @synthesize</span> imgView      = _imgView;
+
+<span style="color: #5fa233;">//  這邊是標準要產生Singleton的寫法! dispatch_once 能確保這一段的程式碼在整個App中只會被執行到一次</span><span style="color: #5fa233;">// 也就是說這個物件只會被init一次! 所有的property 或是傳輸就都能透過他進行了</span>
++ (<span style="color: #da73d2;">id</span>)sharedInstance
+{
+<span style="color: #da73d2;">static</span> <span style="color: #33a27f;">SHCamera</span> *camrea = nil;
+<span style="color: #da73d2;">static</span> <span style="color: #c2743b;">dispatch_once_t</span> onceToken;
+
+<span style="color: #c2743b;">dispatch_once</span>(&amp;onceToken, ^{
+camrea = [[<span style="color: #33a27f;">SHCamera</span> alloc] initWithCamera];
+});
+<span style="color: #da73d2;">return</span> camrea;
+}
+
+<span style="color: #5fa233;">//  這邊很簡單, 就是單純的起始化</span>
+- (<span style="color: #da73d2;">id</span>)initWithCamera
+{
+self = [super init];
+<span style="color: #da73d2;">if</span> (self) {
+<span style="color: #5fa233;">         // Basic parameters</span>
+imageContext = [CIContext contextWithOptions:nil];
+imageArray   = [NSMutableArray array];
+
+<span style="color: #5fa233;">         // Parameter to record</span>
+startToTakePhotos = <span style="color: #da73d2;">NO</span>;
+
+<span style="color: #5fa233;">         // Default parameters</span>
+_sensitivity    = 1.0f;
+_exposureTime   = 0.5f;
+_ev             = 2.0f;
+_isCameraBack   = <span style="color: #d061c7;">YES</span>;  <span style="color: #5fa233;">// 我們預設都是用背後的Camera</span>
+
+[self <span style="color: #3a96b8;">setUpFilter</span>];
+[self <span style="color: #3a96b8;">setUpCamera</span>];
+}
+<span style="color: #da73d2;">return</span> self;
+}
+
+
+接下來就是一連串的設定Fileter跟利用AVFoundation 設定攝影機的步驟
+- (<span style="color: #da73d2;">void</span>)setUpFilter
+{
+blendFilter         = [CIFilter filterWithName:@"CILightenBlendMode"];
+mixFilter           = [CIFilter filterWithName:@"CIMaximumCompositing"];
+alphaFilterInput    = [CIFilter filterWithName:@"CIColorMatrix"];
+
+contrastFilter      = [CIFilter filterWithName:@"CIColorControls"];
+[contrastFilter setDefaults];
+
+fStopFilter         = [CIFilter filterWithName:@"CIExposureAdjust"];
+[fStopFilter setDefaults];
+
+gammaFilter         = [CIFilter filterWithName:@"CIGammaAdjust"];
+[gammaFilter setValue:[NSNumber numberWithFloat:1.0f] forKey:@"inputPower"];
+
+alphaVector         = [CIVector vectorWithX:0 Y:0 Z:0 W:1.0f];
+
+}
+
+- (<span style="color: #da73d2;">void</span>)setUpCamera
+{
+<span style="color: #6cb83a;">     // In ARC. we do not have to handle its release problem</span>
+session = [[AVCaptureSession alloc] init];
+
+<span style="color: #6cb83a;">     // Set resolution
+</span>     session.sessionPreset = AVCaptureSessionPresetMedium;
+
+[session beginConfiguration]; <span style="color: #81c94c;">// Begin to setup session
+</span>
+NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+if (_isCameraBack) {
+<span style="color: #6cb83a;">         // Set up back camera</span>
+for (AVCaptureDevice *device in devices) {
+if (device.position == AVCaptureDevicePositionBack) {
+cameraDevice = device;
+break;
+}
+
+}
+} else {
+
+for (AVCaptureDevice *device in devices) {
+<span style="color: #6cb83a;">      // Setup front camera
+</span>      if (device.position == AVCaptureDevicePositionFront) {
+cameraDevice = device;
+break;
+}
+}
+}
+
+<span style="color: #6cb83a;">     // Add Input device</span>
+NSError *error;
+AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:cameraDevice error:&amp;error];
+[session addInput:input];
+
+<span style="color: #5fa233;">     // Add output device</span>
+AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
+[output setAlwaysDiscardsLateVideoFrames:YES];
+[output setSampleBufferDelegate:self queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)];
+
+output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+
+[session addOutput:output];
+[session commitConfiguration];
+
+}
+
+呼....到這邊基本的設定完成了, 我們就要繼續往下把其他method給實作出來囉!
+以下兩隻method很簡單, 只要單純讓session 跑或不跑而已
+- (<span style="color: #da73d2;">void</span>)showViewInCamera
+{
+<span style="color: #6cb83a;">  // Start to show image
+</span>  [session startRunning];
+
+}
+
+- (<span style="color: #d061c7;">void</span>)stopViewInCamera
+{
+<span style="color: #6cb83a;">     // Stop configuring image</span>
+[session stopRunning];
+}
+
+
+接下來是比較大的重點, 我們要指定畫面的某一個View 能顯現攝影機的畫面, 必須透過以下三個method的串聯才行!
+- (<span style="color: #da73d2;">void</span>)setUpPreviewView:(<span style="color: #6555c2;">UIView</span> *)imgView
+{
+<span style="color: #6555c2;">if</span> (!<span style="color: #3a96b8;">session</span>) {
+<span style="color: #5848b7;">NSLog</span>(<span style="color: #da4444;">@"There is no session"</span>);
+<span style="color: #da73d2;">return</span>;
+
+}
+
+<span style="color: #4cc9a4;">_imgView</span> = imgView;
+
+<span style="color: #6555c2;">AVCaptureVideoPreviewLayer</span> *previewLayer = [<span style="color: #5848b7;">AVCaptureVideoPreviewLayer</span> layerWithSession:session];
+previewLayer.frame = <span style="color: #6555c2;">CGRectMake</span>(0, 0, _imgView.frame.size.width, _imgView.frame.size.height);
+previewLayer.videoGravity = <span style="color: #6555c2;">AVLayerVideoGravityResizeAspectFill</span>;
+
+<span style="color: #5fa233;">     // Show preview layer on this image view
+</span>     [_imgView.layer addSublayer:previewLayer];
+
+<span style="color: #5fa233;">     // Set the orientation layout subview
+</span>     [self layoutPreviewInView];
+}
+
+- (<span style="color: #7161d0;">AVCaptureVideoPreviewLayer</span> *) previewInView: (<span style="color: #7161d0;">UIView</span> *) view
+{
+
+<span style="color: #da73d2;">for</span> (CALayer *layer in view.layer.sublayers)
+if ([layer isKindOfClass:[AVCaptureVideoPreviewLayer class]])
+return (AVCaptureVideoPreviewLayer *)layer;
+
+<span style="color: #da73d2;">return</span> nil;
+
+}
+
+- (<span style="color: #da73d2;">void</span>) layoutPreviewInView
+{
+<span style="color: #6555c2;">AVCaptureVideoPreviewLayer</span> *layer = [self <span style="color: #3387a2;">previewInView</span>:_imgView];
+if (!layer) return;
+
+UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+<span style="color: #7161d0;">CATransform3D</span> transform = <span style="color: #7161d0;">CATransform3DIdentity</span>;
+
+if (orientation == UIDeviceOrientationPortrait) ;
+else if (orientation == UIDeviceOrientationLandscapeLeft)
+transform = <span style="color: #6555c2;">CATransform3DMakeRotation</span>(-<span style="color: #c2743b;">M_PI_2</span>, 0.0f, 0.0f, 1.0f);
+else if (orientation == UIDeviceOrientationLandscapeRight)
+transform = <span style="color: #6555c2;">CATransform3DMakeRotation</span>(<span style="color: #c2743b;">M_PI_2</span>, 0.0f, 0.0f, 1.0f);
+else if (orientation == UIDeviceOrientationPortraitUpsideDown)
+transform = <span style="color: #6555c2;">CATransform3DMakeRotation</span>(<span style="color: #a85f2e;">M_PI</span>, 0.0f, 0.0f, 1.0f);
+
+layer.transform = transform;
+layer.frame = <span style="color: #7161d0;">CGRectMake</span>(0, 0, _imgView.frame.size.width, _imgView.frame.size.height);
+}
+
+接下來我們就要進入重點中的重點啦!!!!(拖了很久總算要進入正題了....)
+<span style="color: #a85f2e;">#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate</span>
+- (<span style="color: #d061c7;">void</span>)captureOutput:(<span style="color: #7161d0;">AVCaptureOutput</span> *)captureOutput didOutputSampleBuffer:(<span style="color: #7161d0;">CMSampleBufferRef</span>)sampleBuffer fromConnection:(<span style="color: #6555c2;">AVCaptureConnection</span> *)connection
+{
+<span style="color: #da73d2;">     @autoreleasepool {</span>
+
+<span style="color: #7161d0;">CVPixelBufferRef</span> pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+<span style="color: #7161d0;">CFDictionaryRef</span> attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
+
+<span style="color: #7161d0;">CIImage</span> *image = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer options:(<span style="color: #da73d2;">__bridge_transfer</span> NSDictionary *)attachments];
+
+image = [image imageByApplyingTransform:<span style="color: #8273da;">CGAffineTransformMakeRotation</span>(-M_PI_2)];
+
+<span style="color: #7161d0;">CGPoint</span> origin = [image extent].origin;
+image = [image imageByApplyingTransform:<span style="color: #7161d0;">CGAffineTransformMakeTranslation</span>(-origin.x, -origin.y)];
+
+<span style="color: #5fa233;">         // Start to record image</span>
+if (startToTakePhotos == <span style="color: #da73d2;">YES</span>) {
+<span style="color: #5fa233;">           // Add image to image array</span>
+[imageArray addObject:image];
+}
+}
+
+}
+
+
+這邊做法是這樣的, 我們會不斷去讀取frame buffer (利用這個的AVCaptureVideoDataOutputSampleBufferDelegate method, iOS SDK會自動幫你把一張攝影機拍到的frame取出來)
+然後不斷去檢查startToTakePhotos這個布林變數
+只要他是YES的狀態
+我們就把目前的frame 一直儲存到imageArray內
+
+
+這樣就能完成以下的步驟:
+<span style="color: #a561d0;">觸發開始拍照後 - &gt;計時 -&gt; 儲存相片 - &gt; 計時時間到 - &gt; 合成相片</span>
+一張長曝光的合成照片就能完成了喔!
+
+接下來就是最後的步驟了!!
+<span style="color: #c2743b;">#pragma mark - Action Method</span>
+- (void)takeSnap:(<span style="color: #33a27f;">CameraBegin</span>)begin withCompletetion:(<span style="color: #33a27f;">CameraResult</span>)result
+{
+
+resultBlock = [result copy];
+startToTakePhotos = YES;
+
+<span style="color: #6cb83a;">     // Execute the beginning block</span>
+begin();
+
+<span style="color: #6cb83a;">     // Set up timer to record</span>
+[NSTimer scheduledTimerWithTimeInterval:<span style="color: #3a96b8;">_exposureTime</span> target:self selector:<span style="color: #d061c7;">@selector</span>(timerSnap:) userInfo:nil repeats:<span style="color: #da73d2;">NO</span>];
+
+}
+
+-(<span style="color: #da73d2;">void</span>)timerSnap:(<span style="color: #6555c2;">NSTimer</span> *)timer
+{
+startToTakePhotos = <span style="color: #d061c7;">NO</span>;
+[timer invalidate];
+timer = nil;
+
+<span style="color: #5fa233;">     // The first image</span>
+CIImage *firstSnapImage = [imageArray objectAtIndex:0];
+
+<span style="color: #5fa233;">     // BlockImage</span>
+CIImage *backImage = firstSnapImage;
+CIImage *inputImage = [[CIImage alloc] init];
+
+CGImageRef tmpRef   = [imageContext createCGImage:backImage fromRect:backImage.extent];
+UIImage *imageBack  = [[UIImage alloc] initWithCGImage:tmpRef];
+UIImage *imageInput = [[UIImage alloc] init];
+
+<span style="color: #da73d2;">for</span> (int i = 0; i &lt; imageArray.count; i++) {
+<span style="color: #5fa233;">         // Add Autorealse pool to release imageref, without release, your app will definitely crash</span>
+<span style="color: #da73d2;"> @autoreleasepool {</span>
+<span style="color: #5fa233;">             // Get the CIImage in each of item for imageArray</span>
+inputImage = [imageArray objectAtIndex:i];
+
+<span style="color: #6cb83a;">             // Transfer CIImage to CIImageRef</span>
+CGImageRef inputImageRef = [imageContext createCGImage:inputImage fromRect:inputImage.extent];
+
+<span style="color: #5fa233;">             // Transfer CIImage to UIImage</span>
+imageInput = [<span style="color: #6555c2;">UIImage</span> imageWithCGImage:inputImageRef];
+
+<span style="color: #5fa233;">             // Set up the two CIImage</span>
+backImage   = [[<span style="color: #6555c2;">CIImage</span> alloc] initWithImage:imageBack];
+inputImage  = [[<span style="color: #6555c2;">CIImage</span> alloc] initWithImage:imageInput];
+
+<span style="color: #5fa233;">             // Actually, the value for sensitivity is just the alpha or opacity value
+// Set up the CIImage filter chain
+// 1. Alpha opacity filter</span>
+alpha = _sensitivity;
+alphaVector = [CIVector vectorWithX:0 Y:0 Z:0 W:alpha];
+[alphaFilterInput setValue:alphaVector forKey:<span style="color: #da4444;">@"inputAVector"</span>];
+[alphaFilterInput setValue:inputImage forKey:<span style="color: #da4444;">@"inputImage"</span>];
+inputImage = alphaFilterInput.outputImage;
+
+<span style="color: #5fa233;">             // 2. Enhance Contrast</span>
+[contrastFilter setValue:inputImage forKey:<span style="color: #da4444;">@"inputImage"</span>];
+[contrastFilter setValue:[NSNumber numberWithFloat:<span style="color: #6555c2;">1.1f</span>] forKey:<span style="color: #da4444;">@"inputContrast"</span>];
+[contrastFilter setValue:[NSNumber numberWithFloat:<span style="color: #7161d0;">0.05f</span>] forKey:<span style="color: #da4444;">@"inputBrightness"</span>];
+inputImage = contrastFilter.outputImage;
+
+<span style="color: #6cb83a;">             // 3. Add Gamma</span>
+[gammaFilter setValue:inputImage forKey:<span style="color: #da4444;">@"inputImage"</span>];
+inputImage = gammaFilter.outputImage;
+
+<span style="color: #6cb83a;">             // 4. Blend backimage and inputimage</span>
+[blendFilter setValue:backImage forKey:<span style="color: #da4444;">@"inputBackgroundImage"</span>];
+[blendFilter setValue:inputImage forKey<span style="color: #da4444;">:@"inputImage"</span>];
+backImage = blendFilter.outputImage;
+
+<span style="color: #6cb83a;">             // 5. Release all image</span>
+<span style="color: #8640ae;">CGImageRef</span> backRef = [imageContext createCGImage:backImage fromRect:backImage.extent];
+imageBack =  [UIImage imageWithCGImage:backRef];
+
+<span style="color: #8640ae;">CGImageRelease</span>(inputImageRef);
+<span style="color: #8640ae;">CGImageRelease</span>(backRef);
+
+imageInput = nil;
+inputImage = nil;
+}
+}
+
+<span style="color: #5fa233;">     // Bloom Effect</span>
+[fStopFilter setValue:[NSNumber numberWithFloat:<span style="color: #3ab890;">_ev</span>] forKey:<span style="color: #c23b3b;">@"inputEV"</span>];
+[fStopFilter setValue:backImage forKey:<span style="color: #da4444;">@"inputImage"</span>];
+backImage = fStopFilter.outputImage;
+
+<span style="color: #5fa233;">     // Compositing the firstImage with the blurred image</span>
+[mixFilter setValue:firstSnapImage forKey:<span style="color: #da4444;">@"inputBackgroundImage"</span>];
+[mixFilter setValue:backImage forKey:<span style="color: #da4444;">@"inputImage"</span>];
+backImage = mixFilter.outputImage;
+
+<span style="color: #5fa233;">     // Finally, Generate the UIImage</span>
+<span style="color: #6555c2;">CGImageRef</span> cgImageOutPut = [imageContext createCGImage:backImage fromRect:backImage.extent];
+<span style="color: #6555c2;">UIImage</span> *resultImage = [UIImage imageWithCGImage:cgImageOutPut];
+
+<span style="color: #5fa233;">    // Pass the result image to the block, and user can use this result to do things they want to do</span>
+<span style="color: #3ab890;">resultBlock</span>(resultImage);
+
+<span style="color: #5fa233;">     // Reset the image array</span>
+imageArray = [NSMutableArray array];
+
+<span style="color: #6cb83a;">     // Release the rest image resource</span>
+imageBack = nil;
+backImage = nil;
+firstSnapImage = nil;
+resultImage = nil;
+
+<span style="color: #8640ae;">CGImageRelease</span>(cgImageOutPut);
+<span style="color: #8640ae;">CGImageRelease</span>(tmpRef);
+
+}
+<span style="color: #da73d2;">@end</span>
+
+詳細濾鏡的步驟大家看上面的Code就行囉!!
+我們利用block變數來處理拍攝前與拍攝後的動作
+這樣可以在畫面上放上一些比如警告標示之類的!
+以下可以看到Bear拍攝的一些成果參考看看!
+
+</div>
+<div>
+<div></div>
+<div id="955737914299147592-slideshow"></div>
+<script type="text/javascript">// < ![CDATA[
+ (function(jQuery) { function init() { wSlideshow.render({elementID:"955737914299147592",nav:"thumbnails",navLocation:"bottom",captionLocation:"bottom",transition:"fade",autoplay:"0",speed:"5",aspectRatio:"auto",showControls:"true",randomStart:"false",images:[{"url":"1\/9\/9\/7\/19975491\/1912652.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/9861483.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/4342192.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/970851.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/681323.jpg","width":187,"height":250,"fullHeight":480,"fullWidth":360},{"url":"1\/9\/9\/7\/19975491\/8361983.jpg","width":187,"height":250,"fullHeight":643,"fullWidth":483}]}) } jQuery ? jQuery(init) : document.observe('dom:loaded', init) })(window._W &#038;& _W.jQuery)
+// ]]></script>
+<div></div>
+</div>
+<div class="paragraph">Bear 拍攝的時候並沒有使用腳架!!
+手震是非常明顯的QQ如果有興趣的版友可以到github上參考完整的code喔!
+<a href="https://github.com/shouian/SHLongExposureDemo" target="_blank">https://github.com/shouian/SHLongExposureDemo</a>
+
+有任何疑問歡迎來信到我們的信箱
+有興趣的朋友請繼續關注TakoBear的新消息!!!
+近期我們也會整理更多開發文章與有趣的新聞分享給大家!
+
+</div>
 
   </div>
 

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[心得]Windows舊電腦移機大工程</title>
-  <meta name="description" content="這篇只是個心得，沒有很複雜的教學(但是過程很複雜XD)就當作茶餘飯後的娛樂或是給有相同需求的讀者們一些想法先說在前頭，本篇沒啥圖片，大部分都是以文字敘述哦話說有天 Bear 的朋友工作的單位換了一台新電腦給他Tako: 換新電腦沒啥問題，哪來的大工程Bear: 可是他要求電腦上所有資料、所有配置連同作業系統都要完...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,64 +61,134 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>這篇只是個心得，沒有很複雜的教學(但是過程很複雜XD)就當作茶餘飯後的娛樂或是給有相同需求的讀者們一些想法</p>
-<p><!--more--></p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3399890_orig.png" alt="" /></p>
+
+<p>這篇只是個心得，沒有很複雜的教學(但是過程很複雜XD)就當作茶餘飯後的娛樂或是給有相同需求的讀者們一些想法</p>
+
+<!--more-->
+
 <p>先說在前頭，本篇沒啥圖片，大部分都是以文字敘述哦</p>
+
 <p>話說有天 Bear 的朋友工作的單位換了一台新電腦給他</p>
+
 <p>Tako: 換新電腦沒啥問題，哪來的大工程</p>
+
 <p>Bear: 可是他要求電腦上所有資料、所有配置連同作業系統都要完整移置過去耶</p>
+
 <p>Tako: 那有什麼問題，把硬碟換過去就好了啊</p>
+
 <p>Bear: 但是，他工作的單位要求兩邊的硬體不準交換，因為舊電腦的保固與新電腦的保固有時間差，而且舊電腦要交付給其他人用</p>
+
 <p>Tako: 是有點麻煩了，不過用硬碟克隆的軟體拷貝過去吧</p>
+
 <p>Bear: 我也是這麼想的，但是他老兄說裡面有顆 SSD 要放系統，好像要做什麼 4 K對齊，那乾脆通通都弄成 4K 對齊吧</p>
+
 <p>Tako:有夠龜毛的</p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>說到這大概可以知道為什麼是大工程了吧還不知道嗎，讓 Bear 再說一次幾個麻煩點</p>
-<p><ol>
-<p><li>舊電腦換新電腦，硬體改變，但是作業系統(Windows 7)必須移植過去，而非重灌</li></p>
-<p><li>舊硬碟不得放置在新電腦，那就必須用進行 clone 或複製備份</li></p>
-<p><li>新配備中的固態硬碟與傳統硬碟都要進行 4K 對齊    </li></p>
-<p></p>
-<p>OK，知道問題點了，一步一步解決吧第一點，移植Windows 7，查了一下網路上的資料微軟似乎有提供蠻不錯的工具可以進行移植的行為那就是"<a href="http://technet.microsoft.com/zh-tw/library/cc721940%28v=ws.10%29.aspx">sysprep</a>"看了微軟的解釋，Bear 是有看沒有懂啦不過看了其他用過的回應，就是一個將原本 Windows(不刪資料下)回到初始，正要辨識硬體的狀態</p>
+
+<ol>
+<li>舊電腦換新電腦，硬體改變，但是作業系統(Windows 7)必須移植過去，而非重灌</li>
+<li>舊硬碟不得放置在新電腦，那就必須用進行 clone 或複製備份</li>
+<li>新配備中的固態硬碟與傳統硬碟都要進行 4K 對齊    </li>
+</ol>
+
+<p>OK，知道問題點了，一步一步解決吧第一點，移植Windows 7，查了一下網路上的資料微軟似乎有提供蠻不錯的工具可以進行移植的行為那就是”<a href="http://technet.microsoft.com/zh-tw/library/cc721940%28v=ws.10%29.aspx">sysprep</a>“看了微軟的解釋，Bear 是有看沒有懂啦不過看了其他用過的回應，就是一個將原本 Windows(不刪資料下)回到初始，正要辨識硬體的狀態</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2820540_orig.png" alt="" /></p>
+
 <p>該程式就放在 <code>C:\Windows\System32\sysprep\</code> 借花獻佛的說明(<a href="http://mrynlin.blogspot.tw/2011/01/windows-7-sysprep.html">參考資料</a>)</p>
+
 <p><strong>進入系統全新體驗(OOBE) 將電腦重新啟動成 Windows 歡迎畫面模式。</strong></p>
+
 <p>Windows 歡迎畫面可讓使用者自訂其 Windows 作業系統、建立使用者帳戶、命名電腦及其他工作。</p>
+
 <p>回應檔案之 oobeSystem 設定階段中的任何設定，會在 Windows 歡迎畫面啟動之前立即處理。</p>
+
 <p><strong>進入系統稽核模式</strong></p>
+
 <p>將電腦重新啟動成稽核模式。</p>
+
 <p>稽核模式可讓您將其他驅動程式或應用程式新增至 Windows。</p>
+
 <p>您也可以在將 Windows 安裝送交給使用者之前先測試它。如果有指定自動的 Windows 安裝檔案，Windows 安裝程式的稽核模式就會執行 auditSystem 與 auditUser 設定階段。</p>
+
 <p><strong>一般化(G)</strong></p>
+
 <p>準備要進行映像處理的 Windows 安裝。</p>
+
 <p>如果指定此選項，就會移除 Windows 安裝中所有唯一的系統資訊。</p>
+
 <p>安全性識別碼 (SID) 會重設、所有系統還原點都會清除，並且事件記錄也會予以刪除。</p>
+
 <p>下次電腦啟動時，specialize 設定階段就會執行。</p>
+
 <p>然後會建立新的安全性識別碼 (SID)，並重設 Windows 啟用的次數 (只能重設三次)。</p>
-<p>簡單的說，利用"進入系統全新體驗"+"一般化"就可以達到免重灌移植</p>
-<p>等等，畢竟除了移植系統外，還要將系統移到新硬碟上檢查一下原本的 C 槽大小跟要移過去的大小咦，原本好像是 160GB，而新硬碟只有 128GB.....諸事不順啊QAQ</p>
+
+<p>簡單的說，利用”進入系統全新體驗”+”一般化”就可以達到免重灌移植</p>
+
+<p>等等，畢竟除了移植系統外，還要將系統移到新硬碟上檢查一下原本的 C 槽大小跟要移過去的大小咦，原本好像是 160GB，而新硬碟只有 128GB…..諸事不順啊QAQ</p>
+
 <p>所幸，160GB 的硬碟只用了 80多GB，還有得救</p>
+
 <p>這下得用磁碟(區)分割之類的軟體，把 160GB 縮小成不到 128G B在 Windows 底下不準執行磁區調整，因此 Bear 選用的工具是 linux 底下的 GParted</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8109333_orig.png" alt="" /></p>
+
 <p>切記，調整磁區，尤其是縮小磁區是非常危險的行為，執行前請備份 Bear 不保證執行後不會有問題(雖然發生失敗機率很低)調整過程可能會很久，千萬不要以為當機而重開，絕對會後悔的</p>
-<p>完成了第一個問題了再來二、三問題比較相似，就混著一起說了先談談什麼是 4K 對齊可以用這個"<a href="http://www.alex-is.de/PHP/fusion/downloads.php?cat_id=4&amp;download_id=9">AS SSD Benchmark</a>"工具檢查</p>
+
+<p>完成了第一個問題了再來二、三問題比較相似，就混著一起說了先談談什麼是 4K 對齊可以用這個”<a href="http://www.alex-is.de/PHP/fusion/downloads.php?cat_id=4&amp;download_id=9">AS SSD Benchmark</a>“工具檢查</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7891525_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3898044_orig.png" alt="" /></p>
+
 <p>上圖是有進行4K對齊，而下圖則否</p>
+
 <p>那4k對齊的好處是什麼解釋起來很長，直接閱讀好的<a href="http://www.techbang.com/posts/10651-ssd-tuning-practice-3-4k-alignment-upgrade-ssd-performance-cheat-secretly-reported-63-issues-cover-story">文章</a>吧</p>
+
 <p>簡單的說，對於AF(先進格式化)硬碟與SSD來說，會有效率上的提升、SSD使用壽命也會比較久如果不幸硬碟(非SSD)沒有4K對齊，放心，對舊硬碟幫助不大，不用特地去進行4K對齊</p>
+
 <p>說到這應該知道了，沒錯，要對新硬碟進行 4K 對齊</p>
+
 <p>4K 對齊不難，難得是有一套可以進行4K對齊的分割軟體 windows7 的安裝光碟內的分割軟體預設就是4K對齊，至少對重灌的人來說，省了一步那單純要切4K對齊的人呢?嘿嘿，還記得GParted嗎?沒錯，當然可以拿它來進行4K對齊的分割行為只要注意分割大小要是大於零的整數( &gt; 0 MB)，那就完成4K對齊了</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1266799_orig.png" alt="" /></p>
+
 <p>全新的硬碟記得設定分割表傳統是msdos、大於2.2TB的要選gpt(前提是主機板跟作業系統要認得QAQ)</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3665521_orig.png" alt="" /></p>
+
 <p>Free space preceding(MiB)留至少 1MiB 就保證有 4K 對齊了</p>
+
 <p>終於來到最後了，磁碟克隆這邊選擇的 clone 軟體是國產的<a href="http://clonezilla.nchc.org.tw/news/">Clonezille</a>再生龍台灣資訊人做的，當然要支持啦燒成光碟或用燒入USB，然後開機選擇中文或其他看得懂的語言鍵盤配置正常情形下不用另外設定(除非您的鍵盤是特製的)</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7036859_orig.png" alt="" /></p>
+
 <p>這邊因應需求使用的是 device-image，將硬碟分區克隆成映像檔，儲存在 USB 外接硬碟中避免誤操作導致硬碟資料消失也可以直接進行硬碟對拷(device-device)，留意每一步操作，要知道自己的行為 clonezille 不太建議映像檔回復至不同分區 sda1 可以回復到 sdb1、sdc1、sdz1 等等卻不建議 sda1 回復到 sda2、sdb3、sdc5 等，數字不同的分區當然也可以強制回復，只要重新命名映像檔的檔名，把數字改成一致假設 sda1 回復到 sdb3，就把 1 改成 3 即可</p>
+
 <p>對了，Clonezille 本身就是個 Linux-liveCD 所以本來在 GParted 要進行的分割行為，反而在 Clonezille 完成了離開 clonezille 後選擇進入命令列</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/55239_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1819345_orig.png" alt="" /></p>
+
 <p>懷念的命令列出現了(大誤)輸入 sudo su 切換成 root，方便活動接下來利用 fdisk（不確定是否容易進行4K對齊）、parted（跟 GParted 一樣，給大於零的整數就是 4K 對齊）進行分割</p>
+
 <p>關於 fdisk 或 parted 的操作就不多說，自行研究吧</p>
-<p>說來慚愧，Bear 利用 Clonezille 拷貝的系統（沒有 4K 對齊，且開始磁區是 63）映像檔回復到 SSD（有 4K 對齊）上卻不能開機也不知道問題何在，什麼設成"active"、"boot"等等做法都試過，不行開機就是不行開機但是可以看到裡面的資料....最後還是用舊硬碟開機安裝<a href="http://www.todo-backup.com/">EaseUS Todo Backup</a>這套軟體解決的Orz</p>
+
+<p>說來慚愧，Bear 利用 Clonezille 拷貝的系統（沒有 4K 對齊，且開始磁區是 63）映像檔回復到 SSD（有 4K 對齊）上卻不能開機也不知道問題何在，什麼設成”active”、”boot”等等做法都試過，不行開機就是不行開機但是可以看到裡面的資料….最後還是用舊硬碟開機安裝<a href="http://www.todo-backup.com/">EaseUS Todo Backup</a>這套軟體解決的Orz</p>
+
 <p>有沒有路過的 Clonezille 或是了解 HDD clone to SSD 的高手指點一下（求救）</p>
+
 <p>搞了這麼大的工程，乾脆直接重灌不就好了雖然重灌很快，但事前的備份、事後的設定也是很繁雜更別說一大堆好用的工具還得找到、還得再安裝所以，究竟是克隆移植還是重灌就見仁見智了</p>
+
 <p>歡迎加入Takobear粉絲團獲得更多最新資訊!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></ol></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 

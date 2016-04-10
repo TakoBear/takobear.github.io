@@ -61,105 +61,114 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1808648_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這陣子Bear跟Tako在工作上意外的發現一些加速開發iOS的方式
-<p>也接觸了些有關Mac的開發方式, 於是今天開始, Bear也會介紹一些有關在Mac上開發應用的教學喔!</p>
-<p>第一篇教學的話, 讓我們先介紹如何在Xcode 5中開發外掛吧!</p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>在介紹如何開發以前, 這邊Bear先列舉幾個有名的Xcode 5外掛名單:(以下名單點選均會導到Github連結)
-<p>1. <a href="https://github.com/steipete/NSLogger-CocoaLumberjack-connector.git" target="_blank">XVim : 讓你開發Xcode的時候可以像操作Vim一樣操作</a></p>
-<p>2. <a href="https://github.com/Kapeli/Dash-Plugin-for-Xcode" target="_blank">Dash-Plugin :  安裝Dash這款Mac App後, 在Xcode的說明文件會導入到Dash</a></p>
-<p>3. <a href="https://github.com/omz/ColorSense-for-Xcode" target="_blank">ColorSense: 讓你在Xcode開發的時候顏色可以自動跳出, 不用每次編譯後才知道自己的RGB值看起來是什麼顏色</a></p>
-<p>4. <a href="https://github.com/questbeat/Lin" target="_blank">Lin: 讓你打NSLocalizedString時可以自動補完...非常的簡單明瞭</a></p>
-<p>5. <a href="https://github.com/chendo/FuzzyAutocompletePlugin" target="_blank">Fuzzy Autocomplete for Xcode: 一款比Xcode內建的自動完成(Auto-completion)更佳的外掛</a></p>
-<p>6. <a href="https://github.com/onevcat/VVDocumenter-Xcode" target="_blank">VVDocumenter: 讓你再寫javadoc的時候更方便的工具</a></p>
-<p>7. <a href="https://github.com/mneorr/Alcatraz" target="_blank">Alcatraz : 一款可以幫你安裝其他Xcode外掛的外掛...安裝後老實說沒什麼感覺, 因為太像原生Xcode的工具了!</a></p>
-<p>輔助的工具實在是太多了, 目前網路上很多文章仍然是關於如何在Xcode 4的階段開發外掛,</p>
-<p>但要開發Xcode 5的外掛的話, 則是有一些設定要弄的,</p>
-<p>不過, 網路上總是有好心人士已經整理好了Open Source,</p>
-<p>以下大家就跟Bear一起進行動做準備開發吧!!</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/369378_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>首先先點選Github連結: <a href="https://github.com/kattrali/Xcode5-Plugin-Template.git" target="_blank">https://github.com/kattrali/Xcode5-Plugin-Template.git</a></div></p>
-<p><div>
-<p><div id="962144589675695253" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p> (adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>首先我們需要先把這份檔案下載下來,
-<p>原始Github的操作步驟敘述比較簡單, 依照以下步驟進行後就能新增進去Xcode範本了</p>
-<p>下載完成後會得到一份Xcode5-Plugin-Template-master的資料夾</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2000150_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這邊把這資料夾名稱更改為: Xcode5-Plugin.xctemplate
-<p>可以用的command為:</p>
-<p><div>
-<p><div id="769002931913791065" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>改名完成以後, 接下來我們要到Xcode的資料夾內部,
-<p>請大家在終端機執行以下Command</p>
-<p><div>
-<p><div id="495474356924519782" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>執行完以後會看到以下畫面</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8422089_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>把剛剛改名好的資料夾放到這裡, 並請大家確認一下檔案有沒有缺少
-<p>(參考下圖)</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1797420_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>移動資料夾進來的時候會需要輸入密碼, 大家別忘記自己的登入密碼囉</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7924195_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>加入完成以後, 這時候重新開啟Xcode, 選擇專案為OS X類型,
-<p>點選 Application Plug-in以後...</p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3908310_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>開啟一個新專案後,
-<p>這個預設就是可以在Xcode 5內進行開發外掛的範本Template囉!!</p>
-<p>後續的操作使用說明, 請大家在注意一下原始出處的提醒:在Info.plist中把XCPluginHasUI的數值改為YES, 就會把外掛給停止</p>
-<p>Xcode 5 預設是開啟ARC (Automatic Reference Counting) (<a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-xcodemrc.html" target="_blank">需要轉換為MRC的請點這邊</a>)</p>
-<p>如果要debug 外掛的程式的時候, 記得在終端機下以下命令</p>
-<p></p>
-<p><div>
-<p><div id="617879293761240567" align="left"><script>// < ![CDATA[</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>這樣萬一Xcode執行到一半crash掉, 或是需要看Log內容時, 都能在終端機時看到了！
-<p>到這邊就是初步建好環境可以開發Xcode外掛囉!</p>
-<p>更多有關Mac / iOS的互動開發接下來也會陸續加入內容, 歡迎有興趣的大家共同分享!喜歡這篇文章嗎? 加入Takobear粉絲團獲得更多最新資訊!</p>
-<p></p>
-<p><div></div></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1808648_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這陣子Bear跟Tako在工作上意外的發現一些加速開發iOS的方式
+也接觸了些有關Mac的開發方式, 於是今天開始, Bear也會介紹一些有關在Mac上開發應用的教學喔!
+第一篇教學的話, 讓我們先介紹如何在Xcode 5中開發外掛吧!</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">在介紹如何開發以前, 這邊Bear先列舉幾個有名的Xcode 5外掛名單:(以下名單點選均會導到Github連結)
+1. <a href="https://github.com/steipete/NSLogger-CocoaLumberjack-connector.git" target="_blank">XVim : 讓你開發Xcode的時候可以像操作Vim一樣操作</a>
+2. <a href="https://github.com/Kapeli/Dash-Plugin-for-Xcode" target="_blank">Dash-Plugin :  安裝Dash這款Mac App後, 在Xcode的說明文件會導入到Dash</a>
+3. <a href="https://github.com/omz/ColorSense-for-Xcode" target="_blank">ColorSense: 讓你在Xcode開發的時候顏色可以自動跳出, 不用每次編譯後才知道自己的RGB值看起來是什麼顏色</a>
+4. <a href="https://github.com/questbeat/Lin" target="_blank">Lin: 讓你打NSLocalizedString時可以自動補完...非常的簡單明瞭</a>
+5. <a href="https://github.com/chendo/FuzzyAutocompletePlugin" target="_blank">Fuzzy Autocomplete for Xcode: 一款比Xcode內建的自動完成(Auto-completion)更佳的外掛</a>
+6. <a href="https://github.com/onevcat/VVDocumenter-Xcode" target="_blank">VVDocumenter: 讓你再寫javadoc的時候更方便的工具</a>
+7. <a href="https://github.com/mneorr/Alcatraz" target="_blank">Alcatraz : 一款可以幫你安裝其他Xcode外掛的外掛...安裝後老實說沒什麼感覺, 因為太像原生Xcode的工具了!</a>
+
+輔助的工具實在是太多了, 目前網路上很多文章仍然是關於如何在Xcode 4的階段開發外掛,
+但要開發Xcode 5的外掛的話, 則是有一些設定要弄的,
+不過, 網路上總是有好心人士已經整理好了Open Source,
+以下大家就跟Bear一起進行動做準備開發吧!!
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/369378_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">首先先點選Github連結: <a href="https://github.com/kattrali/Xcode5-Plugin-Template.git" target="_blank">https://github.com/kattrali/Xcode5-Plugin-Template.git</a></div>
+<div>
+<div id="962144589675695253" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+ (adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">首先我們需要先把這份檔案下載下來,
+原始Github的操作步驟敘述比較簡單, 依照以下步驟進行後就能新增進去Xcode範本了
+下載完成後會得到一份Xcode5-Plugin-Template-master的資料夾</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2000150_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這邊把這資料夾名稱更改為: Xcode5-Plugin.xctemplate
+可以用的command為:</div>
+<div>
+<div id="769002931913791065" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">改名完成以後, 接下來我們要到Xcode的資料夾內部,
+請大家在終端機執行以下Command</div>
+<div>
+<div id="495474356924519782" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">執行完以後會看到以下畫面</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8422089_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">把剛剛改名好的資料夾放到這裡, 並請大家確認一下檔案有沒有缺少
+(參考下圖)</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1797420_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">移動資料夾進來的時候會需要輸入密碼, 大家別忘記自己的登入密碼囉</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7924195_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">加入完成以後, 這時候重新開啟Xcode, 選擇專案為OS X類型,
+點選 Application Plug-in以後...</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3908310_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">開啟一個新專案後,
+這個預設就是可以在Xcode 5內進行開發外掛的範本Template囉!!
+後續的操作使用說明, 請大家在注意一下原始出處的提醒:在Info.plist中把XCPluginHasUI的數值改為YES, 就會把外掛給停止
+Xcode 5 預設是開啟ARC (Automatic Reference Counting) (<a title="" href="http://www.takobear.weebly.com/12/post/2013/10/-xcodemrc.html" target="_blank">需要轉換為MRC的請點這邊</a>)
+
+如果要debug 外掛的程式的時候, 記得在終端機下以下命令
+
+</div>
+<div>
+<div id="617879293761240567" class="wcustomhtml" align="left"><script>// < ![CDATA[
+
+// ]]></script></div>
+</div>
+<div class="paragraph">這樣萬一Xcode執行到一半crash掉, 或是需要看Log內容時, 都能在終端機時看到了！
+到這邊就是初步建好環境可以開發Xcode外掛囉!
+更多有關Mac / iOS的互動開發接下來也會陸續加入內容, 歡迎有興趣的大家共同分享!喜歡這篇文章嗎? 加入Takobear粉絲團獲得更多最新資訊!
+
+</div>
+<div></div>
 
   </div>
 

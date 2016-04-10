@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[Arduino]動手做自己的智能家電 - BLE Shield 簡介</title>
-  <meta name="description" content="各位版友晚安!上篇文章講到我們為什麼要買 BLE Shield 模組這篇我們會更進一步介紹他!這套模組是由 RedBear Lab 所建成的，有興趣的可以到這裡找到他們小編還沒特別查明有關他們的背景,不過他們作 iPhone 藍芽的連接實在很有一套!!他們有特別出一款app : BLE Arduino (按這裡進...">
+  <meta name="description" content="各位版友晚安!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -62,68 +62,124 @@
 
   <div class="post-content" itemprop="articleBody">
     <p>各位版友晚安!</p>
+
 <p>上篇文章講到我們為什麼要買 BLE Shield 模組</p>
+
 <p>這篇我們會更進一步介紹他!這套模組是由 RedBear Lab 所建成的，有興趣的可以<a href="http://redbearlab.com/">到這裡找到他們</a></p>
+
 <p>小編還沒特別查明有關他們的背景,</p>
+
 <p>不過他們作 iPhone 藍芽的連接實在很有一套!!</p>
+
 <p>他們有特別出一款app : BLE Arduino (<a href="https://itunes.apple.com/us/app/ble-arduino/id547628998">按這裡進入下載</a>)</p>
+
 <p>這邊可以先看一段影片:</p>
-<p><iframe src="//www.youtube.com/embed/7Uov12uXikI?wmode=opaque" width="300" height="150" frameborder="0" allowfullscreen="allowfullscreen">
-<p></p>
-<p><!--more--></p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<iframe src="//www.youtube.com/embed/7Uov12uXikI?wmode=opaque" width="300" height="150" frameborder="0" allowfullscreen="allowfullscreen">
+</iframe>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>在正式進入如何自己寫 Arduino 跟 iPhone 間的連接前</p>
+
 <p>看完上面的影片，我們先來瞭解這整套的運作模式吧!藍芽中樞管理者(Central Manger)與外部設備(Peripherals)間要進行溝通</p>
+
 <p>會發出類似 Bonjour 的廣播服務尋找附近的藍芽裝置</p>
+
 <p>這邊我們先不談太深，先講如何在買到 BLE Shield 就實現這些功能</p>
+
 <p>首先先到上面貼的連結下載<a href="https://itunes.apple.com/us/app/ble-arduino/id547628998">BLE Shield</a></p>
+
 <p>(要注意, 這裡小編是假設版友是有 iPhone 的喔! 用其他手機的話會在之後文章做介紹!)</p>
+
 <p>下載完成以後，打開你的arduino</p>
+
 <p>看到以下畫面:</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/503155_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5542390_orig.png" alt="" /></p>
+
 <p>我們先 run BLEFirmata 這個範例，然後對照上圖就能看到程式碼</p>
+
 <p>到這邊後不要想太多，就是 upload 就對了!!不過若是 Mac OS 的板友要注意燒錄到 BLE 的路徑時候</p>
+
 <p>如果出現以下畫面，請參考以下解法喔!</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1978250_orig.png" alt="" /></p>
+
 <p>出現大量的 <code>stk500v2_ReceiveMessage(): timeout</code></p>
+
 <p>這個問題有兩種可能:</p>
-<p><ol>
-<p><li>選錯 Serial Port</li></p>
-<p><li>請要修改 <code>boards.txt</code></li></p>
-<p><li>以上皆是兩種解法是不同的喔!!</li></p>
-<p></p>
+
+<ol>
+<li>選錯 Serial Port</li>
+<li>請要修改 <code>boards.txt</code></li>
+<li>以上皆是兩種解法是不同的喔!!</li>
+</ol>
+
 <p>我們先看第一種情況，這個只要修改 Serial Port，走不同的路線傳輸給 arduino 就好</p>
+
 <p>這種情況就是無法寫入板子內而已，通常錯誤都是因為選到了前面四個其中一個的 Bluetooth 連接</p>
+
 <p>請修改成 <code>/dev/ttv.usrbmodem1421</code>，總之就是走 USB 傳輸就沒問題了!</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6466286_orig.png" alt="" /></p>
+
 <p>另一種是 <code>boards.txt</code> 上面的設定錯誤</p>
+
 <p>Mac OS 的朋友請參考以下步驟找到他!</p>
-<p>點選 "顯示套件內容"(Show Contents) 會看到以下資料夾</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/292778_orig.png" alt="" /></p>
+
+<p>點選 “顯示套件內容”(Show Contents) 會看到以下資料夾</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1906323_orig.png" alt="" /></p>
+
 <p>接下來到以下路徑: <code>Resources/Java/hardware/arduino</code> 資料夾中 就能找到 <code>boards.txt</code> 了!</p>
+
 <p>要直接搜尋的朋友則可以到以下路徑就能看到囉</p>
+
 <p><code>/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino</code> 打開 <code>boards.txt</code> 可以看到:</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2430068_orig.png" alt="" /></p>
+
 <p>每一個板子的設定都已經被用 ################# 分割開來</p>
-<p>上面可以看到 例如: atmega328.name = .... 就是板子的名稱跟型號</p>
+
+<p>上面可以看到 例如: atmega328.name = …. 就是板子的名稱跟型號</p>
+
 <p>所以我們要修改的就是找 atmega2560!</p>
+
 <p>找到以下內容:</p>
-<p><pre><code>mega2560.name=Arduino Mega 2560 or Mega ADKmega2560.upload.protocol=wiring (重點在確認這邊設定upload的方式是透過wiring)
-<p>mega2560.upload.maximum_size=258048</p>
-<p>mega2560.upload.speed=115200</p>
-<p>mega2560.bootloader.low_fuses=0xFF</p>
-<p>mega2560.bootloader.high_fuses=0xD8</p>
-<p>mega2560.bootloader.extended_fuses=0xFD</p>
-<p>mega2560.bootloader.path=stk500v2</p>
-<p>mega2560.bootloader.file=stk500boot_v2_mega2560.hex</p>
-<p>mega2560.bootloader.unlock_bits=0x3F</p>
-<p>mega2560.bootloader.lock_bits=0x0F</p>
-<p>mega2560.build.mcu=atmega2560</p>
-<p>mega2560.build.f_cpu=16000000L</p>
-<p>mega2560.build.core=arduino</p>
-<p>mega2560.build.variant=mega</p>
-<p></p>
+
+<pre><code>mega2560.name=Arduino Mega 2560 or Mega ADKmega2560.upload.protocol=wiring (重點在確認這邊設定upload的方式是透過wiring)
+mega2560.upload.maximum_size=258048
+mega2560.upload.speed=115200
+
+mega2560.bootloader.low_fuses=0xFF
+mega2560.bootloader.high_fuses=0xD8
+mega2560.bootloader.extended_fuses=0xFD
+mega2560.bootloader.path=stk500v2
+mega2560.bootloader.file=stk500boot_v2_mega2560.hex
+mega2560.bootloader.unlock_bits=0x3F
+mega2560.bootloader.lock_bits=0x0F
+
+mega2560.build.mcu=atmega2560
+mega2560.build.f_cpu=16000000L
+mega2560.build.core=arduino
+mega2560.build.variant=mega
+</code></pre>
+
 <p>把 upload.protocol 設定成 wiring 才能用 usb 方式把程式 upload 進去 arduino 喔！！今天就先介紹到這邊</p>
+
 <p>想知道更多消息請繼續關注TakoBear!</p>
+
 <p>有更多問題的朋友歡迎來信到我們的信箱 takobearx@gmail.com</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p></ol></p></iframe></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 

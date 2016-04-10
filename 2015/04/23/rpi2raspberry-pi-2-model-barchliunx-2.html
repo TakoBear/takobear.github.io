@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[RPi2]Raspberry Pi 2 Model B開箱與Archliunx安裝</title>
-  <meta name="description" content="好久不見的RPi相關文章，就讓Bear簡簡單單的寫篇開箱文吧從Raspberry Pi 2 Model B發表的那一刻，Bear就馬上尋找在台灣可以入手（快速、便宜）的管道目前線上的購買管道有幾個，官方出貨、沒屋頂拍賣...而官方授權台灣的購買方式有兩個，一是element14另一是RS當初兩者都是缺貨需預訂，因...">
+  <meta name="description" content="好久不見的RPi相關文章，就讓Bear簡簡單單的寫篇開箱文吧">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,106 +61,119 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3623438_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>好久不見的RPi相關文章，就讓Bear簡簡單單的寫篇開箱文吧</div></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>
-<p><div id="667217304880796193" align="left"><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script><script async="">// < ![CDATA[</p>
-<p>// ]]></script><!-- takobear 336*280 --><script>// < ![CDATA[</p>
-<p>(adsbygoogle = window.adsbygoogle || []).push({});</p>
-<p>// ]]></script></div></p>
-<p></p>
-<p><div>從Raspberry Pi 2 Model B發表的那一刻，Bear就馬上尋找在台灣可以入手（快速、便宜）的管道
-<p>目前線上的購買管道有幾個，官方出貨、沒屋頂拍賣...</p>
-<p>而官方授權台灣的購買方式有兩個，一是<a title="" href="http://tw.element14.com/raspberry-pi/raspberrypi-2-modb-1gb/sbc-raspberry-pi-2-model-b-1gb/dp/2461030">element14</a>另一是<a title="" href="http://twcn.rs-online.com/web/p/processor-microcontroller-development-kits/832-6274/">RS</a></p>
-<p>當初兩者都是缺貨需預訂，因此就挑了便宜的RS（如題圖所示）</p>
-<p>不過購買過程卻是一波三折，要嘛信用卡刷不過、要嘛缺統一編號</p>
-<p>前前後後被砍單兩次，拖到前幾天（2015/04/20）才拿到貨....抱怨的內容就不多說，先開箱吧</p>
-<p>（以下照片皆由鳥鳥的智慧型手機後鏡頭拍攝，難看不負責XDD）</p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8980572_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>沒啥保護的紙盒、沒有密封的靜電袋</div></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4660803_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1179120_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9165826_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>Broadcom博通BCM2836，看型號只比RPi一代的BCM2835多1
-<p>但是內容差很多，從ARMv6單核700mhz變成ARMv7四核900mhz（差太多了吧）</p>
-<p><div>made in the UK 英國製感覺頗爽（目前也沒有中國製吧）
-<p><strong>（WTF 英國藍有農藥，當初不知道喝多少紅茶入肚）</strong></p>
-<p><div>
-<p><div><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6870493_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>Broadcom BCM2836太大顆了，沒辦法跟記憶體合一，所以記憶體被迫移到背面
-<p>爾必達（Elpida母公司為Micron）1GB的RAM&nbsp;</p>
-<p></p>
-<p><div>開箱介紹就到這了
-<p>接下來介紹Arch linux的安裝為啥Bear要用Arch linux而非官方推薦的Raspbian</p>
-<p>也沒啥原因，只是剛好最近在嘗鮮Arch linux而已XD</p>
-<p><a title="" href="http://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2">http://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2</a></p>
-<p>Arch linux官方推薦的安裝方式，稍微說明一下</p>
-<p>1.準備一張大小適合的micro sd（我猜至少4GB），一台可以格式化micro sd的linux base的電腦</p>
-<p>2.將micro sd插入電腦，格式化（fdisk、parted、gparted，whatever you like，<strong>必須小心且知道你在幹嘛</strong>）</p>
-<p>分割兩塊（皆為主要分割磁區）</p>
-<p>一個100MB的大小，檔案格式為fat32、另一大小隨意（到micro sd的最大容量），檔案格式為ext4</p>
-<p>3.切換為電腦的root權限（別用sudo），建立兩個資料夾，分別為root、boot</p>
-<p>   su</p>
-<p>cd ~</p>
-<p>   mkdir ./root ./boot</p>
-<p>4.分別掛載剛剛格式化好的磁區，第一磁區（小的，100MB）掛載到boot，第二磁區（大的）掛置到root</p>
-<p>  mount /dev/sdX1 ./boot</p>
-<p>  mount /dev/sdX2 ./root</p>
-<p>X<strong>是指你的磁碟編號，可能是b、c或其他，請用fdisk -l來查詢</strong></p>
-<p>5.下載官方的archlinux檔案並寫入SD中</p>
-<p>   wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz </p>
-<p>   bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C ./root </p>
-<p>   sync</p>
-<p>6.將./root/boot內容移置./boot，以便可以開機</p>
-<p> mv ./root/boot/* ./boot</p>
-<p>7.卸載SD，放到RPi2上使用吧</p>
-<p>  umount ./boot ./root</p>
-<p>預設的root密碼是root，記得要改哦</p>
-<p>如果嫌麻煩，或是沒有linux base的電腦，或是其他原因</p>
-<p>可以使用bear建好的<a title="" href="http://boo.tw/kCvOP">img file</a> （如果信任bear的話XD）</p>
-<p>用<a title="" href="http://sourceforge.net/projects/win32diskimager/">win32diskimager</a> (for windows users)，或dd來寫入</p>
-<p>對了，這是用16GB的SD卡建立的，小於該容量的User可能就得用上面步驟來建立了（抱歉）</p>
-<p></p>
-<p><div>
-<p><div id="849868088972546515" align="left">
-<p><div id="fb-root"></div></p>
-<p><script>// < ![CDATA[</p>
-<p>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</p>
-<p>// ]]></script></p>
-<p><div data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
-<p><div>由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。</div></p>
-<p></p>
-<p></p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p>
+    <div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3623438_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">好久不見的RPi相關文章，就讓Bear簡簡單單的寫篇開箱文吧</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div>
+<div id="667217304880796193" class="wcustomhtml" align="left"><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+(adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script><script async="">// < ![CDATA[
+
+// ]]></script><!-- takobear 336*280 --><ins class="adsbygoogle" data-ad-client="ca-pub-2505331387846610" data-ad-slot="8029204281"></ins><script>// < ![CDATA[
+(adsbygoogle = window.adsbygoogle || []).push({});
+// ]]></script></div>
+</div>
+<div class="paragraph">從Raspberry Pi 2 Model B發表的那一刻，Bear就馬上尋找在台灣可以入手（快速、便宜）的管道
+目前線上的購買管道有幾個，官方出貨、沒屋頂拍賣...
+而官方授權台灣的購買方式有兩個，一是<a title="" href="http://tw.element14.com/raspberry-pi/raspberrypi-2-modb-1gb/sbc-raspberry-pi-2-model-b-1gb/dp/2461030">element14</a>另一是<a title="" href="http://twcn.rs-online.com/web/p/processor-microcontroller-development-kits/832-6274/">RS</a>
+當初兩者都是缺貨需預訂，因此就挑了便宜的RS（如題圖所示）
+不過購買過程卻是一波三折，要嘛信用卡刷不過、要嘛缺統一編號
+前前後後被砍單兩次，拖到前幾天（2015/04/20）才拿到貨....抱怨的內容就不多說，先開箱吧
+（以下照片皆由鳥鳥的智慧型手機後鏡頭拍攝，難看不負責XDD）
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8980572_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">沒啥保護的紙盒、沒有密封的靜電袋</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4660803_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1179120_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9165826_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">Broadcom博通BCM2836，看型號只比RPi一代的BCM2835多1
+但是內容差很多，從ARMv6單核700mhz變成ARMv7四核900mhz（差太多了吧）</div>
+<div class="paragraph">made in the UK 英國製感覺頗爽（目前也沒有中國製吧）
+<strong>（WTF 英國藍有農藥，當初不知道喝多少紅茶入肚）</strong></div>
+<div>
+<div class="wsite-image wsite-image-border-thin"><a><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6870493_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">Broadcom BCM2836太大顆了，沒辦法跟記憶體合一，所以記憶體被迫移到背面
+爾必達（Elpida母公司為Micron）1GB的RAM&nbsp;
+
+</div>
+<div class="paragraph">開箱介紹就到這了
+接下來介紹Arch linux的安裝為啥Bear要用Arch linux而非官方推薦的Raspbian
+也沒啥原因，只是剛好最近在嘗鮮Arch linux而已XD
+<a title="" href="http://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2">http://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2</a>
+Arch linux官方推薦的安裝方式，稍微說明一下
+
+1.準備一張大小適合的micro sd（我猜至少4GB），一台可以格式化micro sd的linux base的電腦
+
+2.將micro sd插入電腦，格式化（fdisk、parted、gparted，whatever you like，<span style="color: #ff0000;"><strong>必須小心且知道你在幹嘛</strong></span>）
+分割兩塊（皆為主要分割磁區）
+一個100MB的大小，檔案格式為fat32、另一大小隨意（到micro sd的最大容量），檔案格式為ext4
+
+3.切換為電腦的root權限（別用sudo），建立兩個資料夾，分別為root、boot
+<span style="color: #0000ff;">   su
+cd ~
+</span><span style="color: #0000ff;">   mkdir ./root ./boot</span>
+
+4.分別掛載剛剛格式化好的磁區，第一磁區（小的，100MB）掛載到boot，第二磁區（大的）掛置到root
+<span style="color: #0000ff;">  mount /dev/sdX1 ./boot</span>
+<span style="color: #0000ff;">  mount /dev/sdX2 ./root</span>
+X<strong>是指你的磁碟編號，可能是b、c或其他，請用fdisk -l來查詢</strong>
+
+5.下載官方的archlinux檔案並寫入SD中
+<span style="color: #0000ff;">   wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz </span>
+<span style="color: #0000ff;">   bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C ./root </span>
+<span style="color: #0000ff;">   sync</span>
+
+6.將./root/boot內容移置./boot，以便可以開機
+<span style="color: #0000ff;"> </span><span style="color: #0000ff;">mv ./root/boot/* ./boot</span>
+
+7.卸載SD，放到RPi2上使用吧
+<span style="color: #0000ff;">  umount ./boot ./root</span>
+
+預設的root密碼是root，記得要改哦
+
+如果嫌麻煩，或是沒有linux base的電腦，或是其他原因
+可以使用bear建好的<a title="" href="http://boo.tw/kCvOP">img file</a> （如果信任bear的話XD）
+用<a title="" href="http://sourceforge.net/projects/win32diskimager/">win32diskimager</a> (for windows users)，或dd來寫入
+對了，這是用16GB的SD卡建立的，小於該容量的User可能就得用上面步驟來建立了（抱歉）
+
+</div>
+<div>
+<div id="849868088972546515" class="wcustomhtml" align="left">
+<div id="fb-root"></div>
+<script>// < ![CDATA[
+(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+// ]]></script>
+<div class="fb-post" data-href="https://www.facebook.com/funnytechandnews/posts/591467747626523" data-width="466">
+<div class="fb-xfbml-parse-ignore">由 <a href="https://www.facebook.com/funnytechandnews">Takobear科技資訊開發站</a><a href="https://www.facebook.com/funnytechandnews/posts/591467747626523">貼文</a>。</div>
+</div>
+</div>
+</div>
 
   </div>
 

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[RPI]Raspberry Pi當作BT下載器(下)</title>
-  <meta name="description" content="還記得上次安裝完成的 rTorrent 嗎 （點選前往RPI : BT下載教學&lt;上篇&gt;）接下來 Bear 將要把剩下的問題解決掉包含背景處理與網頁控制（ruTorrent）當然，網頁控制就得架一個網站，本文將以 nginx（私心）為主作為介紹（內文使用相當多終端機指令，記得用 tab 鍵補完）[cjt...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,247 +61,407 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>還記得上次安裝完成的 rTorrent 嗎 （<a href="http://www.takobear.tw/2014/12/07/rpiraspberry-pibt-2/">點選前往RPI : BT下載教學&lt;上篇&gt;</a>）</p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2773881_orig.png" alt="" /></p>
+
+<p>還記得上次安裝完成的 rTorrent 嗎 （<a href="http://www.takobear.tw/2014/12/07/rpiraspberry-pibt-2/">點選前往RPI : BT下載教學&lt;上篇&gt;</a>）</p>
+
 <p>接下來 Bear 將要把剩下的問題解決掉</p>
+
 <p>包含背景處理與網頁控制（ruTorrent）</p>
+
 <p>當然，網頁控制就得架一個網站，本文將以 nginx（私心）為主作為介紹</p>
+
 <p>（內文使用相當多終端機指令，記得用 tab 鍵補完）</p>
-<p><!--more--></p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>說到背景處理，其實可以將 rTorrent 設為服務並在開機執行</p>
+
 <p>但是 Bear 偏好手動執行XD</p>
+
 <p>說是手動操作，也只是使用 Linux 背景會話功能(screen)</p>
+
 <p>如果只是古老的 screen 就說不過去了</p>
+
 <p>這次介紹由 Canonical (Ubuntu母公司)的 Dustin Kirklandn 所開發的工具 byobu</p>
+
 <p><a href="http://byobu.co/">http://byobu.co/</a></p>
+
 <p>其實這個工具也只是 screen 的延伸</p>
+
 <p>但更加簡單與人性化</p>
+
 <p>安裝也很簡單</p>
-<p><pre><code>sudo apt-get update
-<p>sudo apt-get install byobu</p>
-<p></p>
+
+<pre><code class="bash">sudo apt-get update
+
+sudo apt-get install byobu
+</code></pre>
+
 <p>沒錯，這樣就裝好了，不用編譯</p>
+
 <p>執行也很簡單，在終端機輸入</p>
-<p><pre><code>byobu
-<p></p>
+
+<pre><code class="bash">byobu
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9564242_orig.png" alt="" /></p>
+
 <p>啟動結果如上圖</p>
+
 <p><strong>如果要離開會話</strong>，那就按 <code>F6</code>（再執行 byobu 則會回來原本會話）</p>
+
 <p><strong>新增新的會話</strong>，按 <code>F2</code></p>
+
 <p><strong>回到前一個會話</strong>，按 <code>F3</code></p>
+
 <p><strong>後一個會話</strong>，按 <code>F4</code></p>
+
 <p><strong>關閉會話</strong>，輸入 <code>exit</code></p>
+
 <p>有趣的是，在任何一個 SSH or TTY 連線，只要執行 byobu，都是同步顯示畫面</p>
+
 <p>如何，夠簡單了吧，比起 screen 複雜的組合鍵，用起 byobu 單純多了</p>
+
 <p>啊！抱歉離題太多，簡單的說，執行 byobu 後，再執行 rtorrent，就可以按 F6 離開會話</p>
+
 <p>如此一來，rtorrent 就會背景工作了，想監控隨時使用 byobu 回來觀察</p>
-<p><hr /></p>
+
+<hr />
+
 <p>接下來，設定網頁控制</p>
+
 <p>當然，網頁控制就是要架個簡易的 web server</p>
+
 <p>有一個專門用於控制 rTorrent 的開放網頁專案</p>
+
 <p><a href="https://code.google.com/p/rutorrent/">ruTorrent</a></p>
+
 <p>畢竟這不是什麼給他人使用的網站</p>
+
 <p>只是個人使用的拿來控制 rTorrent 的工具；別太複雜，簡單就好</p>
+
 <p>簡單的網站架設都用 LAMP (Linux-Apache2-MySQL-PHP)</p>
+
 <p>這邊不需要資料庫，拿掉 MySQL</p>
+
 <p>Apache2 太肥、效能太差，改換成 nginx（別問為什麼不選lighttpd）</p>
+
 <p>不需要用到傳統的 PHP，用 PHP-fpm 即可</p>
+
 <p>OK，接下來就是安裝它們了</p>
+
 <p>（用apt-get套件管理來安裝，別自虐用原始碼編譯QAQ）</p>
-<p><pre><code>sudo apt-get install nginx php5-fpm php5-cli
-<p></p>
+
+<pre><code class="bash">sudo apt-get install nginx php5-fpm php5-cli
+</code></pre>
+
 <p>安裝完後先設定 nginx 吧</p>
-<p><pre><code>sudo vim /etc/nginx/nginx.conf
-<p></p>
+
+<pre><code class="bash">sudo vim /etc/nginx/nginx.conf
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7572196_orig.png" alt="" /></p>
+
 <p>因為 pi 只有單核心，所以把 worker_processes 4 改為 1</p>
+
 <p>改好後存檔</p>
+
 <p>再來建立網站(web server)所放置網頁資料的資料夾</p>
-<p><pre><code>sudo mkdir /var/www
-<p></p>
+
+<pre><code class="bash">sudo mkdir /var/www
+</code></pre>
+
 <p>建立一個新的網站(ruTorrent)以及設定該網站與 nginx 的 symbolic link</p>
-<p><pre><code>sudo vim /etc/nginx/sites-available/rutorrent
-<p></p>
+
+<pre><code class="bash">sudo vim /etc/nginx/sites-available/rutorrent
+</code></pre>
+
 <p>輸入以下內容</p>
-<p><pre><code>#=============================================
-<p>server {</p>
-<p>    #預設的網站埠口，當然可以修改</p>
-<p>    listen   80;</p>
-<p>    #網站的放置位置</p>
-<p>    root /var/www;</p>
-<p>    index index.php index.html index.htm;</p>
-<p>    server_name _;        location / {</p>
-<p>        try_files $uri $uri/ /index.html;</p>
-<p>    }</p>
-<p>    #轉送錯誤頁面，可以不設</p>
-<p>    error_page 500 502 503 504 /50x.html;</p>
-<p>    location = /50x.html {</p>
-<p>        root /usr/share/nginx/www;</p>
-<p>    }</p>
-<p>    #與php-fpm溝通的設定，非常重要</p>
-<p>    location ~ \.php$ {</p>
-<p>        try_files $uri =404;</p>
-<p>        fastcgi_split_path_info ^(.+\.php)(/.+)$;</p>
-<p>        #fastcgi_pass 127.0.0.1:9000;</p>
-<p>        fastcgi_pass unix:/var/run/php5-fpm.sock;</p>
-<p>        fastcgi_index index.php;</p>
-<p>        include fastcgi_params;</p>
-<p>    }</p>
-<p>    #設定xmlrpc，非常重要</p>
-<p>    location /RPC2 {</p>
-<p>        include scgi_params;</p>
-<p>        #scgi_pass 127.0.0.1:5000;</p>
-<p>        scgi_pass unix:///tmp/rpc.socket;</p>
-<p>    }</p>
-<p>    location ~ /\.ht {</p>
-<p>        deny all;</p>
-<p>    }</p>
-<p>}</p>
-<p>#=============================================</p>
-<p></p>
-<p>將剛剛寫好的設定"捷徑"移到sites-enabled底下</p>
-<p><pre><code>cd /etc/nginx/sites-enabled
-<p>sudo ln -s ../sites-available/rutorrent</p>
-<p></p>
-<p>ln -s 建立軟連接，就是 windows 概念中的"捷徑"</p>
+
+<pre><code class="nginx">#=============================================
+server {
+    #預設的網站埠口，當然可以修改
+    listen   80;
+
+    #網站的放置位置
+    root /var/www;
+
+    index index.php index.html index.htm;
+
+    server_name _;        location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    #轉送錯誤頁面，可以不設
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/www;
+    }
+
+    #與php-fpm溝通的設定，非常重要
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        #fastcgi_pass 127.0.0.1:9000;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+
+    #設定xmlrpc，非常重要
+    location /RPC2 {
+        include scgi_params;
+        #scgi_pass 127.0.0.1:5000;
+        scgi_pass unix:///tmp/rpc.socket;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+#=============================================
+</code></pre>
+
+<p>將剛剛寫好的設定”捷徑”移到sites-enabled底下</p>
+
+<pre><code class="bash">cd /etc/nginx/sites-enabled
+
+sudo ln -s ../sites-available/rutorrent
+</code></pre>
+
+<p>ln -s 建立軟連接，就是 windows 概念中的”捷徑”</p>
+
 <p>設定完重啟 nginx 服務吧</p>
-<p><pre><code>sudo /etc/init.d/nginx reloadsudo /etc/init.d/nginx restart
-<p></p>
+
+<pre><code class="bash">sudo /etc/init.d/nginx reloadsudo /etc/init.d/nginx restart
+</code></pre>
+
 <p>再來就是針對 pi 的性能設定 php-fpm</p>
-<p><pre><code>sudo vim /etc/php5/fpm/pool.d/www.conf
-<p></p>
+
+<pre><code class="bash">sudo vim /etc/php5/fpm/pool.d/www.conf
+</code></pre>
+
 <p>編輯</p>
-<p><pre><code>;====================================
-<p>pm = ondemand</p>
-<p>;這是 php-fpm 執行的設定，ondemand 表示直到需要才執行；dynamic 則是固定數量下動態分配</p>
-<p>;針對進程的一些配置，不多解釋了，依序更改內容吧</p>
-<p>pm.max_children = 2</p>
-<p>pm.start_servers = 1</p>
-<p>pm.min_spare_servers = 1</p>
-<p>pm.max_spare_servers = 2</p>
-<p>pm.process_idle_timeout = 5s</p>
-<p>;====================================</p>
-<p></p>
+
+<pre><code class="conf">;====================================
+pm = ondemand
+;這是 php-fpm 執行的設定，ondemand 表示直到需要才執行；dynamic 則是固定數量下動態分配
+
+;針對進程的一些配置，不多解釋了，依序更改內容吧
+
+pm.max_children = 2
+pm.start_servers = 1
+pm.min_spare_servers = 1
+pm.max_spare_servers = 2
+pm.process_idle_timeout = 5s
+;====================================
+</code></pre>
+
 <p>接下來寫一個php測試頁看看php-fpm跟nginx是否設定正常</p>
-<p><pre><code>sudo vim /var/www/info.php
-<p></p>
+
+<pre><code class="bash">sudo vim /var/www/info.php
+</code></pre>
+
 <p>編輯</p>
-<p><pre><code>====================================
-<p>&lt; ?php</p>
-<p>phpinfo();</p>
-<p>?&gt;</p>
-<p>====================================</p>
-<p></p>
+
+<pre><code class="php">====================================
+&lt; ?php
+phpinfo();
+?&gt;
+====================================
+</code></pre>
+
 <p>把 info.php 的擁有者從 root 改為 www-data</p>
-<p><pre><code>sudo chown www-data:www-data /var/www/info.php
-<p></p>
+
+<pre><code class="bash">sudo chown www-data:www-data /var/www/info.php
+</code></pre>
+
 <p>在瀏覽器上輸入 [RPI-IP]/info.php 檢查是否正常運作</p>
+
 <p><em><strong>http://[Your Server IP (Lan IP)]/info.php</strong></em></p>
+
 <p>正常如下圖</p>
+
 <p>簡單的架起了一個私人用的網站了</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3912158_orig.png" alt="" /></p>
+
 <p>再忍耐點，快完成了</p>
+
 <p>下載 ruTorrent 這個網站工具了</p>
-<p><pre><code>cd ~
-<p>wget http://dl.bintray.com/novik65/generic/rutorrent-3.6.tar.gz</p>
-<p></p>
+
+<pre><code class="bash">cd ~
+
+wget http://dl.bintray.com/novik65/generic/rutorrent-3.6.tar.gz
+</code></pre>
+
 <p>這邊不建議安裝外掛套件，畢竟 pi 的性能不足以應付這些額外功能</p>
+
 <p>但如果真的需要可以試著裝一、兩個</p>
-<p><pre><code>wget http://dl.bintray.com/novik65/generic/plugins-3.6.tar.gz　(非必要)
-<p></p>
+
+<pre><code class="bash">wget http://dl.bintray.com/novik65/generic/plugins-3.6.tar.gz　(非必要)
+</code></pre>
+
 <p>解壓縮，並移至 /var/www 底下，順便修改 rutorrent 的擁有者</p>
-<p><pre><code>tar -zxvf ./rutorrent-3.6.tar.gz
-<p>sudo mv ./rutorrent /var/www/</p>
-<p>sudo chown -R www-data:www-data /var/www/rutorrent</p>
-<p></p>
+
+<pre><code class="bash">tar -zxvf ./rutorrent-3.6.tar.gz
+
+sudo mv ./rutorrent /var/www/
+
+sudo chown -R www-data:www-data /var/www/rutorrent
+</code></pre>
+
 <p>至於外掛部分也是一樣的做法，放置的位置： <code>/var/www/rutorrent/plugins/</code></p>
+
 <p>一樣記得修改擁有者，這邊 Bear 就不多談了</p>
+
 <p>編輯 rutorrent 裡面的設定檔，告訴 ruTorrent 有個程式可以讓它控制（當然是經過xmlrpc）</p>
-<p><pre><code>sudo vim /var/www/rutorrent/conf/config.php
-<p></p>
+
+<pre><code class="bash">sudo vim /var/www/rutorrent/conf/config.php
+</code></pre>
+
 <p>內容修改為</p>
-<p><pre><code>//$scgi_port = 5000;
-<p>//$scgi_host = "127.0.0.1";</p>
-<p>//註解掉上面兩個，增加下面兩個</p>
-<p>$scgi_port = 0;</p>
-<p>$scgi_host = "unix:///tmp/rpc.socket";</p>
-<p></p>
-<p>配置完 rutorrent 後，修改 .rtorrent.rc 檔</p>
-<p>告訴 rtorrent 有個網頁工具可以控制它</p>
-<p><pre><code>vim ~/.rtorrent
-<p></p>
+
+<pre><code class="c">//$scgi_port = 5000;
+//$scgi_host = "127.0.0.1";
+//註解掉上面兩個，增加下面兩個
+$scgi_port = 0;
+$scgi_host = "unix:///tmp/rpc.socket";
+</code></pre>
+
+<p>配置完 rutorrent 後，修改 .rtorrent.rc 檔
+告訴 rtorrent 有個網頁工具可以控制它</p>
+
+<pre><code class="bash">vim ~/.rtorrent
+</code></pre>
+
 <p>在最後面補上</p>
-<p><pre><code>execute_nothrow=rm,/tmp/rpc.socket
-<p>scgi_local = /tmp/rpc.socket</p>
-<p>schedule = chmod,0,0,"execute=chmod,777,/tmp/rpc.socket"</p>
-<p></p>
+
+<pre><code class="bash">execute_nothrow=rm,/tmp/rpc.socket
+scgi_local = /tmp/rpc.socket
+schedule = chmod,0,0,"execute=chmod,777,/tmp/rpc.socket"
+</code></pre>
+
 <p>完成了，接下來啟動rtorrent用網頁觀察看看吧</p>
+
 <p><em><strong>http://[Your Server IP (Lan IP)]/rutorrent</strong></em></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5238526_orig.png" alt="" /></p>
+
 <p>咦，怎會有警告呢？</p>
+
 <p><code>Web-server user can't access 'stat' program. Some functionality will be unavailable.</code></p>
+
 <p>這是 nginx 跟 php-fpm 之間的變數定義出了問題</p>
+
 <p>下面網址裡的文章寫得很清楚，可以了解前因後果</p>
+
 <p><a href="http://blog.ihipop.info/2011/03/2204.html">http://blog.ihipop.info/2011/03/2204.html</a></p>
+
 <p>簡言之，修改 php-fpm 的設定檔吧</p>
-<p><pre><code>sudo vim /etc/php5/fpm/pool.d/www.conf
-<p></p>
+
+<pre><code class="bash">sudo vim /etc/php5/fpm/pool.d/www.conf
+</code></pre>
+
 <p>新增</p>
-<p><pre><code>env[PATH] = $PATH
-<p></p>
+
+<pre><code class="bash">env[PATH] = $PATH
+</code></pre>
+
 <p>重啟 php5-fpm 即可</p>
-<p><pre><code>sudo /etc/init.d/php5-fpm reload
-<p></p>
+
+<pre><code class="bash">sudo /etc/init.d/php5-fpm reload
+</code></pre>
+
 <p>再查看一次網頁，應該就沒問題了</p>
-<p><hr /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8643144_orig.png" alt="" /></p>
+
+<hr />
+
 <p>同場加映，設定網頁密碼保護</p>
+
 <p>如果有設定 DDNS 對外，就可以在外面隨時連回來觀察</p>
+
 <p>但是，網站是公開的，任何人都可以進來控制</p>
+
 <p>這不就不安全了嗎？</p>
+
 <p>沒錯，那 Bear 就教一套簡易版的（當然只是防防君子）</p>
+
 <p>產生一加密的驗證檔</p>
+
 <p>其中大寫部份請更改成自己的(USER PASSWORD)</p>
-<p><pre><code>printf "USER:$(openssl passwd -crypt PASSWORD)\n" &gt;&gt; .htpasswd
-<p></p>
+
+<pre><code class="bash">printf "USER:$(openssl passwd -crypt PASSWORD)\n" &gt;&gt; .htpasswd
+</code></pre>
+
 <p>將產生的加密檔案 .htpasswd 移至 /var/www/rutorrent/ 底下</p>
-<p><pre><code>sudo mv ~/.htpasswd /var/www/rutorrent/
-<p></p>
+
+<pre><code class="bash">sudo mv ~/.htpasswd /var/www/rutorrent/
+</code></pre>
+
 <p>告訴 nginx 增加了一個驗證用的加密檔</p>
-<p><pre><code>sudo vim /etc/nginx/sites-available/rutorrent
-<p></p>
+
+<pre><code class="bash">sudo vim /etc/nginx/sites-available/rutorrent
+</code></pre>
+
 <p>修改內容</p>
-<p><pre><code>#=============================================
-<p>...</p>
-<p>        location /RPC2 {</p>
-<p>            include scgi_params;</p>
-<p>            #scgi_pass 127.0.0.1:5000;</p>
-<p>            scgi_pass unix:///tmp/rpc.socket;</p>
-<p>        }</p>
-<p>        #設定xmlrpc，非常重要        </p>
-<p>        location /rutorrent {</p>
-<p>            auth_basic "ruTorrent login";</p>
-<p>            auth_basic_user_file /var/www/rutorrent/.htpasswd;</p>
-<p>        }</p>
-<p>        location ~ /\.ht {</p>
-<p>            deny all;</p>
-<p>        }</p>
-<p>    }</p>
-<p>...</p>
-<p>#=============================================</p>
-<p></p>
+
+<pre><code class="nginx">#=============================================
+...
+
+        location /RPC2 {
+            include scgi_params;
+            #scgi_pass 127.0.0.1:5000;
+            scgi_pass unix:///tmp/rpc.socket;
+        }
+        #設定xmlrpc，非常重要        
+        location /rutorrent {
+            auth_basic "ruTorrent login";
+            auth_basic_user_file /var/www/rutorrent/.htpasswd;
+        }
+
+        location ~ /\.ht {
+            deny all;
+        }
+    }
+...
+#=============================================
+</code></pre>
+
 <p>重啟nginx</p>
-<p><pre><code>sudo /etc/init.d/nginx reload
-<p>sudo /etc/init.d/nginx restart</p>
-<p></p>
+
+<pre><code class="bash">sudo /etc/init.d/nginx reload
+
+sudo /etc/init.d/nginx restart
+</code></pre>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7521546_orig.png" alt="" /></p>
+
 <p>加個外接硬碟，就可以用 RPI 進行 BT 下載</p>
+
 <p>經 Bear 測試一段時間，下載還滿穩定的（沒有壓力測試XD，不過最多也試過同時下載六個種子）</p>
+
 <p>可惜的是 RPI 的 CPU 不夠力</p>
+
 <p>下載極速大概在 3.5MB/s 左右，雖然不是很多，但也很夠力了</p>
+
 <p><a href="http://www.takobear.tw/2014/12/07/rpiraspberry-pibt-2/">點選前往RPI : BT下載教學&lt;上篇&gt;</a></p>
+
 <p>參考資料：</p>
-<p><a href="http://forums.rutorrent.org/index.php?topic=4136.0">(1) rtorrent and rutorrent with nginx setup</a></p>
-<p><a href="http://flag.blog.hexun.com.tw/85753080_d.html">(2) rTorrent + ruTorrent 安裝和配置</a></p>
-<p><a href="https://coderwall.com/p/zvvgna">(3) Create htpasswd file for nginx (without apache)</a></p>
+
+<p><a href="http://forums.rutorrent.org/index.php?topic=4136.0">(1) rtorrent and rutorrent with nginx setup</a>
+<a href="http://flag.blog.hexun.com.tw/85753080_d.html">(2) rTorrent + ruTorrent 安裝和配置</a>
+<a href="https://coderwall.com/p/zvvgna">(3) Create htpasswd file for nginx (without apache)</a></p>
+
 <p>喜歡這篇文章嗎? 趕快加入Takobear粉絲團吧!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>[入門] Bear實驗室: Xcode製作互動元件 - UIButton</title>
-  <meta name="description" content="繼上篇說明如何在iOS內加入畫面元件後這次 Bear 要教大家如何在畫面上製作一個按鈕進行互動囉!!雖然是很簡單的目的但是卻很重要!! 初學 iOS 的趕快往下看吧![cjtoolbox name='google_ad']既然是說要做最基礎的按鈕那不得不介紹這款重量級的物件 - UIButton(還記得Bear在...">
+  <meta name="description" content="繼上篇說明如何在iOS內加入畫面元件後">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -62,97 +62,181 @@
 
   <div class="post-content" itemprop="articleBody">
     <p>繼上篇<a href="http://www.takobear.tw/2014/01/12/bear-xcode/">說明如何在iOS內加入畫面元件</a>後</p>
+
 <p>這次 Bear 要教大家如何在畫面上製作一個按鈕進行互動囉!!</p>
+
 <p>雖然是很簡單的目的但是卻很重要!! 初學 iOS 的趕快往下看吧!</p>
-<p><!--more--></p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<!--more-->
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>既然是說要做最基礎的按鈕</p>
+
 <p>那不得不介紹這款重量級的物件 - UIButton</p>
+
 <p>(還記得Bear<a href="http://www.takobear.tw/2014/01/12/bear-xcode/">在上篇文章中提到的 UIView 跟 UILabel 嗎?</a>)按鈕嗎？</p>
+
 <p>當然就是按下去會有事情發生，今天 Bear 的範例內容是，當你每按一次按鈕時，畫面上的數字加1</p>
+
 <p>(大家也可以自己練習思考看看這要怎麼做到喔!)</p>
+
 <p>經由這範例，Bear順便介紹以下幾個實用技巧：</p>
-<p><ol>
-<p><li>全域變數宣告(Global Variable)</li></p>
-<p><li>標簽使用(Tag)</li></p>
-<p><li>方法(Method)</li></p>
-<p></p>
+
+<ol>
+<li>全域變數宣告(Global Variable)</li>
+<li>標簽使用(Tag)</li>
+<li>方法(Method)</li>
+</ol>
+
 <p>廢話不多說，Bear 馬上一一來介紹今天的程式碼</p>
+
 <p>(程式碼<a href="http://www.takobear.tw/2014/01/12/bear-xcode/">參考上篇教學內容</a>)</p>
+
 <p>首先在 <code>ViewController.m</code> 內的程式碼開頭 <code>@interface ViewController ()</code> 與 <code>@end</code> 之間插入一組大括號</p>
+
 <p>並在裡面宣告一個 int (整數) i，如下圖所示</p>
+
 <p>這樣我們會得到一個全域變數 i</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8673329_orig.png" alt="" /></p>
+
 <p>接著在跟之前創造UIView跟UILabel一樣的地方，編寫新的程式碼，如圖示</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2294969_orig.png" alt="" /></p>
+
 <p>接下來一一解析程式碼內容! <code>-(void)viewDidLoad { }</code> 大括號內隨我們自由編寫程式碼，程式碼會在畫面讀取完後執行一次</p>
+
 <p>這次我們創造兩個物件分別為 UIButton 及 UILabel</p>
+
 <p>button 為一藍色按鈕，上面則有白色的文字 press!!</p>
+
 <p>UIButton 上也可設定文字的，但方法與 UILabel 不太一樣</p>
+
 <p>它沒有 text 的屬性，而是用 setTitle forState 的方法</p>
-<p><pre><code>[button setTitle:@"press!!" forState:0];
-<p></p>
+
+<pre><code class="objectivec">[button setTitle:@"press!!" forState:0];
+</code></pre>
+
 <p>state 0 就是按鈕處在一般狀態，更有其他如：點擊時狀態</p>
+
 <p>可用command點擊參考</p>
+
 <p>(不清楚command點擊的意思的話，<a href="http://www.takobear.tw/2014/01/12/bear-xcode/">參考上篇教學</a>)</p>
+
 <p>而文字屬性則需要先叫出 button 上的 titleLabel 之後就都相同了</p>
+
 <p>接著我們將全域變數所宣告的整數 i 設其值為0</p>
+
 <p>然後就創造一個我們熟悉的 UILabel</p>
+
 <p>但這次我們文字內容要使用會變動的 i</p>
+
 <p>因次我們使用 NSString 的 stringWithFormat 方法</p>
-<p><pre><code>number.text =[NSString stringWithFormat:@“%d",i];
-<p></p>
+
+<pre><code class="objectivec">number.text =[NSString stringWithFormat:@“%d",i];
+</code></pre>
+
 <p>文字內容的部分我們打 %d 用以顯示後面的 i 整數</p>
+
 <p>其他更有 %f 浮點數，%@ 物件資訊等</p>
+
 <p>(物件資訊的顯示相當有用, 請大家記好之後很常會用到!!)</p>
+
 <p>%d 前後也可自行增加靜態文字</p>
+
 <p>而有兩個以上的變數的話，需要打兩次 %d，變數的部分則以逗號隔開</p>
+
 <p>不知道眼尖的讀者有沒有發現，有一個沒看過的東西出現了！！</p>
-<p><pre><code>numer.tag = 101;
-<p></p>
+
+<pre><code class="objectivec">numer.tag = 101;
+</code></pre>
+
 <p>這是什麼東西？！</p>
+
 <p>在 viewDidLoad 這個方法大括號內創造的物件只能在這裡使用</p>
+
 <p>在別的方法內你打 number 的話，程式碼根本就不知道它是什麼東西</p>
+
 <p>因此我們把它貼上標簽101，這樣其他的方法就能根據101知道他是什麼東西囉</p>
+
 <p>這裡有個小地方要注意的是，標簽儘量用100以上的數字，因為100以下的數字可能會被 xcode 內建的程式就死掉了</p>
+
 <p>最後一行的程式碼就是讓 button 可以有點擊後執行動作的功能</p>
-<p><pre><code>[button addTarget:self action:@selector(count) forControlEvents:UIControlEventTouchUpInside];
-<p></p>
+
+<pre><code class="objectivec">[button addTarget:self action:@selector(count) forControlEvents:UIControlEventTouchUpInside];
+</code></pre>
+
 <p>addTarget 目標 self 就是本視圖控制器 viewController</p>
+
 <p>@selector 選擇器內的方法 count 則是點選按鈕後要執行的動作，程式碼內容我們待會介紹 forControlEvents 是按鈕觸發的條件，這邊我們選擇 UIControlEventTouchUpInside (點選 button 區域內)</p>
+
 <p>這些都做完，可別忘了把元件加到畫面上呢！(想想addSubview)</p>
+
 <p>不然可是會一片空白喲！</p>
+
 <p>接著我們要做最後一個步驟了！</p>
+
 <p>那就是撰寫我們的count方法</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7148830_orig.png" alt="" /></p>
+
 <p>如圖，我們在viewDidLoad{}結束後的地方，新增一個方法</p>
-<p><pre><code>-(void)count
-<p>{</p>
-<p>    i++;</p>
-<p>    UILabel *number = (UILabel *)[self.view viewWithTag:101];</p>
-<p>    number.text =[NSString stringWithFormat:@"%d",i];</p>
-<p>}</p>
-<p></p>
+
+<pre><code class="objectivec">-(void)count
+{
+    i++;
+    UILabel *number = (UILabel *)[self.view viewWithTag:101];
+    number.text =[NSString stringWithFormat:@"%d",i];
+}
+</code></pre>
+
 <p>程式碼內容 i++ 表示 i = i + 1</p>
+
 <p>我們在 viewDidLoad已經給 i 值 0 了</p>
+
 <p>所以這裡執行一次的話 i 就會變 1 ，第二次變 2 ，累加上去</p>
+
 <p>i 更新了，那我 number 內的數字也要跟著更新囉，但是 viewDidLoad 內的程式碼只會執行一次</p>
+
 <p>所以我們只好把 number 的文字內容在這裏在攥寫一次囉，讓它跟著 i 一起更新</p>
+
 <p>糟糕！</p>
+
 <p>viewDidLoad 內用到的 number 是區域變數啊！這裡根本沒辦法使用，怎麼辦呢？</p>
+
 <p>這個時候之前所設定的標簽(tag)就派上用場囉</p>
-<p><pre><code>UILabel *number = (UILabel *)[self.view viewWithTag:101];
-<p></p>
+
+<pre><code class="objectivec">UILabel *number = (UILabel *)[self.view viewWithTag:101];
+</code></pre>
+
 <p>self.view viewWithTag:101 就在這視圖控制器(self)的畫面(view)內找到標簽號碼101的 view</p>
+
 <p>但是找到後出來的東西只會是一個 UIView 而已，因此我們要在前面加上(UILabel *)將它轉換成 UILabel 元件，這裡我們一樣宣告成 number 變數，變數名字不同也無所謂</p>
+
 <p>接著將 number 上的文字更新一次</p>
-<p><pre><code>number.text =[NSString stringWithFormat:@"%d",i];
-<p></p>
+
+<pre><code class="objectivec">number.text =[NSString stringWithFormat:@"%d",i];
+</code></pre>
+
 <p>大功告成！以後每點擊一次按鈕，就會執行一次 count</p>
+
 <p>讓我們 <code>command + R</code> 一起來看看成果吧！！</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8551796_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3413960_orig.png" alt="" /></p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7660126_orig.png" alt="" /></p>
+
 <p>是不是簡單又很酷炫呢!?知道這些以後, 接下來就能應用製作自己的按鈕或是其他元件了喔!!</p>
+
 <p>如果大家有任何好奇的內容也歡迎來信給我們, 我們也會盡可能製作教學給大家參考喔!!!</p>
+
 <p>喜歡這篇文章嗎? 加入Takobear粉絲團吧!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></ol></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 

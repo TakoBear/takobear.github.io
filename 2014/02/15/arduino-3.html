@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>動手做自己的智能家電-ARDUINO製作家中遙控器教學 </title>
-  <meta name="description" content="各位版友好，繼上次的 動手做自己的智能家電系列獲得好評後這次TakoBear又要來放上新的智能家電功能開發了!今天的主題是：複製一份家裡的遙控器!概念是像這樣的發送家裡遙控器的紅外線編碼 → Arduino 紀錄內容 → Arduino 發送紅外線編碼出去.....好吧小編知道這樣講似乎太簡單了...接下來就請各...">
+  <meta name="description" content="各位版友好，繼上次的 動手做自己的智能家電系列獲得好評後這次TakoBear又要來放上新的智能家電功能開發了!今天的主題是：複製一份家裡的遙控器!概念是像這樣的發送家裡遙控器的紅外線編碼 → Arduino 紀錄內容 → Arduino 發送紅外線編碼出去">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,258 +61,284 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><div>各位版友好，繼上次的<a title="" href="http://gossibear.weebly.com/12/post/2013/06/-arduino2.html" target="_blank"> 動手做自己的智能家電</a>系列獲得好評後
-<p>這次TakoBear又要來放上新的智能家電功能開發了!今天的主題是：複製一份家裡的遙控器!</p>
-<p>概念是像這樣的</p>
-<p><strong>發送家裡遙控器的紅外線編碼 → Arduino 紀錄內容 → Arduino 發送紅外線編碼出去</strong></p>
-<p><strong>.....</strong></p>
-<p>好吧小編知道這樣講似乎太簡單了...</p>
-<p>接下來就請各位買好消夜拿著你的板子，放上一首喜歡的音樂</p>
-<p>正式進入教學區!</p>
-<p>首先開始前，我們必須要收集材料如下圖:</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8313208_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div><!--BLOG_SUMMARY_END--></div></p>
-<p><div>我們需要的材料就是:
-<p><strong>1個紅外線發射器 (39kHz 上下，約莫30塊台幣)
-<p>1個紅外線接收器 (940nm)</p>
-<p><strong>1塊麵包板</strong></p>
-<p><strong>1捆單芯線</strong></p>
-<p>跟你不能少的一塊Arduion板子，這邊小編用的是Atmega 2560喔~</p>
-<p>(關於如何驅動他的方法可以參考<a title="" href="http://gossibear.weebly.com/12/post/2013/06/-arduino1.html" target="_blank">動手做自己的智能家電系列</a>，需要購買他的朋友就到<a title="" href="http://search.ruten.com.tw/search/s000.php?searchfrom=indexbar&amp;k=ARDUINO&amp;t=0" target="_blank">露天拍賣</a>找囉!)接下來我們就要把他接起來啦!</p>
-<p>別擔心你不會電路學，因為小編也不會(誤)</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6747788_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div><strong>基本上的概念圖是這樣，不過你們也可能會有腳位位置相反!</strong>
-<p><strong>如果之後下載程式碼，按照上圖安裝電路卻不能執行時，</strong></p>
-<p><strong>那很有可能是你的線路插反了!!! </strong></p>
-<p><strong>因為每間廠商的紅外線接收器可能略有不同，插反電路這種事也是十分有可能的</strong></p>
-<p><strong>這時候只要參考下圖就能解決囉</strong></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9028467_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1345225_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>或是也可以像小編的朋友安裝成底下的方式!</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/604564_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>接下來呢，請大家準備一個家裡的紅外線遙控器
-<p>冷氣或是電視的遙控器都行喔!</p>
-<p>這邊小編介紹兩種不同遙控器的會有甚麼影響</p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/193421_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這是隻SAMPO電視的遙控器</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9643960_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這是隻萬用電視遙控器我們這邊先不細談兩支遙控器廠牌差異有什麼影響
-<p>接下來請大家到這個網址: <a title="" href="https://github.com/shirriff/Arduino-IRremote">https://github.com/shirriff/Arduino-IRremote</a></p>
-<p>下載一份Open Source程式碼</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1236379_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>順帶一提，GitHub上有非常多國內外的高手分享Open Source程式碼，為軟體產業做了相當多傑出的貢獻
-<p>讓我們在這邊默默為他們鼓掌(拍手)接下來把下載下來的檔案放在我們之前解壓縮的arduino資料夾(不知道的可以看<a href="http://gossibear.weebly.com/12/post/2013/06/-arduino1.html" target="_blank">動手做自己的智能家電系列</a>)</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8114061_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這樣就能在原本的Arduino中增加新的函式庫囉</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9916329_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>到這邊就能正式進入本篇的正題了!
-<p>完成這些準備工作後，</p>
-<p>我們首先要做的是:<strong>1. 錄製遙控器紅外線訊號</strong></p>
-<p>這裡有我們已經寫好的code，先建立一個檔案叫做IRRecordforUnknownRC.ino吧</p>
-<p></p>
-<p><div>#include &lt;IRremote.h&gt;int RECV_PIN = 11;
-<p>IRrecv irrecv(RECV_PIN);</p>
-<p>decode_results results;</p>
-<p>void setup()</p>
-<p>{</p>
-<p>Serial.begin(9600);</p>
-<p>irrecv.enableIRIn(); // Start the receiver</p>
-<p>}</p>
-<p>void dump(decode_results *results) {</p>
-<p>int count = results-&gt;rawlen;</p>
-<p>if (results-&gt;decode_type == UNKNOWN) {</p>
-<p><strong>Serial</strong>.print("Unknown encoding: ");</p>
-<p>}</p>
-<p>else if (results-&gt;decode_type == NEC) {</p>
-<p><strong>Serial</strong>.print("Decoded NEC: ");</p>
-<p>}</p>
-<p>else if (results-&gt;decode_type == SONY) {</p>
-<p><strong>Serial</strong>.print("Decoded SONY: ");</p>
-<p>}</p>
-<p>else if (results-&gt;decode_type == RC5) {</p>
-<p><strong>Serial</strong>.print("Decoded RC5: ");</p>
-<p>}</p>
-<p>else if (results-&gt;decode_type == RC6) {</p>
-<p><strong>Serial</strong>.print("Decoded RC6: ");</p>
-<p>}</p>
-<p>else if (results-&gt;decode_type == PANASONIC) {</p>
-<p><strong>Serial</strong>.print("Decoded PANASONIC - Address: ");</p>
-<p><strong>Serial</strong>.print(results-&gt;panasonicAddress,HEX);</p>
-<p><strong>Serial</strong>.print(" Value: ");</p>
-<p>}</p>
-<p>else if (results-&gt;decode_type == JVC) {</p>
-<p><strong>Serial</strong>.print("Decoded JVC: ");</p>
-<p>}</p>
-<p><strong>Serial</strong>.print(results-&gt;value, HEX);</p>
-<p><strong>Serial</strong>.print(" (");</p>
-<p><strong>Serial</strong>.print(results-&gt;bits, DEC);</p>
-<p><strong>Serial</strong>.println(" bits)");</p>
-<p><strong>Serial</strong>.print("unsigned int YourVariableName [");</p>
-<p><strong>Serial</strong>.print(count-1, DEC);</p>
-<p><strong>Serial</strong>.print("]={");</p>
-<p><strong>
-<p>for (int i = 1; i &lt; count; i++) {//ingore data of i=0</p>
-<p>if ((i % 2) == 1) {</p>
-<p><strong>Serial</strong>.print(results-&gt;rawbuf[i]*USECPERTICK, DEC);</p>
-<p>}</p>
-<p>else {</p>
-<p><strong>Serial</strong>.print(abs(-(int)results-&gt;rawbuf[i]*USECPERTICK), DEC);</p>
-<p>}</p>
-<p>if(i&lt;count-1){</p>
-<p><strong>Serial</strong>.print(",");</p>
-<p>}</p>
-<p>}</p>
-<p><strong>Serial</strong>.println("};");</p>
-<p>}</p>
-<p>void loop() {</p>
-<p>if (irrecv.decode(&amp;results)) {</p>
-<p>Serial.println(results.value, HEX);</p>
-<p>dump(&amp;results);</p>
-<p>irrecv.resume(); // Receive the next value</p>
-<p>}</p>
-<p>}</p>
-<p></p>
-<p><div>把上面那段Code Upload到Arduino後 (不知道如何Upload<a title="" href="http://gossibear.weebly.com/12/post/2013/06/-arduino2.html" target="_blank">看這篇</a>)
-<p>參考下圖打開Serial Monitor</p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2882191_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>開始Upload!
-<p>Upload以後，我們先拿萬用遙控器，對著紅外線接收器做這件事....</p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5369485_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這時候我們看到Serial Monitor可以看到以下畫面</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8534833_orig.png" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>左邊就是我們看到的成果!
-<p>這邊可以發現我們的萬用遙控器是NEC編碼，所以馬上我們就能把我們的編碼記錄起來</p>
-<p><strong>2FD48B7 , 32bits</strong> 我們只須要記得這一段就好接下來創一個發射訊號的檔案<strong>IRSendSig.ino</strong></p>
-<p></p>
-<p><div>#include &lt;IRremote.h&gt;IRsend irsend;
-<p>void setup()</p>
-<p>{</p>
-<p>Serial.begin(9600);</p>
-<p>}</p>
-<p>void loop() {</p>
-<p>if(Serial.available()&gt;0){</p>
-<p>irsend.sendNEC(0x2FD48B7, 32);  //這邊要加上0x !</p>
-<p>delay(10000);</p>
-<p>}</p>
-<p>}</p>
-<p></p>
-<p><div>至於我們發射腳位的排法就看下面這張圖囉!</div></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2020532_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這裡接好以後，Upload <strong>IRSendSig.ino 的程式碼後</strong>
-<p><strong>開啟Serial Monitor, 隨便打些字，對準你的電視機就能讓他開啟或關閉囉!
-<p></p>
-<p><strong>注意事項</strong></p>
-<p>如果有人跟小編之前一樣，電路都正確卻依然開不了</p>
-<p>實驗距離2~3m是沒問題的，請注意務必要對準接收端</p>
-<p>另外一點是，有人如果跟小編第一次弄時一樣...全都正確了卻仍然沒法讓電視開關</p>
-<p>試試看將你的紅外線發射器長短腳換位子，可能就能解決你的問題了</p>
-<p>雖然這種機率十分低，不過仍不失為一個方法...接下來我們來談另外一種遙控器情況，如果你收到的畫面是以下畫面</p>
-<p></p>
-<p><div>
-<p><div><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/35319_orig.jpg" alt="图片" /></a>
-<p><div></div></p>
-<p></p>
-<p></p>
-<p><div>這種情況代表你的遙控器編碼並沒有被記錄在裡面!不過別擔心
-<p>IRremote的模組已經幫你都處理好了，如果無法辨識這樣的編碼，就只要用 irsend.<strong>sendRaw() 這個函數幫你處理就好!</strong></p>
-<p>這時候我們只要把<strong>IRSendSig.ino</strong>的程式碼改成下面這樣就行了!</p>
-<p>其他過程完全一樣!</p>
-<p></p>
-<p><div>#include &lt;IRremote.h&gt;IRsend irsend;
-<p>unsigned int Power_ON [51]={3350,3300,900,2400,900,2450,850,2450,900,2450,850,2450,950,2400,850,2450,900,800,850,800,850,800,950,750,900,750,950,700,950,750,900,750,950,700,950,750,850,800,950,700,900,2450,850,2450,900,2450,900,2400,950,2250,600};</p>
-<p>unsigned int VolumnUP [51]={3400,3250,900,2450,850,2450,900,2450,900,2400,900,2450,900,2400,900,800,900,2400,900,2400,950,750,900,750,900,750,950,750,900,750,900,750,900,800,900,750,900,750,950,2400,900,750,900,800,900,2400,900,2450,850,2300,650};</p>
-<p>unsigned int VolumnDOWN [51]={3350,3300,850,2450,900,2450,950,2350,900,2450,850,2450,900,2450,850,2450,900,2450,850,2450,900,800,900,750,850,800,900,750,900,800,950,750,850,800,900,750,850,800,900,750,950,750,850,800,900,2450,850,2500,850,2300,650};</p>
-<p>void setup()</p>
-<p>{</p>
-<p>Serial.begin(9600);</p>
-<p>}</p>
-<p>void loop() {</p>
-<p>if(Serial.available()&gt;0)</p>
-<p>{</p>
-<p>int IRact=Serial.read();</p>
-<p>IRact=IRact-48;</p>
-<p>switch(IRact)</p>
-<p>{</p>
-<p>case 1:</p>
-<p>irsend.<strong>sendRaw</strong>(Power_ON, 51, 38);</p>
-<p>delay(50);</p>
-<p>break;</p>
-<p>case 2:</p>
-<p>irsend.<strong>sendRaw</strong>(VolumnUP, 51, 38);</p>
-<p>delay(50);</p>
-<p>break;</p>
-<p>case 3:</p>
-<p>irsend.<strong>sendRaw</strong>(VolumnDOWN, 51, 38);</p>
-<p>delay(50);</p>
-<p>break;</p>
-<p>}</p>
-<p>}</p>
-<p>}</p>
-<p></p>
-<p><div>看到這邊還有問題的朋友可以到這裡下載原始碼: <a title="" href="http://www.4shared.com/rar/dhMejbYB/IRCode.html?">http://www.4shared.com/rar/dhMejbYB/IRCode.html?</a>有任何問題，歡迎聯絡TakoBear!
-<p>我們的gmail: takobearx@gmail.com</p>
-<p></p>
-</div></p></div></p></div></p></div></p></div></p></strong></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></strong></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></div></p></strong></p></div></p></div></p></div></p></div></p>
+    <div class="paragraph">各位版友好，繼上次的<a title="" href="http://gossibear.weebly.com/12/post/2013/06/-arduino2.html" target="_blank"> 動手做自己的智能家電</a>系列獲得好評後
+這次TakoBear又要來放上新的智能家電功能開發了!今天的主題是：複製一份家裡的遙控器!
+概念是像這樣的
+<strong><span style="color: #fa0000;">發送家裡遙控器的紅外線編碼 → Arduino 紀錄內容 → Arduino 發送紅外線編碼出去</span></strong>
+
+<strong><span style="color: #2a2a2a;">.....</span></strong>
+
+好吧小編知道這樣講似乎太簡單了...
+
+接下來就請各位買好消夜拿著你的板子，放上一首喜歡的音樂
+正式進入教學區!
+
+首先開始前，我們必須要收集材料如下圖:
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8313208_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div><!--BLOG_SUMMARY_END--></div>
+<div class="paragraph">我們需要的材料就是:
+<strong>1個紅外線發射器 (39kHz 上下，約莫30塊台幣)
+1個紅外線接收器 (940nm)</strong>
+<strong>1塊麵包板</strong>
+<strong>1捆單芯線</strong>
+跟你不能少的一塊Arduion板子，這邊小編用的是Atmega 2560喔~
+(關於如何驅動他的方法可以參考<a title="" href="http://gossibear.weebly.com/12/post/2013/06/-arduino1.html" target="_blank">動手做自己的智能家電系列</a>，需要購買他的朋友就到<a title="" href="http://search.ruten.com.tw/search/s000.php?searchfrom=indexbar&amp;k=ARDUINO&amp;t=0" target="_blank">露天拍賣</a>找囉!)接下來我們就要把他接起來啦!
+別擔心你不會電路學，因為小編也不會(誤)
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-none "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6747788_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph"><strong><span style="color: #000000;">基本上的概念圖是這樣，不過你們也可能會有腳位位置相反!</span></strong>
+<strong><span style="color: #fe0000;">如果之後下載程式碼，按照上圖安裝電路卻不能執行時，</span></strong>
+<strong><span style="color: #fe0000;">那很有可能是你的線路插反了!!! </span></strong>
+<strong><span style="color: #fe0000;">因為每間廠商的紅外線接收器可能略有不同，插反電路這種事也是十分有可能的</span></strong>
+<strong><span style="color: #fe0000;">這時候只要參考下圖就能解決囉</span></strong></div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9028467_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1345225_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">或是也可以像小編的朋友安裝成底下的方式!</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/604564_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">接下來呢，請大家準備一個家裡的紅外線遙控器
+冷氣或是電視的遙控器都行喔!
+這邊小編介紹兩種不同遙控器的會有甚麼影響</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/193421_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這是隻SAMPO電視的遙控器</div>
+<div>
+<div class="wsite-image wsite-image-border-none "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9643960_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這是隻萬用電視遙控器我們這邊先不細談兩支遙控器廠牌差異有什麼影響
+接下來請大家到這個網址: <a title="" href="https://github.com/shirriff/Arduino-IRremote">https://github.com/shirriff/Arduino-IRremote</a>
+下載一份Open Source程式碼
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1236379_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">順帶一提，GitHub上有非常多國內外的高手分享Open Source程式碼，為軟體產業做了相當多傑出的貢獻
+讓我們在這邊默默為他們鼓掌(拍手)接下來把下載下來的檔案放在我們之前解壓縮的arduino資料夾(不知道的可以看<a href="http://gossibear.weebly.com/12/post/2013/06/-arduino1.html" target="_blank">動手做自己的智能家電系列</a>)
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8114061_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這樣就能在原本的Arduino中增加新的函式庫囉</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9916329_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">到這邊就能正式進入本篇的正題了!
+完成這些準備工作後，
+我們首先要做的是:<strong>1. 錄製遙控器紅外線訊號</strong>
+
+這裡有我們已經寫好的code，先建立一個檔案叫做IRRecordforUnknownRC.ino吧
+
+</div>
+<div class="paragraph">#include &lt;IRremote.h&gt;<span style="color: #a88d2e;">int </span>RECV_PIN = 11;
+
+<span style="color: #a88d2e;">IRrecv </span>irrecv(RECV_PIN);
+
+<span style="color: #c2a43b;">decode_results</span> results;
+
+<span style="color: #a85f2e;">void setup()</span>
+{
+Serial.begin(9600);
+irrecv.enableIRIn(); // Start the receiver
+}
+
+<span style="color: #a85f2e;">void dump</span>(decode_results *results) {
+int count = results-&gt;rawlen;
+if (results-&gt;decode_type == UNKNOWN) {
+<strong>Serial</strong>.print("Unknown encoding: ");
+}
+else if (results-&gt;decode_type == NEC) {
+<strong>Serial</strong>.print("Decoded NEC: ");
+}
+else if (results-&gt;decode_type == SONY) {
+<strong>Serial</strong>.print("Decoded SONY: ");
+}
+else if (results-&gt;decode_type == RC5) {
+<strong>Serial</strong>.print("Decoded RC5: ");
+}
+else if (results-&gt;decode_type == RC6) {
+<strong>Serial</strong>.print("Decoded RC6: ");
+}
+else if (results-&gt;decode_type == PANASONIC) {
+<strong>Serial</strong>.print("Decoded PANASONIC - Address: ");
+<strong>Serial</strong>.print(results-&gt;panasonicAddress,HEX);
+<strong>Serial</strong>.print(" Value: ");
+}
+else if (results-&gt;decode_type == JVC) {
+<strong>Serial</strong>.print("Decoded JVC: ");
+}
+<strong>Serial</strong>.print(results-&gt;value, HEX);
+<strong>Serial</strong>.print(" (");
+<strong>Serial</strong>.print(results-&gt;bits, DEC);
+<strong>Serial</strong>.println(" bits)");
+<strong>Serial</strong>.print("unsigned int YourVariableName [");
+<strong>Serial</strong>.print(count-1, DEC);
+<strong>Serial</strong>.print("]={");
+<strong>
+</strong>for (int i = 1; i &lt; count; i++) {//ingore data of i=0
+if ((i % 2) == 1) {
+<strong>Serial</strong>.print(results-&gt;rawbuf[i]*USECPERTICK, DEC);
+}
+else {
+<strong>Serial</strong>.print(abs(-(int)results-&gt;rawbuf[i]*USECPERTICK), DEC);
+}
+if(i&lt;count-1){
+<strong>Serial</strong>.print(",");
+}
+}
+<strong>Serial</strong>.println("};");
+}
+void loop() {
+if (irrecv.decode(&amp;results)) {
+Serial.println(results.value, HEX);
+dump(&amp;results);
+irrecv.resume(); // Receive the next value
+}
+}
+
+</div>
+<div class="paragraph">把上面那段Code Upload到Arduino後 (不知道如何Upload<a title="" href="http://gossibear.weebly.com/12/post/2013/06/-arduino2.html" target="_blank">看<span style="color: #635353;">這篇</span></a>)
+參考下圖打開Serial Monitor</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2882191_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">開始Upload!
+Upload以後，我們先拿萬用遙控器，對著紅外線接收器做這件事....</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5369485_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這時候我們看到Serial Monitor可以看到以下畫面</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8534833_orig.png" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">左邊就是我們看到的成果!
+這邊可以發現我們的萬用遙控器是NEC編碼，所以馬上我們就能把我們的編碼記錄起來
+<strong><span style="color: #fe0202;">2FD48B7 , 32bits</span></strong> 我們只須要記得這一段就好接下來創一個發射訊號的檔案<strong>IRSendSig.ino</strong>
+
+</div>
+<div class="paragraph">#include &lt;IRremote.h&gt;IRsend irsend;
+<span style="color: #a85f2e;">void setup()</span>
+{
+Serial.begin(9600);
+}
+
+<span style="color: #a85f2e;">void loop()</span> {
+if(Serial.available()&gt;0){
+irsend.sendNEC(0x2FD48B7, 32);  <span style="color: #a82e2e;">//這邊要加上0x !</span>
+delay(10000);
+}
+}
+
+</div>
+<div class="paragraph">至於我們發射腳位的排法就看下面這張圖囉!</div>
+<div>
+<div class="wsite-image wsite-image-border-none "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2020532_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這裡接好以後，Upload <strong>IRSendSig.ino 的程式碼後</strong>
+<strong>開啟Serial Monitor, 隨便打些字，對準你的電視機就能讓他開啟或關閉囉!
+</strong>
+<strong><span style="color: #a82e2e;">注意事項</span></strong>
+如果有人跟小編之前一樣，電路都正確卻依然開不了
+實驗距離2~3m是沒問題的，請注意務必要對準接收端
+另外一點是，有人如果跟小編第一次弄時一樣...全都正確了卻仍然沒法讓電視開關
+試試看將你的紅外線發射器長短腳換位子，可能就能解決你的問題了
+雖然這種機率十分低，不過仍不失為一個方法...接下來我們來談另外一種遙控器情況，如果你收到的畫面是以下畫面
+
+</div>
+<div>
+<div class="wsite-image wsite-image-border-thin "><a> <img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/35319_orig.jpg" alt="图片" /></a>
+<div></div>
+</div>
+</div>
+<div class="paragraph">這種情況代表你的遙控器編碼並沒有被記錄在裡面!不過別擔心
+IRremote的模組已經幫你都處理好了，如果無法辨識這樣的編碼，就只要用 irsend.<strong>sendRaw() 這個函數幫你處理就好!</strong>
+
+這時候我們只要把<strong>IRSendSig.ino</strong>的程式碼改成下面這樣就行了!
+其他過程完全一樣!
+
+</div>
+<div class="paragraph">#include &lt;IRremote.h&gt;<span style="color: #a85f2e;">IRsend</span> irsend;
+<span style="color: #a85f2e;">unsigned int Power_ON</span> [51]={3350,3300,900,2400,900,2450,850,2450,900,2450,850,2450,950,2400,850,2450,900,800,850,800,850,800,950,750,900,750,950,700,950,750,900,750,950,700,950,750,850,800,950,700,900,2450,850,2450,900,2450,900,2400,950,2250,600};
+<span style="color: #a85f2e;">unsigned int VolumnUP </span>[51]={3400,3250,900,2450,850,2450,900,2450,900,2400,900,2450,900,2400,900,800,900,2400,900,2400,950,750,900,750,900,750,950,750,900,750,900,750,900,800,900,750,900,750,950,2400,900,750,900,800,900,2400,900,2450,850,2300,650};
+
+<span style="color: #a85f2e;">unsigned int VolumnDOWN</span> [51]={3350,3300,850,2450,900,2450,950,2350,900,2450,850,2450,900,2450,850,2450,900,2450,850,2450,900,800,900,750,850,800,900,750,900,800,950,750,850,800,900,750,850,800,900,750,950,750,850,800,900,2450,850,2500,850,2300,650};
+
+<span style="color: #a85f2e;">void setup()</span>
+{
+Serial.begin(9600);
+}
+
+<span style="color: #a85f2e;">void loop() </span>{
+if(Serial.available()&gt;0)
+{
+int IRact=Serial.read();
+IRact=IRact-48;
+switch(IRact)
+{
+case 1:
+irsend.<strong>sendRaw</strong>(Power_ON, 51, 38);
+delay(50);
+break;
+case 2:
+irsend.<strong>sendRaw</strong>(VolumnUP, 51, 38);
+delay(50);
+break;
+case 3:
+irsend.<strong>sendRaw</strong>(VolumnDOWN, 51, 38);
+delay(50);
+break;
+}
+}
+
+}
+
+</div>
+<div class="paragraph">看到這邊還有問題的朋友可以到這裡下載原始碼: <a title="" href="http://www.4shared.com/rar/dhMejbYB/IRCode.html?">http://www.4shared.com/rar/dhMejbYB/IRCode.html?</a>有任何問題，歡迎聯絡TakoBear!
+我們的gmail: takobearx@gmail.com
+
+</div>
 
   </div>
 

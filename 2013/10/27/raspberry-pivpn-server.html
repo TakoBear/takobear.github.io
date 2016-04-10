@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>利用Raspberry Pi建立VPN server</title>
-  <meta name="description" content="大家好，Bear 這次打算介紹簡單的樹莓派伺服器應用這次介紹的伺服器應用是 VPN Server何謂 VPN Server?虛擬私人網路（Virtual Private Network，簡稱VPN）通常建立來應用於連線中、大型企業或團體與團體間的私人網路的通訊方法。簡單的說就是利用點對點與VPN Server建立...">
+  <meta name="description" content="">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
@@ -61,224 +61,318 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>大家好，Bear 這次打算介紹簡單的樹莓派伺服器應用</p>
+    <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/1417666_orig.jpg" alt="" /></p>
+
+<p>大家好，Bear 這次打算介紹簡單的樹莓派伺服器應用</p>
+
 <p>這次介紹的伺服器應用是 VPN Server</p>
+
 <p>何謂 VPN Server?</p>
+
 <p>虛擬私人網路（Virtual Private Network，簡稱VPN）</p>
+
 <p>通常建立來應用於連線中、大型企業或團體與團體間的私人網路的通訊方法。</p>
+
 <p>簡單的說就是利用點對點與VPN Server建立一個連線通道，利用該VPN Server進入內部網路或外部網路</p>
-<p>常用於以下幾種情況：</p>
-<p>1. 在家中連線到公司架設的 VPN Server，成為公司內部網路的一份子，在家中工作QAQ</p>
-<p>2. 在外面連進家裡架設的 VPN Server，獲取家中內部網路資源</p>
-<p>3. 利用該方法，繞過部分阻擋外部網路的防火牆，俗稱＂翻牆＂（大心）沒錯，這次介紹的就是 VPN 的特殊用法，翻牆 VPN Server 的類型很多，小編這次教的是難阻擋的 OpenVPN</p>
+
+<p>常用於以下幾種情況：
+1. 在家中連線到公司架設的 VPN Server，成為公司內部網路的一份子，在家中工作QAQ
+2. 在外面連進家裡架設的 VPN Server，獲取家中內部網路資源
+3. 利用該方法，繞過部分阻擋外部網路的防火牆，俗稱＂翻牆＂（大心）沒錯，這次介紹的就是 VPN 的特殊用法，翻牆 VPN Server 的類型很多，小編這次教的是難阻擋的 OpenVPN</p>
+
 <p>為何它難阻擋呢？</p>
+
 <p>OpenVPN 採用 OpenSSL 加密，且可自選 port</p>
+
 <p>沒錯就是威在可自選 port 這點，選擇 port 443（一種用於加密連線的網頁瀏覽，https）</p>
+
 <p>一般防火牆或規則，很難辨別 port 443 裡面封包為何，更不用說阻擋 port 443 的連線</p>
-<p><!--more--></p>
+
+<!--more-->
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/494805_orig.png" alt="" /></p>
+
 <p>在 Windows 底下打開 pietty 或 putty 或其他可以進行 SSH 連線的 Windows App</p>
+
 <p>如果沒有的話請打開瀏覽器搜尋 pietty</p>
+
 <p>在主機名稱輸入樹莓派的區網 IP</p>
+
 <p>如果不知道的話，請打開瀏覽器進入 I P分享器（或ＷiFi AP）等設定頁找出樹莓派的區網 IP</p>
+
 <p>連線完輸入 user id（login as:），password:</p>
+
 <p>畫面如下</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/6007922_orig.png" alt="" /></p>
+
 <p>不要害怕，咱們開始當個 Geek 吧（大誤）</p>
+
 <p>小編這裡採用的是官方推薦的 Raspbian “wheezy”</p>
+
 <p>鍵入</p>
-<p><pre><code># 這指令用於更新目前源庫，就是更新 Raspbian 可用 App 的清單
-<p># 會要求輸入密碼</p>
-<p>sudo apt-get update</p>
-<p># 更新 PI 目前的有的 Apps</p>
-<p>sudo apt-get upgrade</p>
-<p></p>
+
+<pre><code class="bash"># 這指令用於更新目前源庫，就是更新 Raspbian 可用 App 的清單
+# 會要求輸入密碼
+sudo apt-get update
+
+# 更新 PI 目前的有的 Apps
+sudo apt-get upgrade
+</code></pre>
+
 <p>一段時間後，來安裝 openvpn 吧</p>
+
 <p>鍵入</p>
-<p><pre><code># 安裝四個App，分別是openvpn，本篇主角，openssl，建立憑證，vi、vim，終端機下非常好用的文書編輯軟體
-<p>sudo apt-get install openvpn openssl vi vim</p>
-<p></p>
+
+<pre><code class="bash"># 安裝四個App，分別是openvpn，本篇主角，openssl，建立憑證，vi、vim，終端機下非常好用的文書編輯軟體
+sudo apt-get install openvpn openssl vi vim
+</code></pre>
+
 <p>好了，建立 VPN Server 完成</p>
-<p>該休息了^_&lt;.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
+
+<p>該休息了^_&lt;.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.</p>
+
 <p>只說到這，各位讀者一定認為 Bear 很混</p>
+
 <p>接下來就是 openvpn 的設定與啟動</p>
+
 <p>首先，現建立連線用的憑證，可視為一種使用者帳號密碼</p>
+
 <p>為了方便，需要root身分來執行以下動作</p>
+
 <p>如果之前沒有設定 root 密碼，請自行建立一個</p>
-<p><pre><code>sudo passwd
-<p></p>
+
+<pre><code class="bash">sudo passwd
+</code></pre>
+
 <p>待要求後重覆輸入要建立的 root 密碼</p>
+
 <p>注意，root 在 Uuix-like 的作業系統中，是神一般的存在，請建立強式密碼</p>
+
 <p>不要隨意使用root身分執行，在 root 底下，任何行為請小心謹慎</p>
-<p><pre><code># su，切換 user，無指定 ID 表示 root
-<p># 要求輸入 root 密碼</p>
-<p>su</p>
-<p># 移動至 openvpn 安裝後位置</p>
-<p>cd /etc/openvpn/</p>
-<p># 將 openvpn 建立憑證的程式複製到 /etc/openvpn/easy-rsa 底下</p>
-<p>cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 ./easy-rsa</p>
-<p># 到easy-rsa底下用vim修改vars檔案，簡易設定憑證要的參數</p>
-<p>cd ./easy-rsa/</p>
-<p>vim ./vars</p>
-<p></p>
+
+<pre><code class="bash"># su，切換 user，無指定 ID 表示 root
+# 要求輸入 root 密碼
+su
+
+# 移動至 openvpn 安裝後位置
+cd /etc/openvpn/
+
+# 將 openvpn 建立憑證的程式複製到 /etc/openvpn/easy-rsa 底下
+cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 ./easy-rsa
+
+# 到easy-rsa底下用vim修改vars檔案，簡易設定憑證要的參數
+cd ./easy-rsa/
+vim ./vars
+</code></pre>
+
 <p>將 1024 修改成 2048，增加憑證難度</p>
+
 <p>修改方式，按下鍵盤 <code>i</code> 鍵，可開始編輯，不需編輯請按 <code>Esc</code> 鍵</p>
-<p><pre><code># Increase this to 2048 if you
-<p># are paranoid.  This will slow</p>
-<p># down TLS negotiation performance</p>
-<p># as well as the one-time DH parms</p>
-<p># generation process.</p>
-<p>export KEY_SIZE=2048</p>
-<p></p>
+
+<pre><code class="bash"># Increase this to 2048 if you
+# are paranoid.  This will slow
+# down TLS negotiation performance
+# as well as the one-time DH parms
+# generation process.
+export KEY_SIZE=2048
+</code></pre>
+
 <p>需存檔時，按下 <code>Esc</code> 鍵後按出 <code>:wq!</code>，如下圖</p>
+
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7944893_orig.png" alt="" /></p>
+
 <p>按下 Enter 完成存檔 <code>w</code> 並離開 <code>q</code></p>
-<p><pre><code># In how many days should the root CA key expire?
-<p>export CA_EXPIRE=3650</p>
-<p># In how many days should certificates expire? </p>
-<p># 憑證有效時間，預設為3650天，可自行修改</p>
-<p>export KEY_EXPIRE=3650</p>
-<p># These are the default values for fields</p>
-<p># which will be placed in the certificate.</p>
-<p># Don't leave any of these fields blank.</p>
-<p>export KEY_COUNTRY="TW"</p>
-<p>export KEY_PROVINCE="Taiwan"</p>
-<p>export KEY_CITY="Taipei"</p>
-<p>export KEY_ORG="TakoBear"</p>
-<p>export KEY_EMAIL="me@myhost.mydomain"</p>
-<p>export KEY_EMAIL=mail@host.domain</p>
-<p>export KEY_CN=changeme</p>
-<p>export KEY_NAME=changeme</p>
-<p>export KEY_OU=changeme</p>
-<p>export PKCS11_MODULE_PATH=changeme</p>
-<p>export PKCS11_PIN=1234</p>
-<p></p>
+
+<pre><code class="bash"># In how many days should the root CA key expire?
+export CA_EXPIRE=3650
+# In how many days should certificates expire? 
+# 憑證有效時間，預設為3650天，可自行修改
+export KEY_EXPIRE=3650
+# These are the default values for fields
+# which will be placed in the certificate.
+# Don't leave any of these fields blank.
+export KEY_COUNTRY="TW"
+export KEY_PROVINCE="Taiwan"
+export KEY_CITY="Taipei"
+export KEY_ORG="TakoBear"
+export KEY_EMAIL="me@myhost.mydomain"
+export KEY_EMAIL=mail@host.domain
+export KEY_CN=changeme
+export KEY_NAME=changeme
+export KEY_OU=changeme
+export PKCS11_MODULE_PATH=changeme
+export PKCS11_PIN=1234
+</code></pre>
+
 <p>預設憑證資訊，可自行處理好了，可以開始建立憑證</p>
+
 <p>將剛剛建立的文件讀入</p>
-<p><pre><code>source ./vars
-<p></p>
+
+<pre><code class="bash">source ./vars
+</code></pre>
+
 <p>清空舊有憑證</p>
-<p><pre><code>./clean-all
-<p></p>
+
+<pre><code class="bash">./clean-all
+</code></pre>
+
 <p>建立憑證所需動作</p>
-<p><pre><code>./build-ca
-<p>./build-key-server YourServerName</p>
-<p># （依需求建立數量）</p>
-<p>./build-key UserName 1</p>
-<p>./build-key UserName 2</p>
-<p>./build-key UserName 3</p>
-<p>./build-dh openvpn --genkey --secret tls.key</p>
-<p></p>
+
+<pre><code class="bash">./build-ca
+./build-key-server YourServerName
+# （依需求建立數量）
+./build-key UserName 1
+./build-key UserName 2
+./build-key UserName 3
+
+./build-dh openvpn --genkey --secret tls.key
+</code></pre>
+
 <p>將 tls.key 移到 keys 資料夾下</p>
-<p><pre><code>mv ./tls.key ./keys/
-<p></p>
+
+<pre><code class="bash">mv ./tls.key ./keys/
+</code></pre>
+
 <p>利用 FTP Server、NFS Server、File Server 等將憑證複製取出（後續文章再說明）</p>
+
 <p>接下來，設定 OpenVPN 設定檔</p>
+
 <p>一樣使用 root 身分</p>
-<p><pre><code>cd /etc/openvpn/
-<p>vim ./openvpn.conf</p>
-<p></p>
+
+<pre><code class="bash">cd /etc/openvpn/
+vim ./openvpn.conf
+</code></pre>
+
 <p>openvpn.conf 內容如下</p>
-<p><pre><code>dev tun
-<p>;; Listen port: 443</p>
-<p>port 443</p>
-<p>;; tcp mode</p>
-<p>proto tcp</p>
-<p>;; vpn 使用網段，勿和原有網段相衝突</p>
-<p>server 172.16.0.0 255.255.255.0</p>
-<p>;; 允許client間互相連接</p>
-<p>;client-to-client</p>
-<p>push "redirect-gateway def1"</p>
-<p>;;DNS設定</p>
-<p>push "dhcp-option DNS 8.8.8.8"</p>
-<p>;;最大使用者量</p>
-<p>max-clients 12</p>
-<p>keepalive 10 120</p>
-<p>tls-server</p>
-<p>;; Key File 設定</p>
-<p>dh /etc/openvpn/easy-rsa/keys/dh2048.pem</p>
-<p>ca /etc/openvpn/easy-rsa/keys/ca.crt</p>
-<p>cert /etc/openvpn/easy-rsa/keys/YourServerName.crt</p>
-<p>key /etc/openvpn/easy-rsa/keys/YourServerName.key</p>
-<p>;; openvpn 啟動的身份;如果不是root,會影響後面的進階設定</p>
-<p>user root</p>
-<p>group root</p>
-<p>;;----以下是進階部份設定,非必要----</p>
-<p>;; 針對client端個別設定</p>
-<p>client-config-dir /etc/openvpn/ccd</p>
-<p>ccd-exclusive</p>
-<p>;; client登入後要執行的script</p>
-<p>;learn-address "/etc/openvpn/learnscript/userlog"</p>
-<p>;; 以下兩行為啟動 mysqld ,利用user/password認證</p>
-<p>;plugin /usr/lib/openvpn/openvpn-auth-pam.so openvpn</p>
-<p>;; 將登入使用的username,當作憑證的CN name(寫入log需要)</p>
-<p>;username-as-common-name</p>
-<p>;;----進階部份設定結束----</p>
-<p>comp-lzo</p>
-<p>persist-tun</p>
-<p>persist-key</p>
-<p>tls-auth /etc/openvpn/easy-rsa/keys/tls.key 0</p>
-<p>;status /var/log/openvpn/openvpn-status.log</p>
-<p>;log         /var/log/openvpn/openvpn.log</p>
-<p>verb 3</p>
-<p></p>
+
+<pre><code class="ini">dev tun
+;; Listen port: 443
+port 443
+;; tcp mode
+proto tcp
+;; vpn 使用網段，勿和原有網段相衝突
+server 172.16.0.0 255.255.255.0
+;; 允許client間互相連接
+;client-to-client
+push "redirect-gateway def1"
+;;DNS設定
+push "dhcp-option DNS 8.8.8.8"
+;;最大使用者量
+max-clients 12
+keepalive 10 120
+tls-server
+;; Key File 設定
+dh /etc/openvpn/easy-rsa/keys/dh2048.pem
+ca /etc/openvpn/easy-rsa/keys/ca.crt
+cert /etc/openvpn/easy-rsa/keys/YourServerName.crt
+key /etc/openvpn/easy-rsa/keys/YourServerName.key
+;; openvpn 啟動的身份;如果不是root,會影響後面的進階設定
+user root
+group root
+;;----以下是進階部份設定,非必要----
+;; 針對client端個別設定
+client-config-dir /etc/openvpn/ccd
+ccd-exclusive
+;; client登入後要執行的script
+;learn-address "/etc/openvpn/learnscript/userlog"
+;; 以下兩行為啟動 mysqld ,利用user/password認證
+;plugin /usr/lib/openvpn/openvpn-auth-pam.so openvpn
+;; 將登入使用的username,當作憑證的CN name(寫入log需要)
+;username-as-common-name
+;;----進階部份設定結束----
+comp-lzo
+persist-tun
+persist-key
+tls-auth /etc/openvpn/easy-rsa/keys/tls.key 0
+;status /var/log/openvpn/openvpn-status.log
+;log         /var/log/openvpn/openvpn.log
+verb 3
+</code></pre>
+
 <p>建立不同使用者登入後的 IP</p>
-<p><pre><code>cd /etc/openvpn/
-<p>mkdir ./ccd</p>
-<p>cd ./ccd</p>
-<p>vim ./UserName1</p>
-<p></p>
+
+<pre><code class="bash">cd /etc/openvpn/
+mkdir ./ccd
+cd ./ccd
+vim ./UserName1
+</code></pre>
+
 <p>編輯輸入 <code>ifconfig-push 172.16.0.9 172.16.0.10</code></p>
-<p><pre><code>vim ./UserName2
-<p></p>
+
+<pre><code class="bash">vim ./UserName2
+</code></pre>
+
 <p>編輯輸入 <code>ifconfig-push 172.16.0.13 172.16.0.14</code></p>
-<p><pre><code>vim ./UserName3
-<p></p>
+
+<pre><code class="bash">vim ./UserName3
+</code></pre>
+
 <p>編輯輸入 <code>ifconfig-push 172.16.0.17 172.16.0.18</code></p>
+
 <p>（視需求決定，ip 間距為 4）</p>
+
 <p>接下來正式啟動 Raspberry Pi 上面的 openvpn 服務</p>
-<p><pre><code>sudo /etc/init.d/openvpn restart
-<p></p>
+
+<pre><code class="bash">sudo /etc/init.d/openvpn restart
+</code></pre>
+
 <p>當然，此時的 VPN Server 有提供連線，但無對外能力</p>
+
 <p>建立一批次檔（bash）對 PI 的防火牆做些例外吧</p>
-<p><pre><code>vim ./start-nat.sh
-<p></p>
+
+<pre><code class="bash">vim ./start-nat.sh
+</code></pre>
+
 <p>編輯</p>
-<p><pre><code>#!/bin/bash
-<p>ipt="/sbin/iptables"</p>
-<p># Clean the all rules</p>
-<p>$ipt -F</p>
-<p>$ipt -X</p>
-<p>$ipt -t nat -F</p>
-<p>$ipt -t nat -X</p>
-<p># Enable ip_forward</p>
-<p>echo "1" &gt; /proc/sys/net/ipv4/ip_forward</p>
-<p># For NAT routing</p>
-<p>$ipt -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE</p>
-<p>$ipt -t nat -L</p>
-<p></p>
+
+<pre><code class="bash">#!/bin/bash
+ipt="/sbin/iptables"
+# Clean the all rules
+$ipt -F
+$ipt -X
+$ipt -t nat -F
+$ipt -t nat -X
+# Enable ip_forward
+echo "1" &gt; /proc/sys/net/ipv4/ip_forward
+# For NAT routing
+$ipt -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
+$ipt -t nat -L
+</code></pre>
+
 <p>當然，上述做法是清空 iptables 的內容，相當於打開訪火牆</p>
+
 <p>Bear 這邊不多談 iptables 的設定</p>
+
 <p>如果想多了解 iptables 的話，可自行尋找相關介紹</p>
+
 <p>執行批次檔</p>
-<p><pre><code>sh ./start-nat.sh
-<p></p>
+
+<pre><code class="bash">sh ./start-nat.sh
+</code></pre>
+
 <p>到這邊 VPN Server 建立的部分就真的要告一段落了!</p>
+
 <p>下篇文章將介紹 client 的部分!</p>
-<p>[cjtoolbox name='google_ad']</p>
+
+<p>[cjtoolbox name=’google_ad’]</p>
+
 <p>更多消息請繼續關注TakoBear!</p>
-<p><div data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
-<p></p>
-</div></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p></code></pre></p>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/funnytechandnews?ref=hl" data-width="720" data-height="200" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true">
+</div>
 
   </div>
 
