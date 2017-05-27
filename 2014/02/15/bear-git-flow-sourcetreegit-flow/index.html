@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/blog.css">
   <link rel="stylesheet" href="/css/paginate.css">
-  <link rel="canonical" href="http://www.takobear.tw/2014/02/15/bear-git-flow-sourcetreegit-flow/">
-  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://www.takobear.tw/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/2014/02/15/bear-git-flow-sourcetreegit-flow/">
+  <link rel="alternate" type="application/rss+xml" title="TAKOBEAR" href="http://localhost:4000/feed.xml">
 </head>
 
 
@@ -159,8 +159,9 @@
 
 <p>參考指令:</p>
 
-<pre><code class="bash">git checkout -b develop master
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout -b develop master
 </code></pre>
+</div>
 
 <p>完成後就會看到在 BRANCHES 下出現 develop 了，這樣就完成了 git flow 的初始化。</p>
 
@@ -182,14 +183,15 @@
 
 <p>參考指令：</p>
 
-<pre><code class="bash">git checkout -b feature/f1 develop
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout -b feature/f1 develop
 </code></pre>
+</div>
 
 <p>在 BRANCHES 下可以看到新增了 feature/f1 這個 branch，我們在這 branch 上開發新功能。</p>
 
 <p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9355154_orig.png" alt="" /></p>
 
-<p>在專案目錄下新增一檔案，用來代表新功能，接下來就是老樣子的 commmit 動作。</p>
+<p>在專案目錄下新增一檔案，用來代表新功能，接下來就是老樣子的 commit 動作。</p>
 
 <p>這邊我們隨意建了一個新檔案叫做 <code>main.c</code> !</p>
 
@@ -221,10 +223,11 @@
 
 <p>參考指令：</p>
 
-<pre><code>git checkout develop
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout develop
 git merge --no-ff feature/f1
 git branch -d feature/f1
 </code></pre>
+</div>
 
 <p>回到只有 develop 與 master 兩個 branch 的狀態了。重複以上動作直到功能開發完成，就要進行下一個步驟，釋出專案給使用者。</p>
 
@@ -250,47 +253,47 @@ git branch -d feature/f1
 
 <p>參考指令：</p>
 
-<pre><code class="bash">git checkout -b release/v0.1.0 develop
-````
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout -b release/v0.1.0 develop
+</code></pre>
+</div>
 
-在 BRANCHES 下可以看到出現了 release/v0.1.0 的 branch。
+<p>在 BRANCHES 下可以看到出現了 release/v0.1.0 的 branch。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9078051_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9078051_orig.png" alt="" /></p>
 
-現在讓我們修改一下專案目錄下的 README.md 的內容，加上版本號資訊後存檔。
+<p>現在讓我們修改一下專案目錄下的 README.md 的內容，加上版本號資訊後存檔。</p>
 
-(畫面中使用的是 [Mou Markdown 編輯器](http://mouapp.com/), 在 Mac 上編輯 README 相當好用, 有機會Bear再詳加介紹)
+<p>(畫面中使用的是 <a href="http://mouapp.com/">Mou Markdown 編輯器</a>, 在 Mac 上編輯 README 相當好用, 有機會Bear再詳加介紹)</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5068778_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5068778_orig.png" alt="" /></p>
 
-接下來 commit 剛剛的變更，一樣切換到 Working Copy 頁面，選取變更的檔案，點擊 Add。
+<p>接下來 commit 剛剛的變更，一樣切換到 Working Copy 頁面，選取變更的檔案，點擊 Add。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/389527_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/389527_orig.png" alt="" /></p>
 
-點擊 Commit。
+<p>點擊 Commit。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2237938_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2237938_orig.png" alt="" /></p>
 
-輸入 Commit message 後點擊 Commit。
+<p>輸入 Commit message 後點擊 Commit。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3877164_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/3877164_orig.png" alt="" /></p>
 
-回到 BRANCHES 頁面，可以看到 Graph 有變動了。接下來請點擊 Git Flow。
+<p>回到 BRANCHES 頁面，可以看到 Graph 有變動了。接下來請點擊 Git Flow。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9237225_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/9237225_orig.png" alt="" /></p>
 
-因為目前我們正在 release/v0.1.0 branch，所以直接點擊 Finish Current。
+<p>因為目前我們正在 release/v0.1.0 branch，所以直接點擊 Finish Current。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7321146_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/7321146_orig.png" alt="" /></p>
 
-點擊 OK。請注意在 Git Flow 流程中，release branch 只負責釋出設定與修正 bug，千萬不要在上面開發新功能。
+<p>點擊 OK。請注意在 Git Flow 流程中，release branch 只負責釋出設定與修正 bug，千萬不要在上面開發新功能。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/727766_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/727766_orig.png" alt="" /></p>
 
-參考指令：
+<p>參考指令：</p>
 
-```bash
-git checkout master
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout master
 git merge --no-ff release/v0.1.0
 
 git tag -a v0.1.0
@@ -300,6 +303,7 @@ git merge --no-ff release/v0.1.0
 
 git branch -d release/v0.1.0
 </code></pre>
+</div>
 
 <p>Graph 就會出現了變更，release/v0.1.0 會 merge 到 master 跟 develop。並在 master 上標上 v0.1.0 的 tag。</p>
 
@@ -333,28 +337,29 @@ git branch -d release/v0.1.0
 
 <p>參考指令：</p>
 
-<pre><code class="bash">git checkout -b hotfix/v0.1.1 master`
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout -b hotfix/v0.1.1 master
+</code></pre>
+</div>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4438899_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/4438899_orig.png" alt="" /></p>
 
-可以看到 Graph 發生了變動，hotfix/v0.1.1是從 master 分支出來的，接下來就可以修正錯誤，這邊就不再重複講述 commmit 的步驟。
+<p>可以看到 Graph 發生了變動，hotfix/v0.1.1 是從 master 分支出來的，接下來就可以修正錯誤，這邊就不再重複講述 commit 的步驟。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2283436_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/2283436_orig.png" alt="" /></p>
 
-錯誤已經修復好也 commit 了，接下來就是釋出更新的版本。請點擊 Git Flow。
+<p>錯誤已經修復好也 commit 了，接下來就是釋出更新的版本。請點擊 Git Flow。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8968311_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/8968311_orig.png" alt="" /></p>
 
-因為目前我們就在 hotfix/v0.1.1上，所以直接點擊 Finish Current。
+<p>因為目前我們就在 hotfix/v0.1.1 上，所以直接點擊 Finish Current。</p>
 
-![](http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5429617_orig.png)
+<p><img src="http://www.takobear.weebly.com/uploads/1/9/9/7/19975491/5429617_orig.png" alt="" /></p>
 
-點擊 OK。
+<p>點擊 OK。</p>
 
-參考指令：
+<p>參考指令：</p>
 
-```bash
-git checkout master
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout master
 git merge --no-ff hotfix/v0.1.1
 
 git tag -a v0.1.1
@@ -364,6 +369,7 @@ git merge --no-ff -b hotfix/v0.1.1
 
 git branch -d hotfix/v0.1.1
 </code></pre>
+</div>
 
 <p>可以在 Graph 中看到了變更，hotfix/v0.1.1 會 merge 到 master 跟 develop。並在 master 上標上 v0.1.1 的 tag。之後再切換到 feature/f2 繼續開發新功能。</p>
 
